@@ -30,7 +30,14 @@ EXAMS = {
 
 
 def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    """对 LF 归一化后的内容取哈希，保证 Windows / Linux 算出的值一致。"""
+    data = path.read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
+
+
+def write_lf(path: Path, data: bytes) -> None:
+    """统一以 LF 写文件，避免不同平台产出的字节不一致。"""
+    path.write_bytes(data.replace(b"\r\n", b"\n"))
 
 
 def main() -> int:
@@ -59,8 +66,8 @@ def main() -> int:
                 "updatedAt": bank_updated,
             }
         )
-        # 同步到 App 内置种子
-        shutil.copyfile(latest, SEED_DIR / f"{exam_id}.json")
+        # 同步到 App 内置种子（统一 LF，避免跨平台字节差异）
+        write_lf(SEED_DIR / f"{exam_id}.json", latest.read_bytes())
         print(f"[ok] {rel}: {count} 题 → assets/seed/{exam_id}.json")
 
     # updatedAt 取题库自身的时间戳，保证同样输入产出同样索引（CI 可比对）

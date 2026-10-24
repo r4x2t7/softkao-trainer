@@ -59,8 +59,10 @@ class SeedImporter(
 }
 
 object Hashing {
+    /** 对 LF 归一化后的内容取哈希，与题库仓库生成 index.json 的方式保持一致 */
     fun sha256(text: String): String {
-        val digest = MessageDigest.getInstance("SHA-256").digest(text.toByteArray(Charsets.UTF_8))
+        val normalized = text.replace("\r\n", "\n")
+        val digest = MessageDigest.getInstance("SHA-256").digest(normalized.toByteArray(Charsets.UTF_8))
         return digest.joinToString("") { "%02x".format(it) }
     }
 }

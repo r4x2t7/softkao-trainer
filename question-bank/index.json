@@ -7,7 +7,7 @@
       "version": 2,
       "file": "system-integration/v2.json",
       "questionCount": 1341,
-      "sha256": "799355031bbf38a8dcc6f425821044383dbd25ff6e7e1e29a8a2f47c3ac09686",
+      "sha256": "c57555cc9e6f8c0b9e9cc5171561bed82c3201efeb419e1287e9c2f979180228",
       "updatedAt": "2026-10-24T20:00:00Z"
     },
     {
@@ -16,7 +16,7 @@
       "version": 2,
       "file": "multimedia-designer/v2.json",
       "questionCount": 1066,
-      "sha256": "c8c8e50a74e9a2b55170c2394a608b46f167ea6e8365268e185a8b3bbd3cfa6f",
+      "sha256": "32332d529a89e40f408eb6a28964cb2d604434187a376ac9e82401588399c1d2",
       "updatedAt": "2026-10-24T20:00:00Z"
     }
   ]
