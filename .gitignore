@@ -1,0 +1,20 @@
+# Gradle / Android
+.gradle/
+build/
+local.properties
+*.apk
+*.aab
+captures/
+.cxx/
+*.iml
+.idea/
+.DS_Store
+
+# 工具日志
+.tooling-install.log
+.gh-auth.log
+
+# 本地密钥与配置
+secrets.properties
+*.keystore
+*.jks

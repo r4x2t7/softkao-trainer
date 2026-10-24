@@ -1,0 +1,44 @@
+name: 校验题库
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'question-bank/**'
+      - 'tools/**'
+      - '.github/workflows/validate-bank.yml'
+  pull_request:
+    paths:
+      - 'question-bank/**'
+      - 'tools/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 校验题库 JSON
+        run: python tools/validate_bank.py --all
+
+      - name: 重建索引并检查是否一致
+        run: |
+          python tools/build_index.py
+          if ! git diff --quiet -- question-bank/index.json; then
+            echo "::error::question-bank/index.json 与题库内容不一致，请运行 python tools/build_index.py 后提交"
+            git diff -- question-bank/index.json
+            exit 1
+          fi
+
+      - name: 校验种子题库与题库一致
+        run: |
+          for exam in system-integration multimedia-designer; do
+            if ! diff -q "question-bank/$exam/v1.json" "app/src/main/assets/seed/$exam.json"; then
+              echo "::error::$exam 内置种子与题库文件不一致，请运行 python tools/build_index.py"
+              exit 1
+            fi
+          done

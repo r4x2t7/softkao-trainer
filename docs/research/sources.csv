@@ -1,0 +1,40 @@
+name,url,type,free,license,format,updateFreq,apiAccess,notes
+中国计算机技术职业资格网（软考官网首页）,https://www.ruankao.org.cn/,官方-考试机构,是,unknown（政府网站公开信息）,HTML,随考季滚动更新,无公开 API；部分下载需登录,权威大纲与政策入口；站内样题与真题原文受版权保护不可收录
+软考官网-考试介绍与大纲,https://www.ruankao.org.cn/exam/main.html,官方-考试大纲,是,unknown,HTML/PDF 大纲,每半年随考季更新,无公开 API,报考条件、考试科目与题型分布的权威依据
+软考官网-考试用书目录,https://www.ruankao.org.cn/book/main.html,官方-教材目录,是,proprietary（教材正文）,HTML,随新版教材,无,指向各出版社教材页；教材正文与例题有版权不可抄录
+软考报名与大纲下载（bm）,https://bm.ruankao.org.cn/,官方-大纲下载,是,unknown,登录后 PDF,随考季,需账号登录,大纲 PDF 与样题下载入口；样题原文禁止收录
+清华大学出版社,https://www.tup.com.cn/,教材出版,否（图书需购买）,proprietary,图书/HTML,随新版教材,无,《系统集成项目管理工程师教程》第3版与《多媒体应用设计师教程》出版方
+国家标准全文公开系统,https://openstd.samr.gov.cn/bzgk/std/,标准查询,是,public-domain（GB 全文公开）,HTML/PDF,实时同步,页面内检索接口,强制性国标可在线阅读全文；仅可引用标准号与条文大意
+全国标准信息公共服务平台,https://std.samr.gov.cn/,标准查询,是,unknown,HTML,实时同步,无公开 API,标准元数据（编号、名称、实施日期、状态）检索
+中国政府网,https://www.gov.cn/,法规原文,是,public-domain（法律文本）,HTML,实时同步,无公开 API,《招标投标法实施条例》等行政法规原文
+中国人大网,http://www.npc.gov.cn/npc/index.html,法规原文,是,public-domain,HTML,实时同步,无公开 API,《著作权法》《专利法》《商标法》《招标投标法》立法与修订信息
+国家法律法规数据库,https://flk.npc.gov.cn/,法规原文,是,public-domain,HTML,实时同步,有检索接口,现行法律权威版本；引用条文要点需标注法律名称与条款
+希赛网校考试频道,https://kaoshi.educity.cn/,培训机构,部分免费,proprietary,HTML/课程视频,每日,无公开 API,章节练与模拟卷；题库与解析为会员付费内容
+希赛软考 App（App Store）,https://apps.apple.com/cn/app/id6743473447,培训机构 App,下载免费/题库付费,proprietary,iOS/Android,持续更新,无,会员墙：题库、解析、模考需订阅
+软考通 App（App Store）,https://apps.apple.com/cn/app/id1498444438,培训机构 App,下载免费/内购,proprietary,iOS/Android,持续更新,无,刷题+错题本+模考节奏；题量与解析按会员解锁
+信管网 App（App Store）,https://apps.apple.com/cn/app/id1153978078,培训机构 App,部分免费,proprietary,iOS,持续更新,无,官网 cnitpmc.com 实测不可达（HTTP 000）；以应用商店页为准
+软考达人 App（App Store）,https://apps.apple.com/cn/app/id6763562162,培训机构 App,下载免费/部分付费,proprietary,iOS/Android,持续更新,无,与 ruankaodaren/ruankao 同源产品；章节练习与每日一练
+233网校,https://www.233.com/,题库网站,部分免费,proprietary,HTML,每日,无,/ruankao/ 路径对脚本返回 403（反爬）；题库需付费
+课课家,https://www.kkjava.com/,题库网站,部分免费,proprietary,HTML,每日,无,计算机类课程与题库；章节练习与模拟卷
+环球网校,https://www.hqwx.com/,题库网站,部分免费,proprietary,HTML,每日,无,软考课程与题库；解析多为视频化讲解
+51CTO 软考频道,https://rk.51cto.com/,教程与题库,是（教程免费）,proprietary（混合内容）,HTML,每日,无,教程文章与部分免费题库；解析质量参差
+CSDN 软考真题搜索,https://so.csdn.net/so/search?q=%E8%BD%AF%E8%80%83%E7%9C%9F%E9%A2%98,真题回忆版聚合,是,unknown（用户投稿）,HTML,每日,无公开 API,仅用于研究考点分布与题型；禁止抄录真题原文
+掘金 软考真题搜索,https://juejin.cn/search?query=%E8%BD%AF%E8%80%83%E7%9C%9F%E9%A2%98,真题回忆版聚合,是,unknown（用户投稿）,HTML,每日,无公开 API,同上；含考前回忆帖与考点预测
+博客园,https://www.cnblogs.com/,真题回忆版聚合,是,unknown（用户投稿）,HTML,每日,无公开 API,个人博客转载的真题回忆与备考经验
+ruankaodaren/ruankao（GitHub）,https://github.com/ruankaodaren/ruankao,开源题库,是,MIT（代码）,JSON/HTML,每月级（2026-03 上新 15000+ 题）,GitHub API 可读,题目大概率聚合自商业题库：只可研究结构与字段，禁止抄录原文
+软考达人 PC 站,https://ruankaodaren.com/,题库网站,是,unknown（内容授权待核）,HTML,每月,无,顺序与章节练习入口；题量口径可作规模参考
+vangee0528/QuizDock（GitHub）,https://github.com/vangee0528/QuizDock,开源刷题工具,是,MIT,.qbank/JSON/SQLite,持续,无公开 API,题库与应用解耦热更新、AI 一键解析入口；格式设计值得借鉴
+hzhsec/pdf-exam-bank（GitHub）,https://github.com/hzhsec/pdf-exam-bank,开源题库工具,是,unknown,PDF 解析/Python,近期活跃,无公开 API,PDF→结构化题目思路与 AI 讲解缓存参考
+devezhao/rktk-wxx（GitHub）,https://github.com/devezhao/rktk-wxx,开源题库,是,Apache-2.0,JSON/小程序,已停更（2021）,无公开 API,结构老旧；仅作字段设计参考
+羊驼考试（腾讯应用宝）,https://sj.qq.com/search?q=%E7%BE%8A%E9%A9%BC%E8%80%83%E8%AF%95,应用商店,下载免费,proprietary,Android APK,持续,无,实测 37 个相关结果；拍照搜题与 AI 讲解是其卖点
+虎题（腾讯应用宝）,https://sj.qq.com/search?q=%E8%99%8E%E9%A2%98,应用商店,下载免费,proprietary,Android APK,持续,无,刷题+模考节奏+倒计时是其卖点
+Anki 官网,https://apps.ankiweb.net/,竞品工具（间隔重复）,桌面免费/AnkiDroid 免费,AGPL-3.0,.apkg/SQLite,持续,AnkiWeb 同步服务,SM-2/FSRS 间隔重复算法参考；iOS 付费 168 元
+iTunes Search API,https://itunes.apple.com/search?term=%E8%BD%AF%E8%80%83&country=cn&entity=software,API,是,Apple 专有 API,JSON,实时,公开 REST API,竞品元数据核验（trackId/开发者/价格），无鉴权限制
+GitHub REST Search API,https://api.github.com/search/repositories?q=%E8%BD%AF%E8%80%83+%E9%A2%98%E5%BA%93,API,是,宽松（须遵守 GitHub ToS）,JSON,实时,公开 REST API,开源软考题库发现与许可证核验
+Ollama 模型库,https://ollama.com/library/qwen2.5,开源模型,是,MIT（各模型许可不同）,GGUF,持续,本地 HTTP 11434,离线 AI 解析方案；qwen2.5/deepseek-r1/llama3.2 可选
+DeepSeek OpenAI 兼容 API,https://api.deepseek.com/,云模型,按量付费,proprietary,OpenAI 兼容 JSON,持续,HTTP + API Key,国内可直连；实测 401 表示服务在线；定价见 api-docs.deepseek.com
+智谱 GLM OpenAI 兼容 API,https://open.bigmodel.cn/api/paas/v4,云模型,按量付费,proprietary,OpenAI 兼容 JSON,持续,HTTP + API Key,实测 401 在线；定价页 open.bigmodel.cn/pricing
+阿里云百炼 DashScope 兼容模式,https://help.aliyun.com/zh/model-studio/compatibility-of-openai-with-dashscope,云模型,按量付费,proprietary,OpenAI 兼容 JSON,持续,HTTP + API Key,国内直连；文档页可访问、模型列表 help.aliyun.com/zh/model-studio/models
+SiliconFlow 文档,https://docs.siliconflow.cn/,云模型,按量付费,proprietary,OpenAI 兼容 JSON,持续,HTTP + API Key,多模型聚合；定价 siliconflow.cn/zh-cn/pricing
+Kimi 开放平台文档,https://platform.moonshot.cn/docs,云模型,按量付费,proprietary,OpenAI 兼容 JSON,持续,HTTP + API Key,长文本与推理模型；定价页 platform.moonshot.cn/docs/pricing/chat
+火山方舟（豆包）API,https://ark.cn-beijing.volces.com/api/v3,云模型,按量付费,proprietary,OpenAI 兼容 JSON,持续,HTTP + API Key,实测 401 在线；定价见 volcengine.com/docs/82379
