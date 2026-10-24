@@ -131,6 +131,13 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                             "practice?examId=$examId&mode=WRONG&chapter=&kp=&title=%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C&ids=$questionId"
                         )
                     },
+                    onPracticePoint = { examId, point ->
+                        navController.navigate(
+                            "practice?examId=$examId&mode=KNOWLEDGE&chapter=&kp=" +
+                                java.net.URLEncoder.encode(point, "UTF-8") + "&title=" +
+                                java.net.URLEncoder.encode("专项 · $point", "UTF-8")
+                        )
+                    },
                 )
             }
             composable(Routes.KNOWLEDGE) {

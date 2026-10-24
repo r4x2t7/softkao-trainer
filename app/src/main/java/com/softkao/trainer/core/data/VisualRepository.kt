@@ -473,10 +473,11 @@ object VisualRepository {
         ),
     )
 
-    fun forExam(examId: String): List<VisualLesson> = lessons.filter { it.examId == examId }
+    fun forExam(examId: String): List<VisualLesson> =
+        (lessons + VisualRepositoryExtra.lessons).filter { it.examId == examId }
 
     fun forChapter(examId: String, chapter: String): List<VisualLesson> =
-        lessons.filter { it.examId == examId && it.chapter == chapter }
+        (lessons + VisualRepositoryExtra.lessons).filter { it.examId == examId && it.chapter == chapter }
 
-    fun all(): List<VisualLesson> = lessons
+    fun all(): List<VisualLesson> = lessons + VisualRepositoryExtra.lessons
 }

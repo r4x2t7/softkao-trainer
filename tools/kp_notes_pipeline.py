@@ -105,6 +105,33 @@ def merge() -> int:
     return 0
 
 
+def missing() -> int:
+    """列出还没有精讲的知识点，并切出补写任务书"""
+    total_missing = 0
+    for exam in EXAMS:
+        points = collect(exam)
+        merged = BANK / exam / "kp_notes.json"
+        have: dict[str, str] = {}
+        if merged.exists():
+            have = json.loads(merged.read_text(encoding="utf-8")).get("notes", {})
+        todo = [p for p in points if p["point"] not in have or not have[p["point"]].strip()]
+        total_missing += len(todo)
+        parts_dir = BANK / exam / "kp_parts"
+        parts_dir.mkdir(parents=True, exist_ok=True)
+        for i in range(0, len(todo), CHUNK_SIZE):
+            chunk = todo[i:i + CHUNK_SIZE]
+            name = f"{exam}-kp-miss-{i // CHUNK_SIZE:02d}"
+            (parts_dir / f"{name}.in.json").write_text(
+                json.dumps({"chunk": name, "examId": exam, "examName": EXAMS[exam], "points": chunk},
+                           ensure_ascii=False, indent=1),
+                encoding="utf-8",
+            )
+        n_chunks = len(range(0, len(todo), CHUNK_SIZE))
+        print(f"[{exam}] 总 {len(points)} 个知识点，已写 {len(points) - len(todo)}，待补 {len(todo)} → {n_chunks} 个分片")
+    print(f"合计待补 {total_missing} 条")
+    return 0
+
+
 def status() -> int:
     for exam in EXAMS:
         parts_dir = BANK / exam / "kp_parts"
@@ -120,4 +147,4 @@ def status() -> int:
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
-    {"split": split, "merge": merge, "status": status}.get(cmd, status)()
+    {"split": split, "merge": merge, "status": status, "missing": missing}.get(cmd, status)()
