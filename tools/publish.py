@@ -29,22 +29,27 @@ def run(script: str, *args: str) -> int:
 
 def main() -> int:
     print("=" * 64)
-    print("1/4 合并 AI 深度解析")
+    print("1/5 应用法条引用勘误")
+    print("=" * 64)
+    run("fix_law_citations.py")
+
+    print("\n" + "=" * 64)
+    print("2/5 合并 AI 深度解析")
     print("=" * 64)
     run("ai_pipeline.py", "merge")
 
     print("\n" + "=" * 64)
-    print("2/4 合并知识点精讲资料")
+    print("3/5 合并知识点精讲资料")
     print("=" * 64)
     run("material_pipeline.py", "merge")
 
     print("\n" + "=" * 64)
-    print("3/4 重建索引与内置种子")
+    print("4/5 重建索引与内置种子")
     print("=" * 64)
     run("build_index.py")
 
     print("\n" + "=" * 64)
-    print("4/4 校验题库")
+    print("5/5 校验题库")
     print("=" * 64)
     rc = run("validate_bank.py", "--all")
     if rc != 0:

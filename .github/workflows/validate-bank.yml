@@ -39,6 +39,10 @@ jobs:
         run: |
           python tools/kp_notes_pipeline.py coverage
 
+      - name: 答案与 AI 深度解析首句一致性自检
+        run: |
+          python tools/check_ai_consistency.py
+
       - name: 题库规模自检
         run: |
           python - <<'PY'

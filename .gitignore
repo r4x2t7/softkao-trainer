@@ -24,6 +24,9 @@ question-bank/*/ai_parts/
 question-bank/*/material_parts/
 question-bank/*/kp_parts/
 
+# 法条正文为核对用的本地素材（用 tools/grab_laws.py 重新抓取即可），不入库
+docs/research/laws/
+
 # 本地密钥与配置
 secrets.properties
 *.keystore
