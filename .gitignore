@@ -20,6 +20,8 @@ SoftKaoTrainer-*.apk
 
 # 题库分片为本地生产中间产物；仓库只收录合并后的 vN.json
 question-bank/*/parts/
+question-bank/*/ai_parts/
+question-bank/*/material_parts/
 
 # 本地密钥与配置
 secrets.properties
