@@ -14,9 +14,26 @@ class MaterialRepository(private val context: Context) {
 
     private val cache = mutableMapOf<String, List<ChapterMaterial>>()
 
+    /** 优先读本地更新过的资料文件，其次读内置 assets */
     fun load(examId: String): List<ChapterMaterial> = cache.getOrPut(examId) {
-        readAssets(examId)
+        val downloaded = readLocalFile(examId)
+        if (downloaded.isNotEmpty()) downloaded else readAssets(examId)
     }
+
+    /** 题库更新通道下载下来的资料会写到这里 */
+    fun saveLocal(examId: String, raw: String): Boolean = runCatching {
+        val dir = java.io.File(context.filesDir, "materials")
+        dir.mkdirs()
+        java.io.File(dir, "$examId.json").writeText(raw, Charsets.UTF_8)
+        cache.remove(examId)
+        true
+    }.getOrDefault(false)
+
+    private fun readLocalFile(examId: String): List<ChapterMaterial> = runCatching {
+        val f = java.io.File(context.filesDir, "materials/$examId.json")
+        if (!f.exists()) return@runCatching emptyList()
+        parse(f.readText(Charsets.UTF_8))
+    }.getOrDefault(emptyList())
 
     fun find(examId: String, chapter: String): ChapterMaterial? =
         load(examId).firstOrNull { it.chapter == chapter }

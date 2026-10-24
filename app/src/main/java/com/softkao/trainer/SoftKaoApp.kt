@@ -60,7 +60,7 @@ object ServiceLocator {
         materialRepository = MaterialRepository(app)
         importer = QuestionBankImporter(db)
         seedImporter = SeedImporter(app, db, importer)
-        bankUpdater = BankUpdater(db, importer)
+        bankUpdater = BankUpdater(db, importer, materialRepository)
         aiExplainer = AiExplainer()
     }
 

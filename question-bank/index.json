@@ -6,8 +6,8 @@
       "examName": "系统集成项目管理工程师",
       "version": 2,
       "file": "system-integration/v2.json",
-      "questionCount": 1341,
-      "sha256": "c57555cc9e6f8c0b9e9cc5171561bed82c3201efeb419e1287e9c2f979180228",
+      "questionCount": 1335,
+      "sha256": "fe7bb538690f1ae89fb03b1314a82aaf9d66e5d70d5ea9eaa1712ab477e363a8",
       "updatedAt": "2026-10-24T20:00:00Z"
     },
     {
@@ -15,8 +15,8 @@
       "examName": "多媒体应用设计师",
       "version": 2,
       "file": "multimedia-designer/v2.json",
-      "questionCount": 1066,
-      "sha256": "32332d529a89e40f408eb6a28964cb2d604434187a376ac9e82401588399c1d2",
+      "questionCount": 1055,
+      "sha256": "3b3b9f27e8948f95593d62c28b724cf43cbcfc6d91ccf293689aa36796f25558",
       "updatedAt": "2026-10-24T20:00:00Z"
     }
   ]

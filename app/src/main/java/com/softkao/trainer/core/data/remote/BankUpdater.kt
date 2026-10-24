@@ -2,6 +2,7 @@ package com.softkao.trainer.core.data.remote
 
 import com.softkao.trainer.core.data.BankIndexParser
 import com.softkao.trainer.core.data.Hashing
+import com.softkao.trainer.core.data.MaterialRepository
 import com.softkao.trainer.core.data.QuestionBankImporter
 import com.softkao.trainer.core.data.QuestionBankParser
 import com.softkao.trainer.core.data.db.AppDatabase
@@ -17,6 +18,7 @@ import java.net.URL
 class BankUpdater(
     private val db: AppDatabase,
     private val importer: QuestionBankImporter,
+    private val materials: MaterialRepository? = null,
 ) {
 
     data class UpdateResult(
@@ -35,9 +37,14 @@ class BankUpdater(
 
             val reports = mutableListOf<Pair<String, com.softkao.trainer.core.model.ImportReport>>()
             var updatedCount = 0
+            var materialCount = 0
             for (entry in entries) {
                 val local = db.bankVersion(entry.examId)
-                if (local != null && local.version >= entry.version) continue
+                if (local != null && local.version >= entry.version) {
+                    // 版本没变也同步一次资料（资料可能单独更新）
+                    if (fetchMaterials(base, entry.examId)) materialCount++
+                    continue
+                }
                 val raw = get("$base/${entry.file}")
                 if (entry.sha256.isNotBlank() && Hashing.sha256(raw) != entry.sha256.lowercase()) {
                     reports += entry.examId to com.softkao.trainer.core.model.ImportReport(
@@ -49,8 +56,12 @@ class BankUpdater(
                 val report = importer.import(parsed, entry.version)
                 reports += entry.examId to report
                 updatedCount += report.total
+                if (fetchMaterials(base, entry.examId)) materialCount++
             }
-            val message = if (updatedCount == 0) "已是最新版本" else "更新完成，共新增/更新 $updatedCount 道题"
+            val message = buildString {
+                if (updatedCount == 0) append("题库已是最新版本") else append("题库更新完成，共新增/更新 $updatedCount 道题")
+                if (materialCount > 0) append("，同步 $materialCount 份知识点资料")
+            }
             UpdateResult(true, message, reports)
         } catch (e: Exception) {
             UpdateResult(false, "更新失败：${e.message}")
@@ -68,6 +79,12 @@ class BankUpdater(
             UpdateResult(false, "导入失败：${e.message}")
         }
     }
+
+    /** 顺带拉取知识点精讲资料（materials/<examId>.json），失败不影响题库更新 */
+    private fun fetchMaterials(base: String, examId: String): Boolean = runCatching {
+        val raw = get("$base/materials/$examId.json")
+        materials?.saveLocal(examId, raw) ?: false
+    }.getOrDefault(false)
 
     private fun get(url: String): String {
         val conn = (URL(url).openConnection() as HttpURLConnection).apply {

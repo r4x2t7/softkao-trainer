@@ -90,14 +90,28 @@ def merge() -> int:
         if not parts_dir.exists():
             continue
         chapters: list[dict] = []
-        for out_file in sorted(parts_dir.glob("*.out.json")):
+        seen_chapters: set[str] = set()
+        duplicates = 0
+        # 优先合并主输出（*.out.json），再合并补写输出（*.out2.json 等）
+        out_files = sorted(parts_dir.glob("*.out*.json"), key=lambda p: (len(p.name.split(".")), p.name))
+        for out_file in out_files:
             try:
                 data = json.loads(out_file.read_text(encoding="utf-8"))
             except Exception as exc:  # noqa: BLE001
                 print(f"  [skip] {out_file.name}: {exc}")
                 continue
             items = data if isinstance(data, list) else data.get("chapters", [])
-            chapters.extend(items)
+            for item in items:
+                name = item.get("chapter", "")
+                if not name:
+                    continue
+                if name in seen_chapters:
+                    duplicates += 1
+                    continue
+                seen_chapters.add(name)
+                chapters.append(item)
+        if duplicates:
+            print(f"  [dedup] 跳过 {duplicates} 章重复内容")
         if not chapters:
             print(f"[{exam}] 没有可合并的资料")
             continue
