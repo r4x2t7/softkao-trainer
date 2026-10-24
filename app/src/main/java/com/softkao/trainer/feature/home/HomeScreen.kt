@@ -50,6 +50,7 @@ class HomeViewModel : ViewModel() {
         val correct: Int,
         val accuracy: Float,
         val chapters: List<String>,
+        val knowledgePoints: List<Pair<String, Int>> = emptyList(),
     )
 
     data class State(
@@ -87,6 +88,7 @@ class HomeViewModel : ViewModel() {
                         correct = s.correctAttempts(exam.id),
                         accuracy = s.accuracy(exam.id),
                         chapters = q.chapters(exam.id),
+                        knowledgePoints = q.knowledgePointCounts(exam.id).toList(),
                     )
                 }
                 val extra = Quad(
@@ -200,6 +202,23 @@ fun HomeScreen(
                             AssistChip(
                                 onClick = { onStartPractice(stat.exam.id, PracticeMode.CHAPTER, chapter, "", "章节 · $chapter") },
                                 label = { Text(chapter) },
+                            )
+                        }
+                    }
+                }
+                if (stat.knowledgePoints.isNotEmpty()) {
+                    Spacer(Modifier.height(12.dp))
+                    Text(
+                        "按知识点专项练习（共 ${stat.knowledgePoints.size} 个知识点）",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(Modifier.height(6.dp))
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        items(stat.knowledgePoints) { (kp, count) ->
+                            AssistChip(
+                                onClick = { onStartPractice(stat.exam.id, PracticeMode.KNOWLEDGE, "", kp, "专项 · $kp") },
+                                label = { Text("$kp ($count)") },
                             )
                         }
                     }

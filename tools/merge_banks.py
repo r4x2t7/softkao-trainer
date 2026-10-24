@@ -23,6 +23,13 @@ MIN_PER_EXAM = 800
 MIN_PER_CHAPTER = 8
 MAX_CHAPTER_SHARE = 0.15
 
+# 历史题目（v1 种子）的章节名与现行规范不一致，合并时统一改名，避免同一考点被拆成两块
+CHAPTER_ALIASES = {
+    "信息化与标准化法规": "法律法规与标准规范",
+    "数字视频与压缩编码": "数字视频",
+    "多媒体项目实施": "多媒体项目实施",
+}
+
 
 def norm_stem(stem: str) -> str:
     """题干归一化：去掉空白与标点，用于跨分片查重"""
@@ -74,6 +81,10 @@ def merge(exam_id: str, exam_name: str) -> tuple[dict, dict]:
         seen_ids.add(qid)
         if stem_key:
             seen_stems[stem_key] = qid
+        chapter = str(q.get("chapter", ""))
+        if chapter in CHAPTER_ALIASES:
+            q = dict(q)
+            q["chapter"] = CHAPTER_ALIASES[chapter]
         merged.append(q)
 
     merged.sort(key=lambda x: str(x.get("id", "")))
@@ -107,7 +118,7 @@ def report(exam_id: str, stats: dict) -> bool:
     print(f"  知识点数：{stats['knowledgePoints']}")
     print(f"  章节数：{len(chapters)}")
     top = chapters.most_common(5)
-    print("  题量最多的章节：" + "，".join(f"{c}={n}" - f"({n / max(total, 1):.1%})" for c, n in top))
+    print("  题量最多的章节：" + "，".join(f"{c}={n}（{n / max(total, 1):.1%}）" for c, n in top))
 
     ok = True
     if total < MIN_PER_EXAM:

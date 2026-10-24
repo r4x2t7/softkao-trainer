@@ -4,17 +4,30 @@
 
 ## 一、贡献题目
 
-1. 认领或新建题目文件：`question-bank/<examId>/vN.json`
-   - `system-integration` → 系统集成项目管理工程师
-   - `multimedia-designer` → 多媒体应用设计师
-2. 字段规范见 [`docs/QUESTION-BANK-SCHEMA.md`](docs/QUESTION-BANK-SCHEMA.md)，**必填字段一个都不能少**
-3. 本地校验：
+题库按考试分文件存放，仓库里收录的是**合并后的版本**（`question-bank/<examId>/vN.json`）：
+
+| 考试 | 目录 | 当前版本 |
+|---|---|---|
+| 系统集成项目管理工程师 | `question-bank/system-integration/` | v2 |
+| 多媒体应用设计师 | `question-bank/multimedia-designer/` | v2 |
+
+1. 直接在对应 `vN.json` 里追加题目（字段规范见 [`docs/QUESTION-BANK-SCHEMA.md`](docs/QUESTION-BANK-SCHEMA.md)，**必填字段一个都不能少**）。
+2. 本地校验：
 
 ```bash
-python tools/validate_bank.py question-bank/system-integration/v1.json
+python tools/validate_bank.py --all
+```
+
+3. 重建索引与内置种子（App 里打包的题库）：
+
+```bash
+python tools/build_index.py
 ```
 
 4. 提 PR，说明新增题目的考点依据。
+
+> 维护者批量生产题目时会用「分片 → 合并」的方式（`tools/merge_banks.py`，分片目录不入库）；
+> 贡献者直接改 `vN.json` 即可，效果一样。
 
 ### 硬性要求
 

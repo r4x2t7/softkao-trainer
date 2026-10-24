@@ -38,6 +38,9 @@ class QuestionRepository(private val db: AppDatabase) {
     /** 关键词搜索题目 */
     fun search(keyword: String, examId: String? = null, limit: Int = 60): List<Question> =
         db.search(keyword, examId, limit)
+
+    /** 每个知识点的题量（用于专项练习入口） */
+    fun knowledgePointCounts(examId: String): Map<String, Int> = db.knowledgePointCounts(examId)
 }
 
 /**

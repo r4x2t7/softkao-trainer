@@ -225,6 +225,17 @@ class AppDatabase(context: Context) :
             m
         }
 
+    /** 每个知识点的题量 */
+    fun knowledgePointCounts(examId: String): Map<String, Int> =
+        readableDatabase.rawQuery(
+            "SELECT knowledge_point, COUNT(*) FROM questions WHERE exam_id=? GROUP BY knowledge_point ORDER BY COUNT(*) DESC",
+            arrayOf(examId)
+        ).use { c ->
+            val m = linkedMapOf<String, Int>()
+            while (c.moveToNext()) m[c.getString(0)] = c.getInt(1)
+            m
+        }
+
     /** 关键词搜索：题干 / 解析 / 知识点 / 章节 */
     fun search(keyword: String, examId: String? = null, limit: Int = 60): List<Question> {
         val kw = keyword.trim()
