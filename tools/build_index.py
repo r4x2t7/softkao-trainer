@@ -28,6 +28,7 @@ def sha256(path: Path) -> str:
 
 def main() -> int:
     SEED_DIR.mkdir(parents=True, exist_ok=True)
+    index_updated = ""
     banks = []
     for exam_id, exam_name in EXAMS.items():
         files = sorted((BANK_DIR / exam_id).glob("v*.json"))
@@ -38,6 +39,8 @@ def main() -> int:
         data = json.loads(latest.read_text(encoding="utf-8"))
         count = len(data.get("questions", []))
         rel = f"{exam_id}/{latest.name}"
+        bank_updated = str(data.get("updatedAt", ""))
+        index_updated = max(index_updated, bank_updated)
         banks.append(
             {
                 "examId": exam_id,
@@ -46,15 +49,16 @@ def main() -> int:
                 "file": rel,
                 "questionCount": count,
                 "sha256": sha256(latest),
-                "updatedAt": data.get("updatedAt", ""),
+                "updatedAt": bank_updated,
             }
         )
         # 同步到 App 内置种子
         shutil.copyfile(latest, SEED_DIR / f"{exam_id}.json")
         print(f"[ok] {rel}: {count} 题 → assets/seed/{exam_id}.json")
 
+    # updatedAt 取题库自身的时间戳，保证同样输入产出同样索引（CI 可比对）
     index = {
-        "updatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "updatedAt": index_updated or "1970-01-01T00:00:00Z",
         "banks": banks,
     }
     (BANK_DIR / "index.json").write_text(

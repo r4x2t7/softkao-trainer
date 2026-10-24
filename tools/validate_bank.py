@@ -100,7 +100,10 @@ def main(argv: list[str]) -> int:
 
     root = Path(__file__).resolve().parent.parent
     if argv[1] == "--all":
-        files = sorted(root.glob("question-bank/**/*.json"))
+        # 只校验题库文件；index.json 是索引，不参与题目校验
+        files = sorted(
+            p for p in root.glob("question-bank/*/v*.json") if p.name != "index.json"
+        )
         if not files:
             print("未找到题库文件")
             return 2
