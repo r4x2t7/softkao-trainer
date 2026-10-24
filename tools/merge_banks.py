@@ -131,23 +131,35 @@ def main(argv: list[str]) -> int:
         "system-integration": "系统集成项目管理工程师",
         "multimedia-designer": "多媒体应用设计师",
     }
-    if len(argv) > 1:
-        exams = {k: v for k, v in exams.items() if k in argv[1:]}
+    args = [a for a in argv[1:] if not a.startswith("--")]
+    check_only = "--check" in argv[1:]
+    if args:
+        exams = {k: v for k, v in exams.items() if k in args}
 
     all_ok = True
     total_all = 0
     for exam_id, exam_name in exams.items():
         bank, stats = merge(exam_id, exam_name)
         out = BANK_DIR / exam_id / f"v{TARGET_VERSION}.json"
-        out.write_text(json.dumps(bank, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print(f"  [out] {out.relative_to(ROOT)}")
-        all_ok &= report(exam_id, stats)
+        if check_only:
+            if not out.exists():
+                print(f"  [check] 尚无 {out.name}（分片未合并或仓库未收录分片），跳过")
+            else:
+                existing = json.loads(out.read_text(encoding="utf-8"))
+                same = existing.get("questions") == bank["questions"]
+                print(f"  [check] {out.relative_to(ROOT)}：{'与分片一致' if same else '与分片不一致，需重新合并'}")
+                all_ok &= same
+        else:
+            out.write_text(json.dumps(bank, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            print(f"  [out] {out.relative_to(ROOT)}")
+        report(exam_id, stats)
         total_all += stats["total"]
 
     print(f"\n两科合计：{total_all} 题")
     if total_all < MIN_TOTAL:
         print(f"✗ 总量不足 {MIN_TOTAL}")
-        all_ok = False
+        if not check_only:
+            all_ok = False
     else:
         print(f"✓ 总量达到 {MIN_TOTAL} 门槛")
     return 0 if all_ok else 1

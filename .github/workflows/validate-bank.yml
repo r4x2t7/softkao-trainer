@@ -6,6 +6,7 @@ on:
     paths:
       - 'question-bank/**'
       - 'tools/**'
+      - 'app/src/main/assets/seed/**'
       - '.github/workflows/validate-bank.yml'
   pull_request:
     paths:
@@ -22,23 +23,50 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: 校验题库 JSON
+      - name: 校验题库 JSON（字段、答案、解析长度、id 唯一）
         run: python tools/validate_bank.py --all
 
-      - name: 重建索引并检查是否一致
+      - name: 检查分片与合并结果是否一致
         run: |
-          python tools/build_index.py
-          if ! git diff --quiet -- question-bank/index.json; then
-            echo "::error::question-bank/index.json 与题库内容不一致，请运行 python tools/build_index.py 后提交"
-            git diff -- question-bank/index.json
+          set +e
+          python tools/merge_banks.py --check
+          code=$?
+          set -e
+          if [ $code -ne 0 ]; then
+            echo "::error::分片与 question-bank/*/v2.json 不一致，请运行 python tools/merge_banks.py 后提交"
             exit 1
           fi
 
-      - name: 校验种子题库与题库一致
+      - name: 重建索引与内置种子并检查是否一致
         run: |
-          for exam in system-integration multimedia-designer; do
-            if ! diff -q "question-bank/$exam/v1.json" "app/src/main/assets/seed/$exam.json"; then
-              echo "::error::$exam 内置种子与题库文件不一致，请运行 python tools/build_index.py"
-              exit 1
-            fi
-          done
+          python tools/build_index.py
+          if ! git diff --quiet -- question-bank/index.json app/src/main/assets/seed; then
+            echo "::error::index.json 或内置种子与题库不一致，请运行 python tools/build_index.py 后提交"
+            git diff -- question-bank/index.json app/src/main/assets/seed | head -60
+            exit 1
+          fi
+
+      - name: 题库规模自检
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          root = pathlib.Path('question-bank')
+          total = 0
+          has_v2 = False
+          for exam_dir in sorted(p for p in root.iterdir() if p.is_dir()):
+              files = sorted(exam_dir.glob('v*.json'))
+              if not files:
+                  continue
+              data = json.loads(files[-1].read_text(encoding='utf-8'))
+              n = len(data.get('questions', []))
+              total += n
+              if files[-1].name != 'v1.json':
+                  has_v2 = True
+              print(f"{exam_dir.name}: {n} questions ({files[-1].name})")
+          print(f"TOTAL: {total}")
+          if has_v2 and total < 2000:
+              print(f"::error::扩版后的题库总量 {total} < 2000")
+              sys.exit(1)
+          if not has_v2:
+              print("::notice::当前仍是 v1 题库，扩版进行中，规模门槛暂不强制")
+          PY
