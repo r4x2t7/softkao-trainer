@@ -120,7 +120,11 @@ def merge() -> int:
         out = BANK_DIR / exam / "materials.json"
         out.write_text(json.dumps(payload, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
         shutil.copyfile(out, SEED_DIR / f"{exam}.json")
-        print(f"[{exam}] 合并 {len(chapters)} 章资料 → materials.json + assets/materials/{exam}.json")
+        # 同时放到 question-bank/materials/<examId>.json，与 App 更新通道的拉取路径一致
+        pub_dir = BANK_DIR / "materials"
+        pub_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(out, pub_dir / f"{exam}.json")
+        print(f"[{exam}] 合并 {len(chapters)} 章资料 → materials.json + assets/materials/{exam}.json + question-bank/materials/{exam}.json")
     return 0
 
 
