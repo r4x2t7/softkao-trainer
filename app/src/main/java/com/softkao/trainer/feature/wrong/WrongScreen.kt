@@ -50,7 +50,7 @@ import java.util.Locale
 class WrongViewModel : ViewModel() {
 
     data class Item(
-        val entry: WrongEntry,
+        val entry: WrongEntry?,
         val question: Question?,
     )
 
@@ -60,6 +60,9 @@ class WrongViewModel : ViewModel() {
         val dueCount: Int = 0,
         val filter: Mastery? = null,
         val examFilter: ExamId? = null,
+        val bookmarkFilter: Boolean = false,
+        val bookmarkCount: Int = 0,
+        val bookmarkItems: List<Item> = emptyList(),
         val byKnowledge: Map<String, Int> = emptyMap(),
     )
 
@@ -83,17 +86,34 @@ class WrongViewModel : ViewModel() {
                             .map { (kpName, group) -> "$examId · $kpName" to group.size }
                     }
                     .toMap()
-                Triple(items, kp, practice.dueWrongEntries().size)
+                val bookmarks = practice.bookmarkedIds()
+                val bookmarkItems = bookmarks.map { Item(null, repo.byId(it)) }
+                Quad(items, kp, practice.dueWrongEntries().size, bookmarkItems)
             }
-            val (items, kp, due) = loaded
+            val (items, kp, due, bookmarkItems) = loaded
             _state.value = _state.value.copy(
                 loading = false,
                 items = items,
                 byKnowledge = kp,
                 dueCount = due,
+                bookmarkCount = bookmarkItems.size,
+                bookmarkItems = bookmarkItems,
             )
         }
     }
+
+    private data class Quad(
+        val a: List<Item>,
+        val b: Map<String, Int>,
+        val c: Int,
+        val d: List<Item>,
+    )
+
+    fun setBookmarkFilter(enabled: Boolean) {
+        _state.value = _state.value.copy(bookmarkFilter = enabled, filter = null)
+    }
+
+    fun toggleBookmarkFilter() = setBookmarkFilter(!_state.value.bookmarkFilter)
 
     fun setFilter(mastery: Mastery?) {
         _state.value = _state.value.copy(filter = mastery)
@@ -105,9 +125,12 @@ class WrongViewModel : ViewModel() {
 
     fun visibleItems(): List<Item> {
         val s = _state.value
+        if (s.bookmarkFilter) {
+            return s.bookmarkItems.filter { s.examFilter == null || it.question?.examId == s.examFilter.id }
+        }
         return s.items.filter { item ->
-            (s.filter == null || item.entry.mastery == s.filter) &&
-                (s.examFilter == null || item.entry.examId == s.examFilter.id)
+            (s.filter == null || item.entry?.mastery == s.filter) &&
+                (s.examFilter == null || item.entry?.examId == s.examFilter.id)
         }
     }
 }
@@ -141,11 +164,12 @@ fun WrongScreen(
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     StatTile("错题", "${state.items.size}", modifier = Modifier.weight(1f))
                     StatTile("待复习", "${state.dueCount}", modifier = Modifier.weight(1f))
-                    StatTile("已掌握", "${state.items.count { it.entry.mastery == Mastery.MASTERED }}", modifier = Modifier.weight(1f))
+                    StatTile("已掌握", "${state.items.count { it.entry?.mastery == Mastery.MASTERED }}", modifier = Modifier.weight(1f))
                 }
                 Spacer(Modifier.height(12.dp))
-                val dueIds = state.items.filter { it.entry.nextReviewAt <= System.currentTimeMillis() }
-                    .joinToString(",") { it.entry.questionId }
+                val dueIds = state.items.filter { (it.entry?.nextReviewAt ?: 0L) <= System.currentTimeMillis() }
+                    .mapNotNull { it.entry?.questionId }
+                    .joinToString(",")
                 Button(
                     onClick = {
                         onStartPractice(
@@ -164,7 +188,14 @@ fun WrongScreen(
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 item {
                     FilterChip(
-                        selected = state.filter == null,
+                        selected = state.bookmarkFilter,
+                        onClick = { viewModel.toggleBookmarkFilter() },
+                        label = { Text("★ 收藏 (${state.bookmarkCount})") },
+                    )
+                }
+                item {
+                    FilterChip(
+                        selected = state.filter == null && !state.bookmarkFilter,
                         onClick = { viewModel.setFilter(null) },
                         label = { Text("全部") },
                     )
@@ -214,8 +245,9 @@ fun WrongScreen(
             }
         }
 
-        items(items, key = { it.entry.questionId }) { item ->
+        items(items, key = { it.entry?.questionId ?: it.question?.id ?: "" }) { item ->
             val q = item.question
+            val entry = item.entry
             Card(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
@@ -223,8 +255,12 @@ fun WrongScreen(
             ) {
                 Column(Modifier.padding(14.dp)) {
                     Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-                        TagChip(item.entry.mastery.label)
-                        TagChip("错 ${item.entry.wrongCount} 次", MaterialTheme.colorScheme.errorContainer, MaterialTheme.colorScheme.onErrorContainer)
+                        if (entry != null) {
+                            TagChip(entry.mastery.label)
+                            TagChip("错 ${entry.wrongCount} 次", MaterialTheme.colorScheme.errorContainer, MaterialTheme.colorScheme.onErrorContainer)
+                        } else {
+                            TagChip("★ 收藏", MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.onTertiaryContainer)
+                        }
                         q?.let {
                             TagChip(it.knowledgePoint, MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.onSecondaryContainer)
                         }
@@ -241,13 +277,17 @@ fun WrongScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            "下次复习 ${formatDate(item.entry.nextReviewAt)}",
+                            if (entry != null) "下次复习 ${formatDate(entry.nextReviewAt)}" else "已收藏题目",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         OutlinedButton(
                             onClick = {
-                                onStartPractice(item.entry.examId, PracticeMode.WRONG, item.entry.questionId)
+                                val targetId = entry?.questionId ?: q?.id
+                                val targetExam = entry?.examId ?: q?.examId
+                                if (targetId != null && targetExam != null) {
+                                    onStartPractice(targetExam, PracticeMode.WRONG, targetId)
+                                }
                             },
                         ) { Text("重做") }
                     }
