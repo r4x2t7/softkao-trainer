@@ -92,11 +92,25 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       # ubuntu-latest 自带 Android SDK（ANDROID_HOME 已设），只补缺的包。
-      # 不要用 android-actions/setup-android：新版 runner 上它会去装 tools 包并失败。
+      # 不要用 android-actions/setup-android：新版 runner 上它会去装 tools 包并失败；
+      # 而且新版镜像里 sdkmanager 未必在 PATH 上，得自己找。
       - name: 安装所需 Android SDK
         run: |
-          yes | sdkmanager --licenses > /dev/null 2>&1 || true
-          sdkmanager "platforms;android-36" "build-tools;36.0.0" "platform-tools"
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          ls -1 "$ANDROID_HOME" 2>/dev/null || true
+          SDKMANAGER="$(ls -d "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager 2>/dev/null | head -n1 || true)"
+          if [ -z "$SDKMANAGER" ]; then
+            SDKMANAGER="$(command -v sdkmanager 2>/dev/null || true)"
+          fi
+          if [ -n "$SDKMANAGER" ]; then
+            echo "使用 $SDKMANAGER"
+            yes | "$SDKMANAGER" --licenses > /dev/null 2>&1 || true
+            "$SDKMANAGER" "platforms;android-36" "build-tools;36.0.0" "platform-tools" || \
+              echo "补装失败，继续用 runner 预装的版本"
+          else
+            echo "找不到 sdkmanager，直接用 runner 预装的 SDK"
+          fi
+          ls -1 "$ANDROID_HOME/platforms" 2>/dev/null || true
 
       - name: 跑单元测试与 Compose 界面测试
         run: ./gradlew testDebugUnitTest --console=plain
