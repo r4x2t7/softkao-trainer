@@ -12,7 +12,7 @@ captures/
 
 # 工具日志
 .tooling-install.log
-.gh-auth.log
+.gh-auth*.log
 
 # 本地密钥与配置
 secrets.properties
