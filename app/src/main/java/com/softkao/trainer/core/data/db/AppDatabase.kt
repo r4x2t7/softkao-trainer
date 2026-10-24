@@ -247,6 +247,22 @@ class AppDatabase(context: Context) :
             m
         }
 
+    /** 章节 → 该章的知识点 → 题量 */
+    fun knowledgePointsByChapter(examId: String): Map<String, Map<String, Int>> =
+        readableDatabase.rawQuery(
+            "SELECT chapter, knowledge_point, COUNT(*) FROM questions WHERE exam_id=? GROUP BY chapter, knowledge_point",
+            arrayOf(examId)
+        ).use { c ->
+            val out = linkedMapOf<String, MutableMap<String, Int>>()
+            while (c.moveToNext()) {
+                val chapter = c.getString(0)
+                val point = c.getString(1)
+                val count = c.getInt(2)
+                out.getOrPut(chapter) { linkedMapOf() }[point] = count
+            }
+            out
+        }
+
     /** 每个知识点的题量 */
     fun knowledgePointCounts(examId: String): Map<String, Int> =        readableDatabase.rawQuery(
             "SELECT knowledge_point, COUNT(*) FROM questions WHERE exam_id=? GROUP BY knowledge_point ORDER BY COUNT(*) DESC",

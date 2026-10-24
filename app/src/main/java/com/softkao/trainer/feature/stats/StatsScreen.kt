@@ -55,6 +55,8 @@ class StatsViewModel : ViewModel() {
         val trend: List<Pair<String, Pair<Int, Int>>> = emptyList(),
         val knowledge: List<Triple<String, Int, Int>> = emptyList(),
         val examOverview: List<Pair<ExamId, Pair<Int, Int>>> = emptyList(),
+        /** 用户是否已经手动选过科目；用来避免初始化时被异步读取覆盖 */
+        val touched: Boolean = false,
     )
 
     private val _state = MutableStateFlow(State())
@@ -63,14 +65,22 @@ class StatsViewModel : ViewModel() {
     init {
         refresh()
         viewModelScope.launch {
-            // 默认跟随当前科目
-            val current = ServiceLocator.settingsRepository.currentExamId.first()
-            ExamId.fromId(current)?.let { selectExam(it) }
+            // 统计页的科目是本页自己的作用域，跟其它页面互不影响
+            val saved = ServiceLocator.settingsRepository.currentExamId.first()
+            ExamId.fromId(saved)?.let { exam ->
+                if (!_state.value.touched) {
+                    _state.value = _state.value.copy(exam = exam)
+                    refresh()
+                }
+            }
         }
     }
 
     fun selectExam(exam: ExamId) {
-        _state.value = _state.value.copy(exam = exam)
+        _state.value = _state.value.copy(exam = exam, touched = true)
+        viewModelScope.launch {
+            ServiceLocator.settingsRepository.setCurrentExamId(exam.id)
+        }
         refresh()
     }
 
@@ -127,6 +137,12 @@ fun StatsScreen(viewModel: StatsViewModel = viewModel()) {
         }
 
         item {
+            Text(
+                "统计科目（本页独立选择，不影响其它页面）",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(4.dp))
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(ExamId.entries) { exam ->
                     FilterChip(
@@ -150,7 +166,7 @@ fun StatsScreen(viewModel: StatsViewModel = viewModel()) {
         }
 
         item {
-            SectionCard(title = "近 7 天做题量") {
+            SectionCard(title = "近 7 天做题量（两科合计）") {
                 val max = state.trend.maxOfOrNull { it.second.first }?.coerceAtLeast(1) ?: 1
                 Row(
                     Modifier.fillMaxWidth(),

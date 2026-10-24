@@ -53,7 +53,8 @@ class BankViewModel : ViewModel() {
         val message: String? = null,
         val busy: Boolean = false,
         val aiMessage: String? = null,
-        val currentExamId: String = com.softkao.trainer.core.model.ExamId.SYSTEM_INTEGRATION.id,
+        /** 本页操作的科目，独立于其它页面 */
+        val examId: String = com.softkao.trainer.core.model.ExamId.SYSTEM_INTEGRATION.id,
     )
 
     private val _state = MutableStateFlow(State())
@@ -68,17 +69,17 @@ class BankViewModel : ViewModel() {
                 aiApiKey = settings.aiApiKey.first(),
                 aiModel = settings.aiModel.first(),
                 dailyGoal = settings.dailyGoal.first().toString(),
-                currentExamId = settings.currentExamId.first(),
+                examId = settings.currentExamId.first(),
             )
             refreshVersions()
         }
     }
 
-    /** 切换当前科目（一个人通常只考一门） */
-    fun setCurrentExam(id: String) {
+    /** 切换本页操作的科目，只写本页自己的作用域 */
+    fun setExamId(id: String) {
         viewModelScope.launch {
             ServiceLocator.settingsRepository.setCurrentExamId(id)
-            _state.value = _state.value.copy(currentExamId = id, message = "当前科目已切换")
+            _state.value = _state.value.copy(examId = id, message = "本页科目已切换")
         }
     }
 
@@ -175,9 +176,9 @@ fun BankScreen(viewModel: BankViewModel = viewModel()) {
         }
 
         item {
-            com.softkao.trainer.feature.common.SectionCard(title = "学习科目") {
+            com.softkao.trainer.feature.common.SectionCard(title = "本页操作科目") {
                 Text(
-                    "一个人通常只考一门科目，选定后首页、错题本、统计都会默认跟随它",
+                    "只作用于本页。首页、知识点、错题本、统计各自独立选择科目，改这里不会动到它们。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -185,8 +186,8 @@ fun BankScreen(viewModel: BankViewModel = viewModel()) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     com.softkao.trainer.core.model.ExamId.entries.forEach { exam ->
                         FilterChip(
-                            selected = state.currentExamId == exam.id,
-                            onClick = { viewModel.setCurrentExam(exam.id) },
+                            selected = state.examId == exam.id,
+                            onClick = { viewModel.setExamId(exam.id) },
                             label = {
                                 Text(
                                     exam.shortName,
@@ -238,13 +239,28 @@ fun BankScreen(viewModel: BankViewModel = viewModel()) {
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 } else {
-                    state.versions.forEach { v ->
-                        Row(
-                            Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                        ) {
+                    val selected = state.versions.firstOrNull { it.examId == state.examId }
+                    val others = state.versions.filter { it.examId != state.examId }
+                    if (selected != null) {
+                        Row(Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween) {
+                            Text("▶ ${selected.examId}", style = MaterialTheme.typography.bodyMedium)
+                            Text(
+                                "v${selected.version} · ${selected.questionCount} 题",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
+                    others.forEach { v ->
+                        Row(Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween) {
                             Text(v.examId, style = MaterialTheme.typography.bodyMedium)
-                            Text("v${v.version} · ${v.questionCount} 题", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(
+                                "v${v.version} · ${v.questionCount} 题",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
                         }
                     }
                 }

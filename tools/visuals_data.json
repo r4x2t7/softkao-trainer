@@ -1,0 +1,975 @@
+{
+ "visuals": [
+  {
+   "id": "si-osi-layers",
+   "examId": "system-integration",
+   "chapter": "信息化常识",
+   "title": "OSI 七层 ↔ TCP/IP 四层",
+   "archetype": "layers",
+   "caption": "上三层（会话、表示、应用）并入应用层；物理层与数据链路层合成网络接口层。",
+   "tags": ["高频", "对比"],
+   "items": [
+    {"label": "应用层", "note": "HTTP / FTP / DNS（TCP/IP 把会话+表示并入）", "accent": 0},
+    {"label": "传输层", "note": "TCP 可靠传输 / UDP 尽最大努力", "accent": 1},
+    {"label": "网络层", "note": "IP 寻址路由，对应网际层", "accent": 2},
+    {"label": "网络接口层", "note": "物理层 + 数据链路层（以太网、MAC）", "accent": 3}
+   ]
+  },
+  {
+   "id": "si-security-map",
+   "examId": "system-integration",
+   "chapter": "信息安全",
+   "title": "信息安全知识地图",
+   "archetype": "map",
+   "caption": "以 CIA 三属性为轴，向外辐射技术、等级保护、管理与法律四块。",
+   "tags": ["高频"],
+   "center": "信息安全",
+   "spokes": [
+    {"label": "CIA 三属性", "note": "保密性、完整性、可用性", "accent": 0},
+    {"label": "等级保护", "note": "五级：用户自主→第三级", "accent": 1},
+    {"label": "加密技术", "note": "对称 / 非对称 / 摘要", "accent": 2},
+    {"label": "认证与访问控制", "note": "身份鉴别 + 权限矩阵", "accent": 3},
+    {"label": "安全审计", "note": "日志留存与不可否认", "accent": 4},
+    {"label": "备份与恢复", "note": "RTO / RPO 指标", "accent": 5}
+   ]
+  },
+  {
+   "id": "si-initiating-flow",
+   "examId": "system-integration",
+   "chapter": "启动过程组",
+   "title": "启动过程组：从立项到章程",
+   "archetype": "flow",
+   "caption": "启动是唯一被授权把组织资源投入项目的过程组，输出项目章程。",
+   "tags": ["高频", "流程"],
+   "steps": [
+    {"label": "立项", "note": "识别需求与机会", "accent": 0},
+    {"label": "可行性研究", "note": "技术 / 经济 / 进度", "accent": 1},
+    {"label": "需求与约束", "note": "明确干系人期望", "accent": 2},
+    {"label": "项目章程", "note": "高层授权文件", "accent": 3},
+    {"label": "启动会议", "note": "任命项目经理", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-team-cycle",
+   "examId": "system-integration",
+   "chapter": "团队发展与冲突管理",
+   "title": "塔克曼阶梯与冲突处理闭环",
+   "archetype": "cycle",
+   "caption": "团队发展经历形成、震荡、规范、成熟、执行、解散；冲突按五步法闭环处理。",
+   "tags": ["高频"],
+   "center": "团队发展",
+   "items": [
+    {"label": "形成期", "note": "礼貌、试探、依赖项目经理", "accent": 0},
+    {"label": "震荡期", "note": "冲突爆发，分工摩擦", "accent": 3},
+    {"label": "规范期", "note": "默契形成，凝聚增强", "accent": 1},
+    {"label": "成熟期", "note": "高效产出，授权充分", "accent": 2},
+    {"label": "执行期", "note": "绩效评审与激励", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-total-float-formula",
+   "examId": "system-integration",
+   "chapter": "总时差与自由时差",
+   "title": "总时差 TF 与自由时差 FF",
+   "archetype": "formula",
+   "caption": "关键路径上所有活动 TF = 0；FF 决定活动最早能拖多久而不推迟后续活动。",
+   "tags": ["计算", "高频"],
+   "formula": "TF = LS − ES = LF − EF",
+   "note": "自由时差 FF = ES(紧后) − EF(本活动)，FF ≤ TF 且二者均为 0 时活动在关键路径上。",
+   "terms": [
+    {"symbol": "TF", "meaning": "总时差，不影响项目总工期可拖延的时间"},
+    {"symbol": "LS / ES", "meaning": "最晚 / 最早开始时间"},
+    {"symbol": "LF / EF", "meaning": "最晚 / 最早完成时间"},
+    {"symbol": "FF", "meaning": "自由时差，不影响紧后活动最早开始"}
+   ]
+  },
+  {
+   "id": "si-closing-flow",
+   "examId": "system-integration",
+   "chapter": "收尾过程组",
+   "title": "收尾过程组：把项目正式关闭",
+   "archetype": "flow",
+   "caption": "收尾先做采购收尾与合同收尾，再做行政收尾与经验教训总结，最后移交成果。",
+   "tags": ["流程"],
+   "steps": [
+    {"label": "采购收尾", "note": "验收货物、结清尾款", "accent": 0},
+    {"label": "合同收尾", "note": "关闭剩余争议与索赔", "accent": 1},
+    {"label": "行政收尾", "note": "归档、释放资源", "accent": 2},
+    {"label": "经验教训", "note": "总结后进组织过程资产", "accent": 3},
+    {"label": "项目移交", "note": "成果移交运营", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-emerging-map",
+   "examId": "system-integration",
+   "chapter": "新兴技术",
+   "title": "新兴技术选型版图",
+   "archetype": "map",
+   "caption": "以「数据—算力—连接—应用」四条主线记忆新兴技术。",
+   "tags": ["串联"],
+   "center": "新兴技术",
+   "spokes": [
+    {"label": "云计算", "note": "IaaS / PaaS / SaaS", "accent": 0},
+    {"label": "大数据", "note": "Hadoop / Spark / 湖仓", "accent": 1},
+    {"label": "物联网", "note": "感知 / 网络 / 应用三层", "accent": 2},
+    {"label": "人工智能", "note": "机器学习 / 深度学习", "accent": 3},
+    {"label": "区块链", "note": "去中心化 + 不可篡改", "accent": 4},
+    {"label": "新型基础设施", "note": "信息基础设施为主", "accent": 5}
+   ]
+  },
+  {
+   "id": "si-law-layers",
+   "examId": "system-integration",
+   "chapter": "法律法规与标准规范",
+   "title": "我国法律层级与标准规范",
+   "archetype": "layers",
+   "caption": "上位法优于下位法：宪法 > 法律 > 行政法规 > 部门规章 > 地方性法规；标准分国标、行标、企标。",
+   "tags": ["高频", "记忆"],
+   "items": [
+    {"label": "宪法", "note": "最高法律效力", "accent": 0},
+    {"label": "法律", "note": "全国人大及常委会制定", "accent": 1},
+    {"label": "行政法规", "note": "国务院制定", "accent": 2},
+    {"label": "部门规章", "note": "国务院部委制定", "accent": 3},
+    {"label": "地方性法规 / 标准", "note": "省市人大 · 国标行标企标", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-estimating-compare",
+   "examId": "system-integration",
+   "chapter": "活动历时估算",
+   "title": "四种活动历时估算方法",
+   "archetype": "compare",
+   "caption": "类比法最快最粗糙，自下而上最准最费时，三点估算用概率分布收敛期望值。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "类比估算", "items": ["参照同类历史项目", "速度快、成本低", "准确度最低", "适合早期粗估"], "accent": 0},
+    {"title": "参数估算", "items": ["用统计参数与历史数据", "依赖已有数据库", "可重复、可校准"], "accent": 1},
+    {"title": "自下而上", "items": ["先估活动再汇总", "准确度最高", "耗时与成本最高"], "accent": 2},
+    {"title": "三点估算", "items": ["O 最乐观 / M 最可能 / P 最悲观", "PERT：加权期望值", "分布呈概率化"], "accent": 3}
+   ]
+  },
+  {
+   "id": "si-milestone-timeline",
+   "examId": "system-integration",
+   "chapter": "活动定义与里程碑",
+   "title": "里程碑：零工期、零成本、零资源",
+   "archetype": "timeline",
+   "caption": "里程碑是关键路径上的重要时点，用于检查与决策，本身不消耗时间与成本。",
+   "tags": ["高频"],
+   "milestones": [
+    {"label": "项目启动", "note": "章程发布", "accent": 0},
+    {"label": "需求确认", "note": "需求基线", "accent": 1},
+    {"label": "设计评审", "note": "方案通过", "accent": 2},
+    {"label": "开发完成", "note": "代码冻结", "accent": 3},
+    {"label": "验收移交", "note": "正式移交", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-network-aon",
+   "examId": "system-integration",
+   "chapter": "活动排序与网络图绘制",
+   "title": "AON 网络图：活动在节点上",
+   "archetype": "network",
+   "caption": "AON 把活动画成节点、依赖画成箭头；AOA 把活动画在箭线上，绘制时必须处理虚拟活动。",
+   "tags": ["高频", "图形"],
+   "nodes": [
+    {"id": "a", "label": "活动 A", "x": 0.18, "y": 0.12, "note": "工期 3"},
+    {"id": "b", "label": "活动 B", "x": 0.55, "y": 0.12, "note": "工期 5"},
+    {"id": "c", "label": "活动 C", "x": 0.85, "y": 0.42, "note": "工期 2"},
+    {"id": "d", "label": "活动 D", "x": 0.5, "y": 0.72, "note": "工期 4"},
+    {"id": "e", "label": "活动 E", "x": 0.15, "y": 0.72, "note": "工期 6"},
+    {"id": "f", "label": "活动 F", "x": 0.5, "y": 0.28, "note": "终点", "accent": 4}
+   ],
+   "edges": [["a", "b", ""], ["a", "d", ""], ["b", "c", ""], ["b", "f", ""], ["c", "f", ""], ["d", "f", ""], ["e", "d", ""]]
+  },
+  {
+   "id": "si-ethics-compare",
+   "examId": "system-integration",
+   "chapter": "职业道德",
+   "title": "职业道德规范要点对照",
+   "archetype": "compare",
+   "caption": "爱岗敬业是本质要求，诚实守信是基本准则，办事公道与Service群众是行为准则。",
+   "tags": ["记忆"],
+   "columns": [
+    {"title": "基本准则", "items": ["爱岗敬业：本质要求", "诚实守信：基本准则", "办事公道", "服务群众"], "accent": 0},
+    {"title": "主要内容", "items": ["忠于职守、勤奋工作", "爱岗敬业、乐于奉献", "尊重服务对象", "保守秘密与信誉"], "accent": 1},
+    {"title": "底线红线", "items": ["不做虚假承诺", "不接受商业贿赂", "不泄露项目资料", "不与甲方串通"], "accent": 3}
+   ]
+  },
+  {
+   "id": "si-quality-cost-matrix",
+   "examId": "system-integration",
+   "chapter": "质量工具与质量成本",
+   "title": "质量成本四象限",
+   "archetype": "matrix",
+   "caption": "预防成本与内部失败成本是「一致性成本」，外部失败成本是「不一致性成本」，后者代价最大。",
+   "tags": ["高频", "计算"],
+   "xAxis": ["内部失败成本", "外部失败成本"],
+   "yAxis": ["预防 / 内部", "预防 / 外部"],
+   "xTitle": "失败成本 →",
+   "yTitle": "预防投入 ↑",
+   "cells": [
+    {"row": 0, "col": 0, "title": "预防 + 内部失败", "items": ["培训、评审、测试", "边做边改，代价可控"]},
+    {"row": 0, "col": 1, "title": "外部失败", "items": ["保修、召回、索赔", "代价最高，须避免"]},
+    {"row": 1, "col": 0, "title": "预防不足", "items": ["内部缺陷漏检", "内部失败成本上升"]},
+    {"row": 1, "col": 1, "title": "质量事故", "items": ["信誉受损", "重大索赔与停工"]}
+   ]
+  },
+  {
+   "id": "si-resource-compare",
+   "examId": "system-integration",
+   "chapter": "资源平衡与资源平滑",
+   "title": "资源平衡 vs 资源平滑",
+   "archetype": "compare",
+   "caption": "平衡会改变关键路径（工期可能变长），平滑只调整浮动时间内的时序（工期不变）。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "资源平衡", "items": ["解决资源超限", "改变活动时序", "可能延长工期", "关键路径可能改变"], "accent": 3},
+    {"title": "资源平滑", "items": ["利用总时差调整", "不改变关键路径", "不改变工期", "仍可能资源超限"], "accent": 1},
+    {"title": "共同点", "items": ["都需要资源可用性数据", "都属进度控制手段", "都会影响团队负荷"], "accent": 0}
+   ]
+  },
+  {
+   "id": "si-crashing-compare",
+   "examId": "system-integration",
+   "chapter": "进度压缩",
+   "title": "赶工 vs 快速跟进",
+   "archetype": "compare",
+   "caption": "赶工加钱加人被质疑，快速跟进并行加风险被质疑；两者都只缩短关键路径。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "赶工 Crashing", "items": ["增加资源、投入资金", "用成本换时间", "风险：成本超支", "适用于关键活动"], "accent": 3},
+    {"title": "快速跟进 Fast Track", "items": ["把串行改并行", "用风险换时间", "风险：返工与缺陷", "只做有依赖关系的活动"], "accent": 4},
+    {"title": "共同点", "items": ["只压缩关键路径", "增加成本或风险", "需评估变更影响"], "accent": 0}
+   ]
+  },
+  {
+   "id": "si-eva-formula",
+   "examId": "system-integration",
+   "chapter": "进度控制与进度成本",
+   "title": "挣值管理：偏差与指数",
+   "archetype": "formula",
+   "caption": "偏差是绝对差，指数是比值；CV/SV < 0 或 CPI/SPI < 1 都代表不利。",
+   "tags": ["计算", "高频"],
+   "formula": "CV = EV − AC　　CPI = EV / AC",
+   "note": "SV = EV − PV，SPI = EV / PV。CV 或 SV 为负表示不利；CPI 或 SPI 小于 1 表示效率低于计划。",
+   "terms": [
+    {"symbol": "EV", "meaning": "已完工作的预算价值"},
+    {"symbol": "AC", "meaning": "已完成工作的实际成本"},
+    {"symbol": "PV", "meaning": "计划工作预算成本"},
+    {"symbol": "CPI / SPI", "meaning": "成本 / 进度绩效指数"}
+   ]
+  },
+  {
+   "id": "si-cpm-network",
+   "examId": "system-integration",
+   "chapter": "进度网络图与关键路径法",
+   "title": "关键路径法 CPM",
+   "archetype": "network",
+   "caption": "总工期最长的一条路径为关键路径，其上活动总时差为 0；关键路径可能不止一条。",
+   "tags": ["高频", "图形"],
+   "nodes": [
+    {"id": "s", "label": "开始", "x": 0.1, "y": 0.35, "accent": 4},
+    {"id": "a", "label": "活动 A", "x": 0.32, "y": 0.12, "note": "3"},
+    {"id": "b", "label": "活动 B", "x": 0.32, "y": 0.62, "note": "2"},
+    {"id": "c", "label": "活动 C", "x": 0.58, "y": 0.12, "note": "4"},
+    {"id": "d", "label": "活动 D", "x": 0.58, "y": 0.62, "note": "5"},
+    {"id": "e", "label": "活动 E", "x": 0.83, "y": 0.35, "note": "2"},
+    {"id": "f", "label": "完成", "x": 0.97, "y": 0.35, "accent": 4}
+   ],
+   "edges": [["s", "a", ""], ["s", "b", ""], ["a", "c", "关键"], ["b", "d", ""], ["c", "e", "关键"], ["d", "e", ""], ["e", "f", ""]]
+  },
+  {
+   "id": "si-change-flow",
+   "examId": "system-integration",
+   "chapter": "配置审计与变更控制",
+   "title": "变更控制流程",
+   "archetype": "flow",
+   "caption": "变更必须书面提出、评估影响、CCB 审批、实施并验证，最后更新基准与配置记录。",
+   "tags": ["高频", "流程"],
+   "steps": [
+    {"label": "提出变更", "note": "书面变更申请", "accent": 0},
+    {"label": "影响分析", "note": "范围/进度/成本/质量", "accent": 1},
+    {"label": "CCB 审批", "note": "变更控制委员会", "accent": 2},
+    {"label": "批准实施", "note": "下达变更令", "accent": 3},
+    {"label": "验证归档", "note": "更新基准与记录", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-requirement-flow",
+   "examId": "system-integration",
+   "chapter": "需求管理",
+   "title": "需求管理生命周期",
+   "archetype": "flow",
+   "caption": "从收集到确认再到持续管理，需求跟踪贯穿全生命周期形成需求基线。",
+   "tags": ["高频", "流程"],
+   "steps": [
+    {"label": "需求收集", "note": "访谈、问卷、观察", "accent": 0},
+    {"label": "需求分析", "note": "建模、优先级排序", "accent": 1},
+    {"label": "需求规格", "note": "SRS 文档", "accent": 2},
+    {"label": "需求验证", "note": "评审与原型确认", "accent": 3},
+    {"label": "需求跟踪", "note": "变更与基线管理", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-hr-map",
+   "examId": "system-integration",
+   "chapter": "项目人力资源管理",
+   "title": "人力资源管理工具箱",
+   "archetype": "map",
+   "caption": "四个过程对应四类工具：规划靠表格，规划实施靠虚拟团队，团队建设靠激励，管理靠冲突处理。",
+   "tags": ["串联"],
+   "center": "人力管理",
+   "spokes": [
+    {"label": "规划人力资源", "note": "RACI / WBS 词典", "accent": 0},
+    {"label": "组建团队", "note": "虚拟团队、虚拟办公室", "accent": 1},
+    {"label": "管理团队", "note": "激励、冲突解决", "accent": 2},
+    {"label": "RACI 矩阵", "note": "谁负责/谁批准", "accent": 3},
+    {"label": "人员配备", "note": "资源日历、瓶颈分析", "accent": 4},
+    {"label": "绩效评价", "note": "360 度、关键绩效", "accent": 5}
+   ]
+  },
+  {
+   "id": "si-contract-compare",
+   "examId": "system-integration",
+   "chapter": "项目合同管理",
+   "title": "合同类型与风险承担",
+   "archetype": "compare",
+   "caption": "固定总价把成本风险给卖方，可调总价共享风险，成本加成本酬金卖方风险最小。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "固定总价", "items": ["范围明确、价格固定", "卖方承担成本风险", "买方变更需另签", "适合需求清晰"], "accent": 0},
+    {"title": "可调总价", "items": ["设调价条款", "如汇率、物价变动", "风险双方分担", "适合长期合同"], "accent": 1},
+    {"title": "成本加成本酬金", "items": ["实报实销 + 酬金", "卖方风险最小", "买方成本不可控", "适合研发类"], "accent": 3},
+    {"title": "总价加激励", "items": ["共享节约与收益", "成本上限受控", "需测算激励比例"], "accent": 2}
+   ]
+  },
+  {
+   "id": "si-stakeholder-matrix",
+   "examId": "system-integration",
+   "chapter": "项目干系人管理",
+   "title": "权力 / 利益矩阵",
+   "archetype": "matrix",
+   "caption": "高权力高利益重点管理，高权力低利益令其满意，低权力高利益随时告知，低权力低利益监督即可。",
+   "tags": ["高频", "图表"],
+   "xAxis": ["低权力", "高权力"],
+   "yAxis": ["低利益", "高利益"],
+   "xTitle": "权力 →",
+   "yTitle": "利益 ↑",
+   "cells": [
+    {"row": 0, "col": 0, "title": "监督", "items": ["保持最小努力", "定期检查"], "accent": 5},
+    {"row": 0, "col": 1, "title": "令其满意", "items": ["高层、监管方", "重点安抚"], "accent": 1},
+    {"row": 1, "col": 0, "title": "随时告知", "items": ["用户、一线部门", "提供信息"], "accent": 2},
+    {"row": 1, "col": 1, "title": "重点管理", "items": ["项目发起人、客户", "密切参与"], "accent": 0}
+   ]
+  },
+  {
+   "id": "si-cost-formula",
+   "examId": "system-integration",
+   "chapter": "项目成本管理",
+   "title": "成本类型与挣值公式",
+   "archetype": "formula",
+   "caption": "可追溯成本要分摊，不一定等于项目成本；完工估算 EAC 分已完工与未完工两段。",
+   "tags": ["计算", "高频"],
+   "formula": "EAC = AC + (BAC − EV)",
+   "note": "若成本偏差为负且预计继续恶化，EAC = BAC / CPI；ETC = EAC − AC。",
+   "terms": [
+    {"symbol": "BAC", "meaning": "完工预算（全部工作预算成本）"},
+    {"symbol": "EV / AC", "meaning": "已完工作预算价值 / 实际成本"},
+    {"symbol": "EAC", "meaning": "完工估算，预计总花费"},
+    {"symbol": "ETC", "meaning": "完工尚需估算"}
+   ]
+  },
+  {
+   "id": "si-integrated-flow",
+   "examId": "system-integration",
+   "chapter": "项目整体管理",
+   "title": "整体变更控制：项目的总闸门",
+   "archetype": "flow",
+   "caption": "所有变更请求汇总到整体变更控制，评估后决定批准、否决或推迟。",
+   "tags": ["流程"],
+   "steps": [
+    {"label": "提出变更请求", "note": "任一干系人可提出", "accent": 0},
+    {"label": "综合评估", "note": "对整体项目影响", "accent": 1},
+    {"label": "批准或否决", "note": "CCB / 项目经理", "accent": 2},
+    {"label": "组织实施", "note": "更新基准与计划", "accent": 3},
+    {"label": "监督与收尾", "note": "归档并总结", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-communication-formula",
+   "examId": "system-integration",
+   "chapter": "项目沟通管理",
+   "title": "沟通渠道数公式",
+   "archetype": "formula",
+   "caption": "n 个干系人的潜在沟通渠道是 n(n−1)/2；人数翻倍，渠道数约变成 4 倍。",
+   "tags": ["计算", "高频"],
+   "formula": "沟通渠道数 = n × (n − 1) ÷ 2",
+   "note": "5 人 = 10 条渠道，10 人 = 45 条，20 人 = 190 条。这是「沟通成本指数级上升」的数学解释。",
+   "terms": [
+    {"symbol": "n", "meaning": "参与沟通的干系人数量"},
+    {"symbol": "n(n−1)/2", "meaning": "潜在沟通渠道数"},
+    {"symbol": "2 人", "meaning": "只有 1 条渠道"},
+    {"symbol": "10 人", "meaning": "45 条渠道"}
+   ]
+  },
+  {
+   "id": "si-pm-layers",
+   "examId": "system-integration",
+   "chapter": "项目管理概论",
+   "title": "项目管理知识体系层次",
+   "archetype": "layers",
+   "caption": "项目管理是「规划、组织、协调、控制」的过程；十大知识领域是答题的骨架。",
+   "tags": ["串联"],
+   "items": [
+    {"label": "项目整体管理", "note": "章程、范围基准、整体变更控制", "accent": 0},
+    {"label": "范围 / 进度 / 成本", "note": "三大基准与挣值", "accent": 1},
+    {"label": "质量 / 资源 / 沟通", "note": "质量工具、RACI、渠道数", "accent": 2},
+    {"label": "风险 / 采购 / 干系人", "note": "识别到应对、合同、权力矩阵", "accent": 3},
+    {"label": "项目整体与生命周期", "note": "阶段与过程组交叉矩阵", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-scope-flow",
+   "examId": "system-integration",
+   "chapter": "项目范围管理",
+   "title": "范围管理六步",
+   "archetype": "flow",
+   "caption": "核心产出是范围基准：项目范围说明书 + WBS + WBS 词典。",
+   "tags": ["高频", "流程"],
+   "steps": [
+    {"label": "规划范围", "note": "范围管理计划", "accent": 0},
+    {"label": "收集需求", "note": "形成需求文件", "accent": 1},
+    {"label": "定义范围", "note": "项目范围说明书", "accent": 2},
+    {"label": "创建 WBS", "note": "可交付成果分解", "accent": 3},
+    {"label": "确认范围", "note": "可交付成果验收", "accent": 4},
+    {"label": "控制范围", "note": "防止范围蔓延", "accent": 5}
+   ]
+  },
+  {
+   "id": "si-quality-tools-compare",
+   "examId": "system-integration",
+   "chapter": "项目质量管理",
+   "title": "质量工具按用途分类",
+   "archetype": "compare",
+   "caption": "预防类保证过程质量，检查类发现缺陷，统计类用数据找规律。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "预防类", "items": ["质量成本", "过程改进", "评审与培训", "防患于未然"], "accent": 1},
+    {"title": "检查类", "items": ["检查 / 测试", "质量审计", "缺陷记录", "发现不符合项"], "accent": 0},
+    {"title": "统计类", "items": ["因果图（鱼骨图）", "直方图 / 控制图", "帕累托图", "散点图"], "accent": 2},
+    {"title": "常用工具", "items": ["检查表", "流程图", "网络图", "PDCA 循环"], "accent": 3}
+   ]
+  },
+  {
+   "id": "si-schedule-layers",
+   "examId": "system-integration",
+   "chapter": "项目进度管理",
+   "title": "进度管理六个过程",
+   "archetype": "layers",
+   "caption": "规划 → 定义活动 → 排序活动 → 估算活动历时 → 制定进度计划 → 控制进度。",
+   "tags": ["高频", "串联"],
+   "items": [
+    {"label": "规划进度管理", "note": "进度管理计划", "accent": 0},
+    {"label": "定义活动", "note": "活动清单", "accent": 1},
+    {"label": "排序活动", "note": "网络图", "accent": 2},
+    {"label": "估算历时", "note": "历时估算", "accent": 3},
+    {"label": "制定计划", "note": "进度基准", "accent": 4},
+    {"label": "控制进度", "note": "进度控制测量", "accent": 5}
+   ]
+  },
+  {
+   "id": "si-schedule-overview-map",
+   "examId": "system-integration",
+   "chapter": "项目进度管理概述",
+   "title": "进度管理核心概念",
+   "archetype": "map",
+   "caption": "把「计划怎么排」和「实际怎么控」两件事分开记忆。",
+   "tags": ["串联"],
+   "center": "进度管理",
+   "spokes": [
+    {"label": "活动定义", "note": "工作分解到可管理单元", "accent": 0},
+    {"label": "活动排序", "note": "确定依赖关系 FS/SS/FF/SF", "accent": 1},
+    {"label": "历时估算", "note": "三点估算与储备", "accent": 2},
+    {"label": "关键路径", "note": "总工期最长的路径", "accent": 3},
+    {"label": "进度基准", "note": "经批准的计划", "accent": 4},
+    {"label": "进度控制", "note": "偏差分析与纠偏", "accent": 5}
+   ]
+  },
+  {
+   "id": "si-configuration-flow",
+   "examId": "system-integration",
+   "chapter": "项目配置管理",
+   "title": "配置管理四大活动",
+   "archetype": "flow",
+   "caption": "配置项识别 → 状态记录 → 配置审计 → 变更控制，贯穿项目始终。",
+   "tags": ["高频", "流程"],
+   "steps": [
+    {"label": "识别配置项", "note": "确定基线对象", "accent": 0},
+    {"label": "状态记录", "note": "版本与状态台账", "accent": 1},
+    {"label": "配置审计", "note": "功能 / 物理一致性", "accent": 2},
+    {"label": "变更控制", "note": "CCB 审批与实施", "accent": 3},
+    {"label": "版本管理", "note": "基线与配置库", "accent": 4}
+   ]
+  },
+  {
+   "id": "si-procurement-flow",
+   "examId": "system-integration",
+   "chapter": "项目采购管理",
+   "title": "采购管理流程",
+   "archetype": "flow",
+   "caption": "采购工作说明书 → 询价/招标 → 选择卖方 → 合同 → 实施与收尾。",
+   "tags": ["流程"],
+   "steps": [
+    {"label": "规划采购", "note": "采购方式与合同类型", "accent": 0},
+    {"label": "编制 SOW", "note": "采购工作说明书", "accent": 1},
+    {"label": "实施招标", "note": " bidder 征集与评标", "accent": 2},
+    {"label": "选择卖方", "note": "风险加权评分", "accent": 3},
+    {"label": "管理合同", "note": "履约与变更管理", "accent": 4},
+    {"label": "采购收尾", "note": "验收与归档", "accent": 5}
+   ]
+  },
+  {
+   "id": "si-risk-map",
+   "examId": "system-integration",
+   "chapter": "项目风险管理",
+   "title": "风险管理过程与工具",
+   "archetype": "map",
+   "caption": "五个过程：规划 → 识别 → 定性分析 → 定量分析 → 应对与监督。",
+   "tags": ["高频", "串联"],
+   "center": "风险管理",
+   "spokes": [
+    {"label": "规划风险管理", "note": "风险策略与阈值", "accent": 0},
+    {"label": "识别风险", "note": "清单法、专家访谈", "accent": 1},
+    {"label": "定性分析", "note": "概率-影响矩阵排序", "accent": 2},
+    {"label": "定量分析", "note": "蒙特卡洛、决策树", "accent": 3},
+    {"label": "规划应对", "note": "规避/减轻/转移/接受", "accent": 4},
+    {"label": "监督风险", "note": "跟踪触发器与储备", "accent": 5}
+   ]
+  },
+  {
+   "id": "si-risk-matrix",
+   "examId": "system-integration",
+   "chapter": "风险分析与评价",
+   "title": "风险概率–影响矩阵",
+   "archetype": "matrix",
+   "caption": "右上角是重点风险，必须制定应对计划；左下角只需登记并监督。",
+   "tags": ["高频", "图表"],
+   "xAxis": ["低影响", "中影响", "高影响"],
+   "yAxis": ["低概率", "高概率"],
+   "xTitle": "影响 →",
+   "yTitle": "概率 ↑",
+   "cells": [
+    {"row": 0, "col": 0, "title": "可接受", "items": ["登记监督"], "accent": 5},
+    {"row": 0, "col": 1, "title": "中等", "items": ["列入观察", "指定责任人"], "accent": 1},
+    {"row": 0, "col": 2, "title": "重点风险", "items": ["制定应对计划", "预留应急储备"], "accent": 3},
+    {"row": 1, "col": 0, "title": "需关注", "items": ["触发器监控"], "accent": 1},
+    {"row": 1, "col": 1, "title": "较高", "items": ["制定应对", "考虑应急费用"], "accent": 3},
+    {"row": 1, "col": 2, "title": "致命风险", "items": ["上报", "制定应急计划", "必要时变更范围"], "accent": 4}
+   ]
+  },
+  {
+   "id": "si-risk-strategy-compare",
+   "examId": "system-integration",
+   "chapter": "风险应对与储备",
+   "title": "四种风险应对策略",
+   "archetype": "compare",
+   "caption": "规避改变计划，消除威胁；减轻降低概率与影响；转移把责任给第三方；接受并预留储备。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "规避", "items": ["消除威胁本身", "改变方案或目标", "常用：缩小范围"], "accent": 0},
+    {"title": "减轻", "items": ["降低概率或影响", "增加测试与培训", "不改变根本方案"], "accent": 1},
+    {"title": "转移", "items": ["保险、外包、担保", "责任转给第三方", "保费即成本"], "accent": 2},
+    {"title": "接受", "items": ["主动准备应急储备", "被动不采取措施", "已知未知风险"], "accent": 3}
+   ]
+  },
+  {
+   "id": "si-risk-register-flow",
+   "examId": "system-integration",
+   "chapter": "风险识别与登记",
+   "title": "风险管理流程",
+   "archetype": "flow",
+   "caption": "风险登记册是风险识别阶段的正式输出，之后进入分析与应对。",
+   "tags": ["流程"],
+   "steps": [
+    {"label": "识别风险", "note": "头脑风暴、清单、访谈", "accent": 0},
+    {"label": "风险登记册", "note": "描述、概率、影响", "accent": 1},
+    {"label": "定性分析", "note": "优先级排序", "accent": 2},
+    {"label": "定量分析", "note": "风险量化与建模", "accent": 3},
+    {"label": "规划应对", "note": "应对策略与责任人", "accent": 4},
+    {"label": "监督与跟踪", "note": "触发器与应急储备", "accent": 5}
+   ]
+  },
+
+  {
+   "id": "md-jpeg-flow",
+   "examId": "multimedia-designer",
+   "chapter": "JPEG与DCT",
+   "title": "JPEG 编码流程",
+   "archetype": "flow",
+   "caption": "量化是唯一的不可逆环节；DCT 与霍夫曼编码都是可逆的。",
+   "tags": ["高频", "流程"],
+   "steps": [
+    {"label": "颜色转换", "note": "RGB → YCbCr", "accent": 0},
+    {"label": "分块", "note": "8×8 像素块", "accent": 1},
+    {"label": "DCT", "note": "空间域 → 频域", "accent": 2},
+    {"label": "量化", "note": "唯一不可逆步骤", "accent": 4},
+    {"label": "Z 字形扫描", "note": "低频聚在前", "accent": 3},
+    {"label": "霍夫曼编码", "note": "行程 + 熵编码", "accent": 5}
+   ]
+  },
+  {
+   "id": "md-interaction-layers",
+   "examId": "multimedia-designer",
+   "chapter": "交互设计",
+   "title": "交互设计五个层次",
+   "archetype": "layers",
+   "caption": "从「功能」到「体验」逐层提升，缺一层就会「不好用但不难看」。",
+   "tags": ["串联"],
+   "items": [
+    {"label": "功能层", "note": "能否完成核心任务", "accent": 0},
+    {"label": "语义层", "note": "表达与含义是否正确", "accent": 1},
+    {"label": "语法层", "note": "操作顺序与规则", "accent": 2},
+    {"label": "视觉层", "note": "界面美观与反馈", "accent": 3},
+    {"label": "体验层", "note": "情感与整体感受", "accent": 4}
+   ]
+  },
+  {
+   "id": "md-transmission-layers",
+   "examId": "multimedia-designer",
+   "chapter": "传输与安全",
+   "title": "流媒体传输与安全防护",
+   "archetype": "layers",
+   "caption": "自下而上：物理链路 → 传输协议 → 流媒体协议 → 应用安全。",
+   "tags": ["串联"],
+   "items": [
+    {"label": "网络与链路层", "note": "带宽、抖动、丢包", "accent": 5},
+    {"label": "传输协议", "note": "TCP 可靠 / UDP 快", "accent": 1},
+    {"label": "流媒体协议", "note": "RTSP / RTMP / HLS", "accent": 2},
+    {"label": "加密与认证", "note": "TLS/DRM、鉴权", "accent": 3},
+    {"label": "版权保护", "note": "水印、加密、防盗链", "accent": 4}
+   ]
+  },
+  {
+   "id": "md-redundancy-formula",
+   "examId": "multimedia-designer",
+   "chapter": "冗余与压缩比",
+   "title": "压缩比与冗余度",
+   "archetype": "formula",
+   "caption": "压缩比越大说明去掉的冗余越多；无损压缩后再压缩基本无收益。",
+   "tags": ["计算", "高频"],
+   "formula": "压缩比 CR = 原数据量 ÷ 压缩后数据量",
+   "note": "压缩率 = (1 − 1/CR) × 100%。CR = 10 表示压缩到原来的十分之一，压缩率 90%。",
+   "terms": [
+    {"symbol": "原数据量", "meaning": "未压缩前的字节数"},
+    {"symbol": "压缩后数据量", "meaning": "编码后实际占用的字节数"},
+    {"symbol": "CR", "meaning": "压缩比，越大越省空间"},
+    {"symbol": "冗余", "meaning": "可去除的重复与不可预测成分"}
+   ]
+  },
+  {
+   "id": "md-resolution-formula",
+   "examId": "multimedia-designer",
+   "chapter": "分辨率与图像容量",
+   "title": "未压缩图像容量计算",
+   "archetype": "formula",
+   "caption": "容量 = 像素数 × 每像素位数 ÷ 8，彩色按每像素 24 位、灰度按 8 位。",
+   "tags": ["计算", "高频"],
+   "formula": "容量(字节) = 宽 × 高 × 位深 ÷ 8",
+   "note": "例：1024×768 彩色 24 位 = 1024×768×24÷8 = 2 359 296 字节 ≈ 2.25 MB。",
+   "terms": [
+    {"symbol": "宽 × 高", "meaning": "图像分辨率，单位像素"},
+    {"symbol": "位深", "meaning": "每像素位数：彩色 24、灰度 8"},
+    {"symbol": "÷ 8", "meaning": "位换算成字节"},
+    {"symbol": "例", "meaning": "1024×768×24÷8 ≈ 2.25 MB"}
+   ]
+  },
+  {
+   "id": "md-animation-timeline",
+   "examId": "multimedia-designer",
+   "chapter": "动画技术",
+   "title": "动画的帧序列",
+   "archetype": "timeline",
+   "caption": "动画 = 连续帧；帧率决定流畅度，帧数决定时长，关键帧决定运动轨迹。",
+   "tags": ["高频"],
+   "milestones": [
+    {"label": "第 1 帧", "note": "起始关键帧", "accent": 0},
+    {"label": "中间帧", "note": "插值生成", "accent": 1},
+    {"label": "第 N 帧", "note": "结束关键帧", "accent": 2},
+    {"label": "循环播放", "note": "帧序列重复", "accent": 3}
+   ]
+  },
+  {
+   "id": "md-compression-compare",
+   "examId": "multimedia-designer",
+   "chapter": "压缩编码技术",
+   "title": "压缩编码方法分类",
+   "archetype": "compare",
+   "caption": "无损保真但压缩比低，有损丢弃人眼不敏感的信息；帧内压缩去空间冗余，帧间压缩去时间冗余。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "无损压缩", "items": ["行程编码 RLE", "Huffman 熵编码", "算术编码", "可完全还原"], "accent": 1},
+    {"title": "有损压缩", "items": ["变换编码 DCT", "子带编码", "量化是损失源", "不可还原"], "accent": 3},
+    {"title": "帧内 vs 帧间", "items": ["帧内去空间冗余", "帧间去时间冗余", "混合编码最常用"], "accent": 0},
+    {"title": "典型格式", "items": ["PNG / GIF 无损", "JPEG 有损", "MPEG 混合编码"], "accent": 2}
+   ]
+  },
+  {
+   "id": "md-five-elements-map",
+   "examId": "multimedia-designer",
+   "chapter": "多媒体技术基础",
+   "title": "多媒体五要素",
+   "archetype": "map",
+   "caption": "五要素都是「可感知的媒体形态」，不含设备、参数与管理工具。",
+   "tags": ["高频", "记忆"],
+   "center": "多媒体",
+   "spokes": [
+    {"label": "文本", "note": "字符与符号", "accent": 0},
+    {"label": "图形", "note": "矢量线条物体", "accent": 1},
+    {"label": "图像", "note": "位图点阵", "accent": 2},
+    {"label": "声音", "note": "音频", "accent": 3},
+    {"label": "动画", "note": "连续帧", "accent": 4},
+    {"label": "视频", "note": "动画 + 声音的组合", "accent": 5}
+   ]
+  },
+  {
+   "id": "md-database-layers",
+   "examId": "multimedia-designer",
+   "chapter": "多媒体数据库",
+   "title": "多媒体数据的三层组织",
+   "archetype": "layers",
+   "caption": "底层的海量存储要靠数据库管理，上层要靠检索与交互把内容送到用户面前。",
+   "tags": ["串联"],
+   "items": [
+    {"label": "应用与交互层", "note": "检索、编辑、发布", "accent": 0},
+    {"label": "多媒体数据模型层", "note": "BLOB、结构化 + 非结构化", "accent": 1},
+    {"label": "组织与检索层", "note": "基于内容的检索", "accent": 2},
+    {"label": "存储管理层", "note": "海量数据、压缩存储", "accent": 3}
+   ]
+  },
+  {
+   "id": "md-project-flow",
+   "examId": "multimedia-designer",
+   "chapter": "多媒体项目实施",
+   "title": "多媒体项目实施流程",
+   "archetype": "flow",
+   "caption": "需求 → 策划 → 设计 → 制作 → 测试 → 交付，贯穿项目管理三要素。",
+   "tags": ["流程"],
+   "steps": [
+    {"label": "需求分析", "note": "明确用途与受众", "accent": 0},
+    {"label": "总体策划", "note": "脚本、风格、分镜", "accent": 1},
+    {"label": "素材采集", "note": "拍摄、录音、绘制", "accent": 2},
+    {"label": "剪辑合成", "note": "非线性编辑", "accent": 3},
+    {"label": "测试交付", "note": "兼容性检查", "accent": 4}
+   ]
+  },
+  {
+   "id": "md-frame-formula",
+   "examId": "multimedia-designer",
+   "chapter": "帧与编码",
+   "title": "帧率与码率计算",
+   "archetype": "formula",
+   "caption": "码率 = 分辨率 × 帧率 × 每像素比特数；帧数 = 帧率 × 时长。",
+   "tags": ["计算", "高频"],
+   "formula": "码率 = 宽 × 高 × 帧率 × 每像素比特数",
+   "note": "例：720×576、25fps、每像素 12 bit → 720×576×25×12 ≈ 124.4 Mbps（未压缩）。",
+   "terms": [
+    {"symbol": "帧率 fps", "meaning": "每秒帧数，决定流畅度"},
+    {"symbol": "帧数", "meaning": "帧率 × 视频时长"},
+    {"symbol": "每像素比特数", "meaning": "颜色深度 × 压缩后的实际比特"},
+    {"symbol": "码率", "meaning": "每秒数据量，决定存储与带宽"}
+   ]
+  },
+  {
+   "id": "md-image-format-compare",
+   "examId": "multimedia-designer",
+   "chapter": "数字图像与格式",
+   "title": "常见图像格式对比",
+   "archetype": "compare",
+   "caption": "无损格式保真不压缩小，有损格式小但有损，矢量格式与分辨率无关可无限放大。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "PNG", "items": ["无损、支持透明", "可保存 24/32 位", "适合图形与图标"], "accent": 1},
+    {"title": "JPEG", "items": ["有损、有损压缩", "不支持透明", "适合照片"], "accent": 3},
+    {"title": "GIF", "items": ["无损但仅 256 色", "支持透明与动画", "适合小图标"], "accent": 2},
+    {"title": "BMP", "items": ["几乎不压缩", "体积大", "位图原始格式"], "accent": 5}
+   ]
+  },
+  {
+   "id": "node-vector-raster-compare",
+   "examId": "multimedia-designer",
+   "chapter": "数字图形与图像基础",
+   "title": "矢量图 vs 位图",
+   "archetype": "compare",
+   "caption": "矢量图描述「画什么」，位图记录「每个像素什么颜色」；前者与分辨率无关。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "矢量图", "items": ["用数学描述线条形状", "缩放不失真", "文件小、适合插画", "SVG / EPS / AI"], "accent": 0},
+    {"title": "位图", "items": ["按像素点阵存储", "放大会失真", "文件大、适合照片", "BMP / JPEG / PNG"], "accent": 3},
+    {"title": "共同点", "items": ["都要数字化存储", "都要显示器输出", "都可压缩编码"], "accent": 2}
+   ]
+  },
+  {
+   "id": "md-video-flow",
+   "examId": "multimedia-designer",
+   "chapter": "数字视频",
+   "title": "视频制作全流程",
+   "archetype": "flow",
+   "caption": "从拍摄素材到成品交付，每一步都会影响码率与最终文件体积。",
+   "tags": ["流程"],
+   "steps": [
+    {"label": "策划脚本", "note": "分镜头脚本", "accent": 0},
+    {"label": "拍摄采集", "note": "视频 / 音频素材", "accent": 1},
+    {"label": "素材导入", "note": "非线编工程", "accent": 2},
+    {"label": "剪辑合成", "note": "转场、字幕、特效", "accent": 3},
+    {"label": "编码输出", "note": "设置码率与格式", "accent": 4},
+    {"label": "发布交付", "note": "上传与转码分发", "accent": 5}
+   ]
+  },
+  {
+   "id": "md-audio-flow",
+   "examId": "multimedia-designer",
+   "chapter": "数字音频",
+   "title": "声音数字化流程",
+   "archetype": "flow",
+   "caption": "采样把连续时间离散化，量化把幅度离散化，编码再压缩。",
+   "tags": ["高频", "流程"],
+   "steps": [
+    {"label": "采样", "note": "采样频率 f s", "accent": 0},
+    {"label": "量化", "note": "量化级数 / 位深", "accent": 1},
+    {"label": "编码", "note": "压缩成音频帧", "accent": 2},
+    {"label": "存储播放", "note": "解码还原", "accent": 3}
+   ]
+  },
+  {
+   "id": "md-standard-layers",
+   "examId": "multimedia-designer",
+   "chapter": "标准与版权",
+   "title": "标准体系与版权保护",
+   "archetype": "layers",
+   "caption": "标准管「怎么互通」，版权管「能不能用」，两者共同支撑产业落地。",
+   "tags": ["串联"],
+   "items": [
+    {"label": "国际标准组织", "note": "ISO / IEC / ITU", "accent": 0},
+    {"label": "国家标准与行业标准", "note": "GB / 行标", "accent": 1},
+    {"label": "团体与企标", "note": "T/ 与企业规范", "accent": 2},
+    {"label": "著作权", "note": "保护表达形式", "accent": 3},
+    {"label": "邻接权与专利", "note": "传播者与发明人", "accent": 4},
+    {"label": "技术保护措施", "note": "DRM、水印、加密", "accent": 5}
+   ]
+  },
+  {
+   "id": "md-streaming-flow",
+   "examId": "multimedia-designer",
+   "chapter": "流媒体技术",
+   "title": "流媒体工作流程",
+   "archetype": "flow",
+   "caption": "边下载边播放是核心特征，缓冲与分块决定体验。",
+   "tags": ["高频", "流程"],
+   "steps": [
+    {"label": "服务器封装", "note": "切片为分段", "accent": 0},
+    {"label": "建立索引", "note": "生成索引文件", "accent": 1},
+    {"label": "请求分块", "note": "客户端按需索取", "accent": 2},
+    {"label": "缓冲播放", "note": "边下边播", "accent": 3},
+    {"label": "结束与释放", "note": "关闭连接", "accent": 4}
+   ]
+  },
+  {
+   "id": "md-ethics-compare",
+   "examId": "multimedia-designer",
+   "chapter": "职业道德",
+   "title": "多媒体行业职业道德要点",
+   "archetype": "compare",
+   "caption": "版权意识与内容安全是多媒体从业者的两条红线。",
+   "tags": ["记忆"],
+   "columns": [
+    {"title": "专业能力", "items": ["掌握主流工具与规范", "持续学习新技术", "规范设计文档"], "accent": 0},
+    {"title": "版权意识", "items": ["使用授权素材", "标注素材来源", "尊重作者署名权"], "accent": 3},
+    {"title": "职业道德", "items": ["不剽窃他人作品", "不制作违规内容", "保护客户资料"], "accent": 1},
+    {"title": "团队协作", "items": ["按规范交接", "客观评审", "承担岗位责任"], "accent": 2}
+   ]
+  },
+  {
+   "id": "md-color-map",
+   "examId": "multimedia-designer",
+   "chapter": "色彩与色彩管理",
+   "title": "常用色彩空间",
+   "archetype": "map",
+   "caption": "加色法用于发光设备，减色法用于印刷纸张，HSV/HSL 更贴近人的颜色感知。",
+   "tags": ["高频", "对比"],
+   "center": "色彩空间",
+   "spokes": [
+    {"label": "RGB", "note": "加色，显示器", "accent": 0},
+    {"label": "CMYK", "note": "减色，印刷", "accent": 3},
+    {"label": "HSV / HSB", "note": "色相/饱和度/明度", "accent": 1},
+    {"label": "HSL", "note": "色相/饱和度/亮度", "accent": 2},
+    {"label": "Lab", "note": "感知均匀，色彩管理", "accent": 5},
+    {"label": "灰度", "note": "只有明暗，无色相", "accent": 4}
+   ]
+  },
+  {
+   "id": "md-video-size-formula",
+   "examId": "multimedia-designer",
+   "chapter": "视频参数与计算",
+   "title": "视频文件容量计算",
+   "archetype": "formula",
+   "caption": "容量 = 码率 × 时长 ÷ 8，这是所有视频存储题的统一入口。",
+   "tags": ["计算", "高频"],
+   "formula": "容量(字节) = 码率(bit/s) × 时长(s) ÷ 8",
+   "note": "例：码率 4 Mbps、时长 10 分钟 → 4×10^6 × 600 ÷ 8 = 300 000 000 字节 ≈ 286 MB。",
+   "terms": [
+    {"symbol": "码率", "meaning": "每秒比特数，常见 kbps / Mbps"},
+    {"symbol": "时长", "meaning": "秒数，10 分钟 = 600 秒"},
+    {"symbol": "÷ 8", "meaning": "比特换算成字节"},
+    {"symbol": "注意", "meaning": "先统一单位再代入"}
+   ]
+  },
+  {
+   "id": "md-video-format-compare",
+   "examId": "multimedia-designer",
+   "chapter": "视频格式与制作流程",
+   "title": "常见视频格式与容器",
+   "archetype": "compare",
+   "caption": "容器（MP4/MKV/AVI）负责封装，编码（H.264/H.265/AVC）负责压缩，两者别混淆。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "MPEG-1", "items": ["VCD 标准", "352×288 / 25fps", "早期标准"], "accent": 5},
+    {"title": "MPEG-2", "items": ["DVD / 数字电视", "支持高码率", "系统流封装"], "accent": 3},
+    {"title": "H.264 / AVC", "items": ["MP4 常用编码", "同画质码率更低", "兼容性好"], "accent": 1},
+    {"title": "H.265 / HEVC", "items": ["码率再降约一半", "编码复杂", "4K 常用"], "accent": 0}
+   ]
+  },
+  {
+   "id": "md-audio-size-formula",
+   "examId": "multimedia-designer",
+   "chapter": "音频参数与计算",
+   "title": "音频数据量计算",
+   "archetype": "formula",
+   "caption": "数据量 = 采样频率 × 量化位数 × 声道数 × 时间，这四个量缺一不可。",
+   "tags": ["计算", "高频"],
+   "formula": "数据量 = 采样频率 × 量化位数 × 声道数 × 时长",
+   "note": "例：44.1 kHz、16 bit、双声道、60 秒 → 44100×16×2×60 = 84 672 000 字节 ≈ 80.7 MB。",
+   "terms": [
+    {"symbol": "采样频率", "meaning": "44100 Hz 覆盖 20 kHz 音频"},
+    {"symbol": "量化位数", "meaning": "8 / 16 / 24 位，越大动态范围越大"},
+    {"symbol": "声道数", "meaning": "单声道 1，双声道 2，5.1 为 6"},
+    {"symbol": "时长", "meaning": "秒数"}
+   ]
+  },
+  {
+   "id": "md-audio-format-compare",
+   "examId": "multimedia-designer",
+   "chapter": "音频格式与编辑",
+   "title": "常见音频格式对比",
+   "archetype": "compare",
+   "caption": "波形文件未压缩、体积大；压缩格式体积小；MIDI 记录音符事件而非声音。",
+   "tags": ["高频", "对比"],
+   "columns": [
+    {"title": "WAV", "items": ["未压缩波形", "体积大", "编辑与母带常用"], "accent": 0},
+    {"title": "MP3", "items": ["有损压缩", "体积小", "存储与传播最广"], "accent": 3},
+    {"title": "MIDI", "note": "记录音符与乐器事件", "items": ["容量极小", "需音源播放", "适合乐谱"], "accent": 1},
+    {"title": "WMA / AAC", "items": ["平台相关压缩", "AAC 常见于移动端"], "accent": 2}
+   ]
+  }
+ ]
+}

@@ -28,26 +28,39 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.softkao.trainer.ServiceLocator
 import com.softkao.trainer.core.model.ExamId
 import com.softkao.trainer.core.model.Question
 import com.softkao.trainer.feature.common.TagChip
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun SearchScreen(onBack: () -> Unit, onOpenQuestion: (questionId: String, examId: String) -> Unit) {
     var keyword by remember { mutableStateOf("") }
-    var examFilter by remember { mutableStateOf<ExamId?>(null) }
+    // 全局科目：两门考试完全隔离，搜索只搜当前科目
+    val scopeValue by ServiceLocator.settingsRepository.currentExamId
+        .collectAsStateWithLifecycle(initialValue = ExamId.SYSTEM_INTEGRATION.id)
+    val examFilter: ExamId? = ExamId.fromId(scopeValue)
     var results by remember { mutableStateOf<List<Question>>(emptyList()) }
     var searching by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+
+    fun pickExam(exam: ExamId) {
+        scope.launch {
+            ServiceLocator.settingsRepository.setCurrentExamId(exam.id)
+        }
+    }
 
     LaunchedEffect(keyword, examFilter) {
         if (keyword.isBlank()) {
@@ -85,18 +98,11 @@ fun SearchScreen(onBack: () -> Unit, onOpenQuestion: (questionId: String, examId
             )
             Spacer(Modifier.height(10.dp))
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                item {
-                    FilterChip(
-                        selected = examFilter == null,
-                        onClick = { examFilter = null },
-                        label = { Text("全部") },
-                    )
-                }
                 items(ExamId.entries) { exam ->
                     FilterChip(
                         selected = examFilter == exam,
-                        onClick = { examFilter = if (examFilter == exam) null else exam },
-                        label = { Text(exam.shortName) },
+                        onClick = { pickExam(exam) },
+                        label = { Text(exam.shortName, maxLines = 1, softWrap = false) },
                     )
                 }
             }

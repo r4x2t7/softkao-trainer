@@ -38,6 +38,26 @@ class MaterialRepository(private val context: Context) {
     fun find(examId: String, chapter: String): ChapterMaterial? =
         load(examId).firstOrNull { it.chapter == chapter }
 
+    // ------------------------------------------------------------ 知识点精讲
+
+    private val noteCache = mutableMapOf<String, Map<String, String>>()
+
+    /** 每个知识点的一句话精讲 */
+    fun kpNotes(examId: String): Map<String, String> = noteCache.getOrPut(examId) {
+        readNotes(examId)
+    }
+
+    fun kpNote(examId: String, point: String): String? = kpNotes(examId)[point]
+
+    private fun readNotes(examId: String): Map<String, String> = runCatching {
+        val raw = context.assets.open("kp_notes/$examId.json").bufferedReader().use { it.readText() }
+        val obj = org.json.JSONObject(raw)
+        val notes = obj.optJSONObject("notes") ?: return@runCatching emptyMap()
+        val out = linkedMapOf<String, String>()
+        notes.keys().forEach { key -> out[key] = notes.optString(key) }
+        out
+    }.getOrDefault(emptyMap())
+
     private fun readAssets(examId: String): List<ChapterMaterial> = runCatching {
         val raw = context.assets.open("materials/$examId.json").bufferedReader().use { it.readText() }
         parse(raw)

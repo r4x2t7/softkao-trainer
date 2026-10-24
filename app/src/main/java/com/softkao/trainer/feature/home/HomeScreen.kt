@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
@@ -66,7 +67,8 @@ class HomeViewModel : ViewModel() {
         val totalDone: Int = 0,
         val overallAccuracy: Float = 0f,
         val wrongDue: Int = 0,
-        val currentExamId: String = ExamId.SYSTEM_INTEGRATION.id,
+        /** 首页自己选中的科目，只作用于首页 */
+        val examId: String = ExamId.SYSTEM_INTEGRATION.id,
     )
 
     private val _state = MutableStateFlow(State())
@@ -76,8 +78,10 @@ class HomeViewModel : ViewModel() {
         refresh()
     }
 
-    /** 切换当前科目：首页、错题本、统计都跟随它 */
-    fun setCurrentExam(id: String) {
+    /**
+     * 切换首页科目：只写首页自己的作用域，其它页面不受影响。
+     */
+    fun setExamId(id: String) {
         viewModelScope.launch {
             ServiceLocator.settingsRepository.setCurrentExamId(id)
             refresh()
@@ -88,6 +92,9 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             val goal = withContext(Dispatchers.IO) {
                 ServiceLocator.settingsRepository.dailyGoal.first()
+            }
+            val examId = withContext(Dispatchers.IO) {
+                ServiceLocator.settingsRepository.currentExamId.first()
             }
             val snapshot = withContext(Dispatchers.IO) {
                 val q = ServiceLocator.questionRepository
@@ -105,21 +112,18 @@ class HomeViewModel : ViewModel() {
                     )
                 }
                 val extra = Quad(
-                    s.attemptsToday(),
+                    s.attemptsToday(examId),
                     s.streakDays(),
-                    s.accuracy(),
+                    s.accuracy(examId),
                     p.dueWrongEntries().size,
                 )
                 exams to extra
             }
             val (examStats, extra) = snapshot
-            val currentExamId = withContext(Dispatchers.IO) {
-                ServiceLocator.settingsRepository.currentExamId.first()
-            }
             _state.value = State(
                 loading = false,
                 exams = examStats.sortedBy {
-                    if (it.exam.id == currentExamId) 0 else 1
+                    if (it.exam.id == examId) 0 else 1
                 },
                 todayDone = extra.a,
                 goal = goal,
@@ -127,7 +131,7 @@ class HomeViewModel : ViewModel() {
                 totalDone = examStats.sumOf { it.answered },
                 overallAccuracy = extra.c,
                 wrongDue = extra.d,
-                currentExamId = currentExamId,
+                examId = examId,
             )
         }
     }
@@ -169,23 +173,31 @@ fun HomeScreen(
         }
 
         item {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Text(
-                    "当前科目",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                )
-                ExamId.entries.forEach { exam ->
-                    FilterChip(
-                        selected = state.currentExamId == exam.id,
-                        onClick = { viewModel.setCurrentExam(exam.id) },
-                        label = { Text(exam.shortName, maxLines = 1, softWrap = false) },
+            Column {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        "本页科目",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
                     )
+                    ExamId.entries.forEach { exam ->
+                        FilterChip(
+                            selected = state.examId == exam.id,
+                            onClick = { viewModel.setExamId(exam.id) },
+                            label = { Text(exam.shortName, maxLines = 1, softWrap = false) },
+                        )
+                    }
                 }
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    "只作用于本页；知识点、错题本、统计各自独立选择，互不影响",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
 
@@ -196,6 +208,12 @@ fun HomeScreen(
                     StatTile("连续打卡", "${state.streak} 天", modifier = Modifier.weight(1f))
                     StatTile("正确率", "${(state.overallAccuracy * 100).toInt()}%", modifier = Modifier.weight(1f))
                 }
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    "「今日」「正确率」按本页科目统计，连续打卡为两科合计",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 Spacer(Modifier.height(12.dp))
                 LabeledProgress(
                     label = "今日目标",
@@ -211,12 +229,9 @@ fun HomeScreen(
             }
         }
 
-        items(state.exams, key = { it.exam.id }) { stat ->
+        // 两门考试完全隔离：首页只展示当前科目
+        items(state.exams.filter { it.exam.id == state.examId }, key = { it.exam.id }) { stat ->
             SectionCard(title = stat.exam.fullName) {
-                if (stat.exam.id == state.currentExamId) {
-                    TagChip("当前科目", MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.onTertiaryContainer)
-                    Spacer(Modifier.height(8.dp))
-                }
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     StatTile("题库", "${stat.questionCount} 题", modifier = Modifier.weight(1f))
                     StatTile("已做", "${stat.answered}", modifier = Modifier.weight(1f))
@@ -226,16 +241,19 @@ fun HomeScreen(
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Button(
                         onClick = { onStartPractice(stat.exam.id, PracticeMode.SEQUENTIAL, "", "", "顺序练习") },
+                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 6.dp),
                         modifier = Modifier.weight(1f),
-                    ) { Text("顺序练习") }
+                    ) { Text("顺序练习", maxLines = 1, softWrap = false, fontSize = 13.sp) }
                     FilledTonalButton(
                         onClick = { onStartPractice(stat.exam.id, PracticeMode.DAILY, "", "", "每日一练") },
+                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 6.dp),
                         modifier = Modifier.weight(1f),
-                    ) { Text("每日一练") }
+                    ) { Text("每日一练", maxLines = 1, softWrap = false, fontSize = 13.sp) }
                     FilledTonalButton(
                         onClick = { onStartPractice(stat.exam.id, PracticeMode.MOCK, "", "", "模拟卷") },
+                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 6.dp),
                         modifier = Modifier.weight(1f),
-                    ) { Text("模拟卷") }
+                    ) { Text("模拟卷", maxLines = 1, softWrap = false, fontSize = 13.sp) }
                 }
                 if (stat.chapters.isNotEmpty()) {
                     Spacer(Modifier.height(12.dp))

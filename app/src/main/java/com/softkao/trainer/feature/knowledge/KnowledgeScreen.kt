@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -34,6 +35,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +53,14 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+private data class PointRow(
+    val point: String,
+    val count: Int,
+    val done: Int,
+    val right: Int,
+    val note: String?,
+)
+
 private suspend fun <T> withContextIo(block: () -> T): T = withContext(Dispatchers.IO) { block() }
 
 private data class ChapterRow(
@@ -65,7 +75,7 @@ private data class ChapterRow(
 @Composable
 fun KnowledgeScreen(
     onBack: () -> Unit,
-    onOpenChapter: (chapter: String) -> Unit,
+    onOpenChapter: (examId: String, chapter: String) -> Unit,
     onPracticeChapter: (examId: String, chapter: String) -> Unit,
 ) {
     val examIdState = produceState(ExamId.SYSTEM_INTEGRATION.id) {
@@ -94,11 +104,23 @@ fun KnowledgeScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        "知识点",
-                        style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                    )
+                    Column {
+                        Text(
+                            "知识点",
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1,
+                        )
+                        // 全局科目切换固定在顶栏，任何位置都能切换，不会被滚动带走
+                        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            ExamId.entries.forEach { exam ->
+                                FilterChip(
+                                    selected = exam.id == examId,
+                                    onClick = { scope.launch { ServiceLocator.settingsRepository.setCurrentExamId(exam.id) } },
+                                    label = { Text(exam.shortName, maxLines = 1, softWrap = false) },
+                                )
+                            }
+                        }
+                    }
                 },
                 navigationIcon = { TextButton(onClick = onBack) { Text("← 返回") } },
             )
@@ -114,20 +136,16 @@ fun KnowledgeScreen(
             item {
                 SectionCard {
                     Text(
-                        "按章节组织的精讲资料：每章包含考点清单、易错清单、公式与关键数字、记忆口诀和主观题答题模板。",
+                        "按章节组织的精讲资料：每章包含考点清单、易错清单、公式与关键数字、记忆口诀、主观题答题模板与抽象图解。",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Spacer(Modifier.height(10.dp))
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        ExamId.entries.forEach { exam ->
-                            FilterChip(
-                                selected = exam.id == examId,
-                                onClick = { scope.launch { ServiceLocator.settingsRepository.setCurrentExamId(exam.id) } },
-                                label = { Text(exam.shortName, maxLines = 1, softWrap = false) },
-                            )
-                        }
-                    }
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        "切换科目会同步影响首页、错题本与统计",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
             }
 
@@ -136,7 +154,7 @@ fun KnowledgeScreen(
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                     shape = RoundedCornerShape(14.dp),
-                    modifier = Modifier.clickable { onOpenChapter(row.chapter) },
+                    modifier = Modifier.clickable { onOpenChapter(examId, row.chapter) },
                 ) {
                     Column(Modifier.padding(14.dp)) {
                         Row(
@@ -197,12 +215,34 @@ fun ChapterDetailScreen(
     chapter: String,
     onBack: () -> Unit,
     onPracticeChapter: (examId: String, chapter: String) -> Unit,
+    onPracticePoint: (examId: String, point: String) -> Unit,
 ) {
+    // 科目是全局的，章节详情直接跟随当前科目
     val examId by produceState(ExamId.SYSTEM_INTEGRATION.id) {
         value = ServiceLocator.settingsRepository.currentExamId.first()
     }
     val material by produceState<ChapterMaterial?>(null, chapter, examId) {
         value = withContextIo { ServiceLocator.materialRepository.find(examId, chapter) }
+    }
+    // 抽象图解：把本章核心考点画成可逐帧播放的示意图
+    val visuals = remember(chapter, examId, material) {
+        com.softkao.trainer.core.data.VisualRepository.forExam(examId).filter { lesson ->
+            lesson.chapter == chapter || (material?.keyPoints?.any { lesson.matches(it) } == true)
+        }
+    }
+    // 本章的知识点清单：题量、正确率、一句话精讲
+    val pointRows: List<PointRow> = remember(chapter, examId) {
+        val stats = ServiceLocator.statsRepository
+        val counts = stats.knowledgePointsByChapter(examId)[chapter].orEmpty()
+        val acc = stats.knowledgeStats(examId)
+        val notes = ServiceLocator.materialRepository.kpNotes(examId)
+        counts.entries
+            .sortedByDescending { it.value }
+            .map { (point, count) ->
+                val done = acc[point]?.first ?: 0
+                val right = acc[point]?.second ?: 0
+                PointRow(point, count, done, right, notes[point])
+            }
     }
 
     Scaffold(
@@ -251,6 +291,67 @@ fun ChapterDetailScreen(
 
             if (m.summary.isNotBlank()) {
                 item { SectionCard(title = "本章概览") { Text(m.summary, style = MaterialTheme.typography.bodyMedium) } }
+            }
+            // 抽象图解：把本章核心考点画成可逐帧播放的示意图
+            if (visuals.isNotEmpty()) {
+                item {
+                    Text(
+                        "抽象图解",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                }
+                items(visuals, key = { it.id }) { lesson ->
+                    ConceptAnimation(lesson)
+                }
+            }
+            if (pointRows.isNotEmpty()) {
+                item {
+                    Text(
+                        "知识点清单（${pointRows.size} 个）",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                }
+                items(pointRows, key = { it.point }) { row ->
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                        shape = RoundedCornerShape(14.dp),
+                    ) {
+                        Column(Modifier.padding(14.dp)) {
+                            Row(
+                                Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    row.point,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Medium,
+                                    maxLines = 2,
+                                    modifier = Modifier.weight(1f, fill = false),
+                                )
+                                Spacer(Modifier.width(6.dp))
+                                Text(
+                                    "${row.count} 题" + if (row.done > 0) " · 正确率 ${row.right * 100 / row.done}%" else "",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    maxLines = 1,
+                                )
+                            }
+                            if (!row.note.isNullOrBlank()) {
+                                Spacer(Modifier.height(6.dp))
+                                Text(row.note, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Spacer(Modifier.height(4.dp))
+                            TextButton(
+                                onClick = { onPracticePoint(examId, row.point) },
+                                contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp),
+                            ) { Text("练习该考点", maxLines = 1, softWrap = false) }
+                        }
+                    }
+                }
             }
             if (m.examFocus.isNotBlank()) {
                 item { SectionCard(title = "命题趋势") { Text(m.examFocus, style = MaterialTheme.typography.bodyMedium) } }

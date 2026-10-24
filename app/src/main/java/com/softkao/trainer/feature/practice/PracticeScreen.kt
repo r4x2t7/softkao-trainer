@@ -3,6 +3,7 @@ package com.softkao.trainer.feature.practice
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,10 +15,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -135,16 +138,17 @@ class PracticeViewModel(
         val practice = ServiceLocator.practiceRepository
         if (presetIds.isNotEmpty()) return repo.byIds(presetIds)
 
+        // 顺序/章节/专项/错题 一律加载全部题目，由界面分页展示，不再截断
         return when (mode) {
-            PracticeMode.CHAPTER -> repo.list(examId = examId, chapter = chapter, limit = 100)
-            PracticeMode.KNOWLEDGE -> repo.list(examId = examId, knowledgePoint = knowledgePoint, limit = 100)
+            PracticeMode.CHAPTER -> repo.list(examId = examId, chapter = chapter)
+            PracticeMode.KNOWLEDGE -> repo.list(examId = examId, knowledgePoint = knowledgePoint)
             PracticeMode.WRONG -> {
                 val ids = practice.wrongEntries(examId).map { it.questionId }
                 repo.byIds(ids)
             }
             PracticeMode.DAILY -> dailySet()
             PracticeMode.MOCK -> mockSet()
-            PracticeMode.SEQUENTIAL -> repo.list(examId = examId, limit = 200)
+            PracticeMode.SEQUENTIAL -> repo.list(examId = examId)
         }
     }
 
@@ -243,6 +247,13 @@ class PracticeViewModel(
         _state.value = s.copy(index = target, selected = emptySet(), submitted = false, aiText = null, aiError = null, showReference = false)
         refreshBookmark()
     }
+
+    /** 相对跳转，负数往回 */
+    fun jumpBy(delta: Int) = jumpTo(_state.value.index + delta)
+
+    fun jumpFirst() = jumpTo(0)
+
+    fun jumpLast() = jumpTo((_state.value.questions.size - 1).coerceAtLeast(0))
 
     fun toggleBookmark() {
         val q = currentQuestion ?: return
@@ -364,9 +375,21 @@ fun PracticeScreen(
                     TextButton(onClick = { vm.toggleBookmark() }) {
                         Text(if (state.bookmarked) "★ 已收藏" else "☆ 收藏")
                     }
-                    TextButton(onClick = { showSheet = true }) { Text("答题卡") }
                 },
             )
+        },
+        bottomBar = {
+            Column {
+                HorizontalDivider()
+                PracticeJumpBar(
+                    index = state.index,
+                    total = state.questions.size,
+                    onJump = { vm.jumpTo(it) },
+                    onFirst = { vm.jumpFirst() },
+                    onLast = { vm.jumpLast() },
+                    onSheet = { showSheet = true },
+                )
+            }
         },
     ) { padding ->
         val q = state.questions.getOrNull(state.index)
@@ -450,17 +473,53 @@ fun PracticeScreen(
                     }
                 }
             } else {
-                q.options.forEach { option ->
-                    OptionRow(
-                        key = option.key,
-                        text = option.text,
-                        selected = option.key in state.selected,
-                        submitted = state.submitted,
-                        isCorrect = option.key in q.answer,
-                        multi = q.type == QuestionType.MULTI,
-                        enabled = !state.submitted,
-                        onClick = { vm.select(option.key) },
-                    )
+                if (q.type == QuestionType.TRUE_FALSE) {
+                    // 判断题在题库中不带选项，这里渲染 √ / × 两个可选项
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        listOf("√" to "正确", "×" to "错误").forEach { (key, label) ->
+                            val selected = key in state.selected
+                            val isAnswer = key in q.answer
+                            val borderColor = when {
+                                state.submitted && isAnswer -> MaterialTheme.colorScheme.tertiary
+                                state.submitted && selected -> MaterialTheme.colorScheme.error
+                                selected -> MaterialTheme.colorScheme.primary
+                                else -> MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
+                            }
+                            Row(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .clip(RoundedCornerShape(12.dp))
+                                    .border(1.5.dp, borderColor, RoundedCornerShape(12.dp))
+                                    .background(
+                                        if (selected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
+                                        else MaterialTheme.colorScheme.surface
+                                    )
+                                    .clickable(enabled = !state.submitted) { vm.select(key) }
+                                    .padding(vertical = 14.dp),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    "$key  $label",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    fontWeight = FontWeight.Medium,
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    q.options.forEach { option ->
+                        OptionRow(
+                            key = option.key,
+                            text = option.text,
+                            selected = option.key in state.selected,
+                            submitted = state.submitted,
+                            isCorrect = option.key in q.answer,
+                            multi = q.type == QuestionType.MULTI,
+                            enabled = !state.submitted,
+                            onClick = { vm.select(option.key) },
+                        )
+                    }
                 }
             }
 
@@ -553,6 +612,55 @@ fun PracticeScreen(
 }
 
 @Composable
+private fun PracticeJumpBar(
+    index: Int,
+    total: Int,
+    onJump: (Int) -> Unit,
+    onFirst: () -> Unit,
+    onLast: () -> Unit,
+    onSheet: () -> Unit,
+) {
+    if (total <= 0) return
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
+            .padding(horizontal = 6.dp, vertical = 2.dp),
+        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        JumpButton("⌂ 首页") { onFirst() }
+        JumpButton("−100") { onJump((index - 100).coerceAtLeast(0)) }
+        JumpButton("−10") { onJump((index - 10).coerceAtLeast(0)) }
+        JumpButton("上一页") { onJump((index - 1).coerceAtLeast(0)) }
+        Text(
+            "第 ${index + 1} / $total 题",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.primary,
+            maxLines = 1,
+            softWrap = false,
+            modifier = Modifier.padding(horizontal = 6.dp),
+        )
+        JumpButton("下一页") { onJump((index + 1).coerceAtMost(total - 1)) }
+        JumpButton("+10") { onJump((index + 10).coerceAtMost(total - 1)) }
+        JumpButton("+100") { onJump((index + 100).coerceAtMost(total - 1)) }
+        JumpButton("尾页 ⇥") { onLast() }
+        JumpButton("答题卡") { onSheet() }
+    }
+}
+
+@Composable
+private fun JumpButton(text: String, onClick: () -> Unit) {
+    TextButton(
+        onClick = onClick,
+        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+        modifier = Modifier.heightIn(min = 32.dp),
+    ) {
+        Text(text, style = MaterialTheme.typography.labelMedium, maxLines = 1, softWrap = false)
+    }
+}
+
+@Composable
 private fun OptionRow(
     key: String,
     text: String,
@@ -605,34 +713,56 @@ private fun AnswerSheetDialog(
     onJump: (Int) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val perPage = 30
+    val pages = if (total == 0) 1 else (total + perPage - 1) / perPage
+    var page by remember { mutableStateOf((current / perPage).coerceAtMost(pages - 1)) }
+    val start = page * perPage
+    val end = (start + perPage).coerceAtMost(total)
+
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("答题卡") },
+        title = { Text("答题卡（共 $total 题）") },
         text = {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(6),
-                modifier = Modifier.height(220.dp),
-                contentPadding = PaddingValues(2.dp),
-            ) {
-                items(total) { i ->
-                    val flag = flags.getOrNull(i)
-                    val bg = when {
-                        i == current -> MaterialTheme.colorScheme.primary
-                        flag == true -> MaterialTheme.colorScheme.tertiary
-                        flag == false -> MaterialTheme.colorScheme.error
-                        else -> MaterialTheme.colorScheme.surfaceVariant
+            Column {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(6),
+                    modifier = Modifier.height(210.dp),
+                    contentPadding = PaddingValues(2.dp),
+                ) {
+                    items((start until end).toList()) { i ->                        val flag = flags.getOrNull(i)
+                        val bg = when {
+                            i == current -> MaterialTheme.colorScheme.primary
+                            flag == true -> MaterialTheme.colorScheme.tertiary
+                            flag == false -> MaterialTheme.colorScheme.error
+                            else -> MaterialTheme.colorScheme.surfaceVariant
+                        }
+                        val fg = if (flag != null || i == current) Color.White else MaterialTheme.colorScheme.onSurfaceVariant
+                        Box(
+                            Modifier
+                                .padding(3.dp)
+                                .size(34.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(bg)
+                                .clickable {
+                                    onJump(i)
+                                    page = (i / perPage).coerceAtMost(pages - 1)
+                                },
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text("${i + 1}", style = MaterialTheme.typography.labelSmall, color = fg, maxLines = 1)
+                        }
                     }
-                    val fg = if (flag != null || i == current) Color.White else MaterialTheme.colorScheme.onSurfaceVariant
-                    Box(
-                        Modifier
-                            .padding(3.dp)
-                            .size(34.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(bg)
-                            .clickable { onJump(i) },
-                        contentAlignment = Alignment.Center,
+                }
+                if (pages > 1) {
+                    Spacer(Modifier.height(6.dp))
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text("${i + 1}", style = MaterialTheme.typography.labelSmall, color = fg)
+                        TextButton(onClick = { page = (page - 1).coerceAtLeast(0) }) { Text("‹ 上一批") }
+                        Text("第 ${page + 1} / $pages 批", style = MaterialTheme.typography.labelMedium, maxLines = 1)
+                        TextButton(onClick = { page = (page + 1).coerceAtMost(pages - 1) }) { Text("下一批 ›") }
                     }
                 }
             }

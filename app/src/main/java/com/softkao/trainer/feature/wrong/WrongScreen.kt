@@ -72,12 +72,17 @@ class WrongViewModel : ViewModel() {
     private val _state = MutableStateFlow(State())
     val state: StateFlow<State> = _state.asStateFlow()
 
+    /** 用户是否已经手动选过科目；用来避免初始化时被异步读取覆盖 */
+    private var userPicked = false
+
     init {
         refresh()
         viewModelScope.launch {
-            // 默认只看当前科目（一个人通常只考一门）
-            val current = ServiceLocator.settingsRepository.currentExamId.first()
-            ExamId.fromId(current)?.let { setExamFilter(it) }
+            // 全局科目：错题本只显示当前科目，两门考试彻底隔离
+            val saved = ServiceLocator.settingsRepository.currentExamId.first()
+            if (!userPicked) {
+                _state.value = _state.value.copy(examFilter = ExamId.fromId(saved))
+            }
         }
     }
 
@@ -128,7 +133,12 @@ class WrongViewModel : ViewModel() {
     }
 
     fun setExamFilter(exam: ExamId?) {
+        if (exam == null) return
+        userPicked = true
         _state.value = _state.value.copy(examFilter = exam)
+        viewModelScope.launch {
+            ServiceLocator.settingsRepository.setCurrentExamId(exam.id)
+        }
     }
 
     fun visibleItems(): List<Item> {
@@ -169,19 +179,23 @@ fun WrongScreen(
 
         item {
             SectionCard {
+                val visibleDue = items.filter { (it.entry?.nextReviewAt ?: 0L) <= System.currentTimeMillis() }
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    StatTile("错题", "${state.items.size}", modifier = Modifier.weight(1f))
-                    StatTile("待复习", "${state.dueCount}", modifier = Modifier.weight(1f))
-                    StatTile("已掌握", "${state.items.count { it.entry?.mastery == Mastery.MASTERED }}", modifier = Modifier.weight(1f))
+                    StatTile("错题", "${items.size}", modifier = Modifier.weight(1f))
+                    StatTile("待复习", "${visibleDue.size}", modifier = Modifier.weight(1f))
+                    StatTile(
+                        "已掌握",
+                        "${items.count { it.entry?.mastery == Mastery.MASTERED }}",
+                        modifier = Modifier.weight(1f),
+                    )
                 }
                 Spacer(Modifier.height(12.dp))
-                val dueIds = state.items.filter { (it.entry?.nextReviewAt ?: 0L) <= System.currentTimeMillis() }
-                    .mapNotNull { it.entry?.questionId }
-                    .joinToString(",")
+                val dueIds = visibleDue.mapNotNull { it.entry?.questionId }.joinToString(",")
+                val dueExam = visibleDue.firstOrNull()?.entry?.examId
                 Button(
                     onClick = {
                         onStartPractice(
-                            state.items.firstOrNull()?.entry?.examId ?: ExamId.SYSTEM_INTEGRATION.id,
+                            dueExam ?: ExamId.SYSTEM_INTEGRATION.id,
                             PracticeMode.WRONG,
                             dueIds,
                         )
@@ -219,18 +233,17 @@ fun WrongScreen(
         }
 
         item {
+            Text(
+                "错题本科目（本页独立选择，不影响其它页面）",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(4.dp))
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                item {
-                    FilterChip(
-                        selected = state.examFilter == null,
-                        onClick = { viewModel.setExamFilter(null) },
-                        label = { Text("全部科目") },
-                    )
-                }
                 items(ExamId.entries) { exam ->
                     FilterChip(
                         selected = state.examFilter == exam,
-                        onClick = { viewModel.setExamFilter(if (state.examFilter == exam) null else exam) },
+                        onClick = { viewModel.setExamFilter(exam) },
                         label = { Text(exam.shortName) },
                     )
                 }

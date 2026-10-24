@@ -1,5 +1,6 @@
 package com.softkao.trainer
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -49,7 +52,7 @@ object Routes {
     const val BANK = "bank"
     const val SEARCH = "search"
     const val KNOWLEDGE = "knowledge"
-    const val KNOWLEDGE_CHAPTER = "knowledge/chapter/{chapter}"
+    const val KNOWLEDGE_CHAPTER = "knowledge/chapter/{examId}/{chapter}"
     const val PRACTICE =
         "practice?examId={examId}&mode={mode}&chapter={chapter}&kp={kp}&title={title}&ids={ids}"
 }
@@ -59,7 +62,7 @@ private data class Tab(val route: String, val label: String, val glyph: String)
 private val tabs = listOf(
     Tab(Routes.HOME, "首页", "🏠"),
     Tab(Routes.KNOWLEDGE, "知识点", "📚"),
-    Tab(Routes.WRONG, "错题本", "📕"),
+    Tab(Routes.WRONG, "错题", "📕"),
     Tab(Routes.STATS, "统计", "📊"),
     Tab(Routes.BANK, "设置", "⚙️"),
 )
@@ -86,8 +89,16 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                                     }
                                 }
                             },
-                            icon = { Text(tab.glyph) },
-                            label = { Text(tab.label) },
+                            icon = { Text(tab.glyph, fontSize = 16.sp) },
+                            label = {
+                                Text(
+                                    tab.label,
+                                    fontSize = 10.sp,
+                                    maxLines = 1,
+                                    softWrap = false,
+                                    overflow = TextOverflow.Clip,
+                                )
+                            },
                         )
                     }
                 }
@@ -125,8 +136,8 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
             composable(Routes.KNOWLEDGE) {
                 KnowledgeScreen(
                     onBack = { navController.popBackStack() },
-                    onOpenChapter = { chapter ->
-                        navController.navigate("knowledge/chapter/$chapter")
+                    onOpenChapter = { examId, chapter ->
+                        navController.navigate("knowledge/chapter/$examId/${Uri.encode(chapter)}")
                     },
                     onPracticeChapter = { examId, chapter ->
                         navController.navigate(
@@ -138,7 +149,10 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
             }
             composable(
                 route = Routes.KNOWLEDGE_CHAPTER,
-                arguments = listOf(navArgument("chapter") { type = NavType.StringType }),
+                arguments = listOf(
+                    navArgument("examId") { type = NavType.StringType },
+                    navArgument("chapter") { type = NavType.StringType },
+                ),
             ) { entry ->
                 val chapter = entry.arguments?.getString("chapter").orEmpty()
                 ChapterDetailScreen(
@@ -148,6 +162,13 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                         navController.navigate(
                             "practice?examId=$e&mode=CHAPTER&chapter=$c&kp=&title=" +
                                 java.net.URLEncoder.encode("章节 · $c", "UTF-8")
+                        )
+                    },
+                    onPracticePoint = { e, p ->
+                        navController.navigate(
+                            "practice?examId=$e&mode=KNOWLEDGE&chapter=&kp=" +
+                                java.net.URLEncoder.encode(p, "UTF-8") + "&title=" +
+                                java.net.URLEncoder.encode("专项 · $p", "UTF-8")
                         )
                     },
                 )

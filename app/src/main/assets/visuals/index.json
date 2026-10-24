@@ -1,0 +1,812 @@
+{
+ "version": 1,
+ "count": 59,
+ "visuals": [
+  {
+   "id": "si-osi-layers",
+   "examId": "system-integration",
+   "chapter": "信息化常识",
+   "title": "OSI 七层 ↔ TCP/IP 四层",
+   "archetype": "layers",
+   "caption": "上三层（会话、表示、应用）并入应用层；物理层与数据链路层合成网络接口层。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "system-integration/si-osi-layers.html",
+   "darkFile": "system-integration/si-osi-layers.dark.html"
+  },
+  {
+   "id": "si-security-map",
+   "examId": "system-integration",
+   "chapter": "信息安全",
+   "title": "信息安全知识地图",
+   "archetype": "map",
+   "caption": "以 CIA 三属性为轴，向外辐射技术、等级保护、管理与法律四块。",
+   "tags": [
+    "高频"
+   ],
+   "file": "system-integration/si-security-map.html",
+   "darkFile": "system-integration/si-security-map.dark.html"
+  },
+  {
+   "id": "si-initiating-flow",
+   "examId": "system-integration",
+   "chapter": "启动过程组",
+   "title": "启动过程组：从立项到章程",
+   "archetype": "flow",
+   "caption": "启动是唯一被授权把组织资源投入项目的过程组，输出项目章程。",
+   "tags": [
+    "高频",
+    "流程"
+   ],
+   "file": "system-integration/si-initiating-flow.html",
+   "darkFile": "system-integration/si-initiating-flow.dark.html"
+  },
+  {
+   "id": "si-team-cycle",
+   "examId": "system-integration",
+   "chapter": "团队发展与冲突管理",
+   "title": "塔克曼阶梯与冲突处理闭环",
+   "archetype": "cycle",
+   "caption": "团队发展经历形成、震荡、规范、成熟、执行、解散；冲突按五步法闭环处理。",
+   "tags": [
+    "高频"
+   ],
+   "file": "system-integration/si-team-cycle.html",
+   "darkFile": "system-integration/si-team-cycle.dark.html"
+  },
+  {
+   "id": "si-total-float-formula",
+   "examId": "system-integration",
+   "chapter": "总时差与自由时差",
+   "title": "总时差 TF 与自由时差 FF",
+   "archetype": "formula",
+   "caption": "关键路径上所有活动 TF = 0；FF 决定活动最早能拖多久而不推迟后续活动。",
+   "tags": [
+    "计算",
+    "高频"
+   ],
+   "file": "system-integration/si-total-float-formula.html",
+   "darkFile": "system-integration/si-total-float-formula.dark.html"
+  },
+  {
+   "id": "si-closing-flow",
+   "examId": "system-integration",
+   "chapter": "收尾过程组",
+   "title": "收尾过程组：把项目正式关闭",
+   "archetype": "flow",
+   "caption": "收尾先做采购收尾与合同收尾，再做行政收尾与经验教训总结，最后移交成果。",
+   "tags": [
+    "流程"
+   ],
+   "file": "system-integration/si-closing-flow.html",
+   "darkFile": "system-integration/si-closing-flow.dark.html"
+  },
+  {
+   "id": "si-emerging-map",
+   "examId": "system-integration",
+   "chapter": "新兴技术",
+   "title": "新兴技术选型版图",
+   "archetype": "map",
+   "caption": "以「数据—算力—连接—应用」四条主线记忆新兴技术。",
+   "tags": [
+    "串联"
+   ],
+   "file": "system-integration/si-emerging-map.html",
+   "darkFile": "system-integration/si-emerging-map.dark.html"
+  },
+  {
+   "id": "si-law-layers",
+   "examId": "system-integration",
+   "chapter": "法律法规与标准规范",
+   "title": "我国法律层级与标准规范",
+   "archetype": "layers",
+   "caption": "上位法优于下位法：宪法 > 法律 > 行政法规 > 部门规章 > 地方性法规；标准分国标、行标、企标。",
+   "tags": [
+    "高频",
+    "记忆"
+   ],
+   "file": "system-integration/si-law-layers.html",
+   "darkFile": "system-integration/si-law-layers.dark.html"
+  },
+  {
+   "id": "si-estimating-compare",
+   "examId": "system-integration",
+   "chapter": "活动历时估算",
+   "title": "四种活动历时估算方法",
+   "archetype": "compare",
+   "caption": "类比法最快最粗糙，自下而上最准最费时，三点估算用概率分布收敛期望值。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "system-integration/si-estimating-compare.html",
+   "darkFile": "system-integration/si-estimating-compare.dark.html"
+  },
+  {
+   "id": "si-milestone-timeline",
+   "examId": "system-integration",
+   "chapter": "活动定义与里程碑",
+   "title": "里程碑：零工期、零成本、零资源",
+   "archetype": "timeline",
+   "caption": "里程碑是关键路径上的重要时点，用于检查与决策，本身不消耗时间与成本。",
+   "tags": [
+    "高频"
+   ],
+   "file": "system-integration/si-milestone-timeline.html",
+   "darkFile": "system-integration/si-milestone-timeline.dark.html"
+  },
+  {
+   "id": "si-network-aon",
+   "examId": "system-integration",
+   "chapter": "活动排序与网络图绘制",
+   "title": "AON 网络图：活动在节点上",
+   "archetype": "network",
+   "caption": "AON 把活动画成节点、依赖画成箭头；AOA 把活动画在箭线上，绘制时必须处理虚拟活动。",
+   "tags": [
+    "高频",
+    "图形"
+   ],
+   "file": "system-integration/si-network-aon.html",
+   "darkFile": "system-integration/si-network-aon.dark.html"
+  },
+  {
+   "id": "si-ethics-compare",
+   "examId": "system-integration",
+   "chapter": "职业道德",
+   "title": "职业道德规范要点对照",
+   "archetype": "compare",
+   "caption": "爱岗敬业是本质要求，诚实守信是基本准则，办事公道与Service群众是行为准则。",
+   "tags": [
+    "记忆"
+   ],
+   "file": "system-integration/si-ethics-compare.html",
+   "darkFile": "system-integration/si-ethics-compare.dark.html"
+  },
+  {
+   "id": "si-quality-cost-matrix",
+   "examId": "system-integration",
+   "chapter": "质量工具与质量成本",
+   "title": "质量成本四象限",
+   "archetype": "matrix",
+   "caption": "预防成本与内部失败成本是「一致性成本」，外部失败成本是「不一致性成本」，后者代价最大。",
+   "tags": [
+    "高频",
+    "计算"
+   ],
+   "file": "system-integration/si-quality-cost-matrix.html",
+   "darkFile": "system-integration/si-quality-cost-matrix.dark.html"
+  },
+  {
+   "id": "si-resource-compare",
+   "examId": "system-integration",
+   "chapter": "资源平衡与资源平滑",
+   "title": "资源平衡 vs 资源平滑",
+   "archetype": "compare",
+   "caption": "平衡会改变关键路径（工期可能变长），平滑只调整浮动时间内的时序（工期不变）。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "system-integration/si-resource-compare.html",
+   "darkFile": "system-integration/si-resource-compare.dark.html"
+  },
+  {
+   "id": "si-crashing-compare",
+   "examId": "system-integration",
+   "chapter": "进度压缩",
+   "title": "赶工 vs 快速跟进",
+   "archetype": "compare",
+   "caption": "赶工加钱加人被质疑，快速跟进并行加风险被质疑；两者都只缩短关键路径。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "system-integration/si-crashing-compare.html",
+   "darkFile": "system-integration/si-crashing-compare.dark.html"
+  },
+  {
+   "id": "si-eva-formula",
+   "examId": "system-integration",
+   "chapter": "进度控制与进度成本",
+   "title": "挣值管理：偏差与指数",
+   "archetype": "formula",
+   "caption": "偏差是绝对差，指数是比值；CV/SV < 0 或 CPI/SPI < 1 都代表不利。",
+   "tags": [
+    "计算",
+    "高频"
+   ],
+   "file": "system-integration/si-eva-formula.html",
+   "darkFile": "system-integration/si-eva-formula.dark.html"
+  },
+  {
+   "id": "si-cpm-network",
+   "examId": "system-integration",
+   "chapter": "进度网络图与关键路径法",
+   "title": "关键路径法 CPM",
+   "archetype": "network",
+   "caption": "总工期最长的一条路径为关键路径，其上活动总时差为 0；关键路径可能不止一条。",
+   "tags": [
+    "高频",
+    "图形"
+   ],
+   "file": "system-integration/si-cpm-network.html",
+   "darkFile": "system-integration/si-cpm-network.dark.html"
+  },
+  {
+   "id": "si-change-flow",
+   "examId": "system-integration",
+   "chapter": "配置审计与变更控制",
+   "title": "变更控制流程",
+   "archetype": "flow",
+   "caption": "变更必须书面提出、评估影响、CCB 审批、实施并验证，最后更新基准与配置记录。",
+   "tags": [
+    "高频",
+    "流程"
+   ],
+   "file": "system-integration/si-change-flow.html",
+   "darkFile": "system-integration/si-change-flow.dark.html"
+  },
+  {
+   "id": "si-requirement-flow",
+   "examId": "system-integration",
+   "chapter": "需求管理",
+   "title": "需求管理生命周期",
+   "archetype": "flow",
+   "caption": "从收集到确认再到持续管理，需求跟踪贯穿全生命周期形成需求基线。",
+   "tags": [
+    "高频",
+    "流程"
+   ],
+   "file": "system-integration/si-requirement-flow.html",
+   "darkFile": "system-integration/si-requirement-flow.dark.html"
+  },
+  {
+   "id": "si-hr-map",
+   "examId": "system-integration",
+   "chapter": "项目人力资源管理",
+   "title": "人力资源管理工具箱",
+   "archetype": "map",
+   "caption": "四个过程对应四类工具：规划靠表格，规划实施靠虚拟团队，团队建设靠激励，管理靠冲突处理。",
+   "tags": [
+    "串联"
+   ],
+   "file": "system-integration/si-hr-map.html",
+   "darkFile": "system-integration/si-hr-map.dark.html"
+  },
+  {
+   "id": "si-contract-compare",
+   "examId": "system-integration",
+   "chapter": "项目合同管理",
+   "title": "合同类型与风险承担",
+   "archetype": "compare",
+   "caption": "固定总价把成本风险给卖方，可调总价共享风险，成本加成本酬金卖方风险最小。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "system-integration/si-contract-compare.html",
+   "darkFile": "system-integration/si-contract-compare.dark.html"
+  },
+  {
+   "id": "si-stakeholder-matrix",
+   "examId": "system-integration",
+   "chapter": "项目干系人管理",
+   "title": "权力 / 利益矩阵",
+   "archetype": "matrix",
+   "caption": "高权力高利益重点管理，高权力低利益令其满意，低权力高利益随时告知，低权力低利益监督即可。",
+   "tags": [
+    "高频",
+    "图表"
+   ],
+   "file": "system-integration/si-stakeholder-matrix.html",
+   "darkFile": "system-integration/si-stakeholder-matrix.dark.html"
+  },
+  {
+   "id": "si-cost-formula",
+   "examId": "system-integration",
+   "chapter": "项目成本管理",
+   "title": "成本类型与挣值公式",
+   "archetype": "formula",
+   "caption": "可追溯成本要分摊，不一定等于项目成本；完工估算 EAC 分已完工与未完工两段。",
+   "tags": [
+    "计算",
+    "高频"
+   ],
+   "file": "system-integration/si-cost-formula.html",
+   "darkFile": "system-integration/si-cost-formula.dark.html"
+  },
+  {
+   "id": "si-integrated-flow",
+   "examId": "system-integration",
+   "chapter": "项目整体管理",
+   "title": "整体变更控制：项目的总闸门",
+   "archetype": "flow",
+   "caption": "所有变更请求汇总到整体变更控制，评估后决定批准、否决或推迟。",
+   "tags": [
+    "流程"
+   ],
+   "file": "system-integration/si-integrated-flow.html",
+   "darkFile": "system-integration/si-integrated-flow.dark.html"
+  },
+  {
+   "id": "si-communication-formula",
+   "examId": "system-integration",
+   "chapter": "项目沟通管理",
+   "title": "沟通渠道数公式",
+   "archetype": "formula",
+   "caption": "n 个干系人的潜在沟通渠道是 n(n−1)/2；人数翻倍，渠道数约变成 4 倍。",
+   "tags": [
+    "计算",
+    "高频"
+   ],
+   "file": "system-integration/si-communication-formula.html",
+   "darkFile": "system-integration/si-communication-formula.dark.html"
+  },
+  {
+   "id": "si-pm-layers",
+   "examId": "system-integration",
+   "chapter": "项目管理概论",
+   "title": "项目管理知识体系层次",
+   "archetype": "layers",
+   "caption": "项目管理是「规划、组织、协调、控制」的过程；十大知识领域是答题的骨架。",
+   "tags": [
+    "串联"
+   ],
+   "file": "system-integration/si-pm-layers.html",
+   "darkFile": "system-integration/si-pm-layers.dark.html"
+  },
+  {
+   "id": "si-scope-flow",
+   "examId": "system-integration",
+   "chapter": "项目范围管理",
+   "title": "范围管理六步",
+   "archetype": "flow",
+   "caption": "核心产出是范围基准：项目范围说明书 + WBS + WBS 词典。",
+   "tags": [
+    "高频",
+    "流程"
+   ],
+   "file": "system-integration/si-scope-flow.html",
+   "darkFile": "system-integration/si-scope-flow.dark.html"
+  },
+  {
+   "id": "si-quality-tools-compare",
+   "examId": "system-integration",
+   "chapter": "项目质量管理",
+   "title": "质量工具按用途分类",
+   "archetype": "compare",
+   "caption": "预防类保证过程质量，检查类发现缺陷，统计类用数据找规律。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "system-integration/si-quality-tools-compare.html",
+   "darkFile": "system-integration/si-quality-tools-compare.dark.html"
+  },
+  {
+   "id": "si-schedule-layers",
+   "examId": "system-integration",
+   "chapter": "项目进度管理",
+   "title": "进度管理六个过程",
+   "archetype": "layers",
+   "caption": "规划 → 定义活动 → 排序活动 → 估算活动历时 → 制定进度计划 → 控制进度。",
+   "tags": [
+    "高频",
+    "串联"
+   ],
+   "file": "system-integration/si-schedule-layers.html",
+   "darkFile": "system-integration/si-schedule-layers.dark.html"
+  },
+  {
+   "id": "si-schedule-overview-map",
+   "examId": "system-integration",
+   "chapter": "项目进度管理概述",
+   "title": "进度管理核心概念",
+   "archetype": "map",
+   "caption": "把「计划怎么排」和「实际怎么控」两件事分开记忆。",
+   "tags": [
+    "串联"
+   ],
+   "file": "system-integration/si-schedule-overview-map.html",
+   "darkFile": "system-integration/si-schedule-overview-map.dark.html"
+  },
+  {
+   "id": "si-configuration-flow",
+   "examId": "system-integration",
+   "chapter": "项目配置管理",
+   "title": "配置管理四大活动",
+   "archetype": "flow",
+   "caption": "配置项识别 → 状态记录 → 配置审计 → 变更控制，贯穿项目始终。",
+   "tags": [
+    "高频",
+    "流程"
+   ],
+   "file": "system-integration/si-configuration-flow.html",
+   "darkFile": "system-integration/si-configuration-flow.dark.html"
+  },
+  {
+   "id": "si-procurement-flow",
+   "examId": "system-integration",
+   "chapter": "项目采购管理",
+   "title": "采购管理流程",
+   "archetype": "flow",
+   "caption": "采购工作说明书 → 询价/招标 → 选择卖方 → 合同 → 实施与收尾。",
+   "tags": [
+    "流程"
+   ],
+   "file": "system-integration/si-procurement-flow.html",
+   "darkFile": "system-integration/si-procurement-flow.dark.html"
+  },
+  {
+   "id": "si-risk-map",
+   "examId": "system-integration",
+   "chapter": "项目风险管理",
+   "title": "风险管理过程与工具",
+   "archetype": "map",
+   "caption": "五个过程：规划 → 识别 → 定性分析 → 定量分析 → 应对与监督。",
+   "tags": [
+    "高频",
+    "串联"
+   ],
+   "file": "system-integration/si-risk-map.html",
+   "darkFile": "system-integration/si-risk-map.dark.html"
+  },
+  {
+   "id": "si-risk-matrix",
+   "examId": "system-integration",
+   "chapter": "风险分析与评价",
+   "title": "风险概率–影响矩阵",
+   "archetype": "matrix",
+   "caption": "右上角是重点风险，必须制定应对计划；左下角只需登记并监督。",
+   "tags": [
+    "高频",
+    "图表"
+   ],
+   "file": "system-integration/si-risk-matrix.html",
+   "darkFile": "system-integration/si-risk-matrix.dark.html"
+  },
+  {
+   "id": "si-risk-strategy-compare",
+   "examId": "system-integration",
+   "chapter": "风险应对与储备",
+   "title": "四种风险应对策略",
+   "archetype": "compare",
+   "caption": "规避改变计划，消除威胁；减轻降低概率与影响；转移把责任给第三方；接受并预留储备。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "system-integration/si-risk-strategy-compare.html",
+   "darkFile": "system-integration/si-risk-strategy-compare.dark.html"
+  },
+  {
+   "id": "si-risk-register-flow",
+   "examId": "system-integration",
+   "chapter": "风险识别与登记",
+   "title": "风险管理流程",
+   "archetype": "flow",
+   "caption": "风险登记册是风险识别阶段的正式输出，之后进入分析与应对。",
+   "tags": [
+    "流程"
+   ],
+   "file": "system-integration/si-risk-register-flow.html",
+   "darkFile": "system-integration/si-risk-register-flow.dark.html"
+  },
+  {
+   "id": "md-jpeg-flow",
+   "examId": "multimedia-designer",
+   "chapter": "JPEG与DCT",
+   "title": "JPEG 编码流程",
+   "archetype": "flow",
+   "caption": "量化是唯一的不可逆环节；DCT 与霍夫曼编码都是可逆的。",
+   "tags": [
+    "高频",
+    "流程"
+   ],
+   "file": "multimedia-designer/md-jpeg-flow.html",
+   "darkFile": "multimedia-designer/md-jpeg-flow.dark.html"
+  },
+  {
+   "id": "md-interaction-layers",
+   "examId": "multimedia-designer",
+   "chapter": "交互设计",
+   "title": "交互设计五个层次",
+   "archetype": "layers",
+   "caption": "从「功能」到「体验」逐层提升，缺一层就会「不好用但不难看」。",
+   "tags": [
+    "串联"
+   ],
+   "file": "multimedia-designer/md-interaction-layers.html",
+   "darkFile": "multimedia-designer/md-interaction-layers.dark.html"
+  },
+  {
+   "id": "md-transmission-layers",
+   "examId": "multimedia-designer",
+   "chapter": "传输与安全",
+   "title": "流媒体传输与安全防护",
+   "archetype": "layers",
+   "caption": "自下而上：物理链路 → 传输协议 → 流媒体协议 → 应用安全。",
+   "tags": [
+    "串联"
+   ],
+   "file": "multimedia-designer/md-transmission-layers.html",
+   "darkFile": "multimedia-designer/md-transmission-layers.dark.html"
+  },
+  {
+   "id": "md-redundancy-formula",
+   "examId": "multimedia-designer",
+   "chapter": "冗余与压缩比",
+   "title": "压缩比与冗余度",
+   "archetype": "formula",
+   "caption": "压缩比越大说明去掉的冗余越多；无损压缩后再压缩基本无收益。",
+   "tags": [
+    "计算",
+    "高频"
+   ],
+   "file": "multimedia-designer/md-redundancy-formula.html",
+   "darkFile": "multimedia-designer/md-redundancy-formula.dark.html"
+  },
+  {
+   "id": "md-resolution-formula",
+   "examId": "multimedia-designer",
+   "chapter": "分辨率与图像容量",
+   "title": "未压缩图像容量计算",
+   "archetype": "formula",
+   "caption": "容量 = 像素数 × 每像素位数 ÷ 8，彩色按每像素 24 位、灰度按 8 位。",
+   "tags": [
+    "计算",
+    "高频"
+   ],
+   "file": "multimedia-designer/md-resolution-formula.html",
+   "darkFile": "multimedia-designer/md-resolution-formula.dark.html"
+  },
+  {
+   "id": "md-animation-timeline",
+   "examId": "multimedia-designer",
+   "chapter": "动画技术",
+   "title": "动画的帧序列",
+   "archetype": "timeline",
+   "caption": "动画 = 连续帧；帧率决定流畅度，帧数决定时长，关键帧决定运动轨迹。",
+   "tags": [
+    "高频"
+   ],
+   "file": "multimedia-designer/md-animation-timeline.html",
+   "darkFile": "multimedia-designer/md-animation-timeline.dark.html"
+  },
+  {
+   "id": "md-compression-compare",
+   "examId": "multimedia-designer",
+   "chapter": "压缩编码技术",
+   "title": "压缩编码方法分类",
+   "archetype": "compare",
+   "caption": "无损保真但压缩比低，有损丢弃人眼不敏感的信息；帧内压缩去空间冗余，帧间压缩去时间冗余。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "multimedia-designer/md-compression-compare.html",
+   "darkFile": "multimedia-designer/md-compression-compare.dark.html"
+  },
+  {
+   "id": "md-five-elements-map",
+   "examId": "multimedia-designer",
+   "chapter": "多媒体技术基础",
+   "title": "多媒体五要素",
+   "archetype": "map",
+   "caption": "五要素都是「可感知的媒体形态」，不含设备、参数与管理工具。",
+   "tags": [
+    "高频",
+    "记忆"
+   ],
+   "file": "multimedia-designer/md-five-elements-map.html",
+   "darkFile": "multimedia-designer/md-five-elements-map.dark.html"
+  },
+  {
+   "id": "md-database-layers",
+   "examId": "multimedia-designer",
+   "chapter": "多媒体数据库",
+   "title": "多媒体数据的三层组织",
+   "archetype": "layers",
+   "caption": "底层的海量存储要靠数据库管理，上层要靠检索与交互把内容送到用户面前。",
+   "tags": [
+    "串联"
+   ],
+   "file": "multimedia-designer/md-database-layers.html",
+   "darkFile": "multimedia-designer/md-database-layers.dark.html"
+  },
+  {
+   "id": "md-project-flow",
+   "examId": "multimedia-designer",
+   "chapter": "多媒体项目实施",
+   "title": "多媒体项目实施流程",
+   "archetype": "flow",
+   "caption": "需求 → 策划 → 设计 → 制作 → 测试 → 交付，贯穿项目管理三要素。",
+   "tags": [
+    "流程"
+   ],
+   "file": "multimedia-designer/md-project-flow.html",
+   "darkFile": "multimedia-designer/md-project-flow.dark.html"
+  },
+  {
+   "id": "md-frame-formula",
+   "examId": "multimedia-designer",
+   "chapter": "帧与编码",
+   "title": "帧率与码率计算",
+   "archetype": "formula",
+   "caption": "码率 = 分辨率 × 帧率 × 每像素比特数；帧数 = 帧率 × 时长。",
+   "tags": [
+    "计算",
+    "高频"
+   ],
+   "file": "multimedia-designer/md-frame-formula.html",
+   "darkFile": "multimedia-designer/md-frame-formula.dark.html"
+  },
+  {
+   "id": "md-image-format-compare",
+   "examId": "multimedia-designer",
+   "chapter": "数字图像与格式",
+   "title": "常见图像格式对比",
+   "archetype": "compare",
+   "caption": "无损格式保真不压缩小，有损格式小但有损，矢量格式与分辨率无关可无限放大。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "multimedia-designer/md-image-format-compare.html",
+   "darkFile": "multimedia-designer/md-image-format-compare.dark.html"
+  },
+  {
+   "id": "node-vector-raster-compare",
+   "examId": "multimedia-designer",
+   "chapter": "数字图形与图像基础",
+   "title": "矢量图 vs 位图",
+   "archetype": "compare",
+   "caption": "矢量图描述「画什么」，位图记录「每个像素什么颜色」；前者与分辨率无关。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "multimedia-designer/node-vector-raster-compare.html",
+   "darkFile": "multimedia-designer/node-vector-raster-compare.dark.html"
+  },
+  {
+   "id": "md-video-flow",
+   "examId": "multimedia-designer",
+   "chapter": "数字视频",
+   "title": "视频制作全流程",
+   "archetype": "flow",
+   "caption": "从拍摄素材到成品交付，每一步都会影响码率与最终文件体积。",
+   "tags": [
+    "流程"
+   ],
+   "file": "multimedia-designer/md-video-flow.html",
+   "darkFile": "multimedia-designer/md-video-flow.dark.html"
+  },
+  {
+   "id": "md-audio-flow",
+   "examId": "multimedia-designer",
+   "chapter": "数字音频",
+   "title": "声音数字化流程",
+   "archetype": "flow",
+   "caption": "采样把连续时间离散化，量化把幅度离散化，编码再压缩。",
+   "tags": [
+    "高频",
+    "流程"
+   ],
+   "file": "multimedia-designer/md-audio-flow.html",
+   "darkFile": "multimedia-designer/md-audio-flow.dark.html"
+  },
+  {
+   "id": "md-standard-layers",
+   "examId": "multimedia-designer",
+   "chapter": "标准与版权",
+   "title": "标准体系与版权保护",
+   "archetype": "layers",
+   "caption": "标准管「怎么互通」，版权管「能不能用」，两者共同支撑产业落地。",
+   "tags": [
+    "串联"
+   ],
+   "file": "multimedia-designer/md-standard-layers.html",
+   "darkFile": "multimedia-designer/md-standard-layers.dark.html"
+  },
+  {
+   "id": "md-streaming-flow",
+   "examId": "multimedia-designer",
+   "chapter": "流媒体技术",
+   "title": "流媒体工作流程",
+   "archetype": "flow",
+   "caption": "边下载边播放是核心特征，缓冲与分块决定体验。",
+   "tags": [
+    "高频",
+    "流程"
+   ],
+   "file": "multimedia-designer/md-streaming-flow.html",
+   "darkFile": "multimedia-designer/md-streaming-flow.dark.html"
+  },
+  {
+   "id": "md-ethics-compare",
+   "examId": "multimedia-designer",
+   "chapter": "职业道德",
+   "title": "多媒体行业职业道德要点",
+   "archetype": "compare",
+   "caption": "版权意识与内容安全是多媒体从业者的两条红线。",
+   "tags": [
+    "记忆"
+   ],
+   "file": "multimedia-designer/md-ethics-compare.html",
+   "darkFile": "multimedia-designer/md-ethics-compare.dark.html"
+  },
+  {
+   "id": "md-color-map",
+   "examId": "multimedia-designer",
+   "chapter": "色彩与色彩管理",
+   "title": "常用色彩空间",
+   "archetype": "map",
+   "caption": "加色法用于发光设备，减色法用于印刷纸张，HSV/HSL 更贴近人的颜色感知。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "multimedia-designer/md-color-map.html",
+   "darkFile": "multimedia-designer/md-color-map.dark.html"
+  },
+  {
+   "id": "md-video-size-formula",
+   "examId": "multimedia-designer",
+   "chapter": "视频参数与计算",
+   "title": "视频文件容量计算",
+   "archetype": "formula",
+   "caption": "容量 = 码率 × 时长 ÷ 8，这是所有视频存储题的统一入口。",
+   "tags": [
+    "计算",
+    "高频"
+   ],
+   "file": "multimedia-designer/md-video-size-formula.html",
+   "darkFile": "multimedia-designer/md-video-size-formula.dark.html"
+  },
+  {
+   "id": "md-video-format-compare",
+   "examId": "multimedia-designer",
+   "chapter": "视频格式与制作流程",
+   "title": "常见视频格式与容器",
+   "archetype": "compare",
+   "caption": "容器（MP4/MKV/AVI）负责封装，编码（H.264/H.265/AVC）负责压缩，两者别混淆。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "multimedia-designer/md-video-format-compare.html",
+   "darkFile": "multimedia-designer/md-video-format-compare.dark.html"
+  },
+  {
+   "id": "md-audio-size-formula",
+   "examId": "multimedia-designer",
+   "chapter": "音频参数与计算",
+   "title": "音频数据量计算",
+   "archetype": "formula",
+   "caption": "数据量 = 采样频率 × 量化位数 × 声道数 × 时间，这四个量缺一不可。",
+   "tags": [
+    "计算",
+    "高频"
+   ],
+   "file": "multimedia-designer/md-audio-size-formula.html",
+   "darkFile": "multimedia-designer/md-audio-size-formula.dark.html"
+  },
+  {
+   "id": "md-audio-format-compare",
+   "examId": "multimedia-designer",
+   "chapter": "音频格式与编辑",
+   "title": "常见音频格式对比",
+   "archetype": "compare",
+   "caption": "波形文件未压缩、体积大；压缩格式体积小；MIDI 记录音符事件而非声音。",
+   "tags": [
+    "高频",
+    "对比"
+   ],
+   "file": "multimedia-designer/md-audio-format-compare.html",
+   "darkFile": "multimedia-designer/md-audio-format-compare.dark.html"
+  }
+ ]
+}

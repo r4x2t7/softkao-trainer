@@ -5,12 +5,13 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.softkao.trainer.core.model.ExamId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 private val Context.settingsStore by preferencesDataStore(name = "softkao_settings")
 
-/** 本地设置：题库更新源、AI 接口、每日目标 */
+/** 本地设置：题库更新源、AI 接口、每日目标、全局科目 */
 class SettingsRepository(private val context: Context) {
 
     private object Keys {
@@ -20,14 +21,23 @@ class SettingsRepository(private val context: Context) {
         val aiModel = stringPreferencesKey("ai_model")
         val dailyGoal = intPreferencesKey("daily_goal")
         val seeded = stringPreferencesKey("seeded_version")
+
+        /** 全局唯一的当前科目 */
         val currentExamId = stringPreferencesKey("current_exam_id")
     }
 
-    /** 当前科目：一个人通常只考一门，默认跟随这里设置 */
+    /**
+     * 当前科目，全站唯一。
+     *
+     * 一个人通常只考一门科目，所以这里只保留一个值：首页、知识点、错题本、
+     * 统计、搜索、设置全部共用同一份，任何一处切换都会同步到其它页面。
+     * 两门考试的数据本身完全隔离（题库、错题、掌握度各算各的）。
+     */
     val currentExamId: Flow<String> = context.settingsStore.data.map {
-        it[Keys.currentExamId] ?: com.softkao.trainer.core.model.ExamId.SYSTEM_INTEGRATION.id
+        it[Keys.currentExamId] ?: ExamId.SYSTEM_INTEGRATION.id
     }
 
+    /** 切换全局科目 */
     suspend fun setCurrentExamId(id: String) =
         context.settingsStore.edit { it[Keys.currentExamId] = id }
 
