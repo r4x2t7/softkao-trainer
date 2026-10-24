@@ -270,12 +270,11 @@ fun HomeScreen(
                                 label = {
                                     Text(
                                         chapter,
-                                        maxLines = 1,
-                                        softWrap = false,
-                                        overflow = TextOverflow.Ellipsis,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Clip,
                                     )
                                 },
-                                modifier = Modifier.widthIn(max = 190.dp),
+                                modifier = Modifier.widthIn(max = 200.dp),
                             )
                         }
                     }
@@ -286,9 +285,6 @@ fun HomeScreen(
                         "按知识点专项练习（共 ${stat.knowledgePoints.size} 个知识点）",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        softWrap = false,
-                        overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(Modifier.height(6.dp))
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -298,12 +294,11 @@ fun HomeScreen(
                                 label = {
                                     Text(
                                         "$kp ($count)",
-                                        maxLines = 1,
-                                        softWrap = false,
-                                        overflow = TextOverflow.Ellipsis,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Clip,
                                     )
                                 },
-                                modifier = Modifier.widthIn(max = 200.dp),
+                                modifier = Modifier.widthIn(max = 210.dp),
                             )
                         }
                     }

@@ -180,45 +180,14 @@ fun KnowledgeScreen(
                     contentPadding = PaddingValues(vertical = 2.dp),
                 ) {
                     items(rows, key = { it.chapter }) { row ->
-                        Card(
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-                            shape = RoundedCornerShape(14.dp),
-                            modifier = Modifier
-                                .width(252.dp)
-                                .clickable { onOpenChapter(examId, row.chapter) },
-                        ) {
-                            Column(Modifier.padding(14.dp)) {
-                                Text(
-                                    row.chapter,
-                                    style = MaterialTheme.typography.titleSmall,
-                                    fontWeight = FontWeight.SemiBold,
-                                )
-                                Spacer(Modifier.height(6.dp))
-                                if (row.hasMaterial) {
-                                    TagChip("有精讲")
-                                }
-                                Spacer(Modifier.height(8.dp))
-                                LinearProgressIndicator(
-                                    progress = { if (row.total == 0) 0f else row.answered.toFloat() / row.total },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(5.dp)
-                                        .clip(RoundedCornerShape(3.dp)),
-                                )
-                                Spacer(Modifier.height(8.dp))
-                                Text(
-                                    "题量 ${row.total} · 已练 ${row.answered}",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                                Text(
-                                    if (row.answered == 0) "未开始" else "正确率 ${row.correct * 100 / row.answered}%",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                        }
+                        KnowledgeChapterCard(
+                            chapter = row.chapter,
+                            total = row.total,
+                            answered = row.answered,
+                            correct = row.correct,
+                            hasMaterial = row.hasMaterial,
+                            onClick = { onOpenChapter(examId, row.chapter) },
+                        )
                     }
                 }
             }
@@ -337,28 +306,11 @@ fun ChapterDetailScreen(
                         contentPadding = PaddingValues(vertical = 2.dp),
                     ) {
                         items(htmlVisuals, key = { it.id }) { v ->
-                            Card(
-                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-                                shape = RoundedCornerShape(14.dp),
-                                modifier = Modifier
-                                    .width(240.dp)
-                                    .clickable { onOpenVisual(v) },
-                            ) {
-                                Column(Modifier.padding(14.dp)) {
-                                    Text(
-                                        v.title,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        fontWeight = FontWeight.Medium,
-                                    )
-                                    Spacer(Modifier.height(4.dp))
-                                    Text(
-                                        v.caption,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                }
-                            }
+                            KnowledgeVisualCard(
+                                title = v.title,
+                                caption = v.caption,
+                                onClick = { onOpenVisual(v) },
+                            )
                         }
                     }
                 }
@@ -389,39 +341,14 @@ fun ChapterDetailScreen(
                         contentPadding = PaddingValues(vertical = 2.dp),
                     ) {
                         items(pointRows, key = { it.point }) { row ->
-                            Card(
-                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-                                shape = RoundedCornerShape(14.dp),
-                                modifier = Modifier.width(280.dp),
-                            ) {
-                                Column(Modifier.padding(14.dp)) {
-                                    Text(
-                                        row.point,
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        fontWeight = FontWeight.Medium,
-                                    )
-                                    Spacer(Modifier.height(4.dp))
-                                    Text(
-                                        "${row.count} 题" + if (row.done > 0) " · 正确率 ${row.right * 100 / row.done}%" else "",
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                    if (!row.note.isNullOrBlank()) {
-                                        Spacer(Modifier.height(8.dp))
-                                        Text(
-                                            row.note,
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        )
-                                    }
-                                    Spacer(Modifier.height(4.dp))
-                                    TextButton(
-                                        onClick = { onPracticePoint(examId, row.point) },
-                                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp),
-                                    ) { Text("练习该考点", maxLines = 1, softWrap = false) }
-                                }
-                            }
+                            KnowledgePointCard(
+                                point = row.point,
+                                count = row.count,
+                                done = row.done,
+                                right = row.right,
+                                note = row.note,
+                                onPractice = { onPracticePoint(examId, row.point) },
+                            )
                         }
                     }
                 }

@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -293,13 +294,14 @@ def wrap_text(text: str, per_line: int) -> list[str]:
 
 
 def text_block(x: float, y: float, lines: list[str], cls: str = "lbl-s",
-               anchor: str = "middle", lh: float = 13.0) -> str:
+               anchor: str = "middle", lh: float = 13.0, style: str = "") -> str:
     if not lines:
         return ""
     out = []
     for i, ln in enumerate(lines):
+        sty = f' style="{style}"' if style else ""
         out.append(
-            f'<text class="{cls}" x="{x}" y="{y + i * lh}" text-anchor="{anchor}">{esc(ln)}</text>'
+            f'<text class="{cls}" x="{x}" y="{y + i * lh}" text-anchor="{anchor}"{sty}>{esc(ln)}</text>'
         )
     return "".join(out)
 
@@ -309,20 +311,135 @@ def text_block(x: float, y: float, lines: list[str], cls: str = "lbl-s",
 # 约定：SVG 坐标使用 360 宽的虚拟画布，实际显示时用 preserveAspectRatio 缩放。
 
 
+def fit_viewbox(svg: str, pad: float = 10.0) -> str:
+    """按内容实际范围重算 viewBox，避免图形画到画布外被裁掉。
+
+    各种原型的坐标是手写的，难免有元素越界；与其逐个原型调坐标，
+    不如在这里统一兜底：只扩大、不缩小，保证原来长什么样还长什么样，
+    只是不再被裁。文字宽度按「中文 1 个单位、ASCII 0.55 个单位」粗估。
+    """
+    m = re.search(r'viewBox="([^"]+)"', svg)
+    if not m:
+        return svg
+    parts = m.group(1).replace(",", " ").split()
+    if len(parts) != 4:
+        return svg
+    vx, vy, vw, vh = (float(p) for p in parts)
+    right, bottom = vx + vw, vy + vh
+    left, top = vx, vy
+
+    def grow(x0: float, x1: float, y0: float, y1: float) -> None:
+        nonlocal left, top, right, bottom
+        left = min(left, x0)
+        top = min(top, y0)
+        right = max(right, x1)
+        bottom = max(bottom, y1)
+
+    attr_re = re.compile(r'([\w:-]+)\s*=\s*"([^"]*)"')
+    num_re = re.compile(r"-?\d+(?:\.\d+)?")
+
+    def attr(body: str, key: str) -> float | None:
+        mm = re.search(rf'{key}\s*=\s*"([^"]*)"', body)
+        if not mm:
+            return None
+        n = num_re.search(mm.group(1))
+        return float(n.group(0)) if n else None
+
+    for mm in re.finditer(r"<(rect|image|foreignObject)\b([^>]*)>", svg, re.I):
+        b = mm.group(2)
+        x = attr(b, "x") or 0.0
+        y = attr(b, "y") or 0.0
+        w = attr(b, "width") or 0.0
+        h = attr(b, "height") or 0.0
+        grow(x, x + w, y, y + h)
+
+    for mm in re.finditer(r"<(circle|ellipse)\b([^>]*)>", svg, re.I):
+        b = mm.group(2)
+        cx = attr(b, "cx")
+        cy = attr(b, "cy")
+        r = attr(b, "r") or attr(b, "rx") or 0.0
+        if cx is None or cy is None:
+            continue
+        grow(cx - r, cx + r, cy - r, cy + r)
+
+    for mm in re.finditer(r"<text\b([^>]*)>(.*?)</text>", svg, re.I | re.S):
+        b = mm.group(1)
+        x = attr(b, "x")
+        y = attr(b, "y")
+        if x is None or y is None:
+            continue
+        fs = 12.0
+        fsm = re.search(r"font-size\s*:\s*([\d.]+)px", b)
+        if fsm:
+            fs = float(fsm.group(1))
+        content = re.sub(r"<[^>]+>", "", mm.group(2))
+        cjk = len(re.findall(r"[\u2e80-\u9fff\u3000-\u303f\uff00-\uffef]", content))
+        other = max(0, len(content) - cjk)
+        w = cjk * fs + other * fs * 0.55
+        anchor = "middle"
+        am = re.search(r'text-anchor="([^"]+)"', b)
+        if am:
+            anchor = am.group(1)
+        if anchor == "middle":
+            x0, x1 = x - w / 2, x + w / 2
+        elif anchor == "end":
+            x0, x1 = x - w, x
+        else:
+            x0, x1 = x, x + w
+        grow(x0, x1, y - fs, y + fs * 0.3)
+
+    for mm in re.finditer(r"<line\b([^>]*)>", svg, re.I):
+        b = mm.group(1)
+        x1 = attr(b, "x1")
+        x2 = attr(b, "x2")
+        y1 = attr(b, "y1")
+        y2 = attr(b, "y2")
+        if None in (x1, x2, y1, y2):
+            continue
+        grow(min(x1, x2), max(x1, x2), min(y1, y2), max(y1, y2))
+
+    for mm in re.finditer(r"<(polyline|polygon)\b([^>]*)>", svg, re.I):
+        b = mm.group(2)
+        pm = re.search(r'points="([^"]*)"', b)
+        if not pm:
+            continue
+        nums = [float(v) for v in num_re.findall(pm.group(1))]
+        if len(nums) < 4:
+            continue
+        xs = nums[0::2]
+        ys = nums[1::2]
+        grow(min(xs), max(xs), min(ys), max(ys))
+
+    new_x = min(vx, left - pad)
+    new_y = min(vy, top - pad)
+    new_right = max(vx + vw, right + pad)
+    new_bottom = max(vy + vh, bottom + pad)
+    if (new_x, new_y, new_right, new_bottom) == (vx, vy, vx + vw, vy + vh):
+        return svg
+    return svg.replace(
+        m.group(0),
+        f'viewBox="{new_x:.1f} {new_y:.1f} {new_right - new_x:.1f} {new_bottom - new_y:.1f}"',
+        1,
+    )
+
+
 def r_layers(d: dict) -> tuple[str, str]:
     items = d["items"]
     n = len(items)
     box_h = 30
-    gap = 7
+    note_lh = 12.0
+    max_note_lines = 2
+    # 每层都要给副标题留位置，否则标题和副标题会叠在一起
+    block_h = box_h + max_note_lines * note_lh + 6
     top = 26
-    height = top + n * box_h + (n - 1) * gap + 14
+    height = top + n * block_h + 14
     parts = []
     for i, it in enumerate(items):
         # 上窄下宽，做成层叠金字塔
         w = 190 + i * (150 / max(1, n - 1)) if n > 1 else 240
         w = min(w, 300)
         x = 180 - w / 2
-        y = top + i * (box_h + gap)
+        y = top + i * block_h
         acc = it.get("accent", i % 8)
         parts.append(
             f'<g class="drop" style="animation-delay:{0.10 + i * 0.13:.2f}s">'
@@ -330,17 +447,14 @@ def r_layers(d: dict) -> tuple[str, str]:
             f'class="c{acc}" opacity="0.92"/>'
             f'<text class="on0" x="180" y="{y + 19}" text-anchor="middle" '
             f'style="font-size:12px;font-weight:700">{esc(it["label"])}</text>'
-            + (
-                f'<text class="lbl-s" x="180" y="{y + 19}" text-anchor="middle" '
-                f'style="fill:rgba(255,255,255,.85);font-size:10px">{esc(it["note"])}</text>'
-                if False else ""
-            )
             + "</g>"
         )
-        if it.get("note"):
+        # 副标题放在色条下方并折行：放进条内会和标题叠字，超长也会溢出条外
+        lines = wrap_text(it.get("note") or "", 32)[:max_note_lines]
+        for j, ln in enumerate(lines):
             parts.append(
-                f'<text class="lbl-s" x="180" y="{y + box_h - 5}" text-anchor="middle" '
-                f'style="fill:rgba(255,255,255,.88);font-size:10px">{esc(it["note"])}</text>'
+                f'<text class="lbl-s" x="180" y="{y + box_h + 11 + j * note_lh}" text-anchor="middle" '
+                f'style="fill:var(--muted);font-size:10px">{esc(ln)}</text>'
             )
     svg = (
         f'<svg viewBox="0 0 360 {height:.0f}" preserveAspectRatio="xMidYMid meet" '
@@ -471,8 +585,15 @@ def r_compare(d: dict) -> tuple[str, str]:
     gap = 9
     col_w = (360 - margin * 2 - gap * (n - 1)) / n
     top = 26
-    max_items = max(len(c["items"]) for c in cols)
-    body_h = max_items * 26 + 12
+    # 折行宽度必须按列宽算：字号约 10.5px/汉字，按 6.2 算会溢出到隔壁列
+    per_line = max(4, int((col_w - 24) / 10.5))
+    col_lines = [[wrap_text(it, per_line) for it in c["items"]] for c in cols]
+    def col_h(lines_list):
+        h = 0
+        for ls in lines_list:
+            h += max(26, len(ls) * 12 + 8)
+        return h
+    body_h = max((col_h(ls) for ls in col_lines), default=0) + 12
     height = top + 30 + body_h + 16
     parts = []
     for i, col in enumerate(cols):
@@ -488,21 +609,22 @@ def r_compare(d: dict) -> tuple[str, str]:
             f'style="font-size:11.5px;font-weight:700">{esc(col["title"])}</text>'
             f"</g>"
         )
-        for j, it in enumerate(col["items"]):
-            yy = top + 42 + j * 26
+        yy = top + 42
+        for j, ls in enumerate(col_lines[i]):
             parts.append(
                 f'<g class="fade" style="animation-delay:{0.30 + i * 0.12 + j * 0.07:.2f}s">'
                 f'<circle cx="{x + 9:.1f}" cy="{yy - 4:.1f}" r="3" class="c{acc}"/>'
                 + text_block(
                     x + 18,
                     yy,
-                    wrap_text(it, max(6, int(col_w / 6.2))),
+                    ls,
                     "lbl-s",
                     "start",
                     12,
                 )
                 + "</g>"
             )
+            yy += max(26, len(ls) * 12 + 8)
     svg = (
         f'<svg viewBox="0 0 360 {height:.0f}" preserveAspectRatio="xMidYMid meet" '
         f'xmlns="http://www.w3.org/2000/svg">' + "".join(parts) + "</svg>"
@@ -731,9 +853,12 @@ def r_matrix(d: dict) -> tuple[str, str]:
     xa = d.get("xAxis", [])
     ya = d.get("yAxis", [])
     cells = d.get("cells", [])
-    left, top = 58, 34
+    left, top = 76, 34
     cw, ch = 88, 62
     cols, rows = len(xa), len(ya)
+    # 折行宽度必须按格子实际宽度算：按固定字数折行会让文字溢出格子、和邻格叠在一起
+    title_per = max(3, int((cw - 14) / 12))
+    item_per = max(3, int((cw - 14) / 10.5))
     parts = []
     for r in range(rows):
         for c in range(cols):
@@ -748,6 +873,8 @@ def r_matrix(d: dict) -> tuple[str, str]:
         x = left + cell["col"] * cw
         y = top + cell["row"] * ch
         acc = cell.get("accent", (cell["row"] + cell["col"]) % 8)
+        title_lines = wrap_text(cell.get("title", ""), title_per)[:2]
+        item_lines = wrap_text("、".join(cell.get("items", [])), item_per)[:3]
         parts.append(
             f'<g class="pop" style="animation-delay:{0.12 + (cell["row"] * cols + cell["col"]) * 0.1:.2f}s">'
             f'<rect x="{x + 3}" y="{y + 3}" width="{cw - 6}" height="{ch - 6}" rx="8" '
@@ -756,19 +883,21 @@ def r_matrix(d: dict) -> tuple[str, str]:
             f'class="s{acc}" fill="none" style="opacity:.6"/>'
             + text_block(
                 x + cw / 2,
-                y + 20,
-                wrap_text(cell.get("title", ""), 8),
+                y + 18,
+                title_lines,
                 "lbl",
                 "middle",
                 12,
             )
             + text_block(
                 x + cw / 2,
-                y + 40,
-                wrap_text("、".join(cell.get("items", [])), 11),
+                y + 20 + len(title_lines) * 12,
+                item_lines,
                 "lbl-s",
                 "middle",
                 11,
+                # 彩色底上用正文色，别用灰色的 muted，对比度不够
+                style="fill:var(--text);opacity:.82",
             )
             + "</g>"
         )
@@ -789,8 +918,8 @@ def r_matrix(d: dict) -> tuple[str, str]:
         )
     if d.get("yTitle"):
         parts.append(
-            f'<text class="num" x="14" y="{top + rows * ch / 2}" text-anchor="middle" '
-            f'transform="rotate(-90 14 {top + rows * ch / 2})">{esc(d["yTitle"])}</text>'
+            f'<text class="num" x="10" y="{top + rows * ch / 2}" text-anchor="middle" '
+            f'transform="rotate(-90 10 {top + rows * ch / 2})">{esc(d["yTitle"])}</text>'
         )
     height = top + rows * ch + 30
     svg = (
@@ -803,10 +932,21 @@ def r_matrix(d: dict) -> tuple[str, str]:
 def r_network(d: dict) -> tuple[str, str]:
     nodes = d["nodes"]
     edges = d.get("edges", [])
+    # 节点宽度按列数自适应：7 列时如果还用 66px 宽，最后两个节点必然叠在一起
+    uniq_x = sorted({round(float(nd["x"]), 4) for nd in nodes})
+    cols = max(1, len(uniq_x))
+    margin = 12
+    w = int(min(66, max(30, (360 - 2 * margin) / cols - 10)))
+    # 中心点均匀铺开，首尾留出半个节点 + 边距，保证整体不出画布
+    span = 360 - 2 * margin - w
+    step = span / max(1, cols - 1) if cols > 1 else 0
     pos = {}
-    parts = []
     for nd in nodes:
-        pos[nd["id"]] = (26 + nd["x"] * 308, 24 + nd["y"] * 180)
+        idx = uniq_x.index(round(float(nd["x"]), 4))
+        cx = margin + w / 2 + idx * step
+        cy = 24 + float(nd["y"]) * 180
+        pos[nd["id"]] = (cx, cy)
+    parts = []
     for e in edges:
         a, b = e[0], e[1]
         if a not in pos or b not in pos:
@@ -817,20 +957,30 @@ def r_network(d: dict) -> tuple[str, str]:
             f'<path class="edge" d="M{x1:.1f},{y1:.1f} L{x2:.1f},{y2:.1f}"/>'
         )
         if len(e) > 2 and e[2]:
+            # 标签放在边的法线方向上，免得压到节点上
+            mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+            if abs(y2 - y1) < 1:          # 水平边：标在上方
+                lx, ly = mx, my - 13
+            elif abs(x2 - x1) < 1:        # 垂直边：标在右侧
+                lx, ly = mx + 13, my + 4
+            else:                         # 斜边：标在法线方向
+                dx, dy = x2 - x1, y2 - y1
+                ln = max(1e-6, (dx * dx + dy * dy) ** 0.5)
+                lx, ly = mx - dy / ln * 13, my + dx / ln * 13
             parts.append(
-                f'<text class="num" x="{(x1 + x2) / 2:.1f}" y="{(y1 + y2) / 2 - 5:.1f}" '
+                f'<text class="num" x="{lx:.1f}" y="{ly:.1f}" '
                 f'text-anchor="middle">{esc(e[2])}</text>'
             )
     for i, nd in enumerate(nodes):
         x, y = pos[nd["id"]]
         acc = nd.get("accent", i % 8)
-        w = 66
+        fs = 11 if w >= 56 else 10
         parts.append(
             f'<g class="pop" style="animation-delay:{0.2 + i * 0.13:.2f}s">'
             f'<rect x="{x - w / 2:.1f}" y="{y - 15:.1f}" width="{w}" height="30" rx="8" '
             f'class="c{acc}"/>'
             f'<text class="on0" x="{x:.1f}" y="{y + 4:.1f}" text-anchor="middle" '
-            f'style="font-size:11px;font-weight:600">{esc(nd["label"])}</text>'
+            f'style="font-size:{fs}px;font-weight:600">{esc(nd["label"])}</text>'
             f"</g>"
         )
         if nd.get("note"):
@@ -856,9 +1006,11 @@ def r_formula(d: dict) -> tuple[str, str]:
     n = len(terms)
     cols = 2 if n > 2 else n
     rows = (n + cols - 1) // cols if n else 0
-    cw, ch = 150, 44
+    cw, ch = 150, 50
     gap = 12
     top = 56
+    # 按卡片宽度折行，不能写死字数，否则说明文字会顶出卡片
+    meaning_per = max(6, int((cw - 20) / 10.5))
     for i, t in enumerate(terms):
         r, c = divmod(i, cols)
         x = 180 - (cols * cw + (cols - 1) * gap) / 2 + c * (cw + gap)
@@ -870,7 +1022,7 @@ def r_formula(d: dict) -> tuple[str, str]:
             f'<rect x="{x:.1f}" y="{y}" width="4" height="{ch}" rx="2" class="c{acc}"/>'
             f'<text class="lbl" x="{x + 14:.1f}" y="{y + 18:.0f}" '
             f'style="font-size:12.5px;fill:var(--c{acc})">{esc(t["symbol"])}</text>'
-            + text_block(x + 14, y + 33, wrap_text(t["meaning"], 15), "lbl-s", "start", 11)
+            + text_block(x + 14, y + 33, wrap_text(t["meaning"], meaning_per), "lbl-s", "start", 11)
             + "</g>"
         )
     height = top + rows * (ch + gap) + 6
@@ -1040,6 +1192,8 @@ def build(spec: dict) -> dict[str, str]:
     if arch not in RENDERERS:
         raise KeyError(f"未知原型: {arch}")
     svg, extra = RENDERERS[arch](spec)
+    # 统一按内容重算 viewBox：防止手写坐标越界导致图形被裁掉
+    svg = fit_viewbox(svg)
     steps = int(spec.get("animSteps", 0) or 0)
     if steps <= 0:
         steps = {"layers": 4, "cycle": 4, "flow": 4, "compare": 4, "tree": 3, "timeline": 4,

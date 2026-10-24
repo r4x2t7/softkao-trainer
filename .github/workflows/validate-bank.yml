@@ -6,12 +6,18 @@ on:
     paths:
       - 'question-bank/**'
       - 'tools/**'
-      - 'app/src/main/assets/seed/**'
+      - 'app/src/main/assets/**'
+      - 'app/src/main/java/**'
+      - 'app/src/test/**'
+      - 'app/build.gradle.kts'
+      - 'gradle/**'
       - '.github/workflows/validate-bank.yml'
   pull_request:
     paths:
       - 'question-bank/**'
       - 'tools/**'
+      - 'app/src/**'
+      - 'gradle/**'
 
 jobs:
   validate:
@@ -43,6 +49,10 @@ jobs:
         run: |
           python tools/check_ai_consistency.py
 
+      - name: UI 契约自检（文字不许被省略、路由齐全、科目作用域统一）
+        run: |
+          python tools/ui_contract_check.py
+
       - name: 题库规模自检
         run: |
           python - <<'PY'
@@ -67,3 +77,26 @@ jobs:
           if not expanded:
               print("::notice::当前仍是 v1 题库，扩版进行中，规模门槛暂不强制")
           PY
+
+  unit-test:
+    name: 单元测试与界面测试
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - uses: android-actions/setup-android@v3
+
+      - name: 安装所需 Android SDK
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager "platforms;android-36" "build-tools;36.0.0" "platform-tools"
+
+      - name: 跑单元测试与 Compose 界面测试
+        run: ./gradlew testDebugUnitTest --console=plain

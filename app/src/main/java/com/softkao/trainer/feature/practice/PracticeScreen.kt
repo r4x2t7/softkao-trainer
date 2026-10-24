@@ -63,6 +63,7 @@ import com.softkao.trainer.core.model.ExamId
 import com.softkao.trainer.core.model.PracticeMode
 import com.softkao.trainer.core.model.Question
 import com.softkao.trainer.core.model.QuestionType
+import com.softkao.trainer.core.ui.PracticeLogic
 import com.softkao.trainer.feature.common.SectionCard
 import com.softkao.trainer.feature.common.TagChip
 import kotlinx.coroutines.Dispatchers
@@ -478,38 +479,13 @@ fun PracticeScreen(
             } else {
                 if (q.type == QuestionType.TRUE_FALSE) {
                     // 判断题在题库中不带选项，这里渲染 √ / × 两个可选项
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        listOf("√" to "正确", "×" to "错误").forEach { (key, label) ->
-                            val selected = key in state.selected
-                            val isAnswer = key in q.answer
-                            val borderColor = when {
-                                state.submitted && isAnswer -> MaterialTheme.colorScheme.tertiary
-                                state.submitted && selected -> MaterialTheme.colorScheme.error
-                                selected -> MaterialTheme.colorScheme.primary
-                                else -> MaterialTheme.colorScheme.outline.copy(alpha = 0.4f)
-                            }
-                            Row(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .clip(RoundedCornerShape(12.dp))
-                                    .border(1.5.dp, borderColor, RoundedCornerShape(12.dp))
-                                    .background(
-                                        if (selected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
-                                        else MaterialTheme.colorScheme.surface
-                                    )
-                                    .clickable(enabled = !state.submitted) { vm.select(key) }
-                                    .padding(vertical = 14.dp),
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Text(
-                                    "$key  $label",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = FontWeight.Medium,
-                                )
-                            }
-                        }
-                    }
+                    TrueFalseChoiceRow(
+                        selected = state.selected,
+                        answer = q.answer,
+                        submitted = state.submitted,
+                        enabled = !state.submitted,
+                        onSelect = { vm.select(it) },
+                    )
                 } else {
                     q.options.forEach { option ->
                         OptionRow(
@@ -617,21 +593,15 @@ fun PracticeScreen(
 @Composable
 private fun MockTimerBar(questions: Int) {
     // 模拟卷按考试节奏倒计时：选择题 90 分钟，案例题另计
-    var remaining by remember { mutableLongStateOf(90L * 60) }
+    var remaining by remember { mutableLongStateOf(PracticeLogic.MOCK_DURATION_SECONDS) }
     LaunchedEffect(Unit) {
         while (remaining > 0) {
             delay(1000)
             remaining -= 1
         }
     }
-    val m = remaining / 60
-    val s = remaining % 60
-    val urgent = remaining < 10 * 60
-    val timeText = if (remaining > 0) {
-        "⏱ 模拟卷剩余 %02d:%02d".format(m, s)
-    } else {
-        "⏱ 已超时，请尽快交卷"
-    }
+    val timeText = PracticeLogic.mockTimeText(remaining)
+    val urgent = PracticeLogic.isMockUrgent(remaining)
     Row(
         Modifier
             .fillMaxWidth()
@@ -650,55 +620,6 @@ private fun MockTimerBar(questions: Int) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.weight(1f),
         )
-    }
-}
-
-@Composable
-private fun PracticeJumpBar(
-    index: Int,
-    total: Int,
-    onJump: (Int) -> Unit,
-    onFirst: () -> Unit,
-    onLast: () -> Unit,
-    onSheet: () -> Unit,
-) {
-    if (total <= 0) return
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 6.dp, vertical = 2.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        JumpButton("⌂ 首页") { onFirst() }
-        JumpButton("−100") { onJump((index - 100).coerceAtLeast(0)) }
-        JumpButton("−10") { onJump((index - 10).coerceAtLeast(0)) }
-        JumpButton("上一页") { onJump((index - 1).coerceAtLeast(0)) }
-        Text(
-            "第 ${index + 1} / $total 题",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.primary,
-            maxLines = 1,
-            softWrap = false,
-            modifier = Modifier.padding(horizontal = 6.dp),
-        )
-        JumpButton("下一页") { onJump((index + 1).coerceAtMost(total - 1)) }
-        JumpButton("+10") { onJump((index + 10).coerceAtMost(total - 1)) }
-        JumpButton("+100") { onJump((index + 100).coerceAtMost(total - 1)) }
-        JumpButton("尾页 ⇥") { onLast() }
-        JumpButton("答题卡") { onSheet() }
-    }
-}
-
-@Composable
-private fun JumpButton(text: String, onClick: () -> Unit) {
-    TextButton(
-        onClick = onClick,
-        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-        modifier = Modifier.heightIn(min = 32.dp),
-    ) {
-        Text(text, style = MaterialTheme.typography.labelMedium, maxLines = 1, softWrap = false)
     }
 }
 
@@ -755,11 +676,9 @@ private fun AnswerSheetDialog(
     onJump: (Int) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val perPage = 30
-    val pages = if (total == 0) 1 else (total + perPage - 1) / perPage
-    var page by remember { mutableStateOf((current / perPage).coerceAtMost(pages - 1)) }
-    val start = page * perPage
-    val end = (start + perPage).coerceAtMost(total)
+    val pages = PracticeLogic.sheetPageCount(total)
+    var page by remember { mutableStateOf(PracticeLogic.initialSheetPage(current, total)) }
+    val range = PracticeLogic.sheetRange(page, total)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -771,7 +690,8 @@ private fun AnswerSheetDialog(
                     modifier = Modifier.height(210.dp),
                     contentPadding = PaddingValues(2.dp),
                 ) {
-                    items((start until end).toList()) { i ->                        val flag = flags.getOrNull(i)
+                    items(range.toList()) { i ->
+                        val flag = flags.getOrNull(i)
                         val bg = when {
                             i == current -> MaterialTheme.colorScheme.primary
                             flag == true -> MaterialTheme.colorScheme.tertiary
@@ -787,7 +707,7 @@ private fun AnswerSheetDialog(
                                 .background(bg)
                                 .clickable {
                                     onJump(i)
-                                    page = (i / perPage).coerceAtMost(pages - 1)
+                                    page = (i / PracticeLogic.ANSWER_SHEET_PER_PAGE).coerceAtMost(pages - 1)
                                 },
                             contentAlignment = Alignment.Center,
                         ) {

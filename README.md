@@ -54,6 +54,40 @@ python tools/fix_law_citations.py    # 应用勘误（已接入 publish.py）
 
 勘误以「外科手术式」字符串替换落地在 `tools/fix_law_citations.py`，已接入发布流水线，**每次出包都会重新校验并应用**。CI 里还有两道门禁：答案与 AI 解析首句必须一致、每个知识点都必须有精讲。
 
+## 测试与自检
+
+不依赖设备也能跑的测试，全部放在 CI 里：
+
+```bash
+# JVM 单元测试 + Compose 界面测试（Robolectric 渲染真实 Compose，用语义树断言）
+./gradlew testDebugUnitTest
+
+# UI 契约检查：文字不许被省略号截断、路由齐全、科目作用域统一、图解不越界
+python tools/ui_contract_check.py
+
+# 逐知识点精讲覆盖率 / 长度
+python tools/kp_notes_pipeline.py coverage
+python tools/kp_notes_lint.py
+
+# 答案与 AI 解析首句是否自洽
+python tools/check_ai_consistency.py
+
+# 图解素材体检：把 59 张 HTML 渲染成 PNG 做视觉检查 + 坐标越界检查
+python tools/render_visuals.py --size=640x900
+python tools/check_visual_bounds.py
+```
+
+**为什么能在没有设备的情况下测界面**：Robolectric 能把 Compose 真正渲染出来，
+语义树里能读到「这段文字确实显示了」。抽出来的可测部件见
+`KnowledgeCards.kt`（章节卡 / 知识点卡 / 图解卡）与 `PracticeWidgets.kt`（判断题选项行 / 底部跳转栏）。
+
+**踩过的坑**
+- Robolectric 会自动创建 `SoftKaoApp`，它在后台线程往 SQLite 灌种子数据，
+  而 Robolectric 的 SQLite 影子不支持跨线程 → 测试要用 `TestApp`（不初始化 ServiceLocator）
+- Android 的 `org.json` 在 JVM 上是只会抛异常的桩类，单元测试要额外引 `org.json:json`
+- 无头 Chrome 在 Windows 上有最小窗口宽度（约 504px），`--screenshot` 截到的是被裁过的图，
+  看起来像「右边被切了」——其实是截图假象，量一下 `window.innerWidth` 才知道
+
 ## 功能
 
 - **练习模式**：顺序练习、章节练习、专项（知识点）练习、每日一练、模拟卷（90 分钟倒计时条）、错题重做

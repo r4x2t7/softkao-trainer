@@ -220,7 +220,7 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
             composable(Routes.STATS) { StatsScreen() }
             composable(Routes.BANK) { BankScreen() }
             composable(
-                route = "practice?examId={examId}&mode={mode}&chapter={chapter}&kp={kp}&title={title}&ids={ids}",
+                route = Routes.PRACTICE,
                 arguments = listOf(
                     navArgument("examId") { type = NavType.StringType; defaultValue = "" },
                     navArgument("mode") { type = NavType.StringType; defaultValue = "SEQUENTIAL" },

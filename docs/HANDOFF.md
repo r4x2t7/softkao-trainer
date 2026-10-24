@@ -73,7 +73,28 @@ question-bank/index.json          # 版本清单（含题库与精讲的 sha256�
 docs/                             # 需求评审、题库规范、生产计划、调研报告
 ```
 
-## 5. 题库与资料现状
+## 5. 测试与自检（不依赖设备）
+
+```bash
+./gradlew testDebugUnitTest                # 64 个测试：解析校验 + 纯逻辑 + Compose 界面测试
+python tools/ui_contract_check.py          # UI 契约：文字不截断 / 路由齐全 / 科目作用域统一 / 图解不越界
+python tools/kp_notes_pipeline.py coverage # 知识点精讲覆盖率
+python tools/kp_notes_lint.py              # 精讲长度体检
+python tools/check_ai_consistency.py       # 答案与解析首句一致
+python tools/check_visual_bounds.py        # 图解 SVG 内容是否越出 viewBox
+python tools/render_visuals.py --size=640x900   # 把 59 张图解渲染成 PNG 做视觉检查
+python tools/probe_visual.py <id>          # 给图解注入尺寸探针，量真实布局
+```
+
+CI 有两个 job：`validate`（题库 + UI 契约）与 `unit-test`（Gradle 单测 + Compose 界面测试）。
+
+**测试环境的坑**
+- Robolectric 会自动创建 `SoftKaoApp` → 它后台线程写 SQLite，Robolectric 的影子不支持跨线程 → 用 `TestApp`（`app/src/test/java/com/softkao/trainer/TestApp.kt`）
+- Android 的 `org.json` 是抛异常的桩类，JVM 单测必须额外引 `org.json:json`
+- 无头 Chrome 在 Windows 上有最小窗口宽度（~504px），`--screenshot` 给出的是**裁过的图**，别当成真裁切；用 `probe_visual.py` 量 `window.innerWidth` 才准
+- 截图前要禁用入场动画（`animation:none`），否则拍到 opacity:0 的中间态，会误判成「元素没渲染」
+
+## 6. 题库与资料现状
 
 | 内容 | 状态 |
 |---|---|
@@ -117,7 +138,7 @@ python tools/check_update_channel.py       # 端到端验证更新通道（题�
 - 脚本里的 `ROOT` 不要写死 `E:\ai coding\...`，CI 在 ubuntu 上跑会找不到目录 → 统一用 `__file__` 推导
 - GitHub raw 有传播延迟，校验失败先等几秒再判
 
-## 6. 用户已提出并已修复的问题
+## 7. 用户已提出并已修复的问题
 
 | 用户原话 | 处理 |
 |---|---|
@@ -148,6 +169,16 @@ python tools/check_update_channel.py       # 端到端验证更新通道（题�
 
 **机制**：勘误集中在 `tools/fix_law_citations.py`，做外科手术式替换，同时改**分片 + 合并产物 + 内置种子**三处（只改合并产物会被下次 merge 冲掉），并接入 `publish.py` 第 1 步。CI 新增「答案与 AI 解析首句一致性」门禁。
 
+### v2.4.1 又修的（测试驱动）
+
+| 问题 | 处理 |
+|---|---|
+| OSI 分层图标题与副标题叠字 | `r_layers` 原来把副标题放在色条内、比标题只低 6px，必然叠字；改为放到色条下方并按 32 字折行 |
+| CPM 网络图「活动 E」与「完成」两个节点重叠 | 7 列节点用固定 66px 宽在 360px 画布里根本排不下；改为节点宽度按列数自适应，并把边标签移到边的法线方向 |
+| 干系人矩阵格子文字溢出、和邻格叠在一起 | 折行宽度改为按格子实际宽度算（原来固定 11 字），并限制在格子高度内；轴标题左移避让 |
+| 118 张图解有内容画到 viewBox 之外 | 生成器加一步「按内容实际范围重算 viewBox」（只扩不缩），越界数 118 → 0 |
+| HomeScreen 还有 3 处省略号截断（章节 chip / 知识点 chip / 小标题） | 改成最多两行自然换行 |
+
 ### v2.3.0 又修的
 
 | 问题 | 处理 |
@@ -158,7 +189,7 @@ python tools/check_update_channel.py       # 端到端验证更新通道（题�
 | 知识点精讲只有一半 | 补齐到 **2195 条 100% 覆盖**；CI 增加覆盖率门禁（`kp_notes_pipeline.py coverage`，缺一条就红） |
 | 图解不够 | 从 9 个补到 **28 个** |
 
-## 7. 待办（建议按此顺序接手）
+## 8. 待办（建议按此顺序接手）
 
 1. **实机验证**：装 v2.3.0 后重点看——章节/知识点横滑是否顺手、全局科目切换是否即时、逐知识点精讲是否出现在章节详情里、模拟卷倒计时条
 2. **继续加抽象图解**：还有余量的重点是「多媒体项目实施流程」「广告与数字版权管理」「网络存储与 CDN」「项目成本类型（固定/变动）」「决策树分析」「敏感性分析」
@@ -166,7 +197,7 @@ python tools/check_update_channel.py       # 端到端验证更新通道（题�
 4. **可选增强**：错题本按知识点做「掌握度热力图」而不是只按错误数；模拟卷支持用户自定义题量与时长；题库支持按知识点的智能组卷
 5. **可选**：给 App 做签名配置（目前用 debug 签名，发 Release 需要正式 keystore）
 
-## 8. 发布会话照抄（做过的动作）
+## 9. 发布会话照抄（做过的动作）
 
 ```powershell
 # 1) 合并 + 重建索引 + 校验
@@ -186,7 +217,7 @@ gh release create v2.3.0 .\SoftKaoTrainer-v2.3.0-debug.apk --title "..." --notes
 
 **注意**：`versionCode`/`versionName` 在 `app/build.gradle.kts`，发版时记得同步改（v2.3.0 = code 4 / name 2.3.0）。
 
-## 9. 常用验证
+## 10. 常用验证
 
 ```bash
 python tools/verify_remote.py       # 远端题库/资料完整性与覆盖率
