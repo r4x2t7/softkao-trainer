@@ -18,7 +18,7 @@ try:
 except Exception:
     pass
 
-ROOT = pathlib.Path(r"E:\ai coding\pojie\softkao-trainer")
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 BANK_DIR = ROOT / "question-bank"
 CHUNK_SIZE = 160
 

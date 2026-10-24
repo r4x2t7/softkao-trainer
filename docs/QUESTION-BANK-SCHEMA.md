@@ -17,9 +17,15 @@ App 是安装包，更新要过应用商店审核；题库是纯数据，改一�
 question-bank/
 ├── system-integration/
 │   ├── v1.json
-│   └── v2.json
+│   ├── v2.json
+│   ├── materials.json           # 本地生成的章节精讲（已同步到 materials/ 目录）
+│   └── kp_notes.json            # 逐知识点一句话精讲
 ├── multimedia-designer/
-│   └── v1.json
+│   ├── v2.json
+│   └── kp_notes.json
+├── materials/                   # App 更新通道拉取的章节精讲
+│   ├── system-integration.json
+│   └── multimedia-designer.json
 └── index.json          # 版本清单，App 先拉它再决定拉哪个版本
 ```
 
@@ -29,15 +35,45 @@ question-bank/
 {
   "updatedAt": "2026-10-24T20:00:00Z",
   "banks": [
-    { "examId": "system-integration", "version": 2, "file": "system-integration/v2.json",
-      "questionCount": 128, "sha256": "…" },
-    { "examId": "multimedia-designer", "version": 1, "file": "multimedia-designer/v1.json",
-      "questionCount": 96, "sha256": "…" }
+    {
+      "examId": "system-integration",
+      "examName": "系统集成项目管理工程师",
+      "version": 2,
+      "file": "system-integration/v2.json",
+      "questionCount": 1335,
+      "sha256": "…",
+      "updatedAt": "2026-10-24T20:00:00Z",
+      "kpNotes": {
+        "file": "system-integration/kp_notes.json",
+        "count": 1199,
+        "sha256": "…"
+      }
+    }
   ]
 }
 ```
 
-### 2.2 题库文件
+- `kpNotes` 是**可选**字段：App 拉到后会校验 `sha256`，不匹配就整份丢弃，不写坏数据。
+- `sha256` 统一按 **LF 归一化**后的字节计算（Windows 写 CRLF、Git 存 LF，不归一化会误报不匹配）。
+
+### 2.2 kp_notes.json（逐知识点精讲）
+
+```json
+{
+  "examId": "system-integration",
+  "examName": "系统集成项目管理工程师",
+  "version": 1,
+  "notes": {
+    "挣值管理": "挣值三参数：PV 计划价值、EV 挣值、AC 实际成本；CV=EV−AC、SV=EV−PV。",
+    "关键路径法": "关键路径是网络图中总时差为零的路径，决定项目最短工期。"
+  }
+}
+```
+
+- key 必须是题库里 `knowledgePoint` 的**原样字符串**，一字不差，否则 App 匹配不上。
+- value 是一句话精讲，建议 40~70 字：给出定义 + 关键数字/公式 + 易错点。
+
+### 2.3 题库文件
 
 ```json
 {
@@ -100,10 +136,16 @@ question-bank/
    ↓ 是
 拉对应 vN.json → sha256 校验 → JSON 解析 → 逐题 schema 校验
    ↓
-写入 Room（事务 + upsert），保留用户作答数据
+写入平台 SQLite（事务 + upsert），保留用户作答数据
    ↓
-展示结果：新增 N 题 / 更新 M 题 / 跳过 K 题（不合法）
+顺带拉 materials/<examId>.json 与 <examId>/kp_notes.json（章节精讲 + 逐知识点精讲）
+   ↓
+展示结果：新增 N 题 / 更新 M 题 / 跳过 K 题（不合法）+ 同步了 X 条知识点精讲
 ```
+
+- 章节精讲与逐知识点精讲**独立于题库版本**：即使题库版本没变，每次检查更新也会同步一次资料，
+  这样「只补精讲、不加题」的 PR 也能立刻到达用户。
+- 资料下载失败**不影响**题库更新结果，两者分开统计。
 
 - 更新全程**离线优先**：网络不可用时只提示"检查更新失败"，不影响任何本地功能。
 - 仓库地址与 token 存 DataStore（本地），不上传任何数据到第三方。

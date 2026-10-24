@@ -8,7 +8,7 @@
 import pathlib
 import re
 
-ROOT = pathlib.Path(r"E:\ai coding\pojie\softkao-trainer\app\src\main\java\com\softkao\trainer")
+ROOT = pathlib.Path(__file__).resolve().parent.parent / "app" / "src" / "main" / "java" / "com" / "softkao" / "trainer"
 
 REPLACEMENTS = [
     (r"ServiceLocator\.settingsRepository\.examId\(ExamScope\.\w+\)\.first\(\)",

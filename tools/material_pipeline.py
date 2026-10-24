@@ -23,7 +23,7 @@ try:
 except Exception:
     pass
 
-ROOT = pathlib.Path(r"E:\ai coding\pojie\softkao-trainer")
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 BANK_DIR = ROOT / "question-bank"
 SEED_DIR = ROOT / "app" / "src" / "main" / "assets" / "materials"
 CHUNK_SIZE = 12  # 每片 12 章

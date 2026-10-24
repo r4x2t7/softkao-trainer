@@ -473,11 +473,14 @@ object VisualRepository {
         ),
     )
 
-    fun forExam(examId: String): List<VisualLesson> =
-        (lessons + VisualRepositoryExtra.lessons).filter { it.examId == examId }
+    /** 全部图解（三批合并） */
+    private val allLessons: List<VisualLesson>
+        get() = lessons + VisualRepositoryExtra.lessons + VisualRepositoryThird.lessons
+
+    fun forExam(examId: String): List<VisualLesson> = allLessons.filter { it.examId == examId }
 
     fun forChapter(examId: String, chapter: String): List<VisualLesson> =
-        (lessons + VisualRepositoryExtra.lessons).filter { it.examId == examId && it.chapter == chapter }
+        allLessons.filter { it.examId == examId && it.chapter == chapter }
 
-    fun all(): List<VisualLesson> = lessons + VisualRepositoryExtra.lessons
+    fun all(): List<VisualLesson> = allLessons
 }

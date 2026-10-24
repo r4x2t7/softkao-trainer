@@ -35,6 +35,10 @@ jobs:
             exit 1
           fi
 
+      - name: 逐知识点精讲覆盖率自检（每个知识点都要有一句话精讲）
+        run: |
+          python tools/kp_notes_pipeline.py coverage
+
       - name: 题库规模自检
         run: |
           python - <<'PY'

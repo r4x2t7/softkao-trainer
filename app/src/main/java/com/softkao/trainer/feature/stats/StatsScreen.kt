@@ -38,7 +38,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -55,33 +54,29 @@ class StatsViewModel : ViewModel() {
         val trend: List<Pair<String, Pair<Int, Int>>> = emptyList(),
         val knowledge: List<Triple<String, Int, Int>> = emptyList(),
         val examOverview: List<Pair<ExamId, Pair<Int, Int>>> = emptyList(),
-        /** 用户是否已经手动选过科目；用来避免初始化时被异步读取覆盖 */
-        val touched: Boolean = false,
     )
 
     private val _state = MutableStateFlow(State())
     val state: StateFlow<State> = _state.asStateFlow()
 
     init {
-        refresh()
+        // 订阅全局科目：统计跟着当前科目走，切换后立即重算
         viewModelScope.launch {
-            // 统计页的科目是本页自己的作用域，跟其它页面互不影响
-            val saved = ServiceLocator.settingsRepository.currentExamId.first()
-            ExamId.fromId(saved)?.let { exam ->
-                if (!_state.value.touched) {
+            ServiceLocator.settingsRepository.currentExamId.collect { id ->
+                val exam = ExamId.fromId(id) ?: return@collect
+                if (_state.value.exam != exam) {
                     _state.value = _state.value.copy(exam = exam)
-                    refresh()
                 }
+                refresh()
             }
         }
     }
 
     fun selectExam(exam: ExamId) {
-        _state.value = _state.value.copy(exam = exam, touched = true)
+        _state.value = _state.value.copy(exam = exam)
         viewModelScope.launch {
             ServiceLocator.settingsRepository.setCurrentExamId(exam.id)
         }
-        refresh()
     }
 
     fun refresh() {
@@ -138,7 +133,7 @@ fun StatsScreen(viewModel: StatsViewModel = viewModel()) {
 
         item {
             Text(
-                "统计科目（本页独立选择，不影响其它页面）",
+                "当前科目（全站生效，与首页、知识点、错题本同步）",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

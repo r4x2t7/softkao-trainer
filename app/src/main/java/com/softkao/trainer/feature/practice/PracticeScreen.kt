@@ -38,7 +38,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -64,6 +66,7 @@ import com.softkao.trainer.core.model.QuestionType
 import com.softkao.trainer.feature.common.SectionCard
 import com.softkao.trainer.feature.common.TagChip
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -354,9 +357,6 @@ fun PracticeScreen(
                         Text(
                             state.title.ifBlank { "练习" },
                             style = MaterialTheme.typography.titleMedium,
-                            maxLines = 1,
-                            softWrap = false,
-                            overflow = TextOverflow.Ellipsis,
                         )
                         if (state.questions.isNotEmpty()) {
                             Text(
@@ -381,6 +381,9 @@ fun PracticeScreen(
         bottomBar = {
             Column {
                 HorizontalDivider()
+                if (state.mode == PracticeMode.MOCK) {
+                    MockTimerBar(questions = state.questions.size)
+                }
                 PracticeJumpBar(
                     index = state.index,
                     total = state.questions.size,
@@ -607,6 +610,45 @@ fun PracticeScreen(
             current = state.index,
             onJump = { vm.jumpTo(it) },
             onDismiss = { showSheet = false },
+        )
+    }
+}
+
+@Composable
+private fun MockTimerBar(questions: Int) {
+    // 模拟卷按考试节奏倒计时：选择题 90 分钟，案例题另计
+    var remaining by remember { mutableLongStateOf(90L * 60) }
+    LaunchedEffect(Unit) {
+        while (remaining > 0) {
+            delay(1000)
+            remaining -= 1
+        }
+    }
+    val m = remaining / 60
+    val s = remaining % 60
+    val urgent = remaining < 10 * 60
+    val timeText = if (remaining > 0) {
+        "⏱ 模拟卷剩余 %02d:%02d".format(m, s)
+    } else {
+        "⏱ 已超时，请尽快交卷"
+    }
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            timeText,
+            style = MaterialTheme.typography.labelMedium,
+            color = if (urgent) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(
+            "共 $questions 题 · 超时未答按未掌握计入错题",
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.weight(1f),
         )
     }
 }

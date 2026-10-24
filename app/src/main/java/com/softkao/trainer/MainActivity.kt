@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
@@ -23,10 +24,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.softkao.trainer.ServiceLocator
 import com.softkao.trainer.feature.bank.BankScreen
 import com.softkao.trainer.feature.home.HomeScreen
 import com.softkao.trainer.feature.knowledge.ChapterDetailScreen
 import com.softkao.trainer.feature.knowledge.KnowledgeScreen
+import com.softkao.trainer.feature.knowledge.VisualDetailScreen
+import com.softkao.trainer.feature.knowledge.VisualGalleryScreen
 import com.softkao.trainer.feature.practice.PracticeScreen
 import com.softkao.trainer.feature.search.SearchScreen
 import com.softkao.trainer.feature.stats.StatsScreen
@@ -53,6 +57,8 @@ object Routes {
     const val SEARCH = "search"
     const val KNOWLEDGE = "knowledge"
     const val KNOWLEDGE_CHAPTER = "knowledge/chapter/{examId}/{chapter}"
+    const val KNOWLEDGE_VISUALS = "knowledge/visuals"
+    const val KNOWLEDGE_VISUAL = "knowledge/visuals/{visualId}"
     const val PRACTICE =
         "practice?examId={examId}&mode={mode}&chapter={chapter}&kp={kp}&title={title}&ids={ids}"
 }
@@ -146,6 +152,7 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                     onOpenChapter = { examId, chapter ->
                         navController.navigate("knowledge/chapter/$examId/${Uri.encode(chapter)}")
                     },
+                    onOpenVisuals = { navController.navigate(Routes.KNOWLEDGE_VISUALS) },
                     onPracticeChapter = { examId, chapter ->
                         navController.navigate(
                             "practice?examId=$examId&mode=CHAPTER&chapter=$chapter&kp=&title=" +
@@ -153,6 +160,24 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                         )
                     },
                 )
+            }
+            composable(Routes.KNOWLEDGE_VISUALS) {
+                VisualGalleryScreen(
+                    onBack = { navController.popBackStack() },
+                    onOpenVisual = { visual ->
+                        navController.navigate("knowledge/visuals/${Uri.encode(visual.id)}")
+                    },
+                )
+            }
+            composable(
+                route = Routes.KNOWLEDGE_VISUAL,
+                arguments = listOf(navArgument("visualId") { type = NavType.StringType }),
+            ) { entry ->
+                val visualId = entry.arguments?.getString("visualId").orEmpty()
+                val visual = remember(visualId) { ServiceLocator.htmlVisualRepository.byId(visualId) }
+                if (visual != null) {
+                    VisualDetailScreen(visual = visual, onBack = { navController.popBackStack() })
+                }
             }
             composable(
                 route = Routes.KNOWLEDGE_CHAPTER,
@@ -165,6 +190,9 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                 ChapterDetailScreen(
                     chapter = chapter,
                     onBack = { navController.popBackStack() },
+                    onOpenVisual = { visual ->
+                        navController.navigate("knowledge/visuals/${Uri.encode(visual.id)}")
+                    },
                     onPracticeChapter = { e, c ->
                         navController.navigate(
                             "practice?examId=$e&mode=CHAPTER&chapter=$c&kp=&title=" +

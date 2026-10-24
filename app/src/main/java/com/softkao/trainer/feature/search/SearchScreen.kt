@@ -33,12 +33,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.softkao.trainer.ServiceLocator
 import com.softkao.trainer.core.model.ExamId
 import com.softkao.trainer.core.model.Question
+import com.softkao.trainer.core.ui.rememberCurrentExamId
 import com.softkao.trainer.feature.common.TagChip
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -54,8 +53,7 @@ fun SearchScreen(
 ) {
     var keyword by remember { mutableStateOf("") }
     // 全局科目：两门考试完全隔离，搜索只搜当前科目
-    val scopeValue by ServiceLocator.settingsRepository.currentExamId
-        .collectAsStateWithLifecycle(initialValue = ExamId.SYSTEM_INTEGRATION.id)
+    val scopeValue = rememberCurrentExamId()
     val examFilter: ExamId? = ExamId.fromId(scopeValue)
     var results by remember { mutableStateOf<List<Question>>(emptyList()) }
     var pointResults by remember { mutableStateOf<List<PointHit>>(emptyList()) }
@@ -182,15 +180,12 @@ fun SearchScreen(
                                     hit.point,
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.Medium,
-                                    maxLines = 2,
                                 )
                                 Spacer(Modifier.height(4.dp))
                                 Text(
                                     hit.note,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    maxLines = 4,
-                                    overflow = TextOverflow.Ellipsis,
                                 )
                                 Spacer(Modifier.height(6.dp))
                                 Row(
@@ -202,7 +197,7 @@ fun SearchScreen(
                                         "${hit.chapter} · ${hit.count} 题",
                                         style = MaterialTheme.typography.labelSmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        maxLines = 1,
+                                        modifier = Modifier.weight(1f),
                                     )
                                     TextButton(
                                         onClick = { examFilter?.let { onPracticePoint(it.id, hit.point) } },

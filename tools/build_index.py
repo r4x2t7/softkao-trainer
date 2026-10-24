@@ -55,20 +55,30 @@ def main() -> int:
         rel = f"{exam_id}/{latest.name}"
         bank_updated = str(data.get("updatedAt", ""))
         index_updated = max(index_updated, bank_updated)
-        banks.append(
-            {
-                "examId": exam_id,
-                "examName": exam_name,
-                "version": int(data.get("version", 1)),
-                "file": rel,
-                "questionCount": count,
-                "sha256": sha256(latest),
-                "updatedAt": bank_updated,
-            }
-        )
         # 同步到 App 内置种子（统一 LF，避免跨平台字节差异）
         write_lf(SEED_DIR / f"{exam_id}.json", latest.read_bytes())
         print(f"[ok] {rel}: {count} 题 → assets/seed/{exam_id}.json")
+
+        # 逐知识点精讲也走更新通道：索引里带上文件路径与 sha256，App 拉取时可校验
+        entry = {
+            "examId": exam_id,
+            "examName": exam_name,
+            "version": int(data.get("version", 1)),
+            "file": rel,
+            "questionCount": count,
+            "sha256": sha256(latest),
+            "updatedAt": bank_updated,
+        }
+        kp_path = BANK_DIR / exam_id / "kp_notes.json"
+        if kp_path.exists():
+            notes = json.loads(kp_path.read_text(encoding="utf-8")).get("notes", {})
+            entry["kpNotes"] = {
+                "file": f"{exam_id}/kp_notes.json",
+                "count": len(notes),
+                "sha256": sha256(kp_path),
+            }
+            print(f"[ok] {exam_id}/kp_notes.json: {len(notes)} 条知识点精讲")
+        banks.append(entry)
 
     # updatedAt 取题库自身的时间戳，保证同样输入产出同样索引（CI 可比对）
     index = {

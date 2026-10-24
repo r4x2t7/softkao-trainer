@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -41,15 +42,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.softkao.trainer.ServiceLocator
 import com.softkao.trainer.core.model.ChapterMaterial
 import com.softkao.trainer.core.model.ExamId
+import com.softkao.trainer.core.model.HtmlVisual
+import com.softkao.trainer.core.ui.rememberCurrentExamId
 import com.softkao.trainer.feature.common.SectionCard
 import com.softkao.trainer.feature.common.TagChip
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -76,15 +77,14 @@ private data class ChapterRow(
 fun KnowledgeScreen(
     onBack: () -> Unit,
     onOpenChapter: (examId: String, chapter: String) -> Unit,
+    onOpenVisuals: () -> Unit,
     onPracticeChapter: (examId: String, chapter: String) -> Unit,
 ) {
-    val examIdState = produceState(ExamId.SYSTEM_INTEGRATION.id) {
-        value = ServiceLocator.settingsRepository.currentExamId.first()
-    }
-    val examId = examIdState.value
+    val examId = rememberCurrentExamId()
     val scope = rememberCoroutineScope()
 
-    val rows by produceState(emptyList<ChapterRow>(), examId) {        value = withContextIo {
+    val rows by produceState(emptyList<ChapterRow>(), examId) {
+        value = withContextIo {
             val stats = ServiceLocator.statsRepository.chapterStats(examId)
             val materials = ServiceLocator.materialRepository.load(examId)
             val materialChapters = materials.map { it.chapter }.toSet()
@@ -146,61 +146,78 @@ fun KnowledgeScreen(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+                    Spacer(Modifier.height(10.dp))
+                    OutlinedButton(
+                        onClick = onOpenVisuals,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text("打开图解库（结构型考点一张图讲清）") }
                 }
             }
 
-            items(rows, key = { it.chapter }) { row ->
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-                    shape = RoundedCornerShape(14.dp),
-                    modifier = Modifier.clickable { onOpenChapter(examId, row.chapter) },
+            item {
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Column(Modifier.padding(14.dp)) {
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(
-                                row.chapter,
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.SemiBold,
-                                maxLines = 1,
-                                softWrap = false,
-                                overflow = TextOverflow.Ellipsis,
-                                modifier = Modifier.weight(1f, fill = false),
-                            )
-                            if (row.hasMaterial) {
-                                Spacer(Modifier.widthIn(min = 8.dp))
-                                TagChip("有精讲")
-                            }
-                        }
-                        Spacer(Modifier.height(8.dp))
-                        LinearProgressIndicator(
-                            progress = { if (row.total == 0) 0f else row.answered.toFloat() / row.total },
+                    Text(
+                        "章节（${rows.size} 章）",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    Text(
+                        "← 左右滑动翻章 →",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            item {
+                // 章节横向滑动：像翻卡片一样左右滑，一屏能看两章
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    contentPadding = PaddingValues(vertical = 2.dp),
+                ) {
+                    items(rows, key = { it.chapter }) { row ->
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                            shape = RoundedCornerShape(14.dp),
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .height(5.dp)
-                                .clip(RoundedCornerShape(3.dp)),
-                        )
-                        Spacer(Modifier.height(6.dp))
-                        Row(
-                            Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                                .width(252.dp)
+                                .clickable { onOpenChapter(examId, row.chapter) },
                         ) {
-                            Text(
-                                "题量 ${row.total} · 已练 ${row.answered}",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 1,
-                            )
-                            Text(
-                                if (row.answered == 0) "未开始" else "正确率 ${row.correct * 100 / row.answered}%",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 1,
-                            )
+                            Column(Modifier.padding(14.dp)) {
+                                Text(
+                                    row.chapter,
+                                    style = MaterialTheme.typography.titleSmall,
+                                    fontWeight = FontWeight.SemiBold,
+                                )
+                                Spacer(Modifier.height(6.dp))
+                                if (row.hasMaterial) {
+                                    TagChip("有精讲")
+                                }
+                                Spacer(Modifier.height(8.dp))
+                                LinearProgressIndicator(
+                                    progress = { if (row.total == 0) 0f else row.answered.toFloat() / row.total },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(5.dp)
+                                        .clip(RoundedCornerShape(3.dp)),
+                                )
+                                Spacer(Modifier.height(8.dp))
+                                Text(
+                                    "题量 ${row.total} · 已练 ${row.answered}",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                                Text(
+                                    if (row.answered == 0) "未开始" else "正确率 ${row.correct * 100 / row.answered}%",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
                         }
                     }
                 }
@@ -214,13 +231,12 @@ fun KnowledgeScreen(
 fun ChapterDetailScreen(
     chapter: String,
     onBack: () -> Unit,
+    onOpenVisual: (HtmlVisual) -> Unit,
     onPracticeChapter: (examId: String, chapter: String) -> Unit,
     onPracticePoint: (examId: String, point: String) -> Unit,
 ) {
     // 科目是全局的，章节详情直接跟随当前科目
-    val examId by produceState(ExamId.SYSTEM_INTEGRATION.id) {
-        value = ServiceLocator.settingsRepository.currentExamId.first()
-    }
+    val examId = rememberCurrentExamId()
     val material by produceState<ChapterMaterial?>(null, chapter, examId) {
         value = withContextIo { ServiceLocator.materialRepository.find(examId, chapter) }
     }
@@ -229,6 +245,10 @@ fun ChapterDetailScreen(
         com.softkao.trainer.core.data.VisualRepository.forExam(examId).filter { lesson ->
             lesson.chapter == chapter || (material?.keyPoints?.any { lesson.matches(it) } == true)
         }
+    }
+    // 静态图解：结构型考点（分层、层级、地图、对比）的整页卡片
+    val htmlVisuals = remember(chapter, examId) {
+        ServiceLocator.htmlVisualRepository.forChapter(examId, chapter)
     }
     // 本章的知识点清单：题量、正确率、一句话精讲
     val pointRows: List<PointRow> = remember(chapter, examId) {
@@ -252,9 +272,6 @@ fun ChapterDetailScreen(
                     Text(
                         chapter,
                         style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                        softWrap = false,
-                        overflow = TextOverflow.Ellipsis,
                     )
                 },
                 navigationIcon = { TextButton(onClick = onBack) { Text("← 返回") } },
@@ -305,50 +322,106 @@ fun ChapterDetailScreen(
                     ConceptAnimation(lesson)
                 }
             }
-            if (pointRows.isNotEmpty()) {
+            // 静态图解卡片：本章的结构型考点，横向滑动，点开看整页
+            if (htmlVisuals.isNotEmpty()) {
                 item {
                     Text(
-                        "知识点清单（${pointRows.size} 个）",
+                        "结构图解（${htmlVisuals.size} 张）",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold,
                     )
                 }
-                items(pointRows, key = { it.point }) { row ->
-                    Card(
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-                        shape = RoundedCornerShape(14.dp),
+                item {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        contentPadding = PaddingValues(vertical = 2.dp),
                     ) {
-                        Column(Modifier.padding(14.dp)) {
-                            Row(
-                                Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically,
+                        items(htmlVisuals, key = { it.id }) { v ->
+                            Card(
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                                shape = RoundedCornerShape(14.dp),
+                                modifier = Modifier
+                                    .width(240.dp)
+                                    .clickable { onOpenVisual(v) },
                             ) {
-                                Text(
-                                    row.point,
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = FontWeight.Medium,
-                                    maxLines = 2,
-                                    modifier = Modifier.weight(1f, fill = false),
-                                )
-                                Spacer(Modifier.width(6.dp))
-                                Text(
-                                    "${row.count} 题" + if (row.done > 0) " · 正确率 ${row.right * 100 / row.done}%" else "",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    maxLines = 1,
-                                )
+                                Column(Modifier.padding(14.dp)) {
+                                    Text(
+                                        v.title,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.Medium,
+                                    )
+                                    Spacer(Modifier.height(4.dp))
+                                    Text(
+                                        v.caption,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
                             }
-                            if (!row.note.isNullOrBlank()) {
-                                Spacer(Modifier.height(6.dp))
-                                Text(row.note, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    }
+                }
+            }
+            if (pointRows.isNotEmpty()) {
+                item {
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            "知识点清单（${pointRows.size} 个）",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                        Text(
+                            "← 左右滑动 →",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
+                item {
+                    // 知识点横向滑动：一张卡一个考点，滑动即可逐个过
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        contentPadding = PaddingValues(vertical = 2.dp),
+                    ) {
+                        items(pointRows, key = { it.point }) { row ->
+                            Card(
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                                shape = RoundedCornerShape(14.dp),
+                                modifier = Modifier.width(280.dp),
+                            ) {
+                                Column(Modifier.padding(14.dp)) {
+                                    Text(
+                                        row.point,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        fontWeight = FontWeight.Medium,
+                                    )
+                                    Spacer(Modifier.height(4.dp))
+                                    Text(
+                                        "${row.count} 题" + if (row.done > 0) " · 正确率 ${row.right * 100 / row.done}%" else "",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                    if (!row.note.isNullOrBlank()) {
+                                        Spacer(Modifier.height(8.dp))
+                                        Text(
+                                            row.note,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
+                                    Spacer(Modifier.height(4.dp))
+                                    TextButton(
+                                        onClick = { onPracticePoint(examId, row.point) },
+                                        contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp),
+                                    ) { Text("练习该考点", maxLines = 1, softWrap = false) }
+                                }
                             }
-                            Spacer(Modifier.height(4.dp))
-                            TextButton(
-                                onClick = { onPracticePoint(examId, row.point) },
-                                contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp),
-                            ) { Text("练习该考点", maxLines = 1, softWrap = false) }
                         }
                     }
                 }

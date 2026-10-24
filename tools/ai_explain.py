@@ -31,7 +31,7 @@ except Exception:
 
 import yaml
 
-ROOT = pathlib.Path(r"E:\ai coding\pojie\softkao-trainer")
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 SKILL_SCRIPT = pathlib.Path(r"C:\Users\jw\.minimax\.builtin-skills\llm-call\scripts\llm_call.py")
 BANK_DIR = ROOT / "question-bank"
 

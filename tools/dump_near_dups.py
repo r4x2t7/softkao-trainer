@@ -10,7 +10,7 @@ try:
 except Exception:
     pass
 
-ROOT = pathlib.Path(r"E:\ai coding\pojie\softkao-trainer")
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location("mb", ROOT / "tools" / "merge_banks.py")
 mb = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mb)

@@ -17,7 +17,7 @@ try:
 except Exception:
     pass
 
-ROOT = pathlib.Path(r"E:\ai coding\pojie\softkao-trainer")
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 BANK = ROOT / "question-bank"
 
 SI = "system-integration"

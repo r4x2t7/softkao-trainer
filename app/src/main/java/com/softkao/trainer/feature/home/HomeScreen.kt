@@ -67,7 +67,7 @@ class HomeViewModel : ViewModel() {
         val totalDone: Int = 0,
         val overallAccuracy: Float = 0f,
         val wrongDue: Int = 0,
-        /** 首页自己选中的科目，只作用于首页 */
+        /** 全站唯一科目，首页跟随它显示 */
         val examId: String = ExamId.SYSTEM_INTEGRATION.id,
     )
 
@@ -75,16 +75,21 @@ class HomeViewModel : ViewModel() {
     val state: StateFlow<State> = _state.asStateFlow()
 
     init {
-        refresh()
+        // 订阅全局科目：在任意页面切换科目，首页立刻跟着换
+        viewModelScope.launch {
+            ServiceLocator.settingsRepository.currentExamId.collect { id ->
+                _state.value = _state.value.copy(examId = id)
+                refresh()
+            }
+        }
     }
 
     /**
-     * 切换首页科目：只写首页自己的作用域，其它页面不受影响。
+     * 切换科目：写入全局设置，全站所有页面同步切换。
      */
     fun setExamId(id: String) {
         viewModelScope.launch {
             ServiceLocator.settingsRepository.setCurrentExamId(id)
-            refresh()
         }
     }
 
@@ -179,10 +184,9 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     Text(
-                        "本页科目",
+                        "当前科目",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
                     )
                     ExamId.entries.forEach { exam ->
                         FilterChip(
@@ -194,7 +198,7 @@ fun HomeScreen(
                 }
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    "只作用于本页；知识点、错题本、统计各自独立选择，互不影响",
+                    "全站唯一科目：这里切换后，知识点、错题本、统计、搜索会同步切换；两科的题库与记录互不干扰",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

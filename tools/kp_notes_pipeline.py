@@ -22,7 +22,7 @@ try:
 except Exception:
     pass
 
-ROOT = pathlib.Path(r"E:\ai coding\pojie\softkao-trainer")
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 BANK = ROOT / "question-bank"
 SEED_DIR = ROOT / "app" / "src" / "main" / "assets"
 CHUNK_SIZE = 300
@@ -145,6 +145,46 @@ def status() -> int:
     return 0
 
 
+def coverage() -> int:
+    """覆盖率：题库里每个知识点是否都有一句话精讲。"""
+    ok = True
+    for exam in EXAMS:
+        points = collect(exam)
+        have: dict[str, str] = {}
+        for f in sorted((BANK / exam / "kp_parts").glob("*.out*.json")):
+            try:
+                data = json.loads(f.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            items = data if isinstance(data, list) else data.get("notes", [])
+            for it in items:
+                p = str(it.get("point", "")).strip()
+                n = str(it.get("note", "")).strip()
+                if p and n:
+                    have[p] = n
+        merged = BANK / exam / "kp_notes.json"
+        if merged.exists():
+            for p, n in json.loads(merged.read_text(encoding="utf-8")).get("notes", {}).items():
+                if p and str(n).strip():
+                    have[p] = str(n).strip()
+        missing = [p["point"] for p in points if not have.get(p["point"], "").strip()]
+        lengths = [len(v) for v in have.values()]
+        over = [k for k, v in have.items() if len(v) > 70]
+        short = [k for k, v in have.items() if len(v) < 40]
+        status = "OK" if not missing else "MISSING"
+        if missing:
+            ok = False
+        print(
+            f"[{exam}] 知识点 {len(points)} | 有精讲 {len(points) - len(missing)} | 缺 {len(missing)} | "
+            f"长度 min={min(lengths) if lengths else 0} max={max(lengths) if lengths else 0} "
+            f"| 超长 {len(over)} | 过短 {len(short)} | {status}"
+        )
+        if missing:
+            for p in missing[:5]:
+                print(f"    缺: {p}")
+    return 0 if ok else 1
+
+
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "status"
-    {"split": split, "merge": merge, "status": status, "missing": missing}.get(cmd, status)()
+    {"split": split, "merge": merge, "status": status, "missing": missing, "coverage": coverage}.get(cmd, status)()

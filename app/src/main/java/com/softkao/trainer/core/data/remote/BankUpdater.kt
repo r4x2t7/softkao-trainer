@@ -25,6 +25,8 @@ class BankUpdater(
         val ok: Boolean,
         val message: String,
         val reports: List<Pair<String, com.softkao.trainer.core.model.ImportReport>> = emptyList(),
+        /** 本次同步的逐知识点精讲条数 */
+        val noteCount: Int = 0,
     )
 
     suspend fun checkAndUpdate(baseUrl: String): UpdateResult = withContext(Dispatchers.IO) {
@@ -38,11 +40,13 @@ class BankUpdater(
             val reports = mutableListOf<Pair<String, com.softkao.trainer.core.model.ImportReport>>()
             var updatedCount = 0
             var materialCount = 0
+            var noteCount = 0
             for (entry in entries) {
                 val local = db.bankVersion(entry.examId)
                 if (local != null && local.version >= entry.version) {
                     // 版本没变也同步一次资料（资料可能单独更新）
                     if (fetchMaterials(base, entry.examId)) materialCount++
+                    if (fetchKpNotes(base, entry)) noteCount += entry.kpNotesCount
                     continue
                 }
                 val raw = get("$base/${entry.file}")
@@ -57,12 +61,14 @@ class BankUpdater(
                 reports += entry.examId to report
                 updatedCount += report.total
                 if (fetchMaterials(base, entry.examId)) materialCount++
+                if (fetchKpNotes(base, entry)) noteCount += entry.kpNotesCount
             }
             val message = buildString {
                 if (updatedCount == 0) append("题库已是最新版本") else append("题库更新完成，共新增/更新 $updatedCount 道题")
                 if (materialCount > 0) append("，同步 $materialCount 份知识点资料")
+                if (noteCount > 0) append("，同步 $noteCount 条知识点精讲")
             }
-            UpdateResult(true, message, reports)
+            UpdateResult(true, message, reports, noteCount)
         } catch (e: Exception) {
             UpdateResult(false, "更新失败：${e.message}")
         }
@@ -84,6 +90,20 @@ class BankUpdater(
     private fun fetchMaterials(base: String, examId: String): Boolean = runCatching {
         val raw = get("$base/materials/$examId.json")
         materials?.saveLocal(examId, raw) ?: false
+    }.getOrDefault(false)
+
+    /**
+     * 顺带拉取逐知识点精讲（<examId>/kp_notes.json）。
+     * 精讲条目多、体积大，但它是「知识点」模块的核心内容，必须跟着更新通道走，
+     * 否则用户升级题库后看到的还是旧精讲。sha256 不匹配就整份丢弃，绝不写坏数据。
+     */
+    private fun fetchKpNotes(base: String, entry: BankIndexParser.IndexEntry): Boolean = runCatching {
+        val rel = entry.kpNotesFile.ifBlank { "${entry.examId}/kp_notes.json" }
+        val raw = get("$base/$rel")
+        if (entry.kpNotesSha256.isNotBlank() && Hashing.sha256(raw) != entry.kpNotesSha256.lowercase()) {
+            return@runCatching false
+        }
+        materials?.saveLocalNotes(entry.examId, raw) ?: false
     }.getOrDefault(false)
 
     private fun get(url: String): String {

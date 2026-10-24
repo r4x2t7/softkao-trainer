@@ -8,7 +8,12 @@
       "file": "system-integration/v2.json",
       "questionCount": 1335,
       "sha256": "fe7bb538690f1ae89fb03b1314a82aaf9d66e5d70d5ea9eaa1712ab477e363a8",
-      "updatedAt": "2026-10-24T20:00:00Z"
+      "updatedAt": "2026-10-24T20:00:00Z",
+      "kpNotes": {
+        "file": "system-integration/kp_notes.json",
+        "count": 1200,
+        "sha256": "7cf41f759fd1bb0180bb26192e197f2a29c548354415b3c1b20d30a17d259bec"
+      }
     },
     {
       "examId": "multimedia-designer",
@@ -17,7 +22,12 @@
       "file": "multimedia-designer/v2.json",
       "questionCount": 1055,
       "sha256": "3b3b9f27e8948f95593d62c28b724cf43cbcfc6d91ccf293689aa36796f25558",
-      "updatedAt": "2026-10-24T20:00:00Z"
+      "updatedAt": "2026-10-24T20:00:00Z",
+      "kpNotes": {
+        "file": "multimedia-designer/kp_notes.json",
+        "count": 997,
+        "sha256": "edcb97011ab4ba6c7e066473da5c129a38261895dcadd5c807e94c694698f4b3"
+      }
     }
   ]
 }

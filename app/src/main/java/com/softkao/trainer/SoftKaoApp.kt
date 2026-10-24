@@ -3,6 +3,7 @@ package com.softkao.trainer
 import android.app.Application
 import android.content.Context
 import com.softkao.trainer.core.data.SettingsRepository
+import com.softkao.trainer.core.data.HtmlVisualRepository
 import com.softkao.trainer.core.data.MaterialRepository
 import com.softkao.trainer.core.data.QuestionBankImporter
 import com.softkao.trainer.core.data.SeedImporter
@@ -49,6 +50,8 @@ object ServiceLocator {
         private set
     lateinit var aiExplainer: AiExplainer
         private set
+    lateinit var htmlVisualRepository: HtmlVisualRepository
+        private set
 
     fun init(context: Context) {
         val app = context.applicationContext
@@ -58,6 +61,7 @@ object ServiceLocator {
         statsRepository = StatsRepository(db)
         settingsRepository = SettingsRepository(app)
         materialRepository = MaterialRepository(app)
+        htmlVisualRepository = HtmlVisualRepository(app)
         importer = QuestionBankImporter(db)
         seedImporter = SeedImporter(app, db, importer)
         bankUpdater = BankUpdater(db, importer, materialRepository)

@@ -42,21 +42,40 @@ class MaterialRepository(private val context: Context) {
 
     private val noteCache = mutableMapOf<String, Map<String, String>>()
 
-    /** 每个知识点的一句话精讲 */
+    /** 每个知识点的一句话精讲：优先用更新通道下载的，其次用内置 assets */
     fun kpNotes(examId: String): Map<String, String> = noteCache.getOrPut(examId) {
-        readNotes(examId)
+        readNotesLocal(examId).ifEmpty { readNotesAssets(examId) }
     }
 
     fun kpNote(examId: String, point: String): String? = kpNotes(examId)[point]
 
-    private fun readNotes(examId: String): Map<String, String> = runCatching {
+    /** 题库更新通道下载下来的知识点精讲会写到这里 */
+    fun saveLocalNotes(examId: String, raw: String): Boolean = runCatching {
+        val dir = java.io.File(context.filesDir, "kp_notes")
+        dir.mkdirs()
+        java.io.File(dir, "$examId.json").writeText(raw, Charsets.UTF_8)
+        noteCache.remove(examId)
+        true
+    }.getOrDefault(false)
+
+    private fun readNotesLocal(examId: String): Map<String, String> = runCatching {
+        val f = java.io.File(context.filesDir, "kp_notes/$examId.json")
+        if (!f.exists()) return@runCatching emptyMap()
+        parseNotes(f.readText(Charsets.UTF_8))
+    }.getOrDefault(emptyMap())
+
+    private fun readNotesAssets(examId: String): Map<String, String> = runCatching {
         val raw = context.assets.open("kp_notes/$examId.json").bufferedReader().use { it.readText() }
+        parseNotes(raw)
+    }.getOrDefault(emptyMap())
+
+    private fun parseNotes(raw: String): Map<String, String> {
         val obj = org.json.JSONObject(raw)
-        val notes = obj.optJSONObject("notes") ?: return@runCatching emptyMap()
+        val notes = obj.optJSONObject("notes") ?: return emptyMap()
         val out = linkedMapOf<String, String>()
         notes.keys().forEach { key -> out[key] = notes.optString(key) }
-        out
-    }.getOrDefault(emptyMap())
+        return out
+    }
 
     private fun readAssets(examId: String): List<ChapterMaterial> = runCatching {
         val raw = context.assets.open("materials/$examId.json").bufferedReader().use { it.readText() }

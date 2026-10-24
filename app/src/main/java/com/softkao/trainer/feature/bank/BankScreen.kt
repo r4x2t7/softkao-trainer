@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -53,7 +52,7 @@ class BankViewModel : ViewModel() {
         val message: String? = null,
         val busy: Boolean = false,
         val aiMessage: String? = null,
-        /** 本页操作的科目，独立于其它页面 */
+        /** 全站唯一科目，这里显示的是当前全局科目 */
         val examId: String = com.softkao.trainer.core.model.ExamId.SYSTEM_INTEGRATION.id,
     )
 
@@ -61,6 +60,12 @@ class BankViewModel : ViewModel() {
     val state: StateFlow<State> = _state.asStateFlow()
 
     init {
+        // 订阅全局科目：在任意页面切换后，这里同步显示
+        viewModelScope.launch {
+            ServiceLocator.settingsRepository.currentExamId.collect { id ->
+                _state.value = _state.value.copy(examId = id)
+            }
+        }
         viewModelScope.launch {
             val settings = ServiceLocator.settingsRepository
             _state.value = _state.value.copy(
@@ -69,17 +74,16 @@ class BankViewModel : ViewModel() {
                 aiApiKey = settings.aiApiKey.first(),
                 aiModel = settings.aiModel.first(),
                 dailyGoal = settings.dailyGoal.first().toString(),
-                examId = settings.currentExamId.first(),
             )
             refreshVersions()
         }
     }
 
-    /** 切换本页操作的科目，只写本页自己的作用域 */
+    /** 切换全局科目，全站同步 */
     fun setExamId(id: String) {
         viewModelScope.launch {
             ServiceLocator.settingsRepository.setCurrentExamId(id)
-            _state.value = _state.value.copy(examId = id, message = "本页科目已切换")
+            _state.value = _state.value.copy(examId = id, message = "科目已切换，全站同步")
         }
     }
 
@@ -176,9 +180,9 @@ fun BankScreen(viewModel: BankViewModel = viewModel()) {
         }
 
         item {
-            com.softkao.trainer.feature.common.SectionCard(title = "本页操作科目") {
+            com.softkao.trainer.feature.common.SectionCard(title = "当前科目（全站生效）") {
                 Text(
-                    "只作用于本页。首页、知识点、错题本、统计各自独立选择科目，改这里不会动到它们。",
+                    "全站唯一科目：这里切换后，首页、知识点、错题本、统计、搜索全部同步。两科题库与作答记录各自独立，互不干扰。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -189,12 +193,7 @@ fun BankScreen(viewModel: BankViewModel = viewModel()) {
                             selected = state.examId == exam.id,
                             onClick = { viewModel.setExamId(exam.id) },
                             label = {
-                                Text(
-                                    exam.shortName,
-                                    maxLines = 1,
-                                    softWrap = false,
-                                    overflow = TextOverflow.Ellipsis,
-                                )
+                                Text(exam.shortName)
                             },
                             modifier = Modifier.weight(1f),
                         )

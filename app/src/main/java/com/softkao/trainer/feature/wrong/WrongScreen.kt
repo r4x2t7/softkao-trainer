@@ -36,6 +36,7 @@ import com.softkao.trainer.core.model.Mastery
 import com.softkao.trainer.core.model.PracticeMode
 import com.softkao.trainer.core.model.Question
 import com.softkao.trainer.core.model.WrongEntry
+import com.softkao.trainer.feature.common.LabeledProgress
 import com.softkao.trainer.feature.common.SectionCard
 import com.softkao.trainer.feature.common.StatTile
 import com.softkao.trainer.feature.common.TagChip
@@ -43,7 +44,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -72,16 +72,12 @@ class WrongViewModel : ViewModel() {
     private val _state = MutableStateFlow(State())
     val state: StateFlow<State> = _state.asStateFlow()
 
-    /** 用户是否已经手动选过科目；用来避免初始化时被异步读取覆盖 */
-    private var userPicked = false
-
     init {
-        refresh()
+        // 订阅全局科目：错题本只显示当前科目，切换科目时立即重载
         viewModelScope.launch {
-            // 全局科目：错题本只显示当前科目，两门考试彻底隔离
-            val saved = ServiceLocator.settingsRepository.currentExamId.first()
-            if (!userPicked) {
-                _state.value = _state.value.copy(examFilter = ExamId.fromId(saved))
+            ServiceLocator.settingsRepository.currentExamId.collect { id ->
+                _state.value = _state.value.copy(examFilter = ExamId.fromId(id))
+                refresh()
             }
         }
     }
@@ -134,7 +130,6 @@ class WrongViewModel : ViewModel() {
 
     fun setExamFilter(exam: ExamId?) {
         if (exam == null) return
-        userPicked = true
         _state.value = _state.value.copy(examFilter = exam)
         viewModelScope.launch {
             ServiceLocator.settingsRepository.setCurrentExamId(exam.id)
@@ -253,15 +248,21 @@ fun WrongScreen(
         if (state.byKnowledge.isNotEmpty()) {
             item {
                 SectionCard(title = "错题分布（按知识点）") {
-                    state.byKnowledge.entries.sortedByDescending { it.value }.take(6).forEach { (kp, count) ->
-                        Row(
-                            Modifier.fillMaxWidth().padding(vertical = 3.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                        ) {
-                            Text(kp, style = MaterialTheme.typography.bodyMedium)
-                            Text("$count 题", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
+                    val max = state.byKnowledge.values.maxOrNull() ?: 1
+                    state.byKnowledge.entries.sortedByDescending { it.value }.take(8).forEach { (kp, count) ->
+                        Spacer(Modifier.height(6.dp))
+                        LabeledProgress(
+                            label = kp.substringAfter("·").trim(),
+                            value = count.toFloat() / max,
+                            trailing = "$count 题",
+                        )
                     }
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        "条形越长＝这个考点错得越多，优先回去刷它",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                 }
             }
         }

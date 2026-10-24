@@ -54,3 +54,23 @@ data class VisualLesson(
         return keywords.any { point.contains(it, ignoreCase = true) || it.contains(point, ignoreCase = true) }
     }
 }
+
+/**
+ * 静态图解（HTML 卡片）。
+ *
+ * 与 [VisualLesson] 的帧动画是两套互补的素材：
+ * 帧动画负责「过程类」考点（关键路径怎么走、采样量化怎么变），
+ * HTML 卡片负责「结构类」考点（OSI 七层怎么对应、法律层级、信息安全地图）。
+ */
+data class HtmlVisual(
+    val id: String,
+    val examId: String,
+    val chapter: String,
+    val title: String,
+    val caption: String,
+    val tags: List<String>,
+    /** 亮色版文件名（相对 assets/visuals/） */
+    val file: String,
+    /** 暗色版文件名，为空则复用亮色版 */
+    val darkFile: String,
+)

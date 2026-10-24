@@ -67,9 +67,6 @@ fun StatTile(
             label,
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            maxLines = 1,
-            softWrap = false,
-            overflow = TextOverflow.Ellipsis,
         )
         Spacer(Modifier.height(3.dp))
         Text(
@@ -77,18 +74,12 @@ fun StatTile(
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface,
-            maxLines = 1,
-            softWrap = false,
-            overflow = TextOverflow.Ellipsis,
         )
         if (hint != null) {
             Text(
                 hint,
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                softWrap = false,
-                overflow = TextOverflow.Ellipsis,
             )
         }
     }
@@ -105,9 +96,6 @@ fun TagChip(
         text = text,
         style = MaterialTheme.typography.labelSmall,
         color = contentColor,
-        maxLines = 1,
-        softWrap = false,
-        overflow = TextOverflow.Ellipsis,
         modifier = modifier
             .clip(RoundedCornerShape(6.dp))
             .background(color)
@@ -131,10 +119,7 @@ fun LabeledProgress(
             Text(
                 label,
                 style = MaterialTheme.typography.bodyMedium,
-                maxLines = 1,
-                softWrap = false,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.weight(1f, fill = false),
+                modifier = Modifier.weight(1f),
             )
             Text(
                 trailing,

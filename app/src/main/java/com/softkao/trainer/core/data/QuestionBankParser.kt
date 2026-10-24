@@ -213,19 +213,35 @@ object QuestionBankParser {
 
 /** 索引文件 */
 object BankIndexParser {
-    data class IndexEntry(val examId: String, val version: Int, val file: String, val questionCount: Int, val sha256: String)
+    data class IndexEntry(
+        val examId: String,
+        val version: Int,
+        val file: String,
+        val questionCount: Int,
+        val sha256: String,
+        /** 逐知识点精讲文件（相对题库根目录），老索引可能没有 */
+        val kpNotesFile: String = "",
+        /** 逐知识点精讲文件的 sha256 */
+        val kpNotesSha256: String = "",
+        /** 逐知识点精讲条数 */
+        val kpNotesCount: Int = 0,
+    )
 
     fun parse(raw: String): List<IndexEntry> {
         val root = JSONObject(raw)
         val arr = root.optJSONArray("banks") ?: JSONArray()
         return (0 until arr.length()).mapNotNull { i ->
             val o = arr.optJSONObject(i) ?: return@mapNotNull null
+            val notes = o.optJSONObject("kpNotes")
             IndexEntry(
                 examId = o.optString("examId"),
                 version = o.optInt("version", 1),
                 file = o.optString("file"),
                 questionCount = o.optInt("questionCount", 0),
                 sha256 = o.optString("sha256"),
+                kpNotesFile = notes?.optString("file") ?: "",
+                kpNotesSha256 = notes?.optString("sha256") ?: "",
+                kpNotesCount = notes?.optInt("count", 0) ?: 0,
             )
         }.filter { it.examId.isNotEmpty() && it.file.isNotEmpty() }
     }

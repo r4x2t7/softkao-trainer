@@ -9,7 +9,7 @@ try:
 except Exception:
     pass
 
-ROOT = pathlib.Path(r"E:\ai coding\pojie\softkao-trainer")
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 BANK = ROOT / "question-bank" / "multimedia-designer"
 issues = json.loads((BANK / "ai_issues.json").read_text(encoding="utf-8"))
 bank = json.loads((BANK / "v2.json").read_text(encoding="utf-8"))
