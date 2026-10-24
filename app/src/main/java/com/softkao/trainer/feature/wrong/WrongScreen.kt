@@ -2,6 +2,8 @@ package com.softkao.trainer.feature.wrong
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +43,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -71,6 +74,11 @@ class WrongViewModel : ViewModel() {
 
     init {
         refresh()
+        viewModelScope.launch {
+            // 默认只看当前科目（一个人通常只考一门）
+            val current = ServiceLocator.settingsRepository.currentExamId.first()
+            ExamId.fromId(current)?.let { setExamFilter(it) }
+        }
     }
 
     fun refresh() {
@@ -254,7 +262,10 @@ fun WrongScreen(
                 shape = androidx.compose.foundation.shape.RoundedCornerShape(14.dp),
             ) {
                 Column(Modifier.padding(14.dp)) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
                         if (entry != null) {
                             TagChip(entry.mastery.label)
                             TagChip("错 ${entry.wrongCount} 次", MaterialTheme.colorScheme.errorContainer, MaterialTheme.colorScheme.onErrorContainer)

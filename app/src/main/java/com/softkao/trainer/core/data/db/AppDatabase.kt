@@ -225,9 +225,30 @@ class AppDatabase(context: Context) :
             m
         }
 
-    /** 每个知识点的题量 */
-    fun knowledgePointCounts(examId: String): Map<String, Int> =
+    /** 每章的题量 / 作答数 / 正确数（用于知识点模块的掌握度） */
+    fun chapterStats(examId: String): Map<String, Triple<Int, Int, Int>> =
         readableDatabase.rawQuery(
+            """
+            SELECT q.chapter,
+                   (SELECT COUNT(*) FROM questions q2 WHERE q2.exam_id=q.exam_id AND q2.chapter=q.chapter) AS total,
+                   COUNT(a.id) AS answered,
+                   SUM(CASE WHEN a.correct=1 THEN 1 ELSE 0 END) AS correct
+            FROM questions q
+            LEFT JOIN attempts a ON a.question_id = q.id
+            WHERE q.exam_id = ?
+            GROUP BY q.chapter
+            """.trimIndent(),
+            arrayOf(examId)
+        ).use { c ->
+            val m = linkedMapOf<String, Triple<Int, Int, Int>>()
+            while (c.moveToNext()) {
+                m[c.getString(0)] = Triple(c.getInt(1), c.getInt(2), c.getInt(3))
+            }
+            m
+        }
+
+    /** 每个知识点的题量 */
+    fun knowledgePointCounts(examId: String): Map<String, Int> =        readableDatabase.rawQuery(
             "SELECT knowledge_point, COUNT(*) FROM questions WHERE exam_id=? GROUP BY knowledge_point ORDER BY COUNT(*) DESC",
             arrayOf(examId)
         ).use { c ->

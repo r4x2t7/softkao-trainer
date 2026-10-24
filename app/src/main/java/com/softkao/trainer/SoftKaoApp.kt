@@ -3,6 +3,7 @@ package com.softkao.trainer
 import android.app.Application
 import android.content.Context
 import com.softkao.trainer.core.data.SettingsRepository
+import com.softkao.trainer.core.data.MaterialRepository
 import com.softkao.trainer.core.data.QuestionBankImporter
 import com.softkao.trainer.core.data.SeedImporter
 import com.softkao.trainer.core.data.db.AppDatabase
@@ -38,6 +39,8 @@ object ServiceLocator {
         private set
     lateinit var settingsRepository: SettingsRepository
         private set
+    lateinit var materialRepository: MaterialRepository
+        private set
     lateinit var importer: QuestionBankImporter
         private set
     lateinit var seedImporter: SeedImporter
@@ -54,6 +57,7 @@ object ServiceLocator {
         practiceRepository = PracticeRepository(db)
         statsRepository = StatsRepository(db)
         settingsRepository = SettingsRepository(app)
+        materialRepository = MaterialRepository(app)
         importer = QuestionBankImporter(db)
         seedImporter = SeedImporter(app, db, importer)
         bankUpdater = BankUpdater(db, importer)

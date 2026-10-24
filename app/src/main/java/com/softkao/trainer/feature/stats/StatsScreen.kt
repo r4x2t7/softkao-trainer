@@ -38,6 +38,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -61,6 +62,11 @@ class StatsViewModel : ViewModel() {
 
     init {
         refresh()
+        viewModelScope.launch {
+            // 默认跟随当前科目
+            val current = ServiceLocator.settingsRepository.currentExamId.first()
+            ExamId.fromId(current)?.let { selectExam(it) }
+        }
     }
 
     fun selectExam(exam: ExamId) {

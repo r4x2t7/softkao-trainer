@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -33,6 +36,7 @@ import com.softkao.trainer.core.model.PracticeMode
 import com.softkao.trainer.feature.common.LabeledProgress
 import com.softkao.trainer.feature.common.SectionCard
 import com.softkao.trainer.feature.common.StatTile
+import com.softkao.trainer.feature.common.TagChip
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -62,6 +66,7 @@ class HomeViewModel : ViewModel() {
         val totalDone: Int = 0,
         val overallAccuracy: Float = 0f,
         val wrongDue: Int = 0,
+        val currentExamId: String = ExamId.SYSTEM_INTEGRATION.id,
     )
 
     private val _state = MutableStateFlow(State())
@@ -69,6 +74,14 @@ class HomeViewModel : ViewModel() {
 
     init {
         refresh()
+    }
+
+    /** 切换当前科目：首页、错题本、统计都跟随它 */
+    fun setCurrentExam(id: String) {
+        viewModelScope.launch {
+            ServiceLocator.settingsRepository.setCurrentExamId(id)
+            refresh()
+        }
     }
 
     fun refresh() {
@@ -100,15 +113,21 @@ class HomeViewModel : ViewModel() {
                 exams to extra
             }
             val (examStats, extra) = snapshot
+            val currentExamId = withContext(Dispatchers.IO) {
+                ServiceLocator.settingsRepository.currentExamId.first()
+            }
             _state.value = State(
                 loading = false,
-                exams = examStats,
+                exams = examStats.sortedBy {
+                    if (it.exam.id == currentExamId) 0 else 1
+                },
                 todayDone = extra.a,
                 goal = goal,
                 streak = extra.b,
                 totalDone = examStats.sumOf { it.answered },
                 overallAccuracy = extra.c,
                 wrongDue = extra.d,
+                currentExamId = currentExamId,
             )
         }
     }
@@ -150,6 +169,27 @@ fun HomeScreen(
         }
 
         item {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    "当前科目",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                )
+                ExamId.entries.forEach { exam ->
+                    FilterChip(
+                        selected = state.currentExamId == exam.id,
+                        onClick = { viewModel.setCurrentExam(exam.id) },
+                        label = { Text(exam.shortName, maxLines = 1, softWrap = false) },
+                    )
+                }
+            }
+        }
+
+        item {
             SectionCard {
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     StatTile("今日", "${state.todayDone}/${state.goal}", modifier = Modifier.weight(1f))
@@ -173,6 +213,10 @@ fun HomeScreen(
 
         items(state.exams, key = { it.exam.id }) { stat ->
             SectionCard(title = stat.exam.fullName) {
+                if (stat.exam.id == state.currentExamId) {
+                    TagChip("当前科目", MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.onTertiaryContainer)
+                    Spacer(Modifier.height(8.dp))
+                }
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     StatTile("题库", "${stat.questionCount} 题", modifier = Modifier.weight(1f))
                     StatTile("已做", "${stat.answered}", modifier = Modifier.weight(1f))
@@ -201,7 +245,15 @@ fun HomeScreen(
                         items(stat.chapters) { chapter ->
                             AssistChip(
                                 onClick = { onStartPractice(stat.exam.id, PracticeMode.CHAPTER, chapter, "", "章节 · $chapter") },
-                                label = { Text(chapter) },
+                                label = {
+                                    Text(
+                                        chapter,
+                                        maxLines = 1,
+                                        softWrap = false,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                },
+                                modifier = Modifier.widthIn(max = 190.dp),
                             )
                         }
                     }
@@ -212,13 +264,24 @@ fun HomeScreen(
                         "按知识点专项练习（共 ${stat.knowledgePoints.size} 个知识点）",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        softWrap = false,
+                        overflow = TextOverflow.Ellipsis,
                     )
                     Spacer(Modifier.height(6.dp))
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         items(stat.knowledgePoints) { (kp, count) ->
                             AssistChip(
                                 onClick = { onStartPractice(stat.exam.id, PracticeMode.KNOWLEDGE, "", kp, "专项 · $kp") },
-                                label = { Text("$kp ($count)") },
+                                label = {
+                                    Text(
+                                        "$kp ($count)",
+                                        maxLines = 1,
+                                        softWrap = false,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                },
+                                modifier = Modifier.widthIn(max = 200.dp),
                             )
                         }
                     }

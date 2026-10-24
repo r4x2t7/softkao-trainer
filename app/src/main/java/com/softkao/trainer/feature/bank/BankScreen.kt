@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -51,6 +53,7 @@ class BankViewModel : ViewModel() {
         val message: String? = null,
         val busy: Boolean = false,
         val aiMessage: String? = null,
+        val currentExamId: String = com.softkao.trainer.core.model.ExamId.SYSTEM_INTEGRATION.id,
     )
 
     private val _state = MutableStateFlow(State())
@@ -65,8 +68,17 @@ class BankViewModel : ViewModel() {
                 aiApiKey = settings.aiApiKey.first(),
                 aiModel = settings.aiModel.first(),
                 dailyGoal = settings.dailyGoal.first().toString(),
+                currentExamId = settings.currentExamId.first(),
             )
             refreshVersions()
+        }
+    }
+
+    /** 切换当前科目（一个人通常只考一门） */
+    fun setCurrentExam(id: String) {
+        viewModelScope.launch {
+            ServiceLocator.settingsRepository.setCurrentExamId(id)
+            _state.value = _state.value.copy(currentExamId = id, message = "当前科目已切换")
         }
     }
 
@@ -159,6 +171,34 @@ fun BankScreen(viewModel: BankViewModel = viewModel()) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            }
+        }
+
+        item {
+            com.softkao.trainer.feature.common.SectionCard(title = "学习科目") {
+                Text(
+                    "一个人通常只考一门科目，选定后首页、错题本、统计都会默认跟随它",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.height(10.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    com.softkao.trainer.core.model.ExamId.entries.forEach { exam ->
+                        FilterChip(
+                            selected = state.currentExamId == exam.id,
+                            onClick = { viewModel.setCurrentExam(exam.id) },
+                            label = {
+                                Text(
+                                    exam.shortName,
+                                    maxLines = 1,
+                                    softWrap = false,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                }
             }
         }
 

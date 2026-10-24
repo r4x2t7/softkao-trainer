@@ -12,7 +12,8 @@ import json
 import re
 import sys
 import unicodedata
-from collections import Counter
+from collections import Counter, defaultdict
+from difflib import SequenceMatcher
 from pathlib import Path
 
 # Windows 控制台默认 GBK，打印 ✓/✗ 会抛 UnicodeEncodeError，这里统一走 utf-8
@@ -61,6 +62,111 @@ def load_parts(exam_id: str) -> list[dict]:
     return questions
 
 
+def shingles(text: str, k: int = 5) -> set[str]:
+    """字符 k-gram 集合，用于快速筛出可能重复的候选对"""
+    if len(text) < k:
+        return {text} if text else set()
+    return {text[i:i + k] for i in range(len(text) - k + 1)}
+
+
+def similarity(a: str, b: str) -> float:
+    return SequenceMatcher(None, a, b).ratio()
+
+
+def dedupe(questions: list[dict], threshold: float = 0.90) -> tuple[list[dict], list[str], list[str]]:
+    """三步去重：完全相同 id → 完全相同题干 → 近重复题干。
+
+    近重复的判定必须同时满足：
+      1) 题干相似度 ≥ threshold（字符 5-gram 倒排索引筛候选，避免 O(n²) 全比）
+      2) 题型相同（单选版与多选版是两道题，不能当重复）
+      3) 答案集合相同（同题不同答案属冲突，需人工复核，不能自动删）
+    案例分析题（type=case）的题干是「小问（N）：…」模板，相似度无意义，直接跳过。
+    保留优先级：解析更长 > 来源为「改编自」> id 更靠前。
+    """
+    seen_ids: set[str] = set()
+    seen_stems: dict[str, str] = {}
+    kept: list[dict] = []
+    dup_id = 0
+    dup_stem = 0
+    near_dups: list[str] = []
+    conflicts: list[str] = []
+
+    for q in questions:
+        qid = str(q.get("id", ""))
+        stem_key = norm_stem(q.get("stem", ""))
+        if not qid or qid in seen_ids:
+            dup_id += 1
+            continue
+        if stem_key and stem_key in seen_stems:
+            dup_stem += 1
+            continue
+        seen_ids.add(qid)
+        if stem_key:
+            seen_stems[stem_key] = qid
+        kept.append(q)
+
+    # ---- 近重复检测
+    index: dict[str, list[int]] = defaultdict(list)
+    grams: list[set[str]] = []
+    for i, q in enumerate(kept):
+        if q.get("type") == "case":
+            grams.append(set())
+            continue
+        g = shingles(norm_stem(q.get("stem", "")))
+        grams.append(g)
+        for sh in g:
+            index[sh].append(i)
+
+    pairs: set[tuple[int, int]] = set()
+    for sh, idxs in index.items():
+        if len(idxs) > 200:  # 高频 n-gram（常见短语）跳过，避免爆炸
+            continue
+        for i in range(len(idxs)):
+            for j in range(i + 1, len(idxs)):
+                a, b = idxs[i], idxs[j]
+                if len(grams[a] & grams[b]) >= 3:
+                    pairs.add((a, b) if a < b else (b, a))
+
+    drop: set[int] = set()
+    for a, b in pairs:
+        if a in drop or b in drop:
+            continue
+        qa, qb = kept[a], kept[b]
+        if qa.get("type") != qb.get("type"):
+            continue  # 题型不同 → 不是重复题
+        sa = norm_stem(qa.get("stem", ""))
+        sb = norm_stem(qb.get("stem", ""))
+        if not sa or not sb:
+            continue
+        sim = similarity(sa, sb)
+        if sim < threshold:
+            continue
+        ans_a = set(qa.get("answer") or [])
+        ans_b = set(qb.get("answer") or [])
+        if ans_a != ans_b:
+            # 同题不同答案：保留两题并标记人工复核
+            conflicts.append(
+                f"{qa.get('id')} 与 {qb.get('id')} 题干近似（{sim:.2f}）但答案不同："
+                f"{''.join(sorted(ans_a))} vs {''.join(sorted(ans_b))}"
+            )
+            continue
+        winner, loser = (a, b) if _quality(qa) >= _quality(qb) else (b, a)
+        drop.add(loser)
+        near_dups.append(
+            f"{kept[loser].get('id')} ≈ {kept[winner].get('id')}（相似度 {sim:.2f}，答案一致）"
+        )
+
+    result = [q for i, q in enumerate(kept) if i not in drop]
+    return result, near_dups, conflicts
+
+
+def _quality(q: dict) -> tuple[int, int]:
+    """保留优先级打分：解析越长越好；「改编自」优于「自编」"""
+    expl = len(q.get("explanation") or "")
+    src = 1 if "改编" in (q.get("source") or "") else 0
+    return (expl, src)
+
+
 def merge(exam_id: str, exam_name: str) -> tuple[dict, dict]:
     parts = load_parts(exam_id)
     # 合并旧版本 v1（作为种子保留）
@@ -94,6 +200,17 @@ def merge(exam_id: str, exam_name: str) -> tuple[dict, dict]:
         merged.append(q)
 
     merged.sort(key=lambda x: str(x.get("id", "")))
+    merged, near_dups, conflicts = dedupe(merged)
+    if near_dups:
+        print(f"  [near-dup] 近重复去掉 {len(near_dups)} 题")
+        for line in near_dups[:10]:
+            print(f"      {line}")
+        if len(near_dups) > 10:
+            print(f"      … 另有 {len(near_dups) - 10} 条")
+    if conflicts:
+        print(f"  [warn] {len(conflicts)} 组近似题答案不一致，需人工复核：")
+        for line in conflicts[:10]:
+            print(f"      {line}")
     bank = {
         "examId": exam_id,
         "examName": exam_name,
@@ -106,6 +223,8 @@ def merge(exam_id: str, exam_name: str) -> tuple[dict, dict]:
         "total": len(merged),
         "dupId": dup_id,
         "dupStem": dup_stem,
+        "nearDup": len(near_dups),
+        "conflicts": conflicts,
         "types": Counter(q.get("type", "?") for q in merged),
         "chapters": Counter(q.get("chapter", "?") for q in merged),
         "difficulty": Counter(q.get("difficulty", "?") for q in merged),

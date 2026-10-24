@@ -20,7 +20,16 @@ class SettingsRepository(private val context: Context) {
         val aiModel = stringPreferencesKey("ai_model")
         val dailyGoal = intPreferencesKey("daily_goal")
         val seeded = stringPreferencesKey("seeded_version")
+        val currentExamId = stringPreferencesKey("current_exam_id")
     }
+
+    /** 当前科目：一个人通常只考一门，默认跟随这里设置 */
+    val currentExamId: Flow<String> = context.settingsStore.data.map {
+        it[Keys.currentExamId] ?: com.softkao.trainer.core.model.ExamId.SYSTEM_INTEGRATION.id
+    }
+
+    suspend fun setCurrentExamId(id: String) =
+        context.settingsStore.edit { it[Keys.currentExamId] = id }
 
     val bankSourceUrl: Flow<String> = context.settingsStore.data.map { it[Keys.bankSourceUrl] ?: "" }
     val aiBaseUrl: Flow<String> = context.settingsStore.data.map { it[Keys.aiBaseUrl] ?: "" }

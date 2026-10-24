@@ -1,0 +1,1575 @@
+{
+ "chunk": "multimedia-designer-mat-01",
+ "examId": "multimedia-designer",
+ "examName": "多媒体应用设计师",
+ "chapters": [
+  {
+   "chapter": "音频格式与编辑",
+   "questionCount": 43,
+   "knowledgePoints": [
+    {
+     "name": "WAV 格式",
+     "count": 1
+    },
+    {
+     "name": "MP3 格式特点",
+     "count": 1
+    },
+    {
+     "name": "AAC 格式",
+     "count": 1
+    },
+    {
+     "name": "有损与无损格式辨别",
+     "count": 1
+    },
+    {
+     "name": "MIDI 格式",
+     "count": 1
+    },
+    {
+     "name": "AIFF 格式",
+     "count": 1
+    },
+    {
+     "name": "编辑中间格式的选择",
+     "count": 1
+    },
+    {
+     "name": "淡入淡出处理",
+     "count": 1
+    },
+    {
+     "name": "常见音频编辑操作",
+     "count": 1
+    },
+    {
+     "name": "音频编辑软件",
+     "count": 1
+    },
+    {
+     "name": "FLAC 无损压缩",
+     "count": 1
+    },
+    {
+     "name": "WMA 与 OGG 容器",
+     "count": 1
+    },
+    {
+     "name": "MP3 压缩比",
+     "count": 1
+    },
+    {
+     "name": "音频格式与用途对应",
+     "count": 1
+    },
+    {
+     "name": "降噪方法",
+     "count": 1
+    },
+    {
+     "name": "均衡处理",
+     "count": 1
+    },
+    {
+     "name": "动态处理",
+     "count": 1
+    },
+    {
+     "name": "变调与变速",
+     "count": 1
+    },
+    {
+     "name": "响度归一化",
+     "count": 1
+    },
+    {
+     "name": "母版文件的作用",
+     "count": 1
+    },
+    {
+     "name": "采样率转换",
+     "count": 1
+    },
+    {
+     "name": "常用音频格式特性",
+     "count": 1
+    },
+    {
+     "name": "混音操作",
+     "count": 1
+    },
+    {
+     "name": "数字音频工作站",
+     "count": 1
+    },
+    {
+     "name": "容器与编码的关系",
+     "count": 1
+    },
+    {
+     "name": "MIDI 的适用场景",
+     "count": 1
+    },
+    {
+     "name": "音频问题与处理手段对应",
+     "count": 1
+    },
+    {
+     "name": "WAV 与 AIFF 的比较",
+     "count": 1
+    },
+    {
+     "name": "CBR 与 VBR 码率模式",
+     "count": 1
+    },
+    {
+     "name": "音频编辑软件识别",
+     "count": 1
+    },
+    {
+     "name": "音频格式与场景对应",
+     "count": 1
+    },
+    {
+     "name": "交叉淡化",
+     "count": 1
+    },
+    {
+     "name": "降噪的局限",
+     "count": 1
+    },
+    {
+     "name": "压缩器参数",
+     "count": 1
+    },
+    {
+     "name": "均衡器类型",
+     "count": 1
+    },
+    {
+     "name": "变调与变速的应用",
+     "count": 1
+    },
+    {
+     "name": "响度标准",
+     "count": 1
+    },
+    {
+     "name": "无损编辑",
+     "count": 1
+    },
+    {
+     "name": "MIDI 的表达能力限制",
+     "count": 1
+    },
+    {
+     "name": "网页音频格式选择",
+     "count": 1
+    },
+    {
+     "name": "音频后期工作流",
+     "count": 1
+    },
+    {
+     "name": "音频素材库的元数据管理",
+     "count": 1
+    },
+    {
+     "name": "播客音频后期与多平台交付",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 28,
+    "multi": 9,
+    "truefalse": 5,
+    "case": 1
+   },
+   "avgDifficulty": 1.91
+  },
+  {
+   "chapter": "多媒体数据库",
+   "questionCount": 40,
+   "knowledgePoints": [
+    {
+     "name": "多媒体数据库的基本特点",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据的时序性",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据库特点归纳",
+     "count": 1
+    },
+    {
+     "name": "元数据与媒体本体数据",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据库的组织结构",
+     "count": 1
+    },
+    {
+     "name": "集中型组织结构",
+     "count": 1
+    },
+    {
+     "name": "主从型组织结构",
+     "count": 1
+    },
+    {
+     "name": "协作型组织结构",
+     "count": 1
+    },
+    {
+     "name": "B/S 与 C/S 的取舍",
+     "count": 1
+    },
+    {
+     "name": "多媒体系统中 B/S 与 C/S 的适用场景",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据模型",
+     "count": 1
+    },
+    {
+     "name": "对象关系模型",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据库与普通数据库的差异",
+     "count": 1
+    },
+    {
+     "name": "存储与检索技术",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据库的关键问题",
+     "count": 1
+    },
+    {
+     "name": "基于关键词检索",
+     "count": 1
+    },
+    {
+     "name": "基于内容检索",
+     "count": 1
+    },
+    {
+     "name": "多媒体检索方法分类",
+     "count": 1
+    },
+    {
+     "name": "图像检索的特征",
+     "count": 1
+    },
+    {
+     "name": "视频检索",
+     "count": 1
+    },
+    {
+     "name": "音频检索",
+     "count": 1
+    },
+    {
+     "name": "多媒体索引与传统索引的差异",
+     "count": 1
+    },
+    {
+     "name": "元数据索引与内容索引",
+     "count": 1
+    },
+    {
+     "name": "检索加速手段",
+     "count": 1
+    },
+    {
+     "name": "元数据的作用",
+     "count": 1
+    },
+    {
+     "name": "元数据的内容构成",
+     "count": 1
+    },
+    {
+     "name": "元数据标准",
+     "count": 1
+    },
+    {
+     "name": "元数据与索引的关系",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据仓库",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据仓库的特征",
+     "count": 1
+    },
+    {
+     "name": "数据仓库的装载方式",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据的存储方式",
+     "count": 1
+    },
+    {
+     "name": "存储访问的 I/O 优化",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据的并发访问",
+     "count": 1
+    },
+    {
+     "name": "事务与一致性",
+     "count": 1
+    },
+    {
+     "name": "分布式多媒体数据库",
+     "count": 1
+    },
+    {
+     "name": "数据独立性",
+     "count": 1
+    },
+    {
+     "name": "SQL/MM 标准",
+     "count": 1
+    },
+    {
+     "name": "多媒体素材库的数据组织与检索设计",
+     "count": 1
+    },
+    {
+     "name": "素材库检索体系、元数据管理与组织结构",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 27,
+    "multi": 6,
+    "truefalse": 5,
+    "case": 2
+   },
+   "avgDifficulty": 2.15
+  },
+  {
+   "chapter": "分辨率与图像容量",
+   "questionCount": 36,
+   "knowledgePoints": [
+    {
+     "name": "图像容量计算",
+     "count": 3
+    },
+    {
+     "name": "图像容量与输出规格",
+     "count": 2
+    },
+    {
+     "name": "压缩比计算",
+     "count": 2
+    },
+    {
+     "name": "分辨率与 DPI",
+     "count": 1
+    },
+    {
+     "name": "分辨率与输出尺寸",
+     "count": 1
+    },
+    {
+     "name": "DPI与PPI的区别",
+     "count": 1
+    },
+    {
+     "name": "未压缩位图容量公式",
+     "count": 1
+    },
+    {
+     "name": "扫描分辨率的计算",
+     "count": 1
+    },
+    {
+     "name": "容量因素与放大清晰度",
+     "count": 1
+    },
+    {
+     "name": "有效分辨率计算",
+     "count": 1
+    },
+    {
+     "name": "印刷所需像素计算",
+     "count": 1
+    },
+    {
+     "name": "分辨率色彩深度与容量的关系",
+     "count": 1
+    },
+    {
+     "name": "分辨率与容量倍数关系",
+     "count": 1
+    },
+    {
+     "name": "光学分辨率与插值分辨率",
+     "count": 1
+    },
+    {
+     "name": "索引色位图容量计算",
+     "count": 1
+    },
+    {
+     "name": "有效分辨率与输出尺寸",
+     "count": 1
+    },
+    {
+     "name": "扫描分辨率设定",
+     "count": 1
+    },
+    {
+     "name": "分辨率数值的含义",
+     "count": 1
+    },
+    {
+     "name": "DPI与输出尺寸的关系",
+     "count": 1
+    },
+    {
+     "name": "大尺寸主视觉的输出与交付",
+     "count": 1
+    },
+    {
+     "name": "印刷尺寸与像素匹配",
+     "count": 1
+    },
+    {
+     "name": "网页图像的显示与重采样",
+     "count": 1
+    },
+    {
+     "name": "灰度位图容量计算",
+     "count": 1
+    },
+    {
+     "name": "扫描分辨率与质量的取舍",
+     "count": 1
+    },
+    {
+     "name": "减小网页图片体积的手段",
+     "count": 1
+    },
+    {
+     "name": "输出规格的设定原则",
+     "count": 1
+    },
+    {
+     "name": "输出尺寸与有效分辨率的反比关系",
+     "count": 1
+    },
+    {
+     "name": "色彩深度转换对容量的影响",
+     "count": 1
+    },
+    {
+     "name": "分辨率数值与物理尺寸的关系",
+     "count": 1
+    },
+    {
+     "name": "无损压缩的含义",
+     "count": 1
+    },
+    {
+     "name": "文物扫描图的衍生输出",
+     "count": 1
+    },
+    {
+     "name": "印刷与电子版双版本交付",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 14,
+    "multi": 8,
+    "truefalse": 9,
+    "case": 5
+   },
+   "avgDifficulty": 2.25
+  },
+  {
+   "chapter": "色彩与色彩管理",
+   "questionCount": 35,
+   "knowledgePoints": [
+    {
+     "name": "色彩模型",
+     "count": 4
+    },
+    {
+     "name": "位深",
+     "count": 1
+    },
+    {
+     "name": "色彩三属性",
+     "count": 1
+    },
+    {
+     "name": "RGB加色模型",
+     "count": 1
+    },
+    {
+     "name": "CMYK减色模型",
+     "count": 1
+    },
+    {
+     "name": "加色与减色模型",
+     "count": 1
+    },
+    {
+     "name": "HSV模型",
+     "count": 1
+    },
+    {
+     "name": "位深与色彩层次",
+     "count": 1
+    },
+    {
+     "name": "印刷输出与色彩管理",
+     "count": 1
+    },
+    {
+     "name": "HSL与HSV的区别",
+     "count": 1
+    },
+    {
+     "name": "YUV亮度色度分离",
+     "count": 1
+    },
+    {
+     "name": "YUV分量含义",
+     "count": 1
+    },
+    {
+     "name": "Lab色彩空间",
+     "count": 1
+    },
+    {
+     "name": "色域",
+     "count": 1
+    },
+    {
+     "name": "色彩管理要素",
+     "count": 1
+    },
+    {
+     "name": "灰度图像",
+     "count": 1
+    },
+    {
+     "name": "颜色模式与输出用途",
+     "count": 1
+    },
+    {
+     "name": "互补色",
+     "count": 1
+    },
+    {
+     "name": "三角形配色",
+     "count": 1
+    },
+    {
+     "name": "显示印刷与HDR的色彩处理",
+     "count": 1
+    },
+    {
+     "name": "色彩管理原理",
+     "count": 1
+    },
+    {
+     "name": "HSV色相取值",
+     "count": 1
+    },
+    {
+     "name": "邻近色配色",
+     "count": 1
+    },
+    {
+     "name": "色彩对比强度",
+     "count": 1
+    },
+    {
+     "name": "单色配色",
+     "count": 1
+    },
+    {
+     "name": "总墨量控制",
+     "count": 1
+    },
+    {
+     "name": "软打样",
+     "count": 1
+    },
+    {
+     "name": "提高跨设备颜色一致性",
+     "count": 1
+    },
+    {
+     "name": "色彩空间转换的本质",
+     "count": 1
+    },
+    {
+     "name": "加白与色彩属性变化",
+     "count": 1
+    },
+    {
+     "name": "色彩空间与色域",
+     "count": 1
+    },
+    {
+     "name": "界面配色实践",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 22,
+    "multi": 7,
+    "truefalse": 5,
+    "case": 1
+   },
+   "avgDifficulty": 2.11
+  },
+  {
+   "chapter": "视频格式与制作流程",
+   "questionCount": 35,
+   "knowledgePoints": [
+    {
+     "name": "封装容器格式",
+     "count": 1
+    },
+    {
+     "name": "视频编码标准 H.264",
+     "count": 1
+    },
+    {
+     "name": "常用封装容器",
+     "count": 1
+    },
+    {
+     "name": "编码标准与容器的组合",
+     "count": 1
+    },
+    {
+     "name": "视频制作流程",
+     "count": 1
+    },
+    {
+     "name": "硬字幕与软字幕",
+     "count": 1
+    },
+    {
+     "name": "MPEG-1 的应用",
+     "count": 1
+    },
+    {
+     "name": "MPEG 系列标准的定位",
+     "count": 1
+    },
+    {
+     "name": "H.265/HEVC 的优势",
+     "count": 1
+    },
+    {
+     "name": "DV 格式参数",
+     "count": 1
+    },
+    {
+     "name": "XD 格式参数",
+     "count": 1
+    },
+    {
+     "name": "视频容量计算与交付方案",
+     "count": 1
+    },
+    {
+     "name": "视频制作流程与多版本交付",
+     "count": 1
+    },
+    {
+     "name": "MOV 格式的来源",
+     "count": 1
+    },
+    {
+     "name": "FLV 格式",
+     "count": 1
+    },
+    {
+     "name": "现代视频编码标准比较",
+     "count": 1
+    },
+    {
+     "name": "SRT 字幕格式",
+     "count": 1
+    },
+    {
+     "name": "数字化容量计算与格式选择",
+     "count": 1
+    },
+    {
+     "name": "画幅转换与字幕色彩方案",
+     "count": 1
+    },
+    {
+     "name": "制作流程与质检要点",
+     "count": 1
+    },
+    {
+     "name": "MKV 格式特点",
+     "count": 1
+    },
+    {
+     "name": "TS 格式用途",
+     "count": 1
+    },
+    {
+     "name": "编码标准与容器的配合",
+     "count": 1
+    },
+    {
+     "name": "时间码与多机位同步",
+     "count": 1
+    },
+    {
+     "name": "字幕制作与交付",
+     "count": 1
+    },
+    {
+     "name": "横竖屏转换与编码设置",
+     "count": 1
+    },
+    {
+     "name": "发布流程与质检",
+     "count": 1
+    },
+    {
+     "name": "SRT 时间码格式",
+     "count": 1
+    },
+    {
+     "name": "粗剪与精剪",
+     "count": 1
+    },
+    {
+     "name": "常见视频编辑软件与功能",
+     "count": 1
+    },
+    {
+     "name": "导出与转码的区别",
+     "count": 1
+    },
+    {
+     "name": "色彩标准的选择",
+     "count": 1
+    },
+    {
+     "name": "归档与网络版导出方案",
+     "count": 1
+    },
+    {
+     "name": "录屏课程制作与交付",
+     "count": 1
+    },
+    {
+     "name": "多机位素材统一与播出交付",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 19,
+    "multi": 5,
+    "truefalse": 1,
+    "case": 10
+   },
+   "avgDifficulty": 2.49
+  },
+  {
+   "chapter": "帧与编码",
+   "questionCount": 34,
+   "knowledgePoints": [
+    {
+     "name": "I 帧的特点",
+     "count": 1
+    },
+    {
+     "name": "P 帧的特点",
+     "count": 1
+    },
+    {
+     "name": "B 帧的特点",
+     "count": 1
+    },
+    {
+     "name": "三类帧的码率关系",
+     "count": 1
+    },
+    {
+     "name": "GOP 与关键帧间隔",
+     "count": 1
+    },
+    {
+     "name": "随机访问与 I 帧",
+     "count": 1
+    },
+    {
+     "name": "关键帧间隔计算",
+     "count": 1
+    },
+    {
+     "name": "I 帧的作用",
+     "count": 1
+    },
+    {
+     "name": "帧编码与场编码",
+     "count": 1
+    },
+    {
+     "name": "帧率与每帧码率的关系",
+     "count": 1
+    },
+    {
+     "name": "帧率翻倍对每帧码率的影响",
+     "count": 1
+    },
+    {
+     "name": "B 帧的代价与作用",
+     "count": 1
+    },
+    {
+     "name": "关键帧数量计算",
+     "count": 1
+    },
+    {
+     "name": "帧率与码率的关系",
+     "count": 1
+    },
+    {
+     "name": "关键帧的定义",
+     "count": 1
+    },
+    {
+     "name": "典型帧序列结构",
+     "count": 1
+    },
+    {
+     "name": "码流平均码率计算",
+     "count": 1
+    },
+    {
+     "name": "影响码率的因素",
+     "count": 1
+    },
+    {
+     "name": "B 帧数量的作用",
+     "count": 1
+    },
+    {
+     "name": "提高帧率的作用",
+     "count": 1
+    },
+    {
+     "name": "帧率与文件体积及画质的关系",
+     "count": 1
+    },
+    {
+     "name": "B 帧数量对码率的影响",
+     "count": 1
+    },
+    {
+     "name": "剪辑切入点与关键帧",
+     "count": 1
+    },
+    {
+     "name": "三类编码技术",
+     "count": 1
+    },
+    {
+     "name": "帧内编码与帧间编码的比较",
+     "count": 1
+    },
+    {
+     "name": "运动估计与运动补偿",
+     "count": 1
+    },
+    {
+     "name": "影响压缩比的内容因素",
+     "count": 1
+    },
+    {
+     "name": "量化与画质的关系",
+     "count": 1
+    },
+    {
+     "name": "恒定码率与可变码率",
+     "count": 1
+    },
+    {
+     "name": "帧的时间长度",
+     "count": 1
+    },
+    {
+     "name": "GOP 长度的影响",
+     "count": 1
+    },
+    {
+     "name": "编码参数对文件大小的影响",
+     "count": 1
+    },
+    {
+     "name": "场景切换对码率的影响",
+     "count": 1
+    },
+    {
+     "name": "解码顺序与显示顺序",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 22,
+    "multi": 6,
+    "truefalse": 6
+   },
+   "avgDifficulty": 2.32
+  },
+  {
+   "chapter": "传输与安全",
+   "questionCount": 34,
+   "knowledgePoints": [
+    {
+     "name": "TCP 与 UDP 的比较",
+     "count": 1
+    },
+    {
+     "name": "端口号的作用",
+     "count": 1
+    },
+    {
+     "name": "传输层协议的选型",
+     "count": 1
+    },
+    {
+     "name": "HTTPS 加密方案与令牌管理",
+     "count": 1
+    },
+    {
+     "name": "版权保护、DRM 局限与防盗链",
+     "count": 1
+    },
+    {
+     "name": "TCP 的可靠传输机制",
+     "count": 1
+    },
+    {
+     "name": "UDP 的可靠性",
+     "count": 1
+    },
+    {
+     "name": "HTTPS 的组成与安全目标",
+     "count": 1
+    },
+    {
+     "name": "TLS 握手阶段的加密",
+     "count": 1
+    },
+    {
+     "name": "HTTPS 数据传输阶段的加密",
+     "count": 1
+    },
+    {
+     "name": "HTTPS 通信流程",
+     "count": 1
+    },
+    {
+     "name": "数字签名的作用",
+     "count": 1
+    },
+    {
+     "name": "TLS 会话恢复",
+     "count": 1
+    },
+    {
+     "name": "TLS 握手协商的内容",
+     "count": 1
+    },
+    {
+     "name": "对称与非对称加密的组合原因",
+     "count": 1
+    },
+    {
+     "name": "对称加密的特点",
+     "count": 1
+    },
+    {
+     "name": "非对称加密的特点",
+     "count": 1
+    },
+    {
+     "name": "非对称密码的主要用途",
+     "count": 1
+    },
+    {
+     "name": "数字证书的内容",
+     "count": 1
+    },
+    {
+     "name": "认证中心 CA 的职责",
+     "count": 1
+    },
+    {
+     "name": "证书链与信任验证",
+     "count": 1
+    },
+    {
+     "name": "服务器证书的校验要点",
+     "count": 1
+    },
+    {
+     "name": "PKI 的组成",
+     "count": 1
+    },
+    {
+     "name": "DRM 的作用",
+     "count": 1
+    },
+    {
+     "name": "DRM 的局限",
+     "count": 1
+    },
+    {
+     "name": "流媒体内容分发的安全措施",
+     "count": 1
+    },
+    {
+     "name": "版权保护的技术与法律配合",
+     "count": 1
+    },
+    {
+     "name": "数字水印的作用",
+     "count": 1
+    },
+    {
+     "name": "CDN 与源站的关系",
+     "count": 1
+    },
+    {
+     "name": "CDN 回源机制",
+     "count": 1
+    },
+    {
+     "name": "同源策略与 CORS",
+     "count": 1
+    },
+    {
+     "name": "防盗链措施",
+     "count": 1
+    },
+    {
+     "name": "HTTPS 鉴权与源站保护方案",
+     "count": 1
+    },
+    {
+     "name": "CDN 分发关系、缓存差异与防盗链",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 18,
+    "multi": 5,
+    "case": 4,
+    "truefalse": 7
+   },
+   "avgDifficulty": 1.91
+  },
+  {
+   "chapter": "数字图像与格式",
+   "questionCount": 33,
+   "knowledgePoints": [
+    {
+     "name": "图像格式",
+     "count": 5
+    },
+    {
+     "name": "位图与矢量",
+     "count": 1
+    },
+    {
+     "name": "BMP格式",
+     "count": 1
+    },
+    {
+     "name": "PSD格式",
+     "count": 1
+    },
+    {
+     "name": "色彩模式与文件格式的关系",
+     "count": 1
+    },
+    {
+     "name": "JPEG有损压缩",
+     "count": 1
+    },
+    {
+     "name": "PNG变体",
+     "count": 1
+    },
+    {
+     "name": "JPEG质量设置",
+     "count": 1
+    },
+    {
+     "name": "ICO图标格式",
+     "count": 1
+    },
+    {
+     "name": "印刷交付格式EPS与PDF",
+     "count": 1
+    },
+    {
+     "name": "交付场景与格式选型",
+     "count": 1
+    },
+    {
+     "name": "位图存储空间计算",
+     "count": 1
+    },
+    {
+     "name": "GIF格式特点",
+     "count": 1
+    },
+    {
+     "name": "商品素材的格式方案与容量核算",
+     "count": 1
+    },
+    {
+     "name": "PSB与TIFF的定位比较",
+     "count": 1
+    },
+    {
+     "name": "EXIF元数据",
+     "count": 1
+    },
+    {
+     "name": "网页配图优化",
+     "count": 1
+    },
+    {
+     "name": "母版与输出件的分工",
+     "count": 1
+    },
+    {
+     "name": "格式的分层支持能力",
+     "count": 1
+    },
+    {
+     "name": "透明背景素材的处理",
+     "count": 1
+    },
+    {
+     "name": "CMYK与RGB的转换",
+     "count": 1
+    },
+    {
+     "name": "常见格式的主要用途",
+     "count": 1
+    },
+    {
+     "name": "格式技术特性辨析",
+     "count": 1
+    },
+    {
+     "name": "素材交付规范",
+     "count": 1
+    },
+    {
+     "name": "格式与色彩空间的对应关系",
+     "count": 1
+    },
+    {
+     "name": "矢量导出为位图的后果",
+     "count": 1
+    },
+    {
+     "name": "品牌视觉规范交付",
+     "count": 1
+    },
+    {
+     "name": "批量封面图的导出优化",
+     "count": 1
+    },
+    {
+     "name": "批量插图格式转换方案",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 18,
+    "multi": 6,
+    "truefalse": 5,
+    "case": 4
+   },
+   "avgDifficulty": 2.12
+  },
+  {
+   "chapter": "多媒体技术基础",
+   "questionCount": 31,
+   "knowledgePoints": [
+    {
+     "name": "媒体分类",
+     "count": 2
+    },
+    {
+     "name": "多媒体要素",
+     "count": 1
+    },
+    {
+     "name": "信息数字化",
+     "count": 1
+    },
+    {
+     "name": "多媒体技术特征",
+     "count": 1
+    },
+    {
+     "name": "图形与图像",
+     "count": 1
+    },
+    {
+     "name": "多媒体的定义",
+     "count": 1
+    },
+    {
+     "name": "文本类多媒体元素",
+     "count": 1
+    },
+    {
+     "name": "多媒体系统组成",
+     "count": 1
+    },
+    {
+     "name": "集成性",
+     "count": 1
+    },
+    {
+     "name": "交互性",
+     "count": 1
+    },
+    {
+     "name": "数字化",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据特点",
+     "count": 1
+    },
+    {
+     "name": "超媒体",
+     "count": 1
+    },
+    {
+     "name": "流媒体",
+     "count": 1
+    },
+    {
+     "name": "多媒体应用领域",
+     "count": 1
+    },
+    {
+     "name": "多媒体系统层次结构",
+     "count": 1
+    },
+    {
+     "name": "多媒体特征综合判断",
+     "count": 1
+    },
+    {
+     "name": "线性与非线性多媒体",
+     "count": 1
+    },
+    {
+     "name": "多媒体采集设备",
+     "count": 1
+    },
+    {
+     "name": "多媒体输出设备",
+     "count": 1
+    },
+    {
+     "name": "多媒体存储介质",
+     "count": 1
+    },
+    {
+     "name": "多媒体创作工具",
+     "count": 1
+    },
+    {
+     "name": "多媒体软件体系",
+     "count": 1
+    },
+    {
+     "name": "多媒体实时性",
+     "count": 1
+    },
+    {
+     "name": "多媒体特征综合应用",
+     "count": 1
+    },
+    {
+     "name": "多媒体数据的组织",
+     "count": 1
+    },
+    {
+     "name": "集成性的实现",
+     "count": 1
+    },
+    {
+     "name": "多媒体技术瓶颈",
+     "count": 1
+    },
+    {
+     "name": "多媒体应用系统辨识",
+     "count": 1
+    },
+    {
+     "name": "多媒体实时性要求",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 25,
+    "multi": 3,
+    "truefalse": 3
+   },
+   "avgDifficulty": 2.16
+  },
+  {
+   "chapter": "数字图形与图像基础",
+   "questionCount": 26,
+   "knowledgePoints": [
+    {
+     "name": "位图与矢量图",
+     "count": 1
+    },
+    {
+     "name": "位图存储结构",
+     "count": 1
+    },
+    {
+     "name": "像素总数计算",
+     "count": 1
+    },
+    {
+     "name": "色彩深度",
+     "count": 1
+    },
+    {
+     "name": "图形的基本属性",
+     "count": 1
+    },
+    {
+     "name": "光栅化",
+     "count": 1
+    },
+    {
+     "name": "矢量化",
+     "count": 1
+    },
+    {
+     "name": "常用图形与图像软件",
+     "count": 1
+    },
+    {
+     "name": "矢量图形的优点",
+     "count": 1
+    },
+    {
+     "name": "位图的局限",
+     "count": 1
+    },
+    {
+     "name": "分辨率的含义",
+     "count": 1
+    },
+    {
+     "name": "灰度图与索引色图",
+     "count": 1
+    },
+    {
+     "name": "真彩色与索引色",
+     "count": 1
+    },
+    {
+     "name": "图像文件结构",
+     "count": 1
+    },
+    {
+     "name": "锯齿的成因",
+     "count": 1
+    },
+    {
+     "name": "矢量素材的标准选型",
+     "count": 1
+    },
+    {
+     "name": "图形与图像的选型",
+     "count": 1
+    },
+    {
+     "name": "像素的信息内容",
+     "count": 1
+    },
+    {
+     "name": "矢量格式辨识",
+     "count": 1
+    },
+    {
+     "name": "分辨率与显示效果",
+     "count": 1
+    },
+    {
+     "name": "常用处理软件定位",
+     "count": 1
+    },
+    {
+     "name": "矢量与位图的适用性",
+     "count": 1
+    },
+    {
+     "name": "矢量化能力边界",
+     "count": 1
+    },
+    {
+     "name": "移动端图形资源制作",
+     "count": 1
+    },
+    {
+     "name": "图形与图像的配合使用",
+     "count": 1
+    },
+    {
+     "name": "位图使用的注意事项",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 18,
+    "multi": 4,
+    "truefalse": 2,
+    "case": 2
+   },
+   "avgDifficulty": 2.08
+  },
+  {
+   "chapter": "职业道德",
+   "questionCount": 26,
+   "knowledgePoints": [
+    {
+     "name": "保密义务",
+     "count": 3
+    },
+    {
+     "name": "诚实守信",
+     "count": 2
+    },
+    {
+     "name": "尽职尽责",
+     "count": 2
+    },
+    {
+     "name": "职业道德基本规范",
+     "count": 1
+    },
+    {
+     "name": "遵纪守法",
+     "count": 1
+    },
+    {
+     "name": "职业道德基本内容",
+     "count": 1
+    },
+    {
+     "name": "面对客户不合理要求",
+     "count": 1
+    },
+    {
+     "name": "不合理要求的处理",
+     "count": 1
+    },
+    {
+     "name": "商业秘密",
+     "count": 1
+    },
+    {
+     "name": "信息安全责任",
+     "count": 1
+    },
+    {
+     "name": "利益冲突",
+     "count": 1
+    },
+    {
+     "name": "避免利益冲突",
+     "count": 1
+    },
+    {
+     "name": "公正廉洁",
+     "count": 1
+    },
+    {
+     "name": "学术诚信与不抄袭",
+     "count": 1
+    },
+    {
+     "name": "学术诚信",
+     "count": 1
+    },
+    {
+     "name": "能力持续提升",
+     "count": 1
+    },
+    {
+     "name": "设计师与工程师的职业素养",
+     "count": 1
+    },
+    {
+     "name": "团队协作中的责任",
+     "count": 1
+    },
+    {
+     "name": "职业道德与法律底线",
+     "count": 1
+    },
+    {
+     "name": "尊重知识产权",
+     "count": 1
+    },
+    {
+     "name": "爱岗敬业",
+     "count": 1
+    },
+    {
+     "name": "职业审慎与诚信责任",
+     "count": 1
+    }
+   ],
+   "types": {
+    "single": 17,
+    "multi": 5,
+    "truefalse": 4
+   },
+   "avgDifficulty": 1.65
+  }
+ ]
+}

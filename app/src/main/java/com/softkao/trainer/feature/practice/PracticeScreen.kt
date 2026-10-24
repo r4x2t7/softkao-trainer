@@ -6,6 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -42,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -306,7 +309,7 @@ class PracticeViewModel(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun PracticeScreen(
     examId: String,
@@ -337,12 +340,19 @@ fun PracticeScreen(
             TopAppBar(
                 title = {
                     Column {
-                        Text(state.title.ifBlank { "练习" }, style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            state.title.ifBlank { "练习" },
+                            style = MaterialTheme.typography.titleMedium,
+                            maxLines = 1,
+                            softWrap = false,
+                            overflow = TextOverflow.Ellipsis,
+                        )
                         if (state.questions.isNotEmpty()) {
                             Text(
                                 "第 ${state.index + 1} / ${state.questions.size} 题",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
                             )
                         }
                     }
@@ -389,10 +399,14 @@ fun PracticeScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
                 TagChip(q.type.label)
                 TagChip("难度 ${q.difficulty}", MaterialTheme.colorScheme.tertiaryContainer, MaterialTheme.colorScheme.onTertiaryContainer)
                 TagChip(q.chapter, MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.onSecondaryContainer)
+                TagChip(q.knowledgePoint, MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.onSurfaceVariant)
             }
 
             if (!q.caseStudy.isNullOrBlank()) {
@@ -488,10 +502,16 @@ fun PracticeScreen(
                         }
                         Spacer(Modifier.height(10.dp))
                         when {
+                            // 题库自带 AI 深度解析 → 直接展示，离线可用
+                            !q.aiExplanation.isNullOrBlank() -> {
+                                Text("AI 深度解析", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold)
+                                Spacer(Modifier.height(4.dp))
+                                Text(q.aiExplanation!!, style = MaterialTheme.typography.bodyMedium)
+                            }
                             state.aiText != null -> Text(state.aiText!!, style = MaterialTheme.typography.bodyMedium)
                             state.aiError != null -> Text(state.aiError!!, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
                             else -> OutlinedButton(onClick = { vm.requestAi() }, enabled = !state.aiLoading) {
-                                Text(if (state.aiLoading) "AI 解析生成中…" else "AI 深度解析")
+                                Text(if (state.aiLoading) "AI 解析生成中…" else "AI 深度解析（需在题库页配置接口）")
                             }
                         }
                     }

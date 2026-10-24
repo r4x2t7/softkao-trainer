@@ -2,6 +2,8 @@ package com.softkao.trainer.feature.search
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,7 +41,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun SearchScreen(onBack: () -> Unit, onOpenQuestion: (questionId: String, examId: String) -> Unit) {
     var keyword by remember { mutableStateOf("") }
@@ -125,7 +127,10 @@ fun SearchScreen(onBack: () -> Unit, onOpenQuestion: (questionId: String, examId
                                 .fillMaxWidth()
                                 .padding(14.dp),
                         ) {
-                            Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                            FlowRow(
+                                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                verticalArrangement = Arrangement.spacedBy(4.dp),
+                            ) {
                                 TagChip(q.type.label)
                                 TagChip(
                                     q.chapter,

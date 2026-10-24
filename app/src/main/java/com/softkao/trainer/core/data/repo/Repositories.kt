@@ -178,4 +178,7 @@ class StatsRepository(private val db: AppDatabase) {
     fun knowledgeStats(examId: String): Map<String, Pair<Int, Int>> = db.knowledgeStats(examId)
 
     fun bankVersions(): List<BankVersion> = db.allBankVersions()
+
+    /** 每章的题量 / 作答数 / 正确数 */
+    fun chapterStats(examId: String): Map<String, Triple<Int, Int, Int>> = db.chapterStats(examId)
 }
