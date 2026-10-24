@@ -19,6 +19,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -132,6 +133,11 @@ class BankViewModel : ViewModel() {
 fun BankScreen(viewModel: BankViewModel = viewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val appVersion = remember {
+        runCatching {
+            context.packageManager.getPackageInfo(context.packageName, 0).versionName
+        }.getOrNull() ?: "2.0.0"
+    }
 
     val filePicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri == null) return@rememberLauncherForActivityResult
@@ -258,7 +264,18 @@ fun BankScreen(viewModel: BankViewModel = viewModel()) {
 
         item {
             com.softkao.trainer.feature.common.SectionCard(title = "关于") {
-                Text("软考刷题 · SoftKao Trainer", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    "软考刷题 · SoftKao Trainer v$appVersion",
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    "题库版本：${state.versions.joinToString("，") { "${it.examId} v${it.version}（${it.questionCount} 题）" }.ifEmpty { "尚未导入" }}\n" +
+                        "内置题库：${state.versions.sumOf { it.questionCount }} 题",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 Spacer(Modifier.height(4.dp))
                 Text(
                     "开源项目，题库与解析以 JSON 形式托管在 GitHub，欢迎提 PR 补充题目。",
