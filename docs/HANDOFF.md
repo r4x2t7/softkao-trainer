@@ -7,7 +7,7 @@
 
 ## 1. 一句话现状
 
-一个离线优先的 Android 软考刷题 App：两科题库 **2390 题**（全部带 AI 深度解析）+ **59 章章节精讲** + **2195 条逐知识点精讲（100% 覆盖）** + **28 个抽象图解动画**，题库与资料托管在 GitHub 可增量更新，仓库 public、CI 全绿。
+一个离线优先的 Android 软考刷题 App：两科题库 **2390 题**（全部带 AI 深度解析）+ **59 章章节精讲** + **2195 条逐知识点精讲（100% 覆盖）** + **87 张可视化图解**（28 个帧动画 + 59 张离线 HTML 卡片），题库与资料托管在 GitHub 可增量更新，仓库 public、CI 全绿，已发版到 v2.3.0。
 
 ## 2. 环境（已装好，别重装）
 
@@ -50,11 +50,12 @@ app/src/main/java/com/softkao/trainer/
 ├── MainActivity.kt              # 底部 5 栏导航 + NavHost（路由常量在 Routes 里）
 ├── SoftKaoApp.kt                # Application + ServiceLocator
 ├── core/
-│   ├── model/                   # Models.kt / Materials.kt / Visuals.kt
+│   ├── model/                   # Models.kt / Materials.kt / Visuals.kt（含 HtmlVisual）
 │   ├── ui/ExamScope.kt          # rememberCurrentExamId()：全局科目的响应式订阅
 │   └── data/
 │       ├── SettingsRepository.kt     # 全局科目 currentExamId（已统一，ExamScope 旧枚举已删除）
 │       ├── MaterialRepository.kt     # 章节精讲 + 知识点精讲（本地更新优先于 assets）
+│       ├── HtmlVisualRepository.kt   # 59 张静态 HTML 图解清单（assets/visuals/index.json）
 │       ├── VisualRepository.kt       # 图解总入口（第一批）
 │       ├── VisualRepositoryExtra.kt  # 图解第二批
 │       ├── VisualRepositoryThird.kt  # 图解第三批
@@ -64,6 +65,7 @@ app/src/main/java/com/softkao/trainer/
 │       └── remote/                  # BankUpdater（题库/章节精讲/知识点精讲更新通道）、AiExplainer
 └── feature/
     ├── home/ practice/ wrong/ stats/ bank/ knowledge/ search/
+    └── knowledge/ConceptAnimation.kt # 帧动画播放器；VisualGalleryScreen.kt 图解库 + WebView 详情
 tools/                           # 题库与资料的流水线脚本（见下）
 question-bank/<examId>/           # v2.json / kp_notes.json
 question-bank/materials/          # 章节精讲（更新通道按这个路径拉）
@@ -80,7 +82,8 @@ docs/                             # 需求评审、题库规范、生产计划�
 | AI 深度解析 | 2390 题 **100% 覆盖**（160~280 字，结论→依据→易错点）✅ |
 | 章节精讲资料 | 59 章全覆盖（概览/趋势/速记卡/易错/公式/口诀/模板）✅ |
 | 逐知识点精讲 | **2195 条 / 100% 覆盖**（系统集成 1198 + 多媒体 997）✅ |
-| 抽象图解动画 | **28 个** ✅ |
+| 抽象图解（帧动画） | **28 个** ✅ |
+| 结构图解（离线 HTML 卡片） | **59 张**（`assets/visuals/`，59 张全部能匹配到题库章节）✅ |
 | 去重 | 2407 → 2390（删 17 道真重复；单选版/多选版不误删）✅ |
 | 纠错 | AI 复核标出 19 处疑点，已逐条修订并同步订正 AI 解析文本 ✅ |
 
@@ -93,6 +96,7 @@ python tools/build_index.py                # 重建 index.json（含 sha256 + kp
 python tools/material_pipeline.py split|merge|status   # 章节精讲资料
 python tools/kp_notes_pipeline.py split|merge|status|missing|coverage  # 逐知识点精讲
 python tools/kp_notes_lint.py [examId]     # 列出长度越界的精讲（人工改写用）
+python tools/check_visuals.py             # 图解素材完整性（文件存在 + 章节能匹配）
 python tools/publish.py                    # 一键：合并解析+资料+索引+校验
 python tools/verify_remote.py              # 校验 GitHub 上的内容完整性
 python tools/check_update_channel.py       # 端到端验证更新通道（题库+章节精讲+知识点精讲）
@@ -136,8 +140,9 @@ python tools/check_update_channel.py       # 端到端验证更新通道（题�
 
 1. **实机验证**：装 v2.3.0 后重点看——章节/知识点横滑是否顺手、全局科目切换是否即时、逐知识点精讲是否出现在章节详情里、模拟卷倒计时条
 2. **继续加抽象图解**：还有余量的重点是「多媒体项目实施流程」「广告与数字版权管理」「网络存储与 CDN」「项目成本类型（固定/变动）」「决策树分析」「敏感性分析」
-3. **可选增强**：错题本按知识点做「掌握度热力图」而不是只按错误数；模拟卷支持用户自定义题量与时长；题库支持按知识点的智能组卷
-4. **可选**：给 App 做签名配置（目前用 debug 签名，发 Release 需要正式 keystore）
+3. **HTML 图解也有增量空间**：`assets/visuals/` 目前 59 张，只覆盖结构型考点；补图时同时更新 `assets/visuals/index.json`，并跑 `python tools/check_visuals.py` 确认文件齐全、章节能匹配到题库
+4. **可选增强**：错题本按知识点做「掌握度热力图」而不是只按错误数；模拟卷支持用户自定义题量与时长；题库支持按知识点的智能组卷
+5. **可选**：给 App 做签名配置（目前用 debug 签名，发 Release 需要正式 keystore）
 
 ## 8. 发布会话照抄（做过的动作）
 
