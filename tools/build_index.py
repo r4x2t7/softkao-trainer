@@ -13,6 +13,13 @@ import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    import sys
+
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:  # noqa: BLE001
+    pass
+
 ROOT = Path(__file__).resolve().parent.parent
 BANK_DIR = ROOT / "question-bank"
 SEED_DIR = ROOT / "app" / "src" / "main" / "assets" / "seed"

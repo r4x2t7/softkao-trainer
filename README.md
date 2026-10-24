@@ -18,10 +18,13 @@
 
 ## 当前支持的考试
 
-| 考试 | 科目 | 题库文件 |
-|---|---|---|
-| 系统集成项目管理工程师（中级） | 基础知识 / 案例分析 | [`question-bank/system-integration/v1.json`](question-bank/system-integration/v1.json) |
-| 多媒体应用设计师（中级） | 基础知识 / 应用技术 | [`question-bank/multimedia-designer/v1.json`](question-bank/multimedia-designer/v1.json) |
+| 考试 | 科目 | 题库文件 | 题量 | 章节 / 知识点 |
+|---|---|---|---|---|
+| 系统集成项目管理工程师（中级） | 基础知识 / 案例分析 | [`question-bank/system-integration/v2.json`](question-bank/system-integration/v2.json) | **1341 题** | 36 章 / 1199 知识点 |
+| 多媒体应用设计师（中级） | 基础知识 / 应用技术 | [`question-bank/multimedia-designer/v2.json`](question-bank/multimedia-designer/v2.json) | **1066 题** | 23 章 / 1005 知识点 |
+| 合计 | | | **2407 题** | 59 章 / 2204 知识点 |
+
+题型分布：单选 1416 / 多选 432 / 判断 320 / 案例 239；平均解析 133 字，每题均给出依据或推导，并标注「改编自…（考点）」或「自编（依据…）」来源。
 
 ## 功能
 

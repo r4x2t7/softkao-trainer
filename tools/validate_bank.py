@@ -13,6 +13,12 @@ import json
 import sys
 from pathlib import Path
 
+# Windows 控制台默认 GBK，打印中文/符号可能报错，这里统一走 utf-8
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:  # noqa: BLE001
+    pass
+
 REQUIRED_TEXT = ("id", "examId", "stem", "chapter", "knowledgePoint", "explanation", "source")
 VALID_TYPES = {"single", "multi", "truefalse", "case"}
 MIN_EXPLANATION = 20

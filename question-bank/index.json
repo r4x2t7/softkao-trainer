@@ -4,19 +4,19 @@
     {
       "examId": "system-integration",
       "examName": "系统集成项目管理工程师",
-      "version": 1,
-      "file": "system-integration/v1.json",
-      "questionCount": 72,
-      "sha256": "a69457b5e635b4fc2825e0fd17e429eb2b3cc70767e5610968209f92c74a68e1",
+      "version": 2,
+      "file": "system-integration/v2.json",
+      "questionCount": 1341,
+      "sha256": "799355031bbf38a8dcc6f425821044383dbd25ff6e7e1e29a8a2f47c3ac09686",
       "updatedAt": "2026-10-24T20:00:00Z"
     },
     {
       "examId": "multimedia-designer",
       "examName": "多媒体应用设计师",
-      "version": 1,
-      "file": "multimedia-designer/v1.json",
-      "questionCount": 66,
-      "sha256": "b550f3f7eda87466e003f3c284ddcea2789f02cf8cb22dad7a2b0b6693f09279",
+      "version": 2,
+      "file": "multimedia-designer/v2.json",
+      "questionCount": 1066,
+      "sha256": "c8c8e50a74e9a2b55170c2394a608b46f167ea6e8365268e185a8b3bbd3cfa6f",
       "updatedAt": "2026-10-24T20:00:00Z"
     }
   ]

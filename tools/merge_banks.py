@@ -15,6 +15,12 @@ import unicodedata
 from collections import Counter
 from pathlib import Path
 
+# Windows 控制台默认 GBK，打印 ✓/✗ 会抛 UnicodeEncodeError，这里统一走 utf-8
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:  # noqa: BLE001
+    pass
+
 ROOT = Path(__file__).resolve().parent.parent
 BANK_DIR = ROOT / "question-bank"
 TARGET_VERSION = 2
@@ -149,6 +155,8 @@ def main(argv: list[str]) -> int:
 
     all_ok = True
     total_all = 0
+    pending: list[tuple[Path, dict]] = []
+
     for exam_id, exam_name in exams.items():
         bank, stats = merge(exam_id, exam_name)
         out = BANK_DIR / exam_id / f"v{TARGET_VERSION}.json"
@@ -161,9 +169,8 @@ def main(argv: list[str]) -> int:
                 print(f"  [check] {out.relative_to(ROOT)}：{'与分片一致' if same else '与分片不一致，需重新合并'}")
                 all_ok &= same
         else:
-            out.write_text(json.dumps(bank, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-            print(f"  [out] {out.relative_to(ROOT)}")
-        report(exam_id, stats)
+            pending.append((out, bank))
+        all_ok &= report(exam_id, stats)
         total_all += stats["total"]
 
     print(f"\n两科合计：{total_all} 题")
@@ -173,6 +180,14 @@ def main(argv: list[str]) -> int:
             all_ok = False
     else:
         print(f"✓ 总量达到 {MIN_TOTAL} 门槛")
+
+    if not check_only:
+        if all_ok:
+            for out, bank in pending:
+                out.write_text(json.dumps(bank, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                print(f"  [out] {out.relative_to(ROOT)}")
+        else:
+            print("✗ 质量门禁未通过，已中止写入（不会产生半成品题库文件）")
     return 0 if all_ok else 1
 
 
