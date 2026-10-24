@@ -120,6 +120,7 @@ fun HomeScreen(
     onOpenWrong: () -> Unit,
     onOpenStats: () -> Unit,
     onOpenBank: () -> Unit,
+    onOpenSearch: () -> Unit,
     viewModel: HomeViewModel = viewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -137,6 +138,12 @@ fun HomeScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            }
+        }
+
+        item {
+            OutlinedButton(onClick = onOpenSearch, modifier = Modifier.fillMaxWidth()) {
+                Text("🔍 搜索题目（题干 / 解析 / 知识点）")
             }
         }
 

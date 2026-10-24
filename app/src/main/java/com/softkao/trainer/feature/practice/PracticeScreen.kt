@@ -89,6 +89,7 @@ class PracticeViewModel(
         val aiError: String? = null,
         val answeredFlags: List<Boolean?> = emptyList(),
         val finished: Boolean = false,
+        val showReference: Boolean = false,
     )
 
     private val _state = MutableStateFlow(State())
@@ -138,10 +139,43 @@ class PracticeViewModel(
                 val ids = practice.wrongEntries(examId).map { it.questionId }
                 repo.byIds(ids)
             }
-            PracticeMode.DAILY -> repo.list(examId = examId).shuffled().take(20)
-            PracticeMode.MOCK -> repo.list(examId = examId).shuffled().take(40)
-            PracticeMode.SEQUENTIAL -> repo.list(examId = examId, limit = 100)
+            PracticeMode.DAILY -> dailySet()
+            PracticeMode.MOCK -> mockSet()
+            PracticeMode.SEQUENTIAL -> repo.list(examId = examId, limit = 200)
         }
+    }
+
+    /** 每日一练：同一天进入永远是同一组题 */
+    private fun dailySet(count: Int = 20): List<Question> {
+        val all = ServiceLocator.questionRepository.list(examId = examId)
+        if (all.isEmpty()) return emptyList()
+        val daySeed = java.time.LocalDate.now().toEpochDay().toInt()
+        val rnd = java.util.Random(daySeed * 31L + examId.hashCode())
+        return all.shuffled(rnd).take(count)
+    }
+
+    /** 模拟卷：按章节轮流抽题，覆盖面比纯随机更均衡 */
+    private fun mockSet(total: Int = 40): List<Question> {
+        val all = ServiceLocator.questionRepository.list(examId = examId)
+        if (all.isEmpty()) return emptyList()
+        val byChapter = all.groupBy { it.chapter }
+        val picked = mutableListOf<Question>()
+        var round = 0
+        while (picked.size < total) {
+            var added = false
+            for (chapter in byChapter.keys.sorted()) {
+                val list = byChapter[chapter].orEmpty()
+                if (round < list.size) {
+                    picked += list[round]
+                    added = true
+                    if (picked.size >= total) break
+                }
+            }
+            if (!added) break
+            round++
+        }
+        val rnd = java.util.Random(java.time.LocalDate.now().toEpochDay())
+        return picked.shuffled(rnd)
     }
 
     private fun refreshBookmark() {
@@ -187,7 +221,7 @@ class PracticeViewModel(
             return
         }
         startedAt = System.currentTimeMillis()
-        _state.value = s.copy(index = s.index + 1, selected = emptySet(), submitted = false, aiText = null, aiError = null)
+        _state.value = s.copy(index = s.index + 1, selected = emptySet(), submitted = false, aiText = null, aiError = null, showReference = false)
         refreshBookmark()
     }
 
@@ -195,7 +229,7 @@ class PracticeViewModel(
         val s = _state.value
         if (s.index == 0) return
         startedAt = System.currentTimeMillis()
-        _state.value = s.copy(index = s.index - 1, selected = emptySet(), submitted = false, aiText = null, aiError = null)
+        _state.value = s.copy(index = s.index - 1, selected = emptySet(), submitted = false, aiText = null, aiError = null, showReference = false)
         refreshBookmark()
     }
 
@@ -203,7 +237,7 @@ class PracticeViewModel(
         val s = _state.value
         if (target !in s.questions.indices) return
         startedAt = System.currentTimeMillis()
-        _state.value = s.copy(index = target, selected = emptySet(), submitted = false, aiText = null, aiError = null)
+        _state.value = s.copy(index = target, selected = emptySet(), submitted = false, aiText = null, aiError = null, showReference = false)
         refreshBookmark()
     }
 
@@ -211,6 +245,30 @@ class PracticeViewModel(
         val q = currentQuestion ?: return
         val now = ServiceLocator.practiceRepository.toggleBookmark(q.id, q.examId)
         _state.value = _state.value.copy(bookmarked = now)
+    }
+
+    /** 案例题：展示/隐藏参考答案 */
+    fun toggleReference() {
+        _state.value = _state.value.copy(showReference = !_state.value.showReference)
+    }
+
+    /** 案例题自评：记住了 / 没记住 */
+    fun submitCase(remembered: Boolean) {
+        val s = _state.value
+        if (s.submitted) return
+        val q = currentQuestion ?: return
+        val duration = System.currentTimeMillis() - startedAt
+        viewModelScope.launch {
+            val correct = withContext(Dispatchers.IO) {
+                ServiceLocator.practiceRepository.submitCase(q, remembered, s.mode, duration)
+            }
+            _state.value = _state.value.copy(
+                submitted = true,
+                correct = correct,
+                showReference = true,
+                answeredFlags = _state.value.answeredFlags.toMutableList().also { it[_state.value.index] = correct },
+            )
+        }
     }
 
     fun requestAi() {
@@ -354,17 +412,42 @@ fun PracticeScreen(
                 }
             }
 
-            q.options.forEach { option ->
-                OptionRow(
-                    key = option.key,
-                    text = option.text,
-                    selected = option.key in state.selected,
-                    submitted = state.submitted,
-                    isCorrect = option.key in q.answer,
-                    multi = q.type == QuestionType.MULTI,
-                    enabled = !state.submitted,
-                    onClick = { vm.select(option.key) },
-                )
+            if (q.type == QuestionType.CASE) {
+                // 案例分析题：先自己作答，再对照参考答案自评
+                if (state.showReference) {
+                    SectionCard(title = "参考答案") {
+                        Text(q.explanation, style = MaterialTheme.typography.bodyMedium)
+                        q.subQuestions.forEach { sq ->
+                            sq.referenceAnswer?.let {
+                                Spacer(Modifier.height(8.dp))
+                                HorizontalDivider()
+                                Spacer(Modifier.height(8.dp))
+                                Text(it, style = MaterialTheme.typography.bodySmall)
+                            }
+                        }
+                        if (q.source.isNotBlank()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text("来源：${q.source}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    }
+                } else {
+                    OutlinedButton(onClick = { vm.toggleReference() }, modifier = Modifier.fillMaxWidth()) {
+                        Text("先自己写一遍，再点此对照参考答案")
+                    }
+                }
+            } else {
+                q.options.forEach { option ->
+                    OptionRow(
+                        key = option.key,
+                        text = option.text,
+                        selected = option.key in state.selected,
+                        submitted = state.submitted,
+                        isCorrect = option.key in q.answer,
+                        multi = q.type == QuestionType.MULTI,
+                        enabled = !state.submitted,
+                        onClick = { vm.select(option.key) },
+                    )
+                }
             }
 
             if (state.submitted) {
@@ -376,31 +459,40 @@ fun PracticeScreen(
                 ) {
                     Column(Modifier.padding(14.dp)) {
                         Text(
-                            if (state.correct) "回答正确" else "回答错误",
+                            when {
+                                q.type == QuestionType.CASE && state.correct -> "已记录：记住了"
+                                q.type == QuestionType.CASE -> "已记录：没记住（已进错题本）"
+                                state.correct -> "回答正确"
+                                else -> "回答错误"
+                            },
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
                             color = correctColor,
                         )
-                        Spacer(Modifier.height(4.dp))
-                        Text(
-                            "正确答案：${q.answer.joinToString("")}",
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
+                        if (q.type != QuestionType.CASE) {
+                            Spacer(Modifier.height(4.dp))
+                            Text(
+                                "正确答案：${q.answer.joinToString("")}",
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
                     }
                 }
 
-                SectionCard(title = "解析") {
-                    Text(q.explanation, style = MaterialTheme.typography.bodyMedium)
-                    if (q.source.isNotBlank()) {
-                        Spacer(Modifier.height(8.dp))
-                        Text("来源：${q.source}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                    Spacer(Modifier.height(10.dp))
-                    when {
-                        state.aiText != null -> Text(state.aiText!!, style = MaterialTheme.typography.bodyMedium)
-                        state.aiError != null -> Text(state.aiError!!, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
-                        else -> OutlinedButton(onClick = { vm.requestAi() }, enabled = !state.aiLoading) {
-                            Text(if (state.aiLoading) "AI 解析生成中…" else "AI 深度解析")
+                if (q.type != QuestionType.CASE) {
+                    SectionCard(title = "解析") {
+                        Text(q.explanation, style = MaterialTheme.typography.bodyMedium)
+                        if (q.source.isNotBlank()) {
+                            Spacer(Modifier.height(8.dp))
+                            Text("来源：${q.source}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        Spacer(Modifier.height(10.dp))
+                        when {
+                            state.aiText != null -> Text(state.aiText!!, style = MaterialTheme.typography.bodyMedium)
+                            state.aiError != null -> Text(state.aiError!!, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                            else -> OutlinedButton(onClick = { vm.requestAi() }, enabled = !state.aiLoading) {
+                                Text(if (state.aiLoading) "AI 解析生成中…" else "AI 深度解析")
+                            }
                         }
                     }
                 }
@@ -408,13 +500,20 @@ fun PracticeScreen(
 
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 OutlinedButton(onClick = { vm.prev() }, enabled = state.index > 0, modifier = Modifier.weight(1f)) { Text("上一题") }
-                if (!state.submitted) {
-                    Button(onClick = { vm.submit() }, enabled = state.selected.isNotEmpty(), modifier = Modifier.weight(1f)) {
-                        Text("提交答案")
+                when {
+                    q.type == QuestionType.CASE && !state.submitted -> {
+                        Button(onClick = { vm.submitCase(true) }, modifier = Modifier.weight(1f)) { Text("记住了") }
+                        OutlinedButton(onClick = { vm.submitCase(false) }, modifier = Modifier.weight(1f)) { Text("没记住") }
                     }
-                } else {
-                    Button(onClick = { vm.next() }, modifier = Modifier.weight(1f)) {
-                        Text(if (state.index + 1 >= state.questions.size) "完成" else "下一题")
+                    !state.submitted -> {
+                        Button(onClick = { vm.submit() }, enabled = state.selected.isNotEmpty(), modifier = Modifier.weight(1f)) {
+                            Text("提交答案")
+                        }
+                    }
+                    else -> {
+                        Button(onClick = { vm.next() }, modifier = Modifier.weight(1f)) {
+                            Text(if (state.index + 1 >= state.questions.size) "完成" else "下一题")
+                        }
                     }
                 }
             }

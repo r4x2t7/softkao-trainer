@@ -34,6 +34,10 @@ class QuestionRepository(private val db: AppDatabase) {
 
     /** 按给定顺序返回题目（顺序保持调用方给的顺序） */
     fun byIds(ids: List<String>): List<Question> = db.questionsByIds(ids)
+
+    /** 关键词搜索题目 */
+    fun search(keyword: String, examId: String? = null, limit: Int = 60): List<Question> =
+        db.search(keyword, examId, limit)
 }
 
 /**
@@ -50,6 +54,33 @@ class PracticeRepository(private val db: AppDatabase) {
         now: Long = System.currentTimeMillis(),
     ): Boolean {
         val correct = selected.toSet() == question.answer.toSet()
+        record(question, correct, selected, mode, durationMs, now)
+        return correct
+    }
+
+    /**
+     * 案例分析题由用户自评（记住了/没记住），答案不参与自动判分，
+     * 但同样计入作答记录、错题本与掌握度。
+     */
+    fun submitCase(
+        question: Question,
+        remembered: Boolean,
+        mode: PracticeMode,
+        durationMs: Long,
+        now: Long = System.currentTimeMillis(),
+    ): Boolean {
+        record(question, remembered, listOf(if (remembered) "√" else "×"), mode, durationMs, now)
+        return remembered
+    }
+
+    private fun record(
+        question: Question,
+        correct: Boolean,
+        selected: List<String>,
+        mode: PracticeMode,
+        durationMs: Long,
+        now: Long,
+    ) {
         db.insertAttempt(question.id, question.examId, mode, selected, correct, durationMs, now)
 
         val existing = db.wrongEntry(question.id)
@@ -91,7 +122,6 @@ class PracticeRepository(private val db: AppDatabase) {
                 )
             )
         }
-        return correct
     }
 
     fun toggleBookmark(questionId: String, examId: String, now: Long = System.currentTimeMillis()): Boolean =

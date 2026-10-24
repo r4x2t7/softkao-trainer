@@ -23,6 +23,7 @@ import androidx.navigation.navArgument
 import com.softkao.trainer.feature.bank.BankScreen
 import com.softkao.trainer.feature.home.HomeScreen
 import com.softkao.trainer.feature.practice.PracticeScreen
+import com.softkao.trainer.feature.search.SearchScreen
 import com.softkao.trainer.feature.stats.StatsScreen
 import com.softkao.trainer.feature.wrong.WrongScreen
 import com.softkao.trainer.ui.theme.SoftKaoTheme
@@ -44,8 +45,9 @@ object Routes {
     const val WRONG = "wrong"
     const val STATS = "stats"
     const val BANK = "bank"
+    const val SEARCH = "search"
     const val PRACTICE =
-        "practice?examId={examId}&mode={mode}&chapter={chapter}&kp={kp}&title={title}"
+        "practice?examId={examId}&mode={mode}&chapter={chapter}&kp={kp}&title={title}&ids={ids}"
 }
 
 private data class Tab(val route: String, val label: String, val glyph: String)
@@ -102,6 +104,17 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                     onOpenWrong = { navController.navigate(Routes.WRONG) },
                     onOpenStats = { navController.navigate(Routes.STATS) },
                     onOpenBank = { navController.navigate(Routes.BANK) },
+                    onOpenSearch = { navController.navigate(Routes.SEARCH) },
+                )
+            }
+            composable(Routes.SEARCH) {
+                SearchScreen(
+                    onBack = { navController.popBackStack() },
+                    onOpenQuestion = { questionId, examId ->
+                        navController.navigate(
+                            "practice?examId=$examId&mode=WRONG&chapter=&kp=&title=%E6%90%9C%E7%B4%A2%E7%BB%93%E6%9E%9C&ids=$questionId"
+                        )
+                    },
                 )
             }
             composable(Routes.WRONG) {

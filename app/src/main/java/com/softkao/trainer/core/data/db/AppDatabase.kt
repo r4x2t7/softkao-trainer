@@ -225,6 +225,28 @@ class AppDatabase(context: Context) :
             m
         }
 
+    /** 关键词搜索：题干 / 解析 / 知识点 / 章节 */
+    fun search(keyword: String, examId: String? = null, limit: Int = 60): List<Question> {
+        val kw = keyword.trim()
+        if (kw.isEmpty()) return emptyList()
+        val where = mutableListOf(
+            "(stem LIKE ? OR explanation LIKE ? OR knowledge_point LIKE ? OR chapter LIKE ?)"
+        )
+        val args = mutableListOf<String>()
+        repeat(4) { args += "%$kw%" }
+        if (examId != null) {
+            where += "exam_id=?"
+            args += examId
+        }
+        val sql = "SELECT * FROM questions WHERE ${where.joinToString(" AND ")} ORDER BY exam_id, chapter, id LIMIT ?"
+        args += limit.toString()
+        return readableDatabase.rawQuery(sql, args.toTypedArray()).use { c ->
+            val list = mutableListOf<Question>()
+            while (c.moveToNext()) list += c.toQuestion()
+            list
+        }
+    }
+
     // ---------------------------------------------------------------- attempts
 
     fun insertAttempt(questionId: String, examId: String, mode: PracticeMode, selected: List<String>, correct: Boolean, durationMs: Long, at: Long) {
