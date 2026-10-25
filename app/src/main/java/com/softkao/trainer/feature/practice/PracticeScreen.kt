@@ -708,6 +708,8 @@ private fun AnswerSheetDialog(
                                 .clickable {
                                     onJump(i)
                                     page = (i / PracticeLogic.ANSWER_SHEET_PER_PAGE).coerceAtMost(pages - 1)
+                                    // 点了题号要顺手把答题卡关掉，否则弹窗会一直盖在题目上
+                                    onDismiss()
                                 },
                             contentAlignment = Alignment.Center,
                         ) {

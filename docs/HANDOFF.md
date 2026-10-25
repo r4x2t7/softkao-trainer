@@ -94,7 +94,39 @@ CI 有两个 job：`validate`（题库 + UI 契约）与 `unit-test`（Gradle �
 - 无头 Chrome 在 Windows 上有最小窗口宽度（~504px），`--screenshot` 给出的是**裁过的图**，别当成真裁切；用 `probe_visual.py` 量 `window.innerWidth` 才准
 - 截图前要禁用入场动画（`animation:none`），否则拍到 opacity:0 的中间态，会误判成「元素没渲染」
 
-## 6. 题库与资料现状
+## 6. 模拟器 UI 走查（真实运行时）
+
+模拟器**可以跑**：VT-x 在 BIOS 里是开着的（`systeminfo` 报 "A hypervisor has been detected"），
+Windows 的「虚拟机平台」/WHPX 也开着（`vmcompute` 服务在 Running），只是 SDK 里没装模拟器和系统镜像。
+
+```powershell
+$sdk='C:\Users\jw\.local\share\android-sdk'
+$env:ANDROID_SDK_ROOT=$sdk; $env:ANDROID_HOME=$sdk
+$env:ANDROID_AVD_HOME="$env:USERPROFILE\.android\avd"
+& "$sdk\cmdline-tools\latest\bin\sdkmanager.bat" --install "emulator" "system-images;android-34;google_apis;x86_64"
+& "$sdk\cmdline-tools\latest\bin\avdmanager.bat" create avd -n sk34 -k "system-images;android-34;google_apis;x86_64" -d pixel_6 --force
+Start-Process "$sdk\emulator\emulator.exe" -ArgumentList @(
+  '-avd','sk34','-no-window','-no-audio','-no-boot-anim','-no-snapshot',
+  '-gpu','swiftshader_indirect','-accel','on','-port','5554','-memory','2048') -WindowStyle Hidden
+```
+
+开机约 15 秒（有硬件加速），然后：
+
+```bash
+adb -s emulator-5554 install -r -t app/build/outputs/apk/debug/app-debug.apk
+python tools/ui_walkthrough.py      # 19 项断言 + 截图落到 build/ui-shots/
+```
+
+`tools/ui_walkthrough.py` **只认 `emulator-` 前缀**，不会碰插着的实体机。
+
+**写走查脚本的坑**
+- `uiautomator dump` 只报**屏幕上可见**的节点，页面下方内容要滚动后才看得到
+- 不要用文本匹配做导航：首页搜索框提示里也含「知识点」，会跳错页；底部导航栏按坐标点
+- 判断题按「√ / ×」匹配，别用「正确」——题干里也有「正确的有哪些」
+- `bottomBar` 里的装饰层**不能用 `fillMaxHeight()`**：bottomBar 的高度约束上限是整屏，
+  会把底栏撑成全屏高、把题目内容整个挤没（这个坑我踩过一次）
+
+## 7. 题库与资料现状
 
 | 内容 | 状态 |
 |---|---|
@@ -138,7 +170,7 @@ python tools/check_update_channel.py       # 端到端验证更新通道（题�
 - 脚本里的 `ROOT` 不要写死 `E:\ai coding\...`，CI 在 ubuntu 上跑会找不到目录 → 统一用 `__file__` 推导
 - GitHub raw 有传播延迟，校验失败先等几秒再判
 
-## 7. 用户已提出并已修复的问题
+## 8. 用户已提出并已修复的问题
 
 | 用户原话 | 处理 |
 |---|---|
@@ -169,6 +201,19 @@ python tools/check_update_channel.py       # 端到端验证更新通道（题�
 
 **机制**：勘误集中在 `tools/fix_law_citations.py`，做外科手术式替换，同时改**分片 + 合并产物 + 内置种子**三处（只改合并产物会被下次 merge 冲掉），并接入 `publish.py` 第 1 步。CI 新增「答案与 AI 解析首句一致性」门禁。
 
+### v2.5.0 又修的（模拟器走查测出来的）
+
+| 问题 | 处理 |
+|---|---|
+| **在答题卡里点题号后，弹窗不关**，一直盖在题目上 | 点题号时同时 `onDismiss()` |
+| **「答题卡」入口默认在屏幕外**（跳转栏横向滚动，它排最后） | 提到跳转栏第二位，一进页面就能看到；后面的 ±100/±10 等仍可右滑 |
+| 章节卡片信息太单薄、页面下方大片留白 | 卡片补「N 个知识点」和「练习本章 ›」入口行，信息更完整、卡片更饱满 |
+| 底部导航栏按文本匹配会跳错页（首页搜索框提示里也含「知识点」） | 走查脚本改按底部导航坐标点击；App 本身无此问题 |
+
+> 顺带记一个我自己踩的坑：给跳转栏加「右缘渐隐」装饰时用了 `fillMaxHeight()`，
+> 而 `bottomBar` 的高度约束上限是整屏 —— 底栏被撑成全屏高，**题干和选项全被挤没了**。
+> 模拟器截图一眼就看出来了，单测和静态检查都发现不了。
+
 ### v2.4.1 又修的（测试驱动）
 
 | 问题 | 处理 |
@@ -189,7 +234,7 @@ python tools/check_update_channel.py       # 端到端验证更新通道（题�
 | 知识点精讲只有一半 | 补齐到 **2195 条 100% 覆盖**；CI 增加覆盖率门禁（`kp_notes_pipeline.py coverage`，缺一条就红） |
 | 图解不够 | 从 9 个补到 **28 个** |
 
-## 8. 待办（建议按此顺序接手）
+## 9. 待办（建议按此顺序接手）
 
 1. **实机验证**：装 v2.3.0 后重点看——章节/知识点横滑是否顺手、全局科目切换是否即时、逐知识点精讲是否出现在章节详情里、模拟卷倒计时条
 2. **继续加抽象图解**：还有余量的重点是「多媒体项目实施流程」「广告与数字版权管理」「网络存储与 CDN」「项目成本类型（固定/变动）」「决策树分析」「敏感性分析」
@@ -197,7 +242,7 @@ python tools/check_update_channel.py       # 端到端验证更新通道（题�
 4. **可选增强**：错题本按知识点做「掌握度热力图」而不是只按错误数；模拟卷支持用户自定义题量与时长；题库支持按知识点的智能组卷
 5. **可选**：给 App 做签名配置（目前用 debug 签名，发 Release 需要正式 keystore）
 
-## 9. 发布会话照抄（做过的动作）
+## 10. 发布会话照抄（做过的动作）
 
 ```powershell
 # 1) 合并 + 重建索引 + 校验
@@ -217,7 +262,7 @@ gh release create v2.3.0 .\SoftKaoTrainer-v2.3.0-debug.apk --title "..." --notes
 
 **注意**：`versionCode`/`versionName` 在 `app/build.gradle.kts`，发版时记得同步改（v2.3.0 = code 4 / name 2.3.0）。
 
-## 10. 常用验证
+## 11. 常用验证
 
 ```bash
 python tools/verify_remote.py       # 远端题库/资料完整性与覆盖率

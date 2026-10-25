@@ -88,6 +88,31 @@ python tools/check_visual_bounds.py
 - 无头 Chrome 在 Windows 上有最小窗口宽度（约 504px），`--screenshot` 截到的是被裁过的图，
   看起来像「右边被切了」——其实是截图假象，量一下 `window.innerWidth` 才知道
 
+## 模拟器 UI 走查（不需要真机）
+
+除了 JVM 单元测试，还能用 Android 模拟器做真实运行时走查：真 Android、真 WebView、
+真 SQLite/DataStore、真触摸事件。
+
+```bash
+# 一次性准备（需要下载约 1.2GB）
+sdkmanager "emulator" "system-images;android-34;google_apis;x86_64"
+avdmanager create avd -n sk34 -k "system-images;android-34;google_apis;x86_64" -d pixel_6
+
+# 起模拟器（无窗口，WHPX 硬件加速）
+emulator -avd sk34 -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -port 5554
+
+# 装 APK 并走查
+adb -s emulator-5554 install -r -t app/build/outputs/apk/debug/app-debug.apk
+python tools/ui_walkthrough.py     # 走 19 项断言 + 截图到 build/ui-shots/
+```
+
+`tools/ui_walkthrough.py` 只认 `emulator-` 前缀的设备，**不会碰插着的实体机**。
+
+**写这类脚本的坑**
+- `uiautomator dump` **只报屏幕上可见的节点**——页面下方的内容要滚动后才看得到
+- 别用文本匹配导航：首页搜索框的提示文字里也含「知识点」，按文本点会跳错页；底部导航栏要按坐标点
+- 判断题要按「√ / ×」匹配，别用「正确」——题干里也可能有「正确的有哪些」
+
 ## 功能
 
 - **练习模式**：顺序练习、章节练习、专项（知识点）练习、每日一练、模拟卷（90 分钟倒计时条）、错题重做

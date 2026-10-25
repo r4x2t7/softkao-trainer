@@ -5,12 +5,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -80,8 +82,11 @@ fun TrueFalseChoiceRow(
 }
 
 /**
- * 底部跳转栏：⌂首页 / −100 / −10 / 上一页 / 第 x / y 题 / 下一页 / +10 / +100 / 尾页 / 答题卡。
+ * 底部跳转栏：⌂首页 / 答题卡 / −100 / −10 / 上一页 / 第 x / y 题 / 下一页 / +10 / +100 / 尾页。
  * 整体横向滚动，窄屏也不会挤成两行。
+ *
+ * 「答题卡」放在第二位：跳转栏总宽超过一屏，如果排在最后，
+ * 它默认在屏幕外，用户不横向滑动就找不到入口。
  */
 @Composable
 fun PracticeJumpBar(
@@ -93,6 +98,8 @@ fun PracticeJumpBar(
     onSheet: () -> Unit,
 ) {
     if (total <= 0) return
+    // 不要在这里套 fillMaxHeight 的装饰层：bottomBar 的高度约束上限是整屏，
+    // 会把跳转栏撑成全屏高，把题目内容整个挤没。
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -102,6 +109,7 @@ fun PracticeJumpBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         JumpButton("⌂ 首页") { onFirst() }
+        JumpButton("答题卡") { onSheet() }
         JumpButton("−100") { onJump(PracticeLogic.jump(index, -100, total)) }
         JumpButton("−10") { onJump(PracticeLogic.jump(index, -10, total)) }
         JumpButton("上一页") { onJump(PracticeLogic.jump(index, -1, total)) }
@@ -117,7 +125,6 @@ fun PracticeJumpBar(
         JumpButton("+10") { onJump(PracticeLogic.jump(index, 10, total)) }
         JumpButton("+100") { onJump(PracticeLogic.jump(index, 100, total)) }
         JumpButton("尾页 ⇥") { onLast() }
-        JumpButton("答题卡") { onSheet() }
     }
 }
 

@@ -70,6 +70,7 @@ private data class ChapterRow(
     val answered: Int,
     val correct: Int,
     val hasMaterial: Boolean,
+    val pointCount: Int = 0,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,16 +86,19 @@ fun KnowledgeScreen(
 
     val rows by produceState(emptyList<ChapterRow>(), examId) {
         value = withContextIo {
-            val stats = ServiceLocator.statsRepository.chapterStats(examId)
+            val stats = ServiceLocator.statsRepository
+            val chapterStats = stats.chapterStats(examId)
+            val pointCounts = stats.knowledgePointsByChapter(examId)
             val materials = ServiceLocator.materialRepository.load(examId)
             val materialChapters = materials.map { it.chapter }.toSet()
-            stats.map { (chapter, t) ->
+            chapterStats.map { (chapter, t) ->
                 ChapterRow(
                     chapter = chapter,
                     total = t.first,
                     answered = t.second,
                     correct = t.third,
                     hasMaterial = chapter in materialChapters,
+                    pointCount = pointCounts[chapter]?.size ?: 0,
                 )
             }.sortedByDescending { it.total }
         }
@@ -186,6 +190,7 @@ fun KnowledgeScreen(
                             answered = row.answered,
                             correct = row.correct,
                             hasMaterial = row.hasMaterial,
+                            pointCount = row.pointCount,
                             onClick = { onOpenChapter(examId, row.chapter) },
                         )
                     }
