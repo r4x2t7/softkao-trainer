@@ -1,8 +1,6 @@
 package com.softkao.trainer.feature.stats
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,19 +8,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -31,9 +26,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.softkao.trainer.ServiceLocator
 import com.softkao.trainer.core.model.ExamId
+import com.softkao.trainer.feature.common.GradientStatTile
 import com.softkao.trainer.feature.common.LabeledProgress
 import com.softkao.trainer.feature.common.SectionCard
-import com.softkao.trainer.feature.common.StatTile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -152,48 +147,47 @@ fun StatsScreen(viewModel: StatsViewModel = viewModel()) {
         item {
             SectionCard {
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    StatTile("总题数", "${state.total}", modifier = Modifier.weight(1f))
-                    StatTile("正确率", "${(state.accuracy * 100).toInt()}%", modifier = Modifier.weight(1f))
-                    StatTile("连续", "${state.streak} 天", modifier = Modifier.weight(1f))
-                    StatTile("今日", "${state.today}", modifier = Modifier.weight(1f))
+                    GradientStatTile(
+                        label = "总题数",
+                        value = "${state.total}",
+                        accent = Color(0xFF8B5CF6),
+                        modifier = Modifier.weight(1f),
+                    )
+                    GradientStatTile(
+                        label = "正确率",
+                        value = "${(state.accuracy * 100).toInt()}%",
+                        accent = Color(0xFF22D3EE),
+                        modifier = Modifier.weight(1f),
+                    )
+                    GradientStatTile(
+                        label = "连续",
+                        value = "${state.streak} 天",
+                        accent = Color(0xFF34D399),
+                        modifier = Modifier.weight(1f),
+                    )
+                    GradientStatTile(
+                        label = "今日",
+                        value = "${state.today}",
+                        accent = Color(0xFFFB923C),
+                        modifier = Modifier.weight(1f),
+                    )
                 }
             }
         }
 
         item {
             SectionCard(title = "近 7 天做题量（两科合计）") {
-                val max = state.trend.maxOfOrNull { it.second.first }?.coerceAtLeast(1) ?: 1
-                Row(
-                    Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.Bottom,
-                ) {
-                    state.trend.forEach { (day, counts) ->
-                        Column(
-                            Modifier.weight(1f),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(
-                                "${counts.first}",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                            Spacer(Modifier.height(4.dp))
-                            Box(
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height((counts.first * 72 / max).dp.coerceAtLeast(6.dp))
-                                    .clip(RoundedCornerShape(topStart = 6.dp, topEnd = 6.dp))
-                                    .background(
-                                        if (counts.first > 0) MaterialTheme.colorScheme.primary
-                                        else MaterialTheme.colorScheme.surfaceVariant
-                                    ),
-                            )
-                            Spacer(Modifier.height(4.dp))
-                            Text(day, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
-                    }
-                }
+                TrendChart(
+                    points = state.trend.map { (day, counts) ->
+                        TrendPoint(day = day, total = counts.first, correct = counts.second)
+                    },
+                )
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    "点柱子看当天明细；绿色小段是当天答对的题数",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         }
 

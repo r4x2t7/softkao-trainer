@@ -168,6 +168,34 @@ def ink_ratio(png: pathlib.Path, y0: int, y1: int, x0: int = 0, x1: int = 1080) 
     return ink / total if total else 0.0
 
 
+# 趋势图柱体渐变的两端色 + 答对段薄荷绿
+BAR_COLORS = ((139, 92, 246), (34, 211, 238), (52, 211, 153), (5, 150, 105))
+
+
+def bar_ratio(png: pathlib.Path, y0: int, y1: int, x0: int = 0, x1: int = 1080, tol: int = 46) -> float:
+    """统计区域里「柱体颜色」的像素占比。
+
+    图表是 Canvas 自绘的，语义树里看不到任何柱子，
+    只能靠像素来确认柱子真的画出来了，而不是一片空白。
+    """
+    sys.path.insert(0, str(ROOT / "tools"))
+    from measure_shots import png_pixels  # noqa: PLC0415
+
+    w, h, rows = png_pixels(png)
+    if not rows:
+        return 0.0
+    total = 0
+    hit = 0
+    for y in range(max(0, y0), min(h, y1)):
+        row = rows[y]
+        for x in range(max(0, x0), min(w, x1)):
+            total += 1
+            r, g, b = row[x * 3], row[x * 3 + 1], row[x * 3 + 2]
+            if any(abs(r - c[0]) < tol and abs(g - c[1]) < tol and abs(b - c[2]) < tol for c in BAR_COLORS):
+                hit += 1
+    return hit / total if total else 0.0
+
+
 def first_truefalse_index() -> int:
     """从题库里算出第一道判断题在顺序练习中的序号（1 起）。
 
@@ -224,7 +252,8 @@ def main() -> int:
 
     sh(f"am force-stop {PKG}")
     sh(f"am start -n {ACT}")
-    time.sleep(4)
+    # 冷启动要等首页内容真的渲染出来（刚装完 APK 时可能要好几秒，不能死等固定时长）
+    xml, home_ready = wait_for_text("今日", tries=30, delay=1.0)
     shot("01-首页")
 
     passed = 0
@@ -238,9 +267,9 @@ def main() -> int:
             failed += 1
 
     # ---------------- 首页
-    xml = dump()
     ts = texts(xml)
     log(f"[首页] 文本节点 {len(ts)} 个")
+    record(check("首页加载完成", home_ready))
     record(check("首页出现「今日」", any("今日" in t for t in ts)))
     record(check("首页出现科目切换", any("系统集成" in t or "多媒体" in t for t in ts)))
     record(check("首页出现练习入口", any("顺序练习" in t for t in ts)))
@@ -399,12 +428,30 @@ def main() -> int:
 
     # ---------------- 错题本 / 统计 / 设置
     # 注意：别在 tab 页按返回键——那会直接退出 App，后面几步就全找不到页面了
-    for name, key in (("11-错题本", "错题"), ("12-统计", "统计"), ("13-设置", "设置")):
+    for name, key in (("11-错题本", "错题"), ("13-设置", "设置")):
         goto_tab(xml, key, W, H)
         xml = dump()
         shot(name)
         ts = texts(xml)
         record(check(f"{key}页可打开", len(ts) > 2, f"文本 {len(ts)} 个"))
+
+    # ---------------- 统计页：趋势图表
+    goto_tab(xml, "统计", W, H)
+    xml = dump()
+    p = shot("12-统计")
+    ts = texts(xml)
+    record(check("统计页可打开", len(ts) > 2, f"文本 {len(ts)} 个"))
+    record(check("统计页图例齐全（做题量/答对数/趋势）",
+                 any("做题量" in t for t in ts) and any("答对数" in t for t in ts) and any("趋势" in t for t in ts),
+                 f"{[t for t in ts if t in ('做题量', '答对数', '趋势')]}"))
+    record(check("统计页有图表说明文案", any("点柱子看当天明细" in t for t in ts)))
+    # 图表是 Canvas 画的，语义树里看不到柱子，只能靠像素确认真的画出来了
+    legend = find(xml, "做题量")
+    if legend:
+        ratio = bar_ratio(p, legend[1] - 620, legend[1] - 40)
+        record(check("趋势图画出了彩色柱子", ratio > 0.002, f"图表区柱体色像素占比 {ratio:.2%}"))
+    else:
+        record(check("趋势图画出了彩色柱子", False, "找不到图例"))
 
     log("")
     log(f"通过 {passed} 项，失败 {failed} 项")

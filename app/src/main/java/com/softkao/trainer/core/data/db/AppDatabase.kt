@@ -341,8 +341,11 @@ class AppDatabase(context: Context) :
     fun streakDays(): Int {
         val db = readableDatabase
         val days = mutableSetOf<Long>()
-        db.rawQuery("SELECT DISTINCT date(answered_at/1000, 'unixepoch', 'localtime') FROM attempts ORDER BY 1 DESC", null).use { c ->
-            while (c.moveToNext()) days += c.getString(0).toLongOrNull() ?: 0L
+        // 日期键统一在 Kotlin 侧算成 yyyyMMdd，避免 SQL 日期格式和
+        // SimpleDateFormat("yyyyMMdd") 对不上（date() 返回 '2026-10-25'，
+        // 之前因为这个不匹配，连续天数永远是 0）。
+        db.rawQuery("SELECT answered_at FROM attempts", null).use { c ->
+            while (c.moveToNext()) days += dayKey(c.getLong(0))
         }
         if (days.isEmpty()) return 0
         val tz = java.util.TimeZone.getDefault()
@@ -355,8 +358,7 @@ class AppDatabase(context: Context) :
         var streak = 0
         var cursor = today
         while (true) {
-            val local = java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.CHINA).format(java.util.Date(cursor))
-            if (days.contains(local.toLong())) {
+            if (days.contains(dayKey(cursor))) {
                 streak++
                 cursor -= dayMs
             } else {
@@ -369,6 +371,15 @@ class AppDatabase(context: Context) :
             }
         }
         return streak
+    }
+
+    /** 把时间戳折算成当地日期键 yyyyMMdd（Long） */
+    private fun dayKey(epochMs: Long): Long {
+        val c = java.util.Calendar.getInstance()
+        c.timeInMillis = epochMs
+        return c.get(java.util.Calendar.YEAR) * 10000L +
+            (c.get(java.util.Calendar.MONTH) + 1) * 100L +
+            c.get(java.util.Calendar.DAY_OF_MONTH)
     }
 
     /** 最近 N 天的每日作答数与正确数 */
