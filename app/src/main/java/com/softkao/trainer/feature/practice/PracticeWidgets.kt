@@ -82,11 +82,10 @@ fun TrueFalseChoiceRow(
 }
 
 /**
- * 底部跳转栏：⌂首页 / 答题卡 / −100 / −10 / 上一页 / 第 x / y 题 / 下一页 / +10 / +100 / 尾页。
- * 整体横向滚动，窄屏也不会挤成两行。
+ * 底部跳转栏：⌂首页 / 答题卡 / −100 / −10 / 上一页 / 第 x / y 题 / 下一页 / +10 / +100 / 尾页
  *
- * 「答题卡」放在第二位：跳转栏总宽超过一屏，如果排在最后，
- * 它默认在屏幕外，用户不横向滑动就找不到入口。
+ * 分两行放，一屏全显示——之前挤在一行里要横向滚动才能看到「答题卡」和「尾页」，
+ * 用户根本找不到这两个入口。
  */
 @Composable
 fun PracticeJumpBar(
@@ -98,42 +97,50 @@ fun PracticeJumpBar(
     onSheet: () -> Unit,
 ) {
     if (total <= 0) return
-    // 不要在这里套 fillMaxHeight 的装饰层：bottomBar 的高度约束上限是整屏，
-    // 会把跳转栏撑成全屏高，把题目内容整个挤没。
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .horizontalScroll(rememberScrollState())
             .padding(horizontal = 6.dp, vertical = 2.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
-        JumpButton("⌂ 首页") { onFirst() }
-        JumpButton("答题卡") { onSheet() }
-        JumpButton("−100") { onJump(PracticeLogic.jump(index, -100, total)) }
-        JumpButton("−10") { onJump(PracticeLogic.jump(index, -10, total)) }
-        JumpButton("上一页") { onJump(PracticeLogic.jump(index, -1, total)) }
-        Text(
-            "第 ${index + 1} / $total 题",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.primary,
-            maxLines = 1,
-            softWrap = false,
-            modifier = Modifier.padding(horizontal = 6.dp),
-        )
-        JumpButton("下一页") { onJump(PracticeLogic.jump(index, 1, total)) }
-        JumpButton("+10") { onJump(PracticeLogic.jump(index, 10, total)) }
-        JumpButton("+100") { onJump(PracticeLogic.jump(index, 100, total)) }
-        JumpButton("尾页 ⇥") { onLast() }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            JumpButton("⌂ 首页", Modifier.weight(1f)) { onFirst() }
+            JumpButton("答题卡", Modifier.weight(1f)) { onSheet() }
+            JumpButton("−100", Modifier.weight(1f)) { onJump(PracticeLogic.jump(index, -100, total)) }
+            JumpButton("−10", Modifier.weight(1f)) { onJump(PracticeLogic.jump(index, -10, total)) }
+            JumpButton("上一页", Modifier.weight(1f)) { onJump(PracticeLogic.jump(index, -1, total)) }
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                "第 ${index + 1} / $total 题",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                maxLines = 1,
+                softWrap = false,
+                modifier = Modifier.weight(1f),
+            )
+            JumpButton("下一页", Modifier.weight(1f)) { onJump(PracticeLogic.jump(index, 1, total)) }
+            JumpButton("+10", Modifier.weight(1f)) { onJump(PracticeLogic.jump(index, 10, total)) }
+            JumpButton("+100", Modifier.weight(1f)) { onJump(PracticeLogic.jump(index, 100, total)) }
+            JumpButton("尾页 ⇥", Modifier.weight(1f)) { onLast() }
+        }
     }
 }
 
 @Composable
-private fun JumpButton(text: String, onClick: () -> Unit) {
+private fun JumpButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
     TextButton(
         onClick = onClick,
-        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-        modifier = Modifier.heightIn(min = 32.dp),
+        contentPadding = PaddingValues(horizontal = 2.dp, vertical = 4.dp),
+        modifier = modifier.heightIn(min = 34.dp),
     ) {
         Text(text, style = MaterialTheme.typography.labelMedium, maxLines = 1, softWrap = false) // ui-ok: 跳页按钮，固定短标签
     }

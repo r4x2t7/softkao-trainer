@@ -147,6 +147,27 @@ def check(name: str, ok: bool, detail: str = "") -> bool:
     return ok
 
 
+def ink_ratio(png: pathlib.Path, y0: int, y1: int, x0: int = 0, x1: int = 1080) -> float:
+    """统计指定区域里「非背景色」的像素占比，用来判断图解是不是真的画出来了。"""
+    sys.path.insert(0, str(ROOT / "tools"))
+    from measure_shots import png_pixels  # noqa: PLC0415
+
+    w, h, rows = png_pixels(png)
+    if not rows:
+        return 0.0
+    bg = rows[0][:3]
+    total = 0
+    ink = 0
+    for y in range(max(0, y0), min(h, y1)):
+        row = rows[y]
+        for x in range(max(0, x0), min(w, x1)):
+            total += 1
+            px = row[x * 3: x * 3 + 3]
+            if px != bg:
+                ink += 1
+    return ink / total if total else 0.0
+
+
 def first_truefalse_index() -> int:
     """从题库里算出第一道判断题在顺序练习中的序号（1 起）。
 
@@ -161,6 +182,17 @@ def first_truefalse_index() -> int:
         if q.get("type") == "truefalse":
             return i
     return 0
+
+
+def wait_for_text(needle: str, tries: int = 12, delay: float = 1.2) -> tuple[str, bool]:
+    """等某个文字出现（页面加载可能要几秒）。"""
+    xml = ""
+    for _ in range(tries):
+        xml = dump()
+        if any(needle in t for t in texts(xml)):
+            return xml, True
+        time.sleep(delay)
+    return xml, False
 
 
 def scroll_to_text(xml: str, needle: str, times: int = 6) -> tuple[str, bool]:
@@ -221,26 +253,27 @@ def main() -> int:
     record(check("知识点页出现章节卡片", any("章" in t for t in ts)))
     record(check("知识点页出现图解库入口", any("图解库" in t for t in ts)))
     before = texts(xml)
-    swipe(int(W * 0.8), int(H * 0.40), int(W * 0.15), int(H * 0.40), 300, 1.5)
+    # 章节列表现在是纵向的：上下滑动翻页
+    swipe(540, 1800, 540, 900, 260, 1.5)
     xml = dump()
-    shot("03-知识点-章节横滑后")
     after = texts(xml)
-    record(check("章节列表可以横向滑动", before != after, f"滑动前后文本 {len(before)}→{len(after)}"))
+    record(check("章节列表可以上下滑动", before != after, f"滑动前后文本 {len(before)}→{len(after)}"))
 
     # 进章节详情：按章节名点（不要用「章」去匹配，会命中「章节（36 章）」这个标题）
     chapter_names = [t for t in texts(xml) if t.endswith("管理") and len(t) > 4]
     card = find(xml, chapter_names[0]) if chapter_names else find(xml, "管理")
     if card:
         tap(card[0], card[1], wait=2.5)
-        xml = dump()
+        xml, ok = wait_for_text("本章概览", tries=8)
+        record(check("章节详情打开了", ok))
         shot("04-章节详情")
         ts = texts(xml)
         record(check("章节详情出现「练习本章」", any("练习本章" in t for t in ts)))
         b4 = texts(xml)
-        swipe(int(W * 0.8), int(H * 0.62), int(W * 0.15), int(H * 0.62), 300, 1.5)
+        swipe(540, 1800, 540, 900, 260, 1.5)
         xml = dump()
         a4 = texts(xml)
-        record(check("知识点清单可横向滑动", b4 != a4))
+        record(check("知识点清单可上下滑动", b4 != a4))
         shot("05-章节详情-知识点横滑")
         # 「知识点清单」在页面下方，uiautomator 只报可见节点，要滚下去才看得到
         xml, found = scroll_to_text(xml, "知识点清单")
@@ -257,18 +290,16 @@ def main() -> int:
         shot("06-图解库")
         ts = texts(xml)
         record(check("图解库有卡片", len(ts) > 3, f"文本 {len(ts)} 个"))
-        # 点开一张图解（WebView）
-        target = None
-        for t in texts(xml):
-            if t and t not in ("图解库", "← 返回", "全部") and len(t) > 3:
-                target = t
-                break
-        if target and tap_text(xml, target):
-            time.sleep(4)
-            shot("07-图解详情-WebView")
+        # 点开一张图解（真 WebView）：必须真的画出图形，不能只有标题
+        cards = [t for t in texts(xml) if t and t not in ("图解库", "← 返回", "全部") and "（" not in t and len(t) > 3]
+        if cards and tap_text(xml, cards[0]):
+            time.sleep(5)
+            p = shot("07-图解详情-WebView")
             xml = dump()
             ts = texts(xml)
-            record(check("图解详情页有标题", len(ts) > 0, f"文本 {ts[:3]}"))
+            record(check("图解详情页有标题", len(ts) > 0, f"文本 {ts[:2]}"))
+            ratio = ink_ratio(p, 420, 1250)
+            record(check("图解真的画出来了（不是空白）", ratio > 0.02, f"图形区非背景像素占比 {ratio:.1%}"))
             back()
             time.sleep(1)
 
@@ -276,12 +307,14 @@ def main() -> int:
     goto_tab(xml, "首页", W, H)
     xml = dump()
     if tap_text(xml, "顺序练习"):
-        time.sleep(4)
-    xml = dump()
+        pass
+    xml, ok = wait_for_text("提交答案", tries=20)
+    record(check("刷题页加载出来", ok))
     shot("08-刷题页")
     ts = texts(xml)
-    record(check("刷题页有题干与选项", any("提交答案" in t for t in ts), f"{[t for t in ts if '提交' in t]}"))
-    record(check("刷题页出现跳转栏", any("答题卡" in t for t in ts), f"{[t for t in ts if '首页' in t or '答题卡' in t]}"))
+    record(check("刷题页有题干与选项", any("提交答案" in t for t in ts)))
+    record(check("刷题页出现跳转栏（两行全显示）", any("答题卡" in t for t in ts) and any("尾页" in t for t in ts),
+               f"{[t for t in ts if '答题卡' in t or '尾页' in t or '首页' in t]}"))
     record(check("刷题页出现题号", any("题" in t for t in ts)))
 
     # 答题卡：先开一次，顺便验证分批
@@ -318,15 +351,60 @@ def main() -> int:
         record(check("答题卡弹出且分批", False, "找不到答题卡按钮"))
         record(check("判断题渲染出 √/× 按钮", False, "没进到答题卡"))
 
+    # ---------------- 选题页（按章节 / 按知识点）
+    goto_tab(xml, "首页", W, H)
+    xml = dump()
+    # 要精确匹配按钮文案：页面上还有一行标题「按章节 / 按知识点练习」，
+    # 按包含匹配会点到那行标题上，什么都不会发生
+    if tap_text(xml, "按章节（36）"):
+        time.sleep(2.5)
+        xml = dump()
+        shot("14-选题页-章节")
+        ts = texts(xml)
+        record(check("选题页打开了", any("选择练习范围" in t for t in ts), f"{ts[:3]}"))
+        record(check("选题页有章节列表", any("练本章" in t for t in ts)))
+        record(check("选题页有知识点 Tab", any("按知识点" in t for t in ts)))
+        if tap_text(xml, "按知识点（1198）"):
+            time.sleep(2)
+            xml = dump()
+            shot("15-选题页-知识点")
+            record(check("知识点列表带搜索框", any("搜索知识点" in t for t in texts(xml))))
+            record(check("知识点数量正确", any("1198" in t for t in texts(xml)), f"{[t for t in texts(xml) if '1198' in t]}"))
+        back()
+        time.sleep(1)
+
+    # ---------------- 模拟卷：交卷前不给解析
+    goto_tab(xml, "首页", W, H)
+    xml = dump()
+    if tap_text(xml, "模拟卷"):
+        time.sleep(5)
+        xml = dump()
+        record(check("模拟卷进入成功", any("模拟卷" in t for t in texts(xml))))
+        # 选一个答案并提交，看不到解析
+        opts = [t for t in texts(xml) if len(t) > 2 and t not in ("← 返回", "★ 收藏")]
+        for o in opts[:6]:
+            if tap_text(xml, o):
+                break
+        time.sleep(0.8)
+        xml = dump()
+        if tap_text(xml, "提交本题"):
+            time.sleep(2.5)
+            xml = dump()
+            ts = texts(xml)
+            record(check("模拟卷提交后不显示答案解析", not any("正确答案" in t for t in ts), f"{[t for t in ts if '正确答案' in t or '解析' in t]}"))
+            record(check("模拟卷提示交卷", any("交卷" in t for t in ts), f"{[t for t in ts if '交卷' in t]}"))
+            shot("16-模拟卷-提交后")
+        back()
+        time.sleep(1)
+
     # ---------------- 错题本 / 统计 / 设置
+    # 注意：别在 tab 页按返回键——那会直接退出 App，后面几步就全找不到页面了
     for name, key in (("11-错题本", "错题"), ("12-统计", "统计"), ("13-设置", "设置")):
         goto_tab(xml, key, W, H)
         xml = dump()
         shot(name)
         ts = texts(xml)
         record(check(f"{key}页可打开", len(ts) > 2, f"文本 {len(ts)} 个"))
-        back()
-        time.sleep(0.6)
 
     log("")
     log(f"通过 {passed} 项，失败 {failed} 项")

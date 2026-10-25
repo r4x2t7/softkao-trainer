@@ -7,6 +7,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -48,6 +51,7 @@ import com.softkao.trainer.core.model.VisualKind
 import com.softkao.trainer.core.model.VisualLesson
 import com.softkao.trainer.core.model.VisualNode
 import com.softkao.trainer.core.model.VisualTone
+import com.softkao.trainer.feature.common.TagChip
 import kotlinx.coroutines.delay
 
 /**
@@ -56,6 +60,7 @@ import kotlinx.coroutines.delay
  * 每个知识点是一串「帧」，播放器逐帧播放并做淡入过渡，
  * 类似 algorithm-visualizer 用帧序列驱动可视化的做法。
  */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ConceptAnimation(
     lesson: VisualLesson,
@@ -90,6 +95,30 @@ fun ConceptAnimation(
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold,
             )
+            if (lesson.keywords.isNotEmpty()) {
+                Spacer(Modifier.height(6.dp))
+                // 明确告诉用户这张图讲的是哪些考点，否则看完动画也不知道学到了什么
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    lesson.keywords.take(6).forEach { TagChip(it) }
+                }
+            }
+            Spacer(Modifier.height(8.dp))
+            // 要点放在图前面：先知道要记什么，再看动画
+            Surface(
+                color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f),
+                shape = RoundedCornerShape(10.dp),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(
+                    "要点：${lesson.takeaway}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.padding(10.dp),
+                )
+            }
             Spacer(Modifier.height(10.dp))
 
             val frame = lesson.frames[frameIndex.coerceIn(0, lesson.frames.lastIndex)]
@@ -106,16 +135,9 @@ fun ConceptAnimation(
             Spacer(Modifier.height(8.dp))
             Text(
                 frame.caption,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
-            Spacer(Modifier.height(4.dp))
-            Text(
-                "要点：${lesson.takeaway}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-
             Spacer(Modifier.height(8.dp))
             Row(
                 Modifier.fillMaxWidth(),

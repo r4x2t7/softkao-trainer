@@ -46,66 +46,47 @@ fun KnowledgeChapterCard(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(14.dp),
-        modifier = modifier
-            .width(252.dp)
-            .clickable(onClick = onClick),
+        modifier = modifier.clickable(onClick = onClick),
     ) {
         Column(Modifier.padding(14.dp)) {
-            Text(
-                chapter,
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold,
-            )
-            Spacer(Modifier.height(6.dp))
-            if (hasMaterial) {
-                TagChip("有精讲")
-            }
-            Spacer(Modifier.height(8.dp))
-            LinearProgressIndicator(
-                progress = { if (total == 0) 0f else answered.toFloat() / total },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(5.dp)
-                    .clip(RoundedCornerShape(3.dp)),
-            )
-            Spacer(Modifier.height(8.dp))
-            Text(
-                "题量 $total · 已练 $answered",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Text(
-                if (answered == 0) "未开始" else "正确率 ${correct * 100 / answered}%",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            if (pointCount > 0) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    "$pointCount 个知识点",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    chapter,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.weight(1f),
                 )
-            }
-            Spacer(Modifier.height(10.dp))
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-            Spacer(Modifier.height(6.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    "练习本章",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Medium,
-                )
+                if (hasMaterial) {
+                    Spacer(Modifier.width(8.dp))
+                    TagChip("有精讲")
+                }
+                Spacer(Modifier.width(8.dp))
                 Text(
                     "›",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary,
                 )
             }
+            Spacer(Modifier.height(4.dp))
+            val progress = if (total == 0) 0f else answered.toFloat() / total
+            Text(
+                buildString {
+                    append("$total 题")
+                    if (pointCount > 0) append(" · $pointCount 个知识点")
+                    append(" · 已练 $answered")
+                    if (answered > 0) append(" · 正确率 ${correct * 100 / answered}%")
+                },
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(8.dp))
+            LinearProgressIndicator(
+                progress = { progress },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(5.dp)
+                    .clip(RoundedCornerShape(3.dp)),
+            )
         }
     }
 }
@@ -122,7 +103,6 @@ fun KnowledgeVisualCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(14.dp),
         modifier = modifier
-            .width(240.dp)
             .clickable(onClick = onClick),
     ) {
         Column(Modifier.padding(14.dp)) {
@@ -155,7 +135,7 @@ fun KnowledgePointCard(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(14.dp),
-        modifier = modifier.width(280.dp),
+        modifier = modifier,
     ) {
         Column(Modifier.padding(14.dp)) {
             Text(

@@ -109,7 +109,7 @@ fun VisualGalleryScreen(
             item {
                 SectionCard {
                     Text(
-                        "图解把结构型考点画成一张图：协议分层、法律层级、信息安全地图、生命周期曲线、质量工具对比等。左右滑动翻卡片，点开看整张图。",
+                        "图解把结构型考点画成一张图：协议分层、法律层级、信息安全地图、生命周期曲线、质量工具对比等。上下滑动浏览，点开看整张图。",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -141,15 +141,9 @@ fun VisualGalleryScreen(
                 }
             }
 
-            item {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    contentPadding = PaddingValues(vertical = 2.dp),
-                ) {
-                    items(shown, key = { it.id }) { v ->
-                        VisualCard(v) { onOpenVisual(v) }
-                    }
-                }
+            // 图解改成纵向列表：横着滑几十张也找不到想要的那张
+            items(shown, key = { it.id }) { v ->
+                VisualCard(v) { onOpenVisual(v) }
             }
 
             if (shown.isEmpty()) {
@@ -174,7 +168,7 @@ private fun VisualCard(v: HtmlVisual, onClick: () -> Unit) {
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(14.dp),
         modifier = Modifier
-            .width(240.dp)
+            .fillMaxWidth()
             .clickable(onClick = onClick),
     ) {
         Column(Modifier.padding(14.dp)) {

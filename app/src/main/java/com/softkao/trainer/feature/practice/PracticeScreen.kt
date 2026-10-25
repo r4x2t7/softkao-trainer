@@ -100,6 +100,10 @@ class PracticeViewModel(
         val answeredFlags: List<Boolean?> = emptyList(),
         val finished: Boolean = false,
         val showReference: Boolean = false,
+        /** 模拟卷：交卷后才公布答案与解析 */
+        val mockRevealed: Boolean = false,
+        /** 模拟卷：每题作答记录，下标与题目一致 */
+        val mockAnswers: List<List<String>> = emptyList(),
     )
 
     private val _state = MutableStateFlow(State())
@@ -217,13 +221,57 @@ class PracticeViewModel(
             val correct = withContext(Dispatchers.IO) {
                 ServiceLocator.practiceRepository.submit(q, s.selected.toList(), s.mode, duration)
             }
-            _state.value = _state.value.copy(
-                submitted = true,
-                correct = correct,
-                answeredFlags = _state.value.answeredFlags.toMutableList().also { it[_state.value.index] = correct },
-            )
+            if (mode == PracticeMode.MOCK) {
+                // 模拟卷按真实考试来：只记录答案，不当场给解析，全部答完交卷后再公布
+                val idx = s.index
+                val answers = s.mockAnswers.toMutableList()
+                while (answers.size <= idx) answers.add(emptyList())
+                answers[idx] = s.selected.toList()
+                val flags = s.answeredFlags.toMutableList()
+                while (flags.size <= idx) flags.add(null)
+                flags[idx] = correct
+                _state.value = s.copy(
+                    mockAnswers = answers,
+                    answeredFlags = flags,
+                    selected = emptySet(),
+                    submitted = false,
+                    correct = false,
+                    aiText = null,
+                )
+                // 自动进入下一题
+                val next = (idx + 1).coerceAtMost(s.questions.size - 1)
+                if (next != idx) {
+                    startedAt = System.currentTimeMillis()
+                    _state.value = _state.value.copy(index = next)
+                }
+            } else {
+                _state.value = s.copy(
+                    submitted = true,
+                    correct = correct,
+                    answeredFlags = s.answeredFlags.toMutableList().also { it[s.index] = correct },
+                )
+            }
         }
     }
+
+    /** 模拟卷交卷：公布答案与解析，回到第 1 题逐题回看 */
+    fun finishMock() {
+        val s = _state.value
+        if (mode != PracticeMode.MOCK) return
+        val right = s.answeredFlags.count { it == true }
+        val done = s.answeredFlags.count { it != null }
+        _state.value = s.copy(
+            mockRevealed = true,
+            index = 0,
+            selected = emptySet(),
+            submitted = false,
+            title = "模拟卷 · 已交卷（答对 $right / 已答 $done）",
+        )
+    }
+
+    /** 模拟卷里还没作答的题数 */
+    fun mockUnansweredCount(): Int =
+        _state.value.answeredFlags.count { it == null }
 
     fun next() {
         val s = _state.value
@@ -232,7 +280,9 @@ class PracticeViewModel(
             return
         }
         startedAt = System.currentTimeMillis()
-        _state.value = s.copy(index = s.index + 1, selected = emptySet(), submitted = false, aiText = null, aiError = null, showReference = false)
+        val next = s.index + 1
+        _state.value = s.copy(index = next, selected = emptySet(), submitted = false, aiText = null, aiError = null, showReference = false)
+        syncMockCorrect(next)
         refreshBookmark()
     }
 
@@ -240,7 +290,9 @@ class PracticeViewModel(
         val s = _state.value
         if (s.index == 0) return
         startedAt = System.currentTimeMillis()
-        _state.value = s.copy(index = s.index - 1, selected = emptySet(), submitted = false, aiText = null, aiError = null, showReference = false)
+        val prev = s.index - 1
+        _state.value = s.copy(index = prev, selected = emptySet(), submitted = false, aiText = null, aiError = null, showReference = false)
+        syncMockCorrect(prev)
         refreshBookmark()
     }
 
@@ -249,7 +301,15 @@ class PracticeViewModel(
         if (target !in s.questions.indices) return
         startedAt = System.currentTimeMillis()
         _state.value = s.copy(index = target, selected = emptySet(), submitted = false, aiText = null, aiError = null, showReference = false)
+        syncMockCorrect(target)
         refreshBookmark()
+    }
+
+    /** 模拟卷回看阶段：对错要跟着当前题走 */
+    private fun syncMockCorrect(index: Int) {
+        val s = _state.value
+        if (!s.mockRevealed) return
+        _state.value = s.copy(correct = s.answeredFlags.getOrNull(index) == true)
     }
 
     /** 相对跳转，负数往回 */
@@ -436,6 +496,22 @@ fun PracticeScreen(
                 TagChip(q.knowledgePoint, MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.colorScheme.onSurfaceVariant)
             }
 
+            // 模拟卷：像真实考试一样，作答阶段不给答案与解析
+            if (state.mode == PracticeMode.MOCK) {
+                SectionCard(title = if (state.mockRevealed) "已交卷 · 逐题回看" else "模拟卷进行中") {
+                    Text(
+                        if (state.mockRevealed) {
+                            "下面每题都会显示你当时的作答、正确答案与解析。"
+                        } else {
+                            "模拟卷按考试规则来：提交只记录答案，不当场给答案与解析。" +
+                                "还有 ${vm.mockUnansweredCount()} 题没答，答完后点「交卷查看结果」再逐题回看。"
+                        },
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
             if (!q.caseStudy.isNullOrBlank()) {
                 SectionCard(title = "案例背景") {
                     Text(q.caseStudy, style = MaterialTheme.typography.bodyMedium)
@@ -502,8 +578,26 @@ fun PracticeScreen(
                 }
             }
 
-            if (state.submitted) {
+            if (state.submitted || state.mockRevealed) {
+                val mockMode = state.mockRevealed && state.mode == PracticeMode.MOCK
                 val correctColor = if (state.correct) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.error
+                if (mockMode) {
+                    // 模拟卷回看：显示这道题当时选了什么、对不对
+                    val my = state.mockAnswers.getOrNull(state.index).orEmpty()
+                    SectionCard(title = "本题作答情况") {
+                        Text(
+                            "你的答案：${if (my.isEmpty()) "（未作答）" else my.joinToString("")}",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            if (state.correct) "结果：答对" else "结果：答错",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = correctColor,
+                        )
+                    }
+                }
                 Card(
                     colors = CardDefaults.cardColors(containerColor = correctColor.copy(alpha = 0.12f)),
                     shape = RoundedCornerShape(14.dp),
@@ -559,6 +653,25 @@ fun PracticeScreen(
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 OutlinedButton(onClick = { vm.prev() }, enabled = state.index > 0, modifier = Modifier.weight(1f)) { Text("上一题") }
                 when {
+                    // 模拟卷：作答阶段只记录不公布，交卷后才回看
+                    state.mode == PracticeMode.MOCK && !state.mockRevealed -> {
+                        if (state.index + 1 >= state.questions.size) {
+                            Button(onClick = { vm.finishMock() }, modifier = Modifier.weight(1f)) {
+                                Text("交卷查看结果")
+                            }
+                        } else {
+                            Button(
+                                onClick = { vm.submit() },
+                                enabled = state.selected.isNotEmpty(),
+                                modifier = Modifier.weight(1f),
+                            ) { Text("提交本题") }
+                        }
+                    }
+                    state.mode == PracticeMode.MOCK && state.mockRevealed -> {
+                        Button(onClick = { vm.next() }, modifier = Modifier.weight(1f)) {
+                            Text(if (state.index + 1 >= state.questions.size) "回到第 1 题" else "下一题")
+                        }
+                    }
                     q.type == QuestionType.CASE && !state.submitted -> {
                         Button(onClick = { vm.submitCase(true) }, modifier = Modifier.weight(1f)) { Text("记住了") }
                         OutlinedButton(onClick = { vm.submitCase(false) }, modifier = Modifier.weight(1f)) { Text("没记住") }

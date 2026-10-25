@@ -331,6 +331,19 @@ fun BankScreen(viewModel: BankViewModel = viewModel()) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    "作者：霁伪（软考备考者）｜ 整理与维护",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    "AI 协助：题目解析、知识点精讲与抽象图解由 AI 辅助生成，并逐条人工核对法条与数字；" +
+                        "欢迎在 GitHub 提 issue 纠错。",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
                 Spacer(Modifier.height(4.dp))
                 Text(
                     "开源项目，题库与解析以 JSON 形式托管在 GitHub，欢迎提 PR 补充题目。",

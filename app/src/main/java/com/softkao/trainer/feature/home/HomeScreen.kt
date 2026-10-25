@@ -147,6 +147,7 @@ class HomeViewModel : ViewModel() {
 @Composable
 fun HomeScreen(
     onStartPractice: (examId: String, mode: PracticeMode, chapter: String, kp: String, title: String) -> Unit,
+    onOpenPicker: (examId: String, tab: Int) -> Unit,
     onOpenWrong: () -> Unit,
     onOpenStats: () -> Unit,
     onOpenBank: () -> Unit,
@@ -226,7 +227,10 @@ fun HomeScreen(
                 )
                 Spacer(Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedButton(onClick = onOpenWrong, modifier = Modifier.weight(1f)) { Text("错题本 (${state.wrongDue})") }
+                    OutlinedButton(
+                        onClick = onOpenWrong,
+                        modifier = Modifier.weight(1f),
+                    ) { Text(if (state.wrongDue > 0) "错题本（待复习 ${state.wrongDue}）" else "错题本") }
                     OutlinedButton(onClick = onOpenStats, modifier = Modifier.weight(1f)) { Text("统计") }
                     OutlinedButton(onClick = onOpenBank, modifier = Modifier.weight(1f)) { Text("题库") }
                 }
@@ -261,47 +265,27 @@ fun HomeScreen(
                 }
                 if (stat.chapters.isNotEmpty()) {
                     Spacer(Modifier.height(12.dp))
-                    Text("按章节练习", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("按章节 / 按知识点练习", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.height(6.dp))
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(stat.chapters) { chapter ->
-                            AssistChip(
-                                onClick = { onStartPractice(stat.exam.id, PracticeMode.CHAPTER, chapter, "", "章节 · $chapter") },
-                                label = {
-                                    Text(
-                                        chapter,
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Clip,
-                                    )
-                                },
-                                modifier = Modifier.widthIn(max = 200.dp),
-                            )
-                        }
+                    // 知识点有上千个，横着滑根本找不到，所以改成跳到纵向列表的选题页
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedButton(
+                            onClick = { onOpenPicker(stat.exam.id, 0) },
+                            modifier = Modifier.weight(1f),
+                        ) { Text("按章节（${stat.chapters.size}）") }
+                        OutlinedButton(
+                            onClick = { onOpenPicker(stat.exam.id, 1) },
+                            modifier = Modifier.weight(1f),
+                        ) { Text("按知识点（${stat.knowledgePoints.size}）") }
                     }
                 }
                 if (stat.knowledgePoints.isNotEmpty()) {
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(8.dp))
                     Text(
-                        "按知识点专项练习（共 ${stat.knowledgePoints.size} 个知识点）",
-                        style = MaterialTheme.typography.labelMedium,
+                        "共 ${stat.knowledgePoints.size} 个知识点，可在选题页里按名称搜索",
+                        style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    Spacer(Modifier.height(6.dp))
-                    LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        items(stat.knowledgePoints) { (kp, count) ->
-                            AssistChip(
-                                onClick = { onStartPractice(stat.exam.id, PracticeMode.KNOWLEDGE, "", kp, "专项 · $kp") },
-                                label = {
-                                    Text(
-                                        "$kp ($count)",
-                                        maxLines = 2,
-                                        overflow = TextOverflow.Clip,
-                                    )
-                                },
-                                modifier = Modifier.widthIn(max = 210.dp),
-                            )
-                        }
-                    }
                 }
             }
         }

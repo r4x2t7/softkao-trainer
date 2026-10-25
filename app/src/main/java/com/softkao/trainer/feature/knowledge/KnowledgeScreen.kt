@@ -170,31 +170,25 @@ fun KnowledgeScreen(
                         fontWeight = FontWeight.SemiBold,
                     )
                     Text(
-                        "← 左右滑动翻章 →",
+                        "上下滑动浏览",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
 
-            item {
-                // 章节横向滑动：像翻卡片一样左右滑，一屏能看两章
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    contentPadding = PaddingValues(vertical = 2.dp),
-                ) {
-                    items(rows, key = { it.chapter }) { row ->
-                        KnowledgeChapterCard(
-                            chapter = row.chapter,
-                            total = row.total,
-                            answered = row.answered,
-                            correct = row.correct,
-                            hasMaterial = row.hasMaterial,
-                            pointCount = row.pointCount,
-                            onClick = { onOpenChapter(examId, row.chapter) },
-                        )
-                    }
-                }
+            // 章节改成纵向列表：横着滑只能看到一两章，找章节本身就不方便
+            items(rows, key = { it.chapter }) { row ->
+                KnowledgeChapterCard(
+                    chapter = row.chapter,
+                    total = row.total,
+                    answered = row.answered,
+                    correct = row.correct,
+                    hasMaterial = row.hasMaterial,
+                    pointCount = row.pointCount,
+                    onClick = { onOpenChapter(examId, row.chapter) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
         }
     }
@@ -296,7 +290,7 @@ fun ChapterDetailScreen(
                     ConceptAnimation(lesson)
                 }
             }
-            // 静态图解卡片：本章的结构型考点，横向滑动，点开看整页
+            // 静态图解卡片：本章的结构型考点，纵向列表，点开看整页
             if (htmlVisuals.isNotEmpty()) {
                 item {
                     Text(
@@ -305,19 +299,13 @@ fun ChapterDetailScreen(
                         fontWeight = FontWeight.SemiBold,
                     )
                 }
-                item {
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        contentPadding = PaddingValues(vertical = 2.dp),
-                    ) {
-                        items(htmlVisuals, key = { it.id }) { v ->
-                            KnowledgeVisualCard(
-                                title = v.title,
-                                caption = v.caption,
-                                onClick = { onOpenVisual(v) },
-                            )
-                        }
-                    }
+                items(htmlVisuals, key = { it.id }) { v ->
+                    KnowledgeVisualCard(
+                        title = v.title,
+                        caption = v.caption,
+                        onClick = { onOpenVisual(v) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                 }
             }
             if (pointRows.isNotEmpty()) {
@@ -333,29 +321,23 @@ fun ChapterDetailScreen(
                             fontWeight = FontWeight.SemiBold,
                         )
                         Text(
-                            "← 左右滑动 →",
+                            "上下滑动浏览",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }
-                item {
-                    // 知识点横向滑动：一张卡一个考点，滑动即可逐个过
-                    LazyRow(
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                        contentPadding = PaddingValues(vertical = 2.dp),
-                    ) {
-                        items(pointRows, key = { it.point }) { row ->
-                            KnowledgePointCard(
-                                point = row.point,
-                                count = row.count,
-                                done = row.done,
-                                right = row.right,
-                                note = row.note,
-                                onPractice = { onPracticePoint(examId, row.point) },
-                            )
-                        }
-                    }
+                // 知识点改成纵向列表：横着滑几十个也翻不完，而且看不出每条讲了什么
+                items(pointRows, key = { it.point }) { row ->
+                    KnowledgePointCard(
+                        point = row.point,
+                        count = row.count,
+                        done = row.done,
+                        right = row.right,
+                        note = row.note,
+                        onPractice = { onPracticePoint(examId, row.point) },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                 }
             }
             if (m.examFocus.isNotBlank()) {

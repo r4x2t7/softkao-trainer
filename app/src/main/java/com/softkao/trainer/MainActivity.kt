@@ -25,12 +25,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.softkao.trainer.ServiceLocator
+import com.softkao.trainer.core.model.PracticeMode
 import com.softkao.trainer.feature.bank.BankScreen
 import com.softkao.trainer.feature.home.HomeScreen
 import com.softkao.trainer.feature.knowledge.ChapterDetailScreen
 import com.softkao.trainer.feature.knowledge.KnowledgeScreen
 import com.softkao.trainer.feature.knowledge.VisualDetailScreen
 import com.softkao.trainer.feature.knowledge.VisualGalleryScreen
+import com.softkao.trainer.feature.practice.TopicPickerScreen
 import com.softkao.trainer.feature.practice.PracticeScreen
 import com.softkao.trainer.feature.search.SearchScreen
 import com.softkao.trainer.feature.stats.StatsScreen
@@ -59,6 +61,7 @@ object Routes {
     const val KNOWLEDGE_CHAPTER = "knowledge/chapter/{examId}/{chapter}"
     const val KNOWLEDGE_VISUALS = "knowledge/visuals"
     const val KNOWLEDGE_VISUAL = "knowledge/visuals/{visualId}"
+    const val TOPIC_PICKER = "practice/picker/{examId}/{tab}"
     const val PRACTICE =
         "practice?examId={examId}&mode={mode}&chapter={chapter}&kp={kp}&title={title}&ids={ids}"
 }
@@ -120,13 +123,45 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                 HomeScreen(
                     onStartPractice = { examId, mode, chapter, kp, title ->
                         navController.navigate(
-                            "practice?examId=$examId&mode=${mode.name}&chapter=$chapter&kp=$kp&title=$title"
+                            "practice?examId=$examId&mode=${mode.name}" +
+                                "&chapter=${Uri.encode(chapter)}&kp=${Uri.encode(kp)}" +
+                                "&title=${Uri.encode(title)}"
                         )
+                    },
+                    onOpenPicker = { examId, tab ->
+                        navController.navigate("practice/picker/$examId/$tab")
                     },
                     onOpenWrong = { navController.navigate(Routes.WRONG) },
                     onOpenStats = { navController.navigate(Routes.STATS) },
                     onOpenBank = { navController.navigate(Routes.BANK) },
                     onOpenSearch = { navController.navigate(Routes.SEARCH) },
+                )
+            }
+            composable(
+                route = Routes.TOPIC_PICKER,
+                arguments = listOf(
+                    navArgument("examId") { type = NavType.StringType },
+                    navArgument("tab") { type = NavType.IntType },
+                ),
+            ) { entry ->
+                val examId = entry.arguments?.getString("examId").orEmpty()
+                val tab = entry.arguments?.getInt("tab") ?: 0
+                TopicPickerScreen(
+                    examId = examId,
+                    initialTab = tab,
+                    onBack = { navController.popBackStack() },
+                    onPick = { eid, mode, chapter, kp ->
+                        val title = if (mode == PracticeMode.CHAPTER) {
+                            "章节 · $chapter"
+                        } else {
+                            "专项 · $kp"
+                        }
+                        navController.navigate(
+                            "practice?examId=$eid&mode=${mode.name}" +
+                                "&chapter=${Uri.encode(chapter)}&kp=${Uri.encode(kp)}" +
+                                "&title=${Uri.encode(title)}"
+                        )
+                    },
                 )
             }
             composable(Routes.SEARCH) {
@@ -140,8 +175,8 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                     onPracticePoint = { examId, point ->
                         navController.navigate(
                             "practice?examId=$examId&mode=KNOWLEDGE&chapter=&kp=" +
-                                java.net.URLEncoder.encode(point, "UTF-8") + "&title=" +
-                                java.net.URLEncoder.encode("专项 · $point", "UTF-8")
+                                Uri.encode(point) + "&title=" +
+                                Uri.encode("专项 · $point")
                         )
                     },
                 )
@@ -155,8 +190,8 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                     onOpenVisuals = { navController.navigate(Routes.KNOWLEDGE_VISUALS) },
                     onPracticeChapter = { examId, chapter ->
                         navController.navigate(
-                            "practice?examId=$examId&mode=CHAPTER&chapter=$chapter&kp=&title=" +
-                                java.net.URLEncoder.encode("章节 · $chapter", "UTF-8")
+                            "practice?examId=$examId&mode=CHAPTER&chapter=${Uri.encode(chapter)}&kp=&title=" +
+                                Uri.encode("章节 · $chapter")
                         )
                     },
                 )
@@ -195,15 +230,15 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                     },
                     onPracticeChapter = { e, c ->
                         navController.navigate(
-                            "practice?examId=$e&mode=CHAPTER&chapter=$c&kp=&title=" +
-                                java.net.URLEncoder.encode("章节 · $c", "UTF-8")
+                            "practice?examId=$e&mode=CHAPTER&chapter=${Uri.encode(c)}&kp=&title=" +
+                                Uri.encode("章节 · $c")
                         )
                     },
                     onPracticePoint = { e, p ->
                         navController.navigate(
                             "practice?examId=$e&mode=KNOWLEDGE&chapter=&kp=" +
-                                java.net.URLEncoder.encode(p, "UTF-8") + "&title=" +
-                                java.net.URLEncoder.encode("专项 · $p", "UTF-8")
+                                Uri.encode(p) + "&title=" +
+                                Uri.encode("专项 · $p")
                         )
                     },
                 )

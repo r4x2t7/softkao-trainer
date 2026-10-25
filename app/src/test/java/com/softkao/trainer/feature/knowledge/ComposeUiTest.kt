@@ -1,11 +1,12 @@
 package com.softkao.trainer.feature.knowledge
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performScrollTo
 import com.softkao.trainer.feature.practice.PracticeJumpBar
 import com.softkao.trainer.feature.practice.TrueFalseChoiceRow
 import org.junit.Assert.assertEquals
@@ -42,13 +43,15 @@ class ComposeUiTest {
                     answered = 12,
                     correct = 9,
                     hasMaterial = true,
+                    pointCount = 7,
                     onClick = {},
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         }
         composeRule.onNodeWithText(chapter).assertIsDisplayed()
-        composeRule.onNodeWithText("题量 42 · 已练 12").assertIsDisplayed()
-        composeRule.onNodeWithText("正确率 75%").assertIsDisplayed()
+        composeRule.onNodeWithText("42 题 · 7 个知识点 · 已练 12 · 正确率 75%").assertIsDisplayed()
+        composeRule.onNodeWithText("有精讲").assertIsDisplayed()
     }
 
     @Test
@@ -151,7 +154,7 @@ class ComposeUiTest {
     // ------------------------------------------------------------ 底部跳转栏
 
     @Test
-    fun `跳转栏包含全部按钮`() {
+    fun `跳转栏包含全部按钮且不需要横向滑动`() {
         composeRule.setContent {
             MaterialTheme {
                 PracticeJumpBar(
@@ -164,8 +167,9 @@ class ComposeUiTest {
                 )
             }
         }
-        listOf("⌂ 首页", "−100", "−10", "上一页", "下一页", "+10", "+100", "尾页 ⇥", "答题卡").forEach {
-            composeRule.onNodeWithText(it).performScrollTo().assertIsDisplayed()
+        // 分两行排在屏幕上，10 个入口都要能直接看到、能直接点到
+        listOf("⌂ 首页", "答题卡", "−100", "−10", "上一页", "下一页", "+10", "+100", "尾页 ⇥").forEach {
+            composeRule.onNodeWithText(it).assertIsDisplayed()
         }
         composeRule.onNodeWithText("第 1 / 100 题").assertIsDisplayed()
     }
@@ -185,8 +189,8 @@ class ComposeUiTest {
                 )
             }
         }
-        composeRule.onNodeWithText("+10").performScrollTo().performClick()
-        composeRule.onNodeWithText("−100").performScrollTo().performClick()
+        composeRule.onNodeWithText("+10").performClick()
+        composeRule.onNodeWithText("−100").performClick()
         composeRule.runOnIdle {
             assertEquals(listOf(60, 0), targets.toList())
         }

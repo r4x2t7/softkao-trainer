@@ -175,29 +175,45 @@ fun WrongScreen(
         item {
             SectionCard {
                 val visibleDue = items.filter { (it.entry?.nextReviewAt ?: 0L) <= System.currentTimeMillis() }
-                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    StatTile("错题", "${items.size}", modifier = Modifier.weight(1f))
-                    StatTile("待复习", "${visibleDue.size}", modifier = Modifier.weight(1f))
-                    StatTile(
-                        "已掌握",
-                        "${items.count { it.entry?.mastery == Mastery.MASTERED }}",
-                        modifier = Modifier.weight(1f),
+                if (items.isEmpty()) {
+                    // 空状态：没有错题不是坏事，但要给条路走，别摆三个 0 和一个点不了的按钮
+                    Text(
+                        "还没有错题",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold,
                     )
-                }
-                Spacer(Modifier.height(12.dp))
-                val dueIds = visibleDue.mapNotNull { it.entry?.questionId }.joinToString(",")
-                val dueExam = visibleDue.firstOrNull()?.entry?.examId
-                Button(
-                    onClick = {
-                        onStartPractice(
-                            dueExam ?: ExamId.SYSTEM_INTEGRATION.id,
-                            PracticeMode.WRONG,
-                            dueIds,
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        "答错的题会自动收进来，并按 1 / 3 / 7 / 15 天安排复习。" +
+                            "先去练几道题，答错后这里就会出现复习计划。",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                } else {
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        StatTile("错题", "${items.size}", modifier = Modifier.weight(1f))
+                        StatTile("待复习", "${visibleDue.size}", modifier = Modifier.weight(1f))
+                        StatTile(
+                            "已掌握",
+                            "${items.count { it.entry?.mastery == Mastery.MASTERED }}",
+                            modifier = Modifier.weight(1f),
                         )
-                    },
-                    enabled = dueIds.isNotEmpty(),
-                    modifier = Modifier.fillMaxWidth(),
-                ) { Text("开始复习到期错题（${dueIds.split(",").count { it.isNotBlank() }}）") }
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    val dueIds = visibleDue.mapNotNull { it.entry?.questionId }.joinToString(",")
+                    val dueExam = visibleDue.firstOrNull()?.entry?.examId
+                    Button(
+                        onClick = {
+                            onStartPractice(
+                                dueExam ?: ExamId.SYSTEM_INTEGRATION.id,
+                                PracticeMode.WRONG,
+                                dueIds,
+                            )
+                        },
+                        enabled = dueIds.isNotEmpty(),
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text("开始复习到期错题（${dueIds.split(",").count { it.isNotBlank() }}）") }
+                }
             }
         }
 
@@ -229,7 +245,7 @@ fun WrongScreen(
 
         item {
             Text(
-                "错题本科目（本页独立选择，不影响其它页面）",
+                "错题本科目（与全站科目同步，切换科目这里也会跟着换）",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
