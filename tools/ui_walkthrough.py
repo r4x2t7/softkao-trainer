@@ -428,12 +428,46 @@ def main() -> int:
 
     # ---------------- 错题本 / 统计 / 设置
     # 注意：别在 tab 页按返回键——那会直接退出 App，后面几步就全找不到页面了
-    for name, key in (("11-错题本", "错题"), ("13-设置", "设置")):
+    for name, key in (("13-设置", "设置"),):
         goto_tab(xml, key, W, H)
         xml = dump()
         shot(name)
         ts = texts(xml)
         record(check(f"{key}页可打开", len(ts) > 2, f"文本 {len(ts)} 个"))
+
+    # ---------------- 错题本：筛选按钮必须有反馈
+    goto_tab(xml, "错题", W, H)
+    xml = dump()
+    shot("11-错题本")
+    ts = texts(xml)
+    record(check("错题页可打开", len(ts) > 2, f"文本 {len(ts)} 个"))
+    # chip 上要带数量，点之前就知道会筛出什么
+    record(check("错题本筛选chip带数量",
+                 any(re.fullmatch(r"全部错题 \d+", t) for t in ts),
+                 f"{[t for t in ts if '错题' in t][:4]}"))
+    record(check("错题本有当前视图摘要",
+                 any(t.startswith("当前：") for t in ts),
+                 f"{[t for t in ts if t.startswith('当前：')]}"))
+    # 点「★ 收藏」：应该出现「清除筛选」入口，说明状态真的变了
+    if tap_text(xml, "★ 收藏"):
+        time.sleep(1.5)
+        xml = dump()
+        ts = texts(xml)
+        record(check("点收藏后出现清除筛选入口",
+                     any("清除筛选" in t for t in ts),
+                     f"{[t for t in ts if '清除' in t or t.startswith('当前：')]}"))
+        record(check("点收藏后摘要变成收藏视图",
+                     any(t.startswith("当前：★ 收藏") for t in ts),
+                     f"{[t for t in ts if t.startswith('当前：')]}"))
+        shot("11b-错题本-收藏视图")
+        # 再点一次应该回到全部错题
+        if tap_text(xml, "★ 收藏"):
+            time.sleep(1.5)
+            xml = dump()
+            ts = texts(xml)
+            record(check("再点一次收藏回到全部错题",
+                         any(t.startswith("当前：全部错题") for t in ts),
+                         f"{[t for t in ts if t.startswith('当前：')]}"))
 
     # ---------------- 统计页：趋势图表
     goto_tab(xml, "统计", W, H)
