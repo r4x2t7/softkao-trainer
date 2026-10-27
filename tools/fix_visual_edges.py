@@ -3,8 +3,9 @@
 import pathlib
 import re
 
-PATH = pathlib.Path(
-    r"E:\ai coding\pojie\softkao-trainer\app\src\main\java\com\softkao\trainer\core\data\VisualRepositoryExtra.kt"
+PATH = (
+    pathlib.Path(__file__).resolve().parent.parent
+    / "app/src/main/java/com/softkao/trainer/core/data/VisualRepositoryExtra.kt"
 )
 
 text = PATH.read_text(encoding="utf-8")

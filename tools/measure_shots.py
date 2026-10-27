@@ -104,9 +104,8 @@ def content_width(path: pathlib.Path) -> tuple[int, int]:
 
 
 def main() -> int:
-    d = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else pathlib.Path(
-        r"E:\ai coding\pojie\softkao-trainer\build\visual-shots"
-    )
+    root = pathlib.Path(__file__).resolve().parent.parent
+    d = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else root / "build" / "visual-shots"
     files = sorted(d.glob("*.png"))
     if not files:
         print("没有截图")

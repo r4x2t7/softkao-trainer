@@ -3,6 +3,7 @@
 import glob
 import json
 import os
+import pathlib
 import sys
 
 try:
@@ -10,7 +11,9 @@ try:
 except Exception:
     pass
 
-for f in sorted(glob.glob(r"E:\ai coding\pojie\softkao-trainer\question-bank\*\material_parts\*.in.json")):
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+
+for f in sorted(glob.glob(str(ROOT / "question-bank" / "*" / "material_parts" / "*.in.json"))):
     d = json.load(open(f, encoding="utf-8"))
     parts = []
     for c in d["chapters"]:

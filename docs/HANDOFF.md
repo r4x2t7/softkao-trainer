@@ -19,12 +19,12 @@
 | Android SDK | `C:\Users\jw\.local\share\android-sdk` | platforms 34/35/36、build-tools 36.0.0 |
 | Gradle | 缓存里的 9.3.1 发行版 | 见下方构建命令 |
 
-**构建命令**（在 `E:\ai coding\pojie\softkao-trainer` 下）：
+**构建命令**（在 `E:\ai coding\softkao-trainer` 下）：
 
 ```powershell
 $env:JAVA_HOME='C:\Program Files\Microsoft\jdk-17.0.20.101-hotspot'
 $env:PATH="$env:JAVA_HOME\bin;$env:PATH"
-& 'C:\Users\jw\.gradle\wrapper\dists\gradle-9.3.1-all\5wooodlkfwsm42ictrailuf0e\gradle-9.3.1\bin\gradle.bat' -p 'E:\ai coding\pojie\softkao-trainer' assembleDebug --console=plain --offline
+& 'C:\Users\jw\.gradle\wrapper\dists\gradle-9.3.1-all\5wooodlkfwsm42ictrailuf0e\gradle-9.3.1\bin\gradle.bat' -p 'E:\ai coding\softkao-trainer' assembleDebug --console=plain --offline
 # 产物：app/build/outputs/apk/debug/app-debug.apk
 ```
 
@@ -345,7 +345,7 @@ python tools/validate_bank.py --all
 python tools/kp_notes_pipeline.py coverage
 # 2) 构建
 $env:JAVA_HOME='C:\Program Files\Microsoft\jdk-17.0.20.101-hotspot'
-& 'C:\Users\jw\.gradle\wrapper\dists\gradle-9.3.1-all\5wooodlkfwsm42ictrailuf0e\gradle-9.3.1\bin\gradle.bat' -p 'E:\ai coding\pojie\softkao-trainer' assembleDebug --console=plain --offline
+& 'C:\Users\jw\.gradle\wrapper\dists\gradle-9.3.1-all\5wooodlkfwsm42ictrailuf0e\gradle-9.3.1\bin\gradle.bat' -p 'E:\ai coding\softkao-trainer' assembleDebug --console=plain --offline
 # 3) 提交推送
 git add -A; git commit -m "..."; git push origin main
 git tag -a v2.3.0 -m "..."; git push origin v2.3.0
