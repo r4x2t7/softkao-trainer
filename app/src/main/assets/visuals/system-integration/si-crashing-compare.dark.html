@@ -9,7 +9,7 @@
   --panel2: #262E3A;
   --line: #394455;
   --text: #E8EEF6;
-  --muted: #9BA9BC;
+  --muted: #A9B7C9;
   --primary: #7FA5FF;
   --on-primary: #0B1017;
   --accent: #33D3BC;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">赶工 vs 快速跟进</div><div class="cap">赶工加钱加人被质疑，快速跟进并行加风险被质疑；两者都只缩短关键路径。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 214.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><g class="rise" style="animation-delay:0.08s"><rect x="8.0" y="26" width="108.7" height="156.0" rx="10" class="card"/><rect x="8.0" y="26" width="108.7" height="26" rx="10" class="c3"/><rect x="8.0" y="42" width="108.7" height="10" class="c3"/><text class="on0" x="62.3" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">赶工 Crashing</text></g><g class="fade" style="animation-delay:0.30s"><circle cx="17.0" cy="64.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="68" text-anchor="start">增加资源、投入资</text><text class="lbl-s" x="26.0" y="80" text-anchor="start">金</text></g><g class="fade" style="animation-delay:0.37s"><circle cx="17.0" cy="96.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="100" text-anchor="start">用成本换时间</text></g><g class="fade" style="animation-delay:0.44s"><circle cx="17.0" cy="122.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="126" text-anchor="start">风险：成本超支</text></g><g class="fade" style="animation-delay:0.51s"><circle cx="17.0" cy="148.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="152" text-anchor="start">适用于关键活动</text></g><g class="rise" style="animation-delay:0.22s"><rect x="125.7" y="26" width="108.7" height="156.0" rx="10" class="card"/><rect x="125.7" y="26" width="108.7" height="26" rx="10" class="c4"/><rect x="125.7" y="42" width="108.7" height="10" class="c4"/><text class="on0" x="180.0" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">快速跟进 Fast Track</text></g><g class="fade" style="animation-delay:0.42s"><circle cx="134.7" cy="64.0" r="3" class="c4"/><text class="lbl-s" x="143.66666666666669" y="68" text-anchor="start">把串行改并行</text></g><g class="fade" style="animation-delay:0.49s"><circle cx="134.7" cy="90.0" r="3" class="c4"/><text class="lbl-s" x="143.66666666666669" y="94" text-anchor="start">用风险换时间</text></g><g class="fade" style="animation-delay:0.56s"><circle cx="134.7" cy="116.0" r="3" class="c4"/><text class="lbl-s" x="143.66666666666669" y="120" text-anchor="start">风险：返工与缺陷</text></g><g class="fade" style="animation-delay:0.63s"><circle cx="134.7" cy="142.0" r="3" class="c4"/><text class="lbl-s" x="143.66666666666669" y="146" text-anchor="start">只做有依赖关系的</text><text class="lbl-s" x="143.66666666666669" y="158" text-anchor="start">活动</text></g><g class="rise" style="animation-delay:0.36s"><rect x="243.3" y="26" width="108.7" height="156.0" rx="10" class="card"/><rect x="243.3" y="26" width="108.7" height="26" rx="10" class="c0"/><rect x="243.3" y="42" width="108.7" height="10" class="c0"/><text class="on0" x="297.7" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">共同点</text></g><g class="fade" style="animation-delay:0.54s"><circle cx="252.3" cy="64.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="68" text-anchor="start">只压缩关键路径</text></g><g class="fade" style="animation-delay:0.61s"><circle cx="252.3" cy="90.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="94" text-anchor="start">增加成本或风险</text></g><g class="fade" style="animation-delay:0.68s"><circle cx="252.3" cy="116.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="120" text-anchor="start">需评估变更影响</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">赶工 vs 快速跟进</div><div class="cap">赶工加钱加人被质疑，快速跟进并行加风险被质疑；两者都只缩短关键路径。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 228.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><g class="rise" style="animation-delay:0.08s"><rect x="8.0" y="26" width="108.7" height="170.0" rx="10" class="card"/><rect x="8.0" y="26" width="108.7" height="26" rx="10" class="c3"/><rect x="8.0" y="42" width="108.7" height="10" class="c3"/><text class="on0" x="62.3" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">赶工 Crashing</text></g><g class="fade" style="animation-delay:0.30s"><circle cx="17.0" cy="66.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="70" text-anchor="start">增加资源、投入</text><text class="lbl-s" x="26.0" y="83" text-anchor="start">资金</text></g><g class="fade" style="animation-delay:0.37s"><circle cx="17.0" cy="100.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="104" text-anchor="start">用成本换时间</text></g><g class="fade" style="animation-delay:0.44s"><circle cx="17.0" cy="128.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="132" text-anchor="start">风险：成本超支</text></g><g class="fade" style="animation-delay:0.51s"><circle cx="17.0" cy="156.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="160" text-anchor="start">适用于关键活动</text></g><g class="rise" style="animation-delay:0.22s"><rect x="125.7" y="26" width="108.7" height="170.0" rx="10" class="card"/><rect x="125.7" y="26" width="108.7" height="26" rx="10" class="c4"/><rect x="125.7" y="42" width="108.7" height="10" class="c4"/><text class="on0" x="180.0" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">快速跟进 Fast Track</text></g><g class="fade" style="animation-delay:0.42s"><circle cx="134.7" cy="66.0" r="3" class="c4"/><text class="lbl-s" x="143.66666666666669" y="70" text-anchor="start">把串行改并行</text></g><g class="fade" style="animation-delay:0.49s"><circle cx="134.7" cy="94.0" r="3" class="c4"/><text class="lbl-s" x="143.66666666666669" y="98" text-anchor="start">用风险换时间</text></g><g class="fade" style="animation-delay:0.56s"><circle cx="134.7" cy="122.0" r="3" class="c4"/><text class="lbl-s" x="143.66666666666669" y="126" text-anchor="start">风险：返工与缺</text><text class="lbl-s" x="143.66666666666669" y="139" text-anchor="start">陷</text></g><g class="fade" style="animation-delay:0.63s"><circle cx="134.7" cy="156.0" r="3" class="c4"/><text class="lbl-s" x="143.66666666666669" y="160" text-anchor="start">只做有依赖关系</text><text class="lbl-s" x="143.66666666666669" y="173" text-anchor="start">的活动</text></g><g class="rise" style="animation-delay:0.36s"><rect x="243.3" y="26" width="108.7" height="170.0" rx="10" class="card"/><rect x="243.3" y="26" width="108.7" height="26" rx="10" class="c0"/><rect x="243.3" y="42" width="108.7" height="10" class="c0"/><text class="on0" x="297.7" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">共同点</text></g><g class="fade" style="animation-delay:0.54s"><circle cx="252.3" cy="66.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="70" text-anchor="start">只压缩关键路径</text></g><g class="fade" style="animation-delay:0.61s"><circle cx="252.3" cy="94.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="98" text-anchor="start">增加成本或风险</text></g><g class="fade" style="animation-delay:0.68s"><circle cx="252.3" cy="122.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="126" text-anchor="start">需评估变更影响</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');

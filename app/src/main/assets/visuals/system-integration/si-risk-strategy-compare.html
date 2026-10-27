@@ -9,7 +9,7 @@
   --panel2: #E2EAF6;
   --line: #C6D4E9;
   --text: #16202E;
-  --muted: #5A6B80;
+  --muted: #46586E;
   --primary: #2F6BFF;
   --on-primary: #FFFFFF;
   --accent: #00A08F;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">四种风险应对策略</div><div class="cap">规避改变计划，消除威胁；减轻降低概率与影响；转移把责任给第三方；接受并预留储备。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 200.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><g class="rise" style="animation-delay:0.08s"><rect x="8.0" y="26" width="79.2" height="142.0" rx="10" class="card"/><rect x="8.0" y="26" width="79.2" height="26" rx="10" class="c0"/><rect x="8.0" y="42" width="79.2" height="10" class="c0"/><text class="on0" x="47.6" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">规避</text></g><g class="fade" style="animation-delay:0.30s"><circle cx="17.0" cy="64.0" r="3" class="c0"/><text class="lbl-s" x="26.0" y="68" text-anchor="start">消除威胁本</text><text class="lbl-s" x="26.0" y="80" text-anchor="start">身</text></g><g class="fade" style="animation-delay:0.37s"><circle cx="17.0" cy="96.0" r="3" class="c0"/><text class="lbl-s" x="26.0" y="100" text-anchor="start">改变方案或</text><text class="lbl-s" x="26.0" y="112" text-anchor="start">目标</text></g><g class="fade" style="animation-delay:0.44s"><circle cx="17.0" cy="128.0" r="3" class="c0"/><text class="lbl-s" x="26.0" y="132" text-anchor="start">常用：缩小</text><text class="lbl-s" x="26.0" y="144" text-anchor="start">范围</text></g><g class="rise" style="animation-delay:0.22s"><rect x="96.2" y="26" width="79.2" height="142.0" rx="10" class="card"/><rect x="96.2" y="26" width="79.2" height="26" rx="10" class="c1"/><rect x="96.2" y="42" width="79.2" height="10" class="c1"/><text class="on0" x="135.9" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">减轻</text></g><g class="fade" style="animation-delay:0.42s"><circle cx="105.2" cy="64.0" r="3" class="c1"/><text class="lbl-s" x="114.25" y="68" text-anchor="start">降低概率或</text><text class="lbl-s" x="114.25" y="80" text-anchor="start">影响</text></g><g class="fade" style="animation-delay:0.49s"><circle cx="105.2" cy="96.0" r="3" class="c1"/><text class="lbl-s" x="114.25" y="100" text-anchor="start">增加测试与</text><text class="lbl-s" x="114.25" y="112" text-anchor="start">培训</text></g><g class="fade" style="animation-delay:0.56s"><circle cx="105.2" cy="128.0" r="3" class="c1"/><text class="lbl-s" x="114.25" y="132" text-anchor="start">不改变根本</text><text class="lbl-s" x="114.25" y="144" text-anchor="start">方案</text></g><g class="rise" style="animation-delay:0.36s"><rect x="184.5" y="26" width="79.2" height="142.0" rx="10" class="card"/><rect x="184.5" y="26" width="79.2" height="26" rx="10" class="c2"/><rect x="184.5" y="42" width="79.2" height="10" class="c2"/><text class="on0" x="224.1" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">转移</text></g><g class="fade" style="animation-delay:0.54s"><circle cx="193.5" cy="64.0" r="3" class="c2"/><text class="lbl-s" x="202.5" y="68" text-anchor="start">保险、外包</text><text class="lbl-s" x="202.5" y="80" text-anchor="start">、担保</text></g><g class="fade" style="animation-delay:0.61s"><circle cx="193.5" cy="96.0" r="3" class="c2"/><text class="lbl-s" x="202.5" y="100" text-anchor="start">责任转给第</text><text class="lbl-s" x="202.5" y="112" text-anchor="start">三方</text></g><g class="fade" style="animation-delay:0.68s"><circle cx="193.5" cy="128.0" r="3" class="c2"/><text class="lbl-s" x="202.5" y="132" text-anchor="start">保费即成本</text></g><g class="rise" style="animation-delay:0.50s"><rect x="272.8" y="26" width="79.2" height="142.0" rx="10" class="card"/><rect x="272.8" y="26" width="79.2" height="26" rx="10" class="c3"/><rect x="272.8" y="42" width="79.2" height="10" class="c3"/><text class="on0" x="312.4" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">接受</text></g><g class="fade" style="animation-delay:0.66s"><circle cx="281.8" cy="64.0" r="3" class="c3"/><text class="lbl-s" x="290.75" y="68" text-anchor="start">主动准备应</text><text class="lbl-s" x="290.75" y="80" text-anchor="start">急储备</text></g><g class="fade" style="animation-delay:0.73s"><circle cx="281.8" cy="96.0" r="3" class="c3"/><text class="lbl-s" x="290.75" y="100" text-anchor="start">被动不采取</text><text class="lbl-s" x="290.75" y="112" text-anchor="start">措施</text></g><g class="fade" style="animation-delay:0.80s"><circle cx="281.8" cy="128.0" r="3" class="c3"/><text class="lbl-s" x="290.75" y="132" text-anchor="start">已知未知风</text><text class="lbl-s" x="290.75" y="144" text-anchor="start">险</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">四种风险应对策略</div><div class="cap">规避改变计划，消除威胁；减轻降低概率与影响；转移把责任给第三方；接受并预留储备。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 206.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><g class="rise" style="animation-delay:0.08s"><rect x="8.0" y="26" width="79.2" height="148.0" rx="10" class="card"/><rect x="8.0" y="26" width="79.2" height="26" rx="10" class="c0"/><rect x="8.0" y="42" width="79.2" height="10" class="c0"/><text class="on0" x="47.6" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">规避</text></g><g class="fade" style="animation-delay:0.30s"><circle cx="17.0" cy="66.0" r="3" class="c0"/><text class="lbl-s" x="26.0" y="70" text-anchor="start">消除威胁</text><text class="lbl-s" x="26.0" y="83" text-anchor="start">本身</text></g><g class="fade" style="animation-delay:0.37s"><circle cx="17.0" cy="100.0" r="3" class="c0"/><text class="lbl-s" x="26.0" y="104" text-anchor="start">改变方案</text><text class="lbl-s" x="26.0" y="117" text-anchor="start">或目标</text></g><g class="fade" style="animation-delay:0.44s"><circle cx="17.0" cy="134.0" r="3" class="c0"/><text class="lbl-s" x="26.0" y="138" text-anchor="start">常用：缩</text><text class="lbl-s" x="26.0" y="151" text-anchor="start">小范围</text></g><g class="rise" style="animation-delay:0.22s"><rect x="96.2" y="26" width="79.2" height="148.0" rx="10" class="card"/><rect x="96.2" y="26" width="79.2" height="26" rx="10" class="c1"/><rect x="96.2" y="42" width="79.2" height="10" class="c1"/><text class="on0" x="135.9" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">减轻</text></g><g class="fade" style="animation-delay:0.42s"><circle cx="105.2" cy="66.0" r="3" class="c1"/><text class="lbl-s" x="114.25" y="70" text-anchor="start">降低概率</text><text class="lbl-s" x="114.25" y="83" text-anchor="start">或影响</text></g><g class="fade" style="animation-delay:0.49s"><circle cx="105.2" cy="100.0" r="3" class="c1"/><text class="lbl-s" x="114.25" y="104" text-anchor="start">增加测试</text><text class="lbl-s" x="114.25" y="117" text-anchor="start">与培训</text></g><g class="fade" style="animation-delay:0.56s"><circle cx="105.2" cy="134.0" r="3" class="c1"/><text class="lbl-s" x="114.25" y="138" text-anchor="start">不改变根</text><text class="lbl-s" x="114.25" y="151" text-anchor="start">本方案</text></g><g class="rise" style="animation-delay:0.36s"><rect x="184.5" y="26" width="79.2" height="148.0" rx="10" class="card"/><rect x="184.5" y="26" width="79.2" height="26" rx="10" class="c2"/><rect x="184.5" y="42" width="79.2" height="10" class="c2"/><text class="on0" x="224.1" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">转移</text></g><g class="fade" style="animation-delay:0.54s"><circle cx="193.5" cy="66.0" r="3" class="c2"/><text class="lbl-s" x="202.5" y="70" text-anchor="start">保险、外</text><text class="lbl-s" x="202.5" y="83" text-anchor="start">包、担保</text></g><g class="fade" style="animation-delay:0.61s"><circle cx="193.5" cy="100.0" r="3" class="c2"/><text class="lbl-s" x="202.5" y="104" text-anchor="start">责任转给</text><text class="lbl-s" x="202.5" y="117" text-anchor="start">第三方</text></g><g class="fade" style="animation-delay:0.68s"><circle cx="193.5" cy="134.0" r="3" class="c2"/><text class="lbl-s" x="202.5" y="138" text-anchor="start">保费即成</text><text class="lbl-s" x="202.5" y="151" text-anchor="start">本</text></g><g class="rise" style="animation-delay:0.50s"><rect x="272.8" y="26" width="79.2" height="148.0" rx="10" class="card"/><rect x="272.8" y="26" width="79.2" height="26" rx="10" class="c3"/><rect x="272.8" y="42" width="79.2" height="10" class="c3"/><text class="on0" x="312.4" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">接受</text></g><g class="fade" style="animation-delay:0.66s"><circle cx="281.8" cy="66.0" r="3" class="c3"/><text class="lbl-s" x="290.75" y="70" text-anchor="start">主动准备</text><text class="lbl-s" x="290.75" y="83" text-anchor="start">应急储备</text></g><g class="fade" style="animation-delay:0.73s"><circle cx="281.8" cy="100.0" r="3" class="c3"/><text class="lbl-s" x="290.75" y="104" text-anchor="start">被动不采</text><text class="lbl-s" x="290.75" y="117" text-anchor="start">取措施</text></g><g class="fade" style="animation-delay:0.80s"><circle cx="281.8" cy="134.0" r="3" class="c3"/><text class="lbl-s" x="290.75" y="138" text-anchor="start">已知未知</text><text class="lbl-s" x="290.75" y="151" text-anchor="start">风险</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');

@@ -9,7 +9,7 @@
   --panel2: #E2EAF6;
   --line: #C6D4E9;
   --text: #16202E;
-  --muted: #5A6B80;
+  --muted: #46586E;
   --primary: #2F6BFF;
   --on-primary: #FFFFFF;
   --accent: #00A08F;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">关键路径法 CPM</div><div class="cap">总工期最长的一条路径为关键路径，其上活动总时差为 0；关键路径可能不止一条。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 248.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><path class="edge" d="M40.5,87.0 L110.2,45.6"/><path class="edge" d="M40.5,87.0 L110.2,135.6"/><path class="edge" d="M110.2,45.6 L180.0,45.6"/><text class="num" x="145.1" y="32.6" text-anchor="middle">关键</text><path class="edge" d="M110.2,135.6 L180.0,135.6"/><path class="edge" d="M180.0,45.6 L249.8,87.0"/><text class="num" x="208.2" y="77.5" text-anchor="middle">关键</text><path class="edge" d="M180.0,135.6 L249.8,87.0"/><path class="edge" d="M249.8,87.0 L319.5,87.0"/><g class="pop" style="animation-delay:0.20s"><rect x="12.0" y="72.0" width="57" height="30" rx="8" class="c4"/><text class="on0" x="40.5" y="91.0" text-anchor="middle" style="font-size:11px;font-weight:600">开始</text></g><g class="pop" style="animation-delay:0.33s"><rect x="81.8" y="30.6" width="57" height="30" rx="8" class="c1"/><text class="on0" x="110.2" y="49.6" text-anchor="middle" style="font-size:11px;font-weight:600">活动 A</text></g><text class="lbl-s" x="110.25" y="73.6" text-anchor="middle">3</text><g class="pop" style="animation-delay:0.46s"><rect x="81.8" y="120.6" width="57" height="30" rx="8" class="c2"/><text class="on0" x="110.2" y="139.6" text-anchor="middle" style="font-size:11px;font-weight:600">活动 B</text></g><text class="lbl-s" x="110.25" y="163.6" text-anchor="middle">2</text><g class="pop" style="animation-delay:0.59s"><rect x="151.5" y="30.6" width="57" height="30" rx="8" class="c3"/><text class="on0" x="180.0" y="49.6" text-anchor="middle" style="font-size:11px;font-weight:600">活动 C</text></g><text class="lbl-s" x="180.0" y="73.6" text-anchor="middle">4</text><g class="pop" style="animation-delay:0.72s"><rect x="151.5" y="120.6" width="57" height="30" rx="8" class="c4"/><text class="on0" x="180.0" y="139.6" text-anchor="middle" style="font-size:11px;font-weight:600">活动 D</text></g><text class="lbl-s" x="180.0" y="163.6" text-anchor="middle">5</text><g class="pop" style="animation-delay:0.85s"><rect x="221.2" y="72.0" width="57" height="30" rx="8" class="c5"/><text class="on0" x="249.8" y="91.0" text-anchor="middle" style="font-size:11px;font-weight:600">活动 E</text></g><text class="lbl-s" x="249.75" y="115.0" text-anchor="middle">2</text><g class="pop" style="animation-delay:0.98s"><rect x="291.0" y="72.0" width="57" height="30" rx="8" class="c4"/><text class="on0" x="319.5" y="91.0" text-anchor="middle" style="font-size:11px;font-weight:600">完成</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">关键路径法 CPM</div><div class="cap">总工期最长的一条路径为关键路径，其上活动总时差为 0；关键路径可能不止一条。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 248.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><path class="edge" d="M40.5,87.0 L110.2,45.6"/><path class="edge" d="M40.5,87.0 L110.2,135.6"/><path class="edge" d="M110.2,45.6 L180.0,45.6"/><text class="num" x="145.1" y="32.6" text-anchor="middle">关键</text><path class="edge" d="M110.2,135.6 L180.0,135.6"/><path class="edge" d="M180.0,45.6 L249.8,87.0"/><text class="num" x="208.2" y="77.5" text-anchor="middle">关键</text><path class="edge" d="M180.0,135.6 L249.8,87.0"/><path class="edge" d="M249.8,87.0 L319.5,87.0"/><g class="pop" style="animation-delay:0.20s"><rect x="12.0" y="71.0" width="57" height="32" rx="8" class="c4"/><text class="on0" x="40.5" y="91.5" text-anchor="middle" style="font-size:12px;font-weight:600">开始</text></g><g class="pop" style="animation-delay:0.33s"><rect x="81.8" y="29.6" width="57" height="32" rx="8" class="c1"/><text class="on0" x="110.2" y="50.1" text-anchor="middle" style="font-size:12px;font-weight:600">活动 A</text></g><text class="lbl-s" x="110.25" y="75.6" text-anchor="middle">3</text><g class="pop" style="animation-delay:0.46s"><rect x="81.8" y="119.6" width="57" height="32" rx="8" class="c2"/><text class="on0" x="110.2" y="140.1" text-anchor="middle" style="font-size:12px;font-weight:600">活动 B</text></g><text class="lbl-s" x="110.25" y="165.6" text-anchor="middle">2</text><g class="pop" style="animation-delay:0.59s"><rect x="151.5" y="29.6" width="57" height="32" rx="8" class="c3"/><text class="on0" x="180.0" y="50.1" text-anchor="middle" style="font-size:12px;font-weight:600">活动 C</text></g><text class="lbl-s" x="180.0" y="75.6" text-anchor="middle">4</text><g class="pop" style="animation-delay:0.72s"><rect x="151.5" y="119.6" width="57" height="32" rx="8" class="c4"/><text class="on0" x="180.0" y="140.1" text-anchor="middle" style="font-size:12px;font-weight:600">活动 D</text></g><text class="lbl-s" x="180.0" y="165.6" text-anchor="middle">5</text><g class="pop" style="animation-delay:0.85s"><rect x="221.2" y="71.0" width="57" height="32" rx="8" class="c5"/><text class="on0" x="249.8" y="91.5" text-anchor="middle" style="font-size:12px;font-weight:600">活动 E</text></g><text class="lbl-s" x="249.75" y="117.0" text-anchor="middle">2</text><g class="pop" style="animation-delay:0.98s"><rect x="291.0" y="71.0" width="57" height="32" rx="8" class="c4"/><text class="on0" x="319.5" y="91.5" text-anchor="middle" style="font-size:12px;font-weight:600">完成</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');

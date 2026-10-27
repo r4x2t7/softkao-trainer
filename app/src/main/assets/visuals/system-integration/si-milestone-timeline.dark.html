@@ -9,7 +9,7 @@
   --panel2: #262E3A;
   --line: #394455;
   --text: #E8EEF6;
-  --muted: #9BA9BC;
+  --muted: #A9B7C9;
   --primary: #7FA5FF;
   --on-primary: #0B1017;
   --accent: #33D3BC;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">里程碑：零工期、零成本、零资源</div><div class="cap">里程碑是关键路径上的重要时点，用于检查与决策，本身不消耗时间与成本。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 210.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><line x1="18" y1="92" x2="342" y2="92" class="edge"/><line x1="18" y1="92" x2="342" y2="92" class="edge s0" stroke-width="2.5" style="--len:324" stroke-dasharray="324" stroke-dashoffset="324"><animate attributeName="stroke-dashoffset" from="324" to="0" dur="1.2s" fill="freeze"/></line><g class="pop" style="animation-delay:0.35s"><circle cx="50.4" cy="92" r="7" class="c0"/><circle cx="50.4" cy="92" r="11" class="s0" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="50.4" y1="85" x2="50.4" y2="76" class="edge"/><text class="lbl" x="50.4" y="48" text-anchor="middle" style="font-size:11px">项目启动</text></g><text class="lbl-s" x="50.4" y="62" text-anchor="middle">章程发布</text><g class="pop" style="animation-delay:0.51s"><circle cx="115.2" cy="92" r="7" class="c1"/><circle cx="115.2" cy="92" r="11" class="s1" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="115.2" y1="99" x2="115.2" y2="108" class="edge"/><text class="lbl" x="115.2" y="120" text-anchor="middle" style="font-size:11px">需求确认</text></g><text class="lbl-s" x="115.2" y="134" text-anchor="middle">需求基线</text><g class="pop" style="animation-delay:0.67s"><circle cx="180.0" cy="92" r="7" class="c2"/><circle cx="180.0" cy="92" r="11" class="s2" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="180.0" y1="85" x2="180.0" y2="76" class="edge"/><text class="lbl" x="180.0" y="48" text-anchor="middle" style="font-size:11px">设计评审</text></g><text class="lbl-s" x="180.0" y="62" text-anchor="middle">方案通过</text><g class="pop" style="animation-delay:0.83s"><circle cx="244.8" cy="92" r="7" class="c3"/><circle cx="244.8" cy="92" r="11" class="s3" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="244.8" y1="99" x2="244.8" y2="108" class="edge"/><text class="lbl" x="244.8" y="120" text-anchor="middle" style="font-size:11px">开发完成</text></g><text class="lbl-s" x="244.8" y="134" text-anchor="middle">代码冻结</text><g class="pop" style="animation-delay:0.99s"><circle cx="309.6" cy="92" r="7" class="c4"/><circle cx="309.6" cy="92" r="11" class="s4" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="309.6" y1="85" x2="309.6" y2="76" class="edge"/><text class="lbl" x="309.6" y="48" text-anchor="middle" style="font-size:11px">验收移交</text></g><text class="lbl-s" x="309.6" y="62" text-anchor="middle">正式移交</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">里程碑：零工期、零成本、零资源</div><div class="cap">里程碑是关键路径上的重要时点，用于检查与决策，本身不消耗时间与成本。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 210.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><line x1="18" y1="92" x2="342" y2="92" class="edge"/><line x1="18" y1="92" x2="342" y2="92" class="edge s0" stroke-width="2.5" style="--len:324" stroke-dasharray="324" stroke-dashoffset="324"><animate attributeName="stroke-dashoffset" from="324" to="0" dur="1.2s" fill="freeze"/></line><g class="pop" style="animation-delay:0.35s"><circle cx="50.4" cy="92" r="7" class="c0"/><circle cx="50.4" cy="92" r="11" class="s0" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="50.4" y1="85" x2="50.4" y2="76" class="edge"/><text class="lbl" x="50.4" y="48" text-anchor="middle" style="font-size:12px">项目启动</text></g><text class="lbl-s" x="50.4" y="62" text-anchor="middle">章程发布</text><g class="pop" style="animation-delay:0.51s"><circle cx="115.2" cy="92" r="7" class="c1"/><circle cx="115.2" cy="92" r="11" class="s1" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="115.2" y1="99" x2="115.2" y2="108" class="edge"/><text class="lbl" x="115.2" y="120" text-anchor="middle" style="font-size:12px">需求确认</text></g><text class="lbl-s" x="115.2" y="134" text-anchor="middle">需求基线</text><g class="pop" style="animation-delay:0.67s"><circle cx="180.0" cy="92" r="7" class="c2"/><circle cx="180.0" cy="92" r="11" class="s2" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="180.0" y1="85" x2="180.0" y2="76" class="edge"/><text class="lbl" x="180.0" y="48" text-anchor="middle" style="font-size:12px">设计评审</text></g><text class="lbl-s" x="180.0" y="62" text-anchor="middle">方案通过</text><g class="pop" style="animation-delay:0.83s"><circle cx="244.8" cy="92" r="7" class="c3"/><circle cx="244.8" cy="92" r="11" class="s3" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="244.8" y1="99" x2="244.8" y2="108" class="edge"/><text class="lbl" x="244.8" y="120" text-anchor="middle" style="font-size:12px">开发完成</text></g><text class="lbl-s" x="244.8" y="134" text-anchor="middle">代码冻结</text><g class="pop" style="animation-delay:0.99s"><circle cx="309.6" cy="92" r="7" class="c4"/><circle cx="309.6" cy="92" r="11" class="s4" fill="none" style="opacity:.35"><animate attributeName="r" values="11;17;11" dur="2.4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".35;0;.35" dur="2.4s" repeatCount="indefinite"/></circle><line x1="309.6" y1="85" x2="309.6" y2="76" class="edge"/><text class="lbl" x="309.6" y="48" text-anchor="middle" style="font-size:12px">验收移交</text></g><text class="lbl-s" x="309.6" y="62" text-anchor="middle">正式移交</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');

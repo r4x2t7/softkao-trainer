@@ -9,7 +9,7 @@
   --panel2: #262E3A;
   --line: #394455;
   --text: #E8EEF6;
-  --muted: #9BA9BC;
+  --muted: #A9B7C9;
   --primary: #7FA5FF;
   --on-primary: #0B1017;
   --accent: #33D3BC;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">资源平衡 vs 资源平滑</div><div class="cap">平衡会改变关键路径（工期可能变长），平滑只调整浮动时间内的时序（工期不变）。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 208.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><g class="rise" style="animation-delay:0.08s"><rect x="8.0" y="26" width="108.7" height="150.0" rx="10" class="card"/><rect x="8.0" y="26" width="108.7" height="26" rx="10" class="c3"/><rect x="8.0" y="42" width="108.7" height="10" class="c3"/><text class="on0" x="62.3" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">资源平衡</text></g><g class="fade" style="animation-delay:0.30s"><circle cx="17.0" cy="64.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="68" text-anchor="start">解决资源超限</text></g><g class="fade" style="animation-delay:0.37s"><circle cx="17.0" cy="90.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="94" text-anchor="start">改变活动时序</text></g><g class="fade" style="animation-delay:0.44s"><circle cx="17.0" cy="116.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="120" text-anchor="start">可能延长工期</text></g><g class="fade" style="animation-delay:0.51s"><circle cx="17.0" cy="142.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="146" text-anchor="start">关键路径可能改变</text></g><g class="rise" style="animation-delay:0.22s"><rect x="125.7" y="26" width="108.7" height="150.0" rx="10" class="card"/><rect x="125.7" y="26" width="108.7" height="26" rx="10" class="c1"/><rect x="125.7" y="42" width="108.7" height="10" class="c1"/><text class="on0" x="180.0" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">资源平滑</text></g><g class="fade" style="animation-delay:0.42s"><circle cx="134.7" cy="64.0" r="3" class="c1"/><text class="lbl-s" x="143.66666666666669" y="68" text-anchor="start">利用总时差调整</text></g><g class="fade" style="animation-delay:0.49s"><circle cx="134.7" cy="90.0" r="3" class="c1"/><text class="lbl-s" x="143.66666666666669" y="94" text-anchor="start">不改变关键路径</text></g><g class="fade" style="animation-delay:0.56s"><circle cx="134.7" cy="116.0" r="3" class="c1"/><text class="lbl-s" x="143.66666666666669" y="120" text-anchor="start">不改变工期</text></g><g class="fade" style="animation-delay:0.63s"><circle cx="134.7" cy="142.0" r="3" class="c1"/><text class="lbl-s" x="143.66666666666669" y="146" text-anchor="start">仍可能资源超限</text></g><g class="rise" style="animation-delay:0.36s"><rect x="243.3" y="26" width="108.7" height="150.0" rx="10" class="card"/><rect x="243.3" y="26" width="108.7" height="26" rx="10" class="c0"/><rect x="243.3" y="42" width="108.7" height="10" class="c0"/><text class="on0" x="297.7" y="44" text-anchor="middle" style="font-size:11.5px;font-weight:700">共同点</text></g><g class="fade" style="animation-delay:0.54s"><circle cx="252.3" cy="64.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="68" text-anchor="start">都需要资源可用性</text><text class="lbl-s" x="261.33333333333337" y="80" text-anchor="start">数据</text></g><g class="fade" style="animation-delay:0.61s"><circle cx="252.3" cy="96.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="100" text-anchor="start">都属进度控制手段</text></g><g class="fade" style="animation-delay:0.68s"><circle cx="252.3" cy="122.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="126" text-anchor="start">都会影响团队负荷</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">资源平衡 vs 资源平滑</div><div class="cap">平衡会改变关键路径（工期可能变长），平滑只调整浮动时间内的时序（工期不变）。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 222.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><g class="rise" style="animation-delay:0.08s"><rect x="8.0" y="26" width="108.7" height="164.0" rx="10" class="card"/><rect x="8.0" y="26" width="108.7" height="26" rx="10" class="c3"/><rect x="8.0" y="42" width="108.7" height="10" class="c3"/><text class="on0" x="62.3" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">资源平衡</text></g><g class="fade" style="animation-delay:0.30s"><circle cx="17.0" cy="66.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="70" text-anchor="start">解决资源超限</text></g><g class="fade" style="animation-delay:0.37s"><circle cx="17.0" cy="94.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="98" text-anchor="start">改变活动时序</text></g><g class="fade" style="animation-delay:0.44s"><circle cx="17.0" cy="122.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="126" text-anchor="start">可能延长工期</text></g><g class="fade" style="animation-delay:0.51s"><circle cx="17.0" cy="150.0" r="3" class="c3"/><text class="lbl-s" x="26.0" y="154" text-anchor="start">关键路径可能改</text><text class="lbl-s" x="26.0" y="167" text-anchor="start">变</text></g><g class="rise" style="animation-delay:0.22s"><rect x="125.7" y="26" width="108.7" height="164.0" rx="10" class="card"/><rect x="125.7" y="26" width="108.7" height="26" rx="10" class="c1"/><rect x="125.7" y="42" width="108.7" height="10" class="c1"/><text class="on0" x="180.0" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">资源平滑</text></g><g class="fade" style="animation-delay:0.42s"><circle cx="134.7" cy="66.0" r="3" class="c1"/><text class="lbl-s" x="143.66666666666669" y="70" text-anchor="start">利用总时差调整</text></g><g class="fade" style="animation-delay:0.49s"><circle cx="134.7" cy="94.0" r="3" class="c1"/><text class="lbl-s" x="143.66666666666669" y="98" text-anchor="start">不改变关键路径</text></g><g class="fade" style="animation-delay:0.56s"><circle cx="134.7" cy="122.0" r="3" class="c1"/><text class="lbl-s" x="143.66666666666669" y="126" text-anchor="start">不改变工期</text></g><g class="fade" style="animation-delay:0.63s"><circle cx="134.7" cy="150.0" r="3" class="c1"/><text class="lbl-s" x="143.66666666666669" y="154" text-anchor="start">仍可能资源超限</text></g><g class="rise" style="animation-delay:0.36s"><rect x="243.3" y="26" width="108.7" height="164.0" rx="10" class="card"/><rect x="243.3" y="26" width="108.7" height="26" rx="10" class="c0"/><rect x="243.3" y="42" width="108.7" height="10" class="c0"/><text class="on0" x="297.7" y="45" text-anchor="middle" style="font-size:12.5px;font-weight:700">共同点</text></g><g class="fade" style="animation-delay:0.54s"><circle cx="252.3" cy="66.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="70" text-anchor="start">都需要资源可用</text><text class="lbl-s" x="261.33333333333337" y="83" text-anchor="start">性数据</text></g><g class="fade" style="animation-delay:0.61s"><circle cx="252.3" cy="100.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="104" text-anchor="start">都属进度控制手</text><text class="lbl-s" x="261.33333333333337" y="117" text-anchor="start">段</text></g><g class="fade" style="animation-delay:0.68s"><circle cx="252.3" cy="134.0" r="3" class="c0"/><text class="lbl-s" x="261.33333333333337" y="138" text-anchor="start">都会影响团队负</text><text class="lbl-s" x="261.33333333333337" y="151" text-anchor="start">荷</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');

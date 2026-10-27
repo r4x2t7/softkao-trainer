@@ -9,7 +9,7 @@
   --panel2: #E2EAF6;
   --line: #C6D4E9;
   --text: #16202E;
-  --muted: #5A6B80;
+  --muted: #46586E;
   --primary: #2F6BFF;
   --on-primary: #FFFFFF;
   --accent: #00A08F;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">塔克曼阶梯与冲突处理闭环</div><div class="cap">团队发展经历形成、震荡、规范、成熟、执行、解散；冲突按五步法闭环处理。</div></div><div class="stage"><svg viewBox="-39.5 -22.0 463.1 296.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><circle cx="180" cy="132" r="88" class="edge" style="--len:560" pathLength="560" stroke-dasharray="560" stroke-dashoffset="560"><animate attributeName="stroke-dashoffset" from="560" to="0" dur="1.1s" fill="freeze"/></circle><g class="pop" style="animation-delay:0.45s"><circle cx="180.0" cy="44.0" r="27" class="c0"/><text class="on0" x="180.0" y="48.0" text-anchor="middle" style="font-size:11.5px;font-weight:700">形成期</text></g><text class="lbl-s" x="180.0" y="0.0" text-anchor="middle">礼貌、试探、依赖项</text><text class="lbl-s" x="180.0" y="11.0" text-anchor="middle">目经理</text><g class="pop" style="animation-delay:0.61s"><circle cx="263.7" cy="104.8" r="27" class="c3"/><text class="on0" x="263.7" y="108.8" text-anchor="middle" style="font-size:11.5px;font-weight:700">震荡期</text></g><text class="lbl-s" x="305.5394601509603" y="91.20975674250695" text-anchor="start">冲突爆发，分工摩擦</text><g class="pop" style="animation-delay:0.77s"><circle cx="231.7" cy="203.2" r="27" class="c1"/><text class="on0" x="231.7" y="207.2" text-anchor="middle" style="font-size:11.5px;font-weight:700">规范期</text></g><text class="lbl-s" x="257.58765330260644" y="238.79024325749305" text-anchor="start">默契形成，凝聚增强</text><g class="pop" style="animation-delay:0.93s"><circle cx="128.3" cy="203.2" r="27" class="c2"/><text class="on0" x="128.3" y="207.2" text-anchor="middle" style="font-size:11.5px;font-weight:700">成熟期</text></g><text class="lbl-s" x="102.41234669739356" y="238.79024325749305" text-anchor="end">高效产出，授权充分</text><g class="pop" style="animation-delay:1.09s"><circle cx="96.3" cy="104.8" r="27" class="c4"/><text class="on0" x="96.3" y="108.8" text-anchor="middle" style="font-size:11.5px;font-weight:700">执行期</text></g><text class="lbl-s" x="54.46053984903972" y="91.20975674250695" text-anchor="end">绩效评审与激励</text><circle cx="180" cy="132" r="40" class="card2"/><text class="lbl" x="180" y="137" text-anchor="middle" style="font-size:13px;font-weight:700">团队发展</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">塔克曼阶梯与冲突处理闭环</div><div class="cap">团队发展经历形成、震荡、规范、成熟、执行、解散；冲突按五步法闭环处理。</div></div><div class="stage"><svg viewBox="-36.0 -21.5 455.1 295.5" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><circle cx="180" cy="132" r="88" class="edge" style="--len:560" pathLength="560" stroke-dasharray="560" stroke-dashoffset="560"><animate attributeName="stroke-dashoffset" from="560" to="0" dur="1.1s" fill="freeze"/></circle><g class="pop" style="animation-delay:0.45s"><circle cx="180.0" cy="44.0" r="27" class="c0"/><text class="on0" x="180.0" y="48.0" text-anchor="middle" style="font-size:11.5px;font-weight:700">形成期</text></g><text class="lbl-s" x="180.0" y="0.0" text-anchor="middle">礼貌、试探、依赖项</text><text class="lbl-s" x="180.0" y="11.0" text-anchor="middle">目经理</text><g class="pop" style="animation-delay:0.61s"><circle cx="263.7" cy="104.8" r="27" class="c3"/><text class="on0" x="263.7" y="108.8" text-anchor="middle" style="font-size:11.5px;font-weight:700">震荡期</text></g><text class="lbl-s" x="305.5394601509603" y="91.20975674250695" text-anchor="start">冲突爆发，分工摩擦</text><g class="pop" style="animation-delay:0.77s"><circle cx="231.7" cy="203.2" r="27" class="c1"/><text class="on0" x="231.7" y="207.2" text-anchor="middle" style="font-size:11.5px;font-weight:700">规范期</text></g><text class="lbl-s" x="257.58765330260644" y="238.79024325749305" text-anchor="start">默契形成，凝聚增强</text><g class="pop" style="animation-delay:0.93s"><circle cx="128.3" cy="203.2" r="27" class="c2"/><text class="on0" x="128.3" y="207.2" text-anchor="middle" style="font-size:11.5px;font-weight:700">成熟期</text></g><text class="lbl-s" x="102.41234669739356" y="238.79024325749305" text-anchor="end">高效产出，授权充分</text><g class="pop" style="animation-delay:1.09s"><circle cx="96.3" cy="104.8" r="27" class="c4"/><text class="on0" x="96.3" y="108.8" text-anchor="middle" style="font-size:11.5px;font-weight:700">执行期</text></g><text class="lbl-s" x="54.46053984903972" y="91.20975674250695" text-anchor="end">绩效评审与激励</text><circle cx="180" cy="132" r="40" class="card2"/><text class="lbl" x="180" y="137" text-anchor="middle" style="font-size:14px;font-weight:700">团队发展</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');

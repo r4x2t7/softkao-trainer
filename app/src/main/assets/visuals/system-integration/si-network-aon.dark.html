@@ -9,7 +9,7 @@
   --panel2: #262E3A;
   --line: #394455;
   --text: #E8EEF6;
-  --muted: #9BA9BC;
+  --muted: #A9B7C9;
   --primary: #7FA5FF;
   --on-primary: #0B1017;
   --accent: #33D3BC;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">AON 网络图：活动在节点上</div><div class="cap">AON 把活动画成节点、依赖画成箭头；AOA 把活动画在箭线上，绘制时必须处理虚拟活动。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 248.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><path class="edge" d="M110.2,45.6 L249.8,45.6"/><path class="edge" d="M110.2,45.6 L180.0,153.6"/><path class="edge" d="M249.8,45.6 L319.5,99.6"/><path class="edge" d="M249.8,45.6 L180.0,74.4"/><path class="edge" d="M319.5,99.6 L180.0,74.4"/><path class="edge" d="M180.0,153.6 L180.0,74.4"/><path class="edge" d="M40.5,153.6 L180.0,153.6"/><g class="pop" style="animation-delay:0.20s"><rect x="81.8" y="30.6" width="57" height="30" rx="8" class="c0"/><text class="on0" x="110.2" y="49.6" text-anchor="middle" style="font-size:11px;font-weight:600">活动 A</text></g><text class="lbl-s" x="110.25" y="73.6" text-anchor="middle">工期 3</text><g class="pop" style="animation-delay:0.33s"><rect x="221.2" y="30.6" width="57" height="30" rx="8" class="c1"/><text class="on0" x="249.8" y="49.6" text-anchor="middle" style="font-size:11px;font-weight:600">活动 B</text></g><text class="lbl-s" x="249.75" y="73.6" text-anchor="middle">工期 5</text><g class="pop" style="animation-delay:0.46s"><rect x="291.0" y="84.6" width="57" height="30" rx="8" class="c2"/><text class="on0" x="319.5" y="103.6" text-anchor="middle" style="font-size:11px;font-weight:600">活动 C</text></g><text class="lbl-s" x="319.5" y="127.6" text-anchor="middle">工期 2</text><g class="pop" style="animation-delay:0.59s"><rect x="151.5" y="138.6" width="57" height="30" rx="8" class="c3"/><text class="on0" x="180.0" y="157.6" text-anchor="middle" style="font-size:11px;font-weight:600">活动 D</text></g><text class="lbl-s" x="180.0" y="181.6" text-anchor="middle">工期 4</text><g class="pop" style="animation-delay:0.72s"><rect x="12.0" y="138.6" width="57" height="30" rx="8" class="c4"/><text class="on0" x="40.5" y="157.6" text-anchor="middle" style="font-size:11px;font-weight:600">活动 E</text></g><text class="lbl-s" x="40.5" y="181.6" text-anchor="middle">工期 6</text><g class="pop" style="animation-delay:0.85s"><rect x="151.5" y="59.4" width="57" height="30" rx="8" class="c4"/><text class="on0" x="180.0" y="78.4" text-anchor="middle" style="font-size:11px;font-weight:600">活动 F</text></g><text class="lbl-s" x="180.0" y="102.4" text-anchor="middle">终点</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">AON 网络图：活动在节点上</div><div class="cap">AON 把活动画成节点、依赖画成箭头；AOA 把活动画在箭线上，绘制时必须处理虚拟活动。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 248.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><path class="edge" d="M110.2,45.6 L249.8,45.6"/><path class="edge" d="M110.2,45.6 L180.0,153.6"/><path class="edge" d="M249.8,45.6 L319.5,99.6"/><path class="edge" d="M249.8,45.6 L180.0,74.4"/><path class="edge" d="M319.5,99.6 L180.0,74.4"/><path class="edge" d="M180.0,153.6 L180.0,74.4"/><path class="edge" d="M40.5,153.6 L180.0,153.6"/><g class="pop" style="animation-delay:0.20s"><rect x="81.8" y="29.6" width="57" height="32" rx="8" class="c0"/><text class="on0" x="110.2" y="50.1" text-anchor="middle" style="font-size:12px;font-weight:600">活动 A</text></g><text class="lbl-s" x="110.25" y="75.6" text-anchor="middle">工期 3</text><g class="pop" style="animation-delay:0.33s"><rect x="221.2" y="29.6" width="57" height="32" rx="8" class="c1"/><text class="on0" x="249.8" y="50.1" text-anchor="middle" style="font-size:12px;font-weight:600">活动 B</text></g><text class="lbl-s" x="249.75" y="75.6" text-anchor="middle">工期 5</text><g class="pop" style="animation-delay:0.46s"><rect x="291.0" y="83.6" width="57" height="32" rx="8" class="c2"/><text class="on0" x="319.5" y="104.1" text-anchor="middle" style="font-size:12px;font-weight:600">活动 C</text></g><text class="lbl-s" x="319.5" y="129.6" text-anchor="middle">工期 2</text><g class="pop" style="animation-delay:0.59s"><rect x="151.5" y="137.6" width="57" height="32" rx="8" class="c3"/><text class="on0" x="180.0" y="158.1" text-anchor="middle" style="font-size:12px;font-weight:600">活动 D</text></g><text class="lbl-s" x="180.0" y="183.6" text-anchor="middle">工期 4</text><g class="pop" style="animation-delay:0.72s"><rect x="12.0" y="137.6" width="57" height="32" rx="8" class="c4"/><text class="on0" x="40.5" y="158.1" text-anchor="middle" style="font-size:12px;font-weight:600">活动 E</text></g><text class="lbl-s" x="40.5" y="183.6" text-anchor="middle">工期 6</text><g class="pop" style="animation-delay:0.85s"><rect x="151.5" y="58.4" width="57" height="32" rx="8" class="c4"/><text class="on0" x="180.0" y="78.9" text-anchor="middle" style="font-size:12px;font-weight:600">活动 F</text></g><text class="lbl-s" x="180.0" y="104.4" text-anchor="middle">终点</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');

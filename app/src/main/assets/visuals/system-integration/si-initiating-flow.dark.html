@@ -9,7 +9,7 @@
   --panel2: #262E3A;
   --line: #394455;
   --text: #E8EEF6;
-  --muted: #9BA9BC;
+  --muted: #A9B7C9;
   --primary: #7FA5FF;
   --on-primary: #0B1017;
   --accent: #33D3BC;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">启动过程组：从立项到章程</div><div class="cap">启动是唯一被授权把组织资源投入项目的过程组，输出项目章程。</div></div><div class="stage"><svg viewBox="-11.0 -10.0 382.0 194.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--line)"/></marker></defs><g class="pop" style="animation-delay:0.10s"><rect x="-1.0" y="22" width="74" height="44" rx="9" class="c0" opacity="0.9"/><text class="on0" x="36.0" y="41" text-anchor="middle" style="font-size:11.5px;font-weight:700">立项</text><text style="fill:rgba(255,255,255,.9);font-size:9.5px" class="lbl-s" x="36.0" y="56" text-anchor="middle">识别需求与机会</text></g><path class="edge s0" d="M76.0,44.0 L92.0,44.0" marker-end="url(#ah)"/><g class="pop" style="animation-delay:0.24s"><rect x="95.0" y="22" width="74" height="44" rx="9" class="c1" opacity="0.9"/><text class="on0" x="132.0" y="41" text-anchor="middle" style="font-size:11.5px;font-weight:700">可行性研究</text><text style="fill:rgba(255,255,255,.9);font-size:9.5px" class="lbl-s" x="132.0" y="56" text-anchor="middle">技术 / 经济 / 进</text><text style="fill:rgba(255,255,255,.9);font-size:9.5px" class="lbl-s" x="132.0" y="67" text-anchor="middle">度</text></g><path class="edge s0" d="M172.0,44.0 L188.0,44.0" marker-end="url(#ah)"/><g class="pop" style="animation-delay:0.38s"><rect x="191.0" y="22" width="74" height="44" rx="9" class="c2" opacity="0.9"/><text class="on0" x="228.0" y="41" text-anchor="middle" style="font-size:11.5px;font-weight:700">需求与约束</text><text style="fill:rgba(255,255,255,.9);font-size:9.5px" class="lbl-s" x="228.0" y="56" text-anchor="middle">明确干系人期望</text></g><path class="edge s0" d="M268.0,44.0 L284.0,44.0" marker-end="url(#ah)"/><g class="pop" style="animation-delay:0.52s"><rect x="287.0" y="22" width="74" height="44" rx="9" class="c3" opacity="0.9"/><text class="on0" x="324.0" y="41" text-anchor="middle" style="font-size:11.5px;font-weight:700">项目章程</text><text style="fill:rgba(255,255,255,.9);font-size:9.5px" class="lbl-s" x="324.0" y="56" text-anchor="middle">高层授权文件</text></g><path class="edge" d="M361.0,44.0 C375.0,44.0 375.0,96.0 355.0,96.0" marker-end="url(#ah)"/><g class="pop" style="animation-delay:0.66s"><rect x="143.0" y="112" width="74" height="44" rx="9" class="c4" opacity="0.9"/><text class="on0" x="180.0" y="131" text-anchor="middle" style="font-size:11.5px;font-weight:700">启动会议</text><text style="fill:rgba(255,255,255,.9);font-size:9.5px" class="lbl-s" x="180.0" y="146" text-anchor="middle">任命项目经理</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">启动过程组：从立项到章程</div><div class="cap">启动是唯一被授权把组织资源投入项目的过程组，输出项目章程。</div></div><div class="stage"><svg viewBox="-16.0 -10.0 392.0 218.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--line)"/></marker></defs><g class="pop" style="animation-delay:0.10s"><rect x="-6.0" y="22" width="78" height="54" rx="9" class="c0" opacity="0.9"/><text class="on0" x="33.0" y="44" text-anchor="middle" style="font-size:12.5px;font-weight:700">立项</text><text style="fill:rgba(255,255,255,.92);font-size:10.5px" class="lbl-s" x="33.0" y="58" text-anchor="middle">识别需求与机会</text></g><path class="edge s0" d="M75.0,49.0 L89.0,49.0" marker-end="url(#ah)"/><g class="pop" style="animation-delay:0.24s"><rect x="92.0" y="22" width="78" height="54" rx="9" class="c1" opacity="0.9"/><text class="on0" x="131.0" y="44" text-anchor="middle" style="font-size:12.5px;font-weight:700">可行性研究</text><text style="fill:rgba(255,255,255,.92);font-size:10.5px" class="lbl-s" x="131.0" y="58" text-anchor="middle">技术 / 经济 / </text><text style="fill:rgba(255,255,255,.92);font-size:10.5px" class="lbl-s" x="131.0" y="69" text-anchor="middle">进度</text></g><path class="edge s0" d="M173.0,49.0 L187.0,49.0" marker-end="url(#ah)"/><g class="pop" style="animation-delay:0.38s"><rect x="190.0" y="22" width="78" height="54" rx="9" class="c2" opacity="0.9"/><text class="on0" x="229.0" y="44" text-anchor="middle" style="font-size:12.5px;font-weight:700">需求与约束</text><text style="fill:rgba(255,255,255,.92);font-size:10.5px" class="lbl-s" x="229.0" y="58" text-anchor="middle">明确干系人期望</text></g><path class="edge s0" d="M271.0,49.0 L285.0,49.0" marker-end="url(#ah)"/><g class="pop" style="animation-delay:0.52s"><rect x="288.0" y="22" width="78" height="54" rx="9" class="c3" opacity="0.9"/><text class="on0" x="327.0" y="44" text-anchor="middle" style="font-size:12.5px;font-weight:700">项目章程</text><text style="fill:rgba(255,255,255,.92);font-size:10.5px" class="lbl-s" x="327.0" y="58" text-anchor="middle">高层授权文件</text></g><path class="edge" d="M366.0,49.0 C380.0,49.0 380.0,105.0 360.0,105.0" marker-end="url(#ah)"/><g class="pop" style="animation-delay:0.66s"><rect x="141.0" y="126" width="78" height="54" rx="9" class="c4" opacity="0.9"/><text class="on0" x="180.0" y="148" text-anchor="middle" style="font-size:12.5px;font-weight:700">启动会议</text><text style="fill:rgba(255,255,255,.92);font-size:10.5px" class="lbl-s" x="180.0" y="162" text-anchor="middle">任命项目经理</text></g></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');

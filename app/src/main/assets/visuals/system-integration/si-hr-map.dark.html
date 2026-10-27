@@ -9,7 +9,7 @@
   --panel2: #262E3A;
   --line: #394455;
   --text: #E8EEF6;
-  --muted: #9BA9BC;
+  --muted: #A9B7C9;
   --primary: #7FA5FF;
   --on-primary: #0B1017;
   --accent: #33D3BC;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">人力资源管理工具箱</div><div class="cap">四个过程对应四类工具：规划靠表格，规划实施靠虚拟团队，团队建设靠激励，管理靠冲突处理。</div></div><div class="stage"><svg viewBox="-42.1 -10.0 444.3 284.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><line x1="180" y1="132" x2="180.0" y2="36.0" class="edge s0" style="opacity:.55"/><line x1="180" y1="132" x2="263.1" y2="84.0" class="edge s1" style="opacity:.55"/><line x1="180" y1="132" x2="263.1" y2="180.0" class="edge s2" style="opacity:.55"/><line x1="180" y1="132" x2="180.0" y2="228.0" class="edge s3" style="opacity:.55"/><line x1="180" y1="132" x2="96.9" y2="180.0" class="edge s4" style="opacity:.55"/><line x1="180" y1="132" x2="96.9" y2="84.0" class="edge s5" style="opacity:.55"/><circle cx="180" cy="132" r="40" class="c0"/><text class="on0" x="180" y="137" text-anchor="middle" style="font-size:12.5px;font-weight:700">人力管理</text><g class="pop" style="animation-delay:0.20s"><rect x="143.0" y="23.0" width="74.0" height="26" rx="8" class="card2"/><text class="lbl" x="180.0" y="40.0" text-anchor="middle" style="font-size:11px">规划人力资源</text></g><text class="lbl-s" x="180.0" y="62.0" text-anchor="middle">RACI / WBS 词</text><text class="lbl-s" x="180.0" y="73.0" text-anchor="middle">典</text><g class="pop" style="animation-delay:0.32s"><rect x="234.1" y="71.0" width="58.0" height="26" rx="8" class="card2"/><text class="lbl" x="263.1" y="88.0" text-anchor="middle" style="font-size:11px">组建团队</text></g><text class="lbl-s" x="296.1384387633061" y="88.0" text-anchor="start">虚拟团队、虚拟办</text><text class="lbl-s" x="296.1384387633061" y="99.0" text-anchor="start">公室</text><g class="pop" style="animation-delay:0.44s"><rect x="234.1" y="167.0" width="58.0" height="26" rx="8" class="card2"/><text class="lbl" x="263.1" y="184.0" text-anchor="middle" style="font-size:11px">管理团队</text></g><text class="lbl-s" x="296.1384387633061" y="184.0" text-anchor="start">激励、冲突解决</text><g class="pop" style="animation-delay:0.56s"><rect x="137.5" y="215.0" width="85.0" height="26" rx="8" class="card2"/><text class="lbl" x="180.0" y="232.0" text-anchor="middle" style="font-size:11px">RACI 矩阵</text></g><text class="lbl-s" x="180.0" y="254.0" text-anchor="middle">谁负责/谁批准</text><g class="pop" style="animation-delay:0.68s"><rect x="67.9" y="167.0" width="58.0" height="26" rx="8" class="card2"/><text class="lbl" x="96.9" y="184.0" text-anchor="middle" style="font-size:11px">人员配备</text></g><text class="lbl-s" x="63.86156123669389" y="184.0" text-anchor="end">资源日历、瓶颈分</text><text class="lbl-s" x="63.86156123669389" y="195.0" text-anchor="end">析</text><g class="pop" style="animation-delay:0.80s"><rect x="67.9" y="71.0" width="58.0" height="26" rx="8" class="card2"/><text class="lbl" x="96.9" y="88.0" text-anchor="middle" style="font-size:11px">绩效评价</text></g><text class="lbl-s" x="63.86156123669389" y="87.99999999999999" text-anchor="end">360 度、关键绩</text><text class="lbl-s" x="63.86156123669389" y="98.99999999999999" text-anchor="end">效</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">人力资源管理工具箱</div><div class="cap">四个过程对应四类工具：规划靠表格，规划实施靠虚拟团队，团队建设靠激励，管理靠冲突处理。</div></div><div class="stage"><svg viewBox="-39.1 -10.0 438.3 284.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><line x1="180" y1="132" x2="180.0" y2="36.0" class="edge s0" style="opacity:.55"/><line x1="180" y1="132" x2="263.1" y2="84.0" class="edge s1" style="opacity:.55"/><line x1="180" y1="132" x2="263.1" y2="180.0" class="edge s2" style="opacity:.55"/><line x1="180" y1="132" x2="180.0" y2="228.0" class="edge s3" style="opacity:.55"/><line x1="180" y1="132" x2="96.9" y2="180.0" class="edge s4" style="opacity:.55"/><line x1="180" y1="132" x2="96.9" y2="84.0" class="edge s5" style="opacity:.55"/><circle cx="180" cy="132" r="40" class="c0"/><text class="on0" x="180" y="137" text-anchor="middle" style="font-size:13.5px;font-weight:700">人力管理</text><g class="pop" style="animation-delay:0.20s"><rect x="139.0" y="22.0" width="82.0" height="28" rx="8" class="card2"/><text class="lbl" x="180.0" y="41.0" text-anchor="middle" style="font-size:12px">规划人力资源</text></g><text class="lbl-s" x="180.0" y="62.0" text-anchor="middle">RACI / WBS 词</text><text class="lbl-s" x="180.0" y="73.0" text-anchor="middle">典</text><g class="pop" style="animation-delay:0.32s"><rect x="233.1" y="70.0" width="60.0" height="28" rx="8" class="card2"/><text class="lbl" x="263.1" y="89.0" text-anchor="middle" style="font-size:12px">组建团队</text></g><text class="lbl-s" x="297.1384387633061" y="88.0" text-anchor="start">虚拟团队、虚拟办</text><text class="lbl-s" x="297.1384387633061" y="99.0" text-anchor="start">公室</text><g class="pop" style="animation-delay:0.44s"><rect x="233.1" y="166.0" width="60.0" height="28" rx="8" class="card2"/><text class="lbl" x="263.1" y="185.0" text-anchor="middle" style="font-size:12px">管理团队</text></g><text class="lbl-s" x="297.1384387633061" y="184.0" text-anchor="start">激励、冲突解决</text><g class="pop" style="animation-delay:0.56s"><rect x="133.0" y="214.0" width="94.0" height="28" rx="8" class="card2"/><text class="lbl" x="180.0" y="233.0" text-anchor="middle" style="font-size:12px">RACI 矩阵</text></g><text class="lbl-s" x="180.0" y="254.0" text-anchor="middle">谁负责/谁批准</text><g class="pop" style="animation-delay:0.68s"><rect x="66.9" y="166.0" width="60.0" height="28" rx="8" class="card2"/><text class="lbl" x="96.9" y="185.0" text-anchor="middle" style="font-size:12px">人员配备</text></g><text class="lbl-s" x="62.86156123669389" y="184.0" text-anchor="end">资源日历、瓶颈分</text><text class="lbl-s" x="62.86156123669389" y="195.0" text-anchor="end">析</text><g class="pop" style="animation-delay:0.80s"><rect x="66.9" y="70.0" width="60.0" height="28" rx="8" class="card2"/><text class="lbl" x="96.9" y="89.0" text-anchor="middle" style="font-size:12px">绩效评价</text></g><text class="lbl-s" x="62.86156123669389" y="87.99999999999999" text-anchor="end">360 度、关键绩</text><text class="lbl-s" x="62.86156123669389" y="98.99999999999999" text-anchor="end">效</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');

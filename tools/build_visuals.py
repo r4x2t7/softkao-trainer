@@ -42,7 +42,7 @@ THEMES = {
         "--panel2": "#E2EAF6",
         "--line": "#C6D4E9",
         "--text": "#16202E",
-        "--muted": "#5A6B80",
+        "--muted": "#46586E",
         "--primary": "#2F6BFF",
         "--on-primary": "#FFFFFF",
         "--accent": "#00A08F",
@@ -66,7 +66,7 @@ THEMES = {
         "--panel2": "#262E3A",
         "--line": "#394455",
         "--text": "#E8EEF6",
-        "--muted": "#9BA9BC",
+        "--muted": "#A9B7C9",
         "--primary": "#7FA5FF",
         "--on-primary": "#0B1017",
         "--accent": "#33D3BC",
@@ -108,12 +108,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -122,7 +123,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -133,11 +134,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -314,6 +315,9 @@ def text_block(x: float, y: float, lines: list[str], cls: str = "lbl-s",
 # 每个渲染器返回 (svg, extra_css)
 # 约定：SVG 坐标使用 360 宽的虚拟画布，实际显示时用 preserveAspectRatio 缩放。
 
+# fit_viewbox 估宽兜底用的 class→字号表，与 BASE_CSS 里的通用图元保持一致
+CLASS_FONT = {"lbl": 13.5, "lbl-s": 11.5, "lbl-w": 13.5, "num": 11.0}
+
 
 def fit_viewbox(svg: str, pad: float = 10.0) -> str:
     """按内容实际范围重算 viewBox，避免图形画到画布外被裁掉。
@@ -376,6 +380,12 @@ def fit_viewbox(svg: str, pad: float = 10.0) -> str:
         fsm = re.search(r"font-size\s*:\s*([\d.]+)px", b)
         if fsm:
             fs = float(fsm.group(1))
+        else:
+            # 字号走 class 时（.lbl/.lbl-s/...）之前一律按 12px 低估，
+            # 长文本会据此漏扩 viewBox，导致内容被裁；这里按 CSS 兜底
+            cm = re.search(r'class="([^"]*)"', b)
+            if cm:
+                fs = CLASS_FONT.get(cm.group(1).split()[0], 12.0)
         content = re.sub(r"<[^>]+>", "", mm.group(2))
         cjk = len(re.findall(r"[\u2e80-\u9fff\u3000-\u303f\uff00-\uffef]", content))
         other = max(0, len(content) - cjk)
@@ -430,9 +440,9 @@ def fit_viewbox(svg: str, pad: float = 10.0) -> str:
 def r_layers(d: dict) -> tuple[str, str]:
     items = d["items"]
     n = len(items)
-    box_h = 30
-    note_lh = 12.0
-    max_note_lines = 2
+    box_h = 42
+    note_lh = 13.5
+    max_note_lines = 3
     # 每层都要给副标题留位置，否则标题和副标题会叠在一起
     block_h = box_h + max_note_lines * note_lh + 6
     top = 26
@@ -449,16 +459,16 @@ def r_layers(d: dict) -> tuple[str, str]:
             f'<g class="drop" style="animation-delay:{0.10 + i * 0.13:.2f}s">'
             f'<rect x="{x:.1f}" y="{y}" width="{w:.1f}" height="{box_h}" rx="8" '
             f'class="c{acc}" opacity="0.92"/>'
-            f'<text class="on0" x="180" y="{y + 19}" text-anchor="middle" '
-            f'style="font-size:12px;font-weight:700">{esc(it["label"])}</text>'
+            f'<text class="on0" x="180" y="{y + 27}" text-anchor="middle" '
+            f'style="font-size:14px;font-weight:700">{esc(it["label"])}</text>'
             + "</g>"
         )
         # 副标题放在色条下方并折行：放进条内会和标题叠字，超长也会溢出条外
-        lines = wrap_text(it.get("note") or "", 32)[:max_note_lines]
+        lines = wrap_text(it.get("note") or "", 30)[:max_note_lines]
         for j, ln in enumerate(lines):
             parts.append(
-                f'<text class="lbl-s" x="180" y="{y + box_h + 11 + j * note_lh}" text-anchor="middle" '
-                f'style="fill:var(--muted);font-size:10px">{esc(ln)}</text>'
+                f'<text class="lbl-s" x="180" y="{y + box_h + 14 + j * note_lh}" text-anchor="middle" '
+                f'style="fill:var(--muted);font-size:11.5px">{esc(ln)}</text>'
             )
     svg = (
         f'<svg viewBox="0 0 360 {height:.0f}" preserveAspectRatio="xMidYMid meet" '
@@ -508,7 +518,7 @@ def r_cycle(d: dict) -> tuple[str, str]:
         parts.append(
             f'<circle cx="{cx}" cy="{cy}" r="40" class="card2"/>'
             f'<text class="lbl" x="{cx}" y="{cy + 5}" text-anchor="middle" '
-            f'style="font-size:13px;font-weight:700">{esc(center)}</text>'
+            f'style="font-size:14px;font-weight:700">{esc(center)}</text>'
         )
     svg = (
         f'<svg viewBox="0 0 360 264" preserveAspectRatio="xMidYMid meet" '
@@ -521,9 +531,9 @@ def r_flow(d: dict) -> tuple[str, str]:
     steps = d["steps"]
     per_row = 4 if len(steps) > 4 else len(steps)
     rows = (len(steps) + per_row - 1) // per_row
-    box_w, box_h = 74, 44
-    gap_x = 22
-    row_gap = 46
+    box_w, box_h = 78, 54
+    gap_x = 20
+    row_gap = 50
     top = 22
     parts = []
     idx = 0
@@ -540,16 +550,16 @@ def r_flow(d: dict) -> tuple[str, str]:
                 f'<g class="pop" style="animation-delay:{0.10 + idx * 0.14:.2f}s">'
                 f'<rect x="{x:.1f}" y="{y}" width="{box_w}" height="{box_h}" rx="9" '
                 f'class="c{acc}" opacity="0.9"/>'
-                f'<text class="on0" x="{x + box_w / 2:.1f}" y="{y + 19}" text-anchor="middle" '
-                f'style="font-size:11.5px;font-weight:700">{esc(st["label"])}</text>'
+                f'<text class="on0" x="{x + box_w / 2:.1f}" y="{y + 22}" text-anchor="middle" '
+                f'style="font-size:12.5px;font-weight:700">{esc(st["label"])}</text>'
                 + text_block(
                     x + box_w / 2,
-                    y + 34,
-                    wrap_text(st.get("note", ""), 9),
+                    y + 36,
+                    wrap_text(st.get("note", ""), 8)[:2],
                     "lbl-s",
                     "middle",
                     11,
-                ).replace('class="lbl-s"', 'style="fill:rgba(255,255,255,.9);font-size:9.5px" class="lbl-s"')
+                ).replace('class="lbl-s"', 'style="fill:rgba(255,255,255,.92);font-size:10.5px" class="lbl-s"')
                 + "</g>"
             )
             if j < n - 1:
@@ -589,13 +599,13 @@ def r_compare(d: dict) -> tuple[str, str]:
     gap = 9
     col_w = (360 - margin * 2 - gap * (n - 1)) / n
     top = 26
-    # 折行宽度必须按列宽算：字号约 10.5px/汉字，按 6.2 算会溢出到隔壁列
-    per_line = max(4, int((col_w - 24) / 10.5))
+    # 折行宽度必须按列宽算：字号约 11.5px/汉字，按 6.2 算会溢出到隔壁列
+    per_line = max(4, int((col_w - 24) / 11.5))
     col_lines = [[wrap_text(it, per_line) for it in c["items"]] for c in cols]
     def col_h(lines_list):
         h = 0
         for ls in lines_list:
-            h += max(26, len(ls) * 12 + 8)
+            h += max(28, len(ls) * 13 + 8)
         return h
     body_h = max((col_h(ls) for ls in col_lines), default=0) + 12
     height = top + 30 + body_h + 16
@@ -609,11 +619,11 @@ def r_compare(d: dict) -> tuple[str, str]:
             f'rx="10" class="card"/>'
             f'<rect x="{x:.1f}" y="{top}" width="{col_w:.1f}" height="26" rx="10" class="c{acc}"/>'
             f'<rect x="{x:.1f}" y="{top + 16}" width="{col_w:.1f}" height="10" class="c{acc}"/>'
-            f'<text class="on0" x="{x + col_w / 2:.1f}" y="{top + 18}" text-anchor="middle" '
-            f'style="font-size:11.5px;font-weight:700">{esc(col["title"])}</text>'
+            f'<text class="on0" x="{x + col_w / 2:.1f}" y="{top + 19}" text-anchor="middle" '
+            f'style="font-size:12.5px;font-weight:700">{esc(col["title"])}</text>'
             f"</g>"
         )
-        yy = top + 42
+        yy = top + 44
         for j, ls in enumerate(col_lines[i]):
             parts.append(
                 f'<g class="fade" style="animation-delay:{0.30 + i * 0.12 + j * 0.07:.2f}s">'
@@ -624,11 +634,11 @@ def r_compare(d: dict) -> tuple[str, str]:
                     ls,
                     "lbl-s",
                     "start",
-                    12,
+                    13,
                 )
                 + "</g>"
             )
-            yy += max(26, len(ls) * 12 + 8)
+            yy += max(28, len(ls) * 13 + 8)
     svg = (
         f'<svg viewBox="0 0 360 {height:.0f}" preserveAspectRatio="xMidYMid meet" '
         f'xmlns="http://www.w3.org/2000/svg">' + "".join(parts) + "</svg>"
@@ -693,7 +703,7 @@ def r_tree(d: dict) -> tuple[str, str]:
             parts.append(
                 f'<g class="fade"><rect x="18" y="{n["y"] - 15:.0f}" width="120" height="30" '
                 f'rx="8" class="c0"/><text class="on0" x="78" y="{n["y"] + 5:.0f}" '
-                f'text-anchor="middle" style="font-size:12px;font-weight:700">'
+                f'text-anchor="middle" style="font-size:13px;font-weight:700">'
                 f'{esc(n["label"])}</text></g>'
             )
         elif n["depth"] == 1:
@@ -702,7 +712,7 @@ def r_tree(d: dict) -> tuple[str, str]:
                 f'<rect x="{n["x"] - 44:.1f}" y="{n["y"] - 15:.1f}" width="88" height="30" '
                 f'rx="8" class="card2"/>'
                 f'<text class="lbl" x="{n["x"]:.1f}" y="{n["y"] + 4:.1f}" text-anchor="middle" '
-                f'style="font-size:11px">{esc(n["label"])}</text></g>'
+                f'style="font-size:12px">{esc(n["label"])}</text></g>'
             )
         else:
             parts.append(
@@ -744,7 +754,7 @@ def r_timeline(d: dict) -> tuple[str, str]:
             f'<line x1="{x:.1f}" y1="{y - 7 if up else y + 7}" x2="{x:.1f}" '
             f'y2="{y - 16 if up else y + 16}" class="edge"/>'
             f'<text class="lbl" x="{x:.1f}" y="{ty + (0 if up else 8):.0f}" text-anchor="middle" '
-            f'style="font-size:11px">{esc(m["label"])}</text>'
+            f'style="font-size:12px">{esc(m["label"])}</text>'
             f'</g>'
         )
         if m.get("note"):
@@ -770,7 +780,7 @@ def r_bars(d: dict) -> tuple[str, str]:
     unit = d.get("unit", "")
     left = 96
     bar_w = 196
-    row_h = 30
+    row_h = 34
     top = 18
     height = top + len(bars) * row_h + 12
     parts = []
@@ -781,18 +791,18 @@ def r_bars(d: dict) -> tuple[str, str]:
         ratio = max(0.0, min(1.0, val / mx if mx else 0))
         acc = b.get("accent", i % 8)
         parts.append(
-            f'<text class="lbl" x="{left - 8}" y="{y + 15}" text-anchor="end" '
-            f'style="font-size:11px">{esc(b["label"])}</text>'
+            f'<text class="lbl" x="{left - 8}" y="{y + 17}" text-anchor="end" '
+            f'style="font-size:12px">{esc(b["label"])}</text>'
         )
         parts.append(
-            f'<rect x="{left}" y="{y + 4}" width="{bar_w}" height="16" rx="8" class="card"/>'
+            f'<rect x="{left}" y="{y + 5}" width="{bar_w}" height="18" rx="9" class="card"/>'
         )
         parts.append(
-            f'<rect class="grow c{acc}" x="{left}" y="{y + 4}" width="{bar_w * ratio:.1f}" '
-            f'height="16" rx="8" style="animation-delay:{0.15 + i * 0.15:.2f}s"/>'
+            f'<rect class="grow c{acc}" x="{left}" y="{y + 5}" width="{bar_w * ratio:.1f}" '
+            f'height="18" rx="9" style="animation-delay:{0.15 + i * 0.15:.2f}s"/>'
         )
         parts.append(
-            f'<text class="num" x="{left + bar_w + 6}" y="{y + 16}">'
+            f'<text class="num" x="{left + bar_w + 6}" y="{y + 18}">'
             f'{esc(b.get("text", str(b["value"]) + unit))}</text>'
         )
     svg = (
@@ -823,7 +833,7 @@ def r_gauge(d: dict) -> tuple[str, str]:
     )
     parts.append(
         f'<text class="lbl" x="{cx}" y="{cy - 4}" text-anchor="middle" '
-        f'style="font-size:28px;font-weight:700;fill:var(--primary)">'
+        f'style="font-size:30px;font-weight:700;fill:var(--primary)">'
         f'{esc(d.get("text", str(value)))}</text>'
     )
     parts.append(
@@ -861,8 +871,8 @@ def r_matrix(d: dict) -> tuple[str, str]:
     cw, ch = 88, 62
     cols, rows = len(xa), len(ya)
     # 折行宽度必须按格子实际宽度算：按固定字数折行会让文字溢出格子、和邻格叠在一起
-    title_per = max(3, int((cw - 14) / 12))
-    item_per = max(3, int((cw - 14) / 10.5))
+    title_per = max(3, int((cw - 14) / 13.5))
+    item_per = max(3, int((cw - 14) / 11.5))
     parts = []
     for r in range(rows):
         for c in range(cols):
@@ -891,15 +901,15 @@ def r_matrix(d: dict) -> tuple[str, str]:
                 title_lines,
                 "lbl",
                 "middle",
-                12,
+                13,
             )
             + text_block(
                 x + cw / 2,
-                y + 20 + len(title_lines) * 12,
+                y + 21 + len(title_lines) * 13,
                 item_lines,
                 "lbl-s",
                 "middle",
-                11,
+                11.5,
                 # 彩色底上用正文色，别用灰色的 muted，对比度不够
                 style="fill:var(--text);opacity:.82",
             )
@@ -978,18 +988,18 @@ def r_network(d: dict) -> tuple[str, str]:
     for i, nd in enumerate(nodes):
         x, y = pos[nd["id"]]
         acc = nd.get("accent", i % 8)
-        fs = 11 if w >= 56 else 10
+        fs = 12 if w >= 56 else 10.5
         parts.append(
             f'<g class="pop" style="animation-delay:{0.2 + i * 0.13:.2f}s">'
-            f'<rect x="{x - w / 2:.1f}" y="{y - 15:.1f}" width="{w}" height="30" rx="8" '
+            f'<rect x="{x - w / 2:.1f}" y="{y - 16:.1f}" width="{w}" height="32" rx="8" '
             f'class="c{acc}"/>'
-            f'<text class="on0" x="{x:.1f}" y="{y + 4:.1f}" text-anchor="middle" '
+            f'<text class="on0" x="{x:.1f}" y="{y + 4.5:.1f}" text-anchor="middle" '
             f'style="font-size:{fs}px;font-weight:600">{esc(nd["label"])}</text>'
             f"</g>"
         )
         if nd.get("note"):
             parts.append(
-                text_block(x, y + 28, wrap_text(nd["note"], 12), "lbl-s", "middle", 11)
+                text_block(x, y + 30, wrap_text(nd["note"], 11), "lbl-s", "middle", 11.5)
             )
     svg = (
         '<svg viewBox="0 0 360 228" preserveAspectRatio="xMidYMid meet" '
@@ -1005,16 +1015,16 @@ def r_formula(d: dict) -> tuple[str, str]:
     parts = []
     parts.append(
         f'<text class="lbl" x="180" y="34" text-anchor="middle" '
-        f'style="font-size:19px;font-weight:700;fill:var(--primary)">{esc(formula)}</text>'
+        f'style="font-size:21px;font-weight:700;fill:var(--primary)">{esc(formula)}</text>'
     )
     n = len(terms)
     cols = 2 if n > 2 else n
     rows = (n + cols - 1) // cols if n else 0
-    cw, ch = 150, 50
+    cw, ch = 152, 52
     gap = 12
-    top = 56
+    top = 58
     # 按卡片宽度折行，不能写死字数，否则说明文字会顶出卡片
-    meaning_per = max(6, int((cw - 20) / 10.5))
+    meaning_per = max(6, int((cw - 20) / 11.5))
     for i, t in enumerate(terms):
         r, c = divmod(i, cols)
         x = 180 - (cols * cw + (cols - 1) * gap) / 2 + c * (cw + gap)
@@ -1024,9 +1034,9 @@ def r_formula(d: dict) -> tuple[str, str]:
             f'<g class="pop" style="animation-delay:{0.15 + i * 0.13:.2f}s">'
             f'<rect x="{x:.1f}" y="{y}" width="{cw}" height="{ch}" rx="9" class="card"/>'
             f'<rect x="{x:.1f}" y="{y}" width="4" height="{ch}" rx="2" class="c{acc}"/>'
-            f'<text class="lbl" x="{x + 14:.1f}" y="{y + 18:.0f}" '
-            f'style="font-size:12.5px;fill:var(--c{acc})">{esc(t["symbol"])}</text>'
-            + text_block(x + 14, y + 33, wrap_text(t["meaning"], meaning_per), "lbl-s", "start", 11)
+            f'<text class="lbl" x="{x + 14:.1f}" y="{y + 19:.0f}" '
+            f'style="font-size:13.5px;fill:var(--c{acc})">{esc(t["symbol"])}</text>'
+            + text_block(x + 14, y + 35, wrap_text(t["meaning"], meaning_per), "lbl-s", "start", 11.5)
             + "</g>"
         )
     height = top + rows * (ch + gap) + 6
@@ -1065,19 +1075,19 @@ def r_map(d: dict) -> tuple[str, str]:
     parts.append(
         f'<circle cx="{cx}" cy="{cy}" r="40" class="c0"/>'
         f'<text class="on0" x="{cx}" y="{cy + 5}" text-anchor="middle" '
-        f'style="font-size:12.5px;font-weight:700">{esc(center)}</text>'
+        f'style="font-size:13.5px;font-weight:700">{esc(center)}</text>'
     )
     for i, s in enumerate(spokes):
         x, y = positions[i]
         acc = s.get("accent", i % 8)
-        lines = wrap_text(s["label"], 7)
-        w = max(58, 8 + max(len(x) for x in lines) * 11)
+        lines = wrap_text(s["label"], 6)
+        w = max(60, 10 + max(len(x) for x in lines) * 12)
         parts.append(
             f'<g class="pop" style="animation-delay:{0.2 + i * 0.12:.2f}s">'
-            f'<rect x="{x - w / 2:.1f}" y="{y - 13:.1f}" width="{w:.1f}" height="26" rx="8" '
+            f'<rect x="{x - w / 2:.1f}" y="{y - 14:.1f}" width="{w:.1f}" height="28" rx="8" '
             f'class="card2"/>'
-            f'<text class="lbl" x="{x:.1f}" y="{y + 4:.1f}" text-anchor="middle" '
-            f'style="font-size:11px">{esc(s["label"])}</text>'
+            f'<text class="lbl" x="{x:.1f}" y="{y + 5:.1f}" text-anchor="middle" '
+            f'style="font-size:12px">{esc(s["label"])}</text>'
             f"</g>"
         )
         if s.get("note"):
@@ -1115,9 +1125,9 @@ def r_sequence(d: dict) -> tuple[str, str]:
         x = 30 + i * col_w + col_w / 2
         parts.append(
             f'<g class="drop" style="animation-delay:{0.05 + i * 0.12:.2f}s">'
-            f'<rect x="{x - 44:.1f}" y="6" width="88" height="26" rx="8" class="c{i % 8}"/>'
-            f'<text class="on0" x="{x:.1f}" y="23" text-anchor="middle" '
-            f'style="font-size:11px;font-weight:700">{esc(a)}</text>'
+            f'<rect x="{x - 46:.1f}" y="5" width="92" height="28" rx="8" class="c{i % 8}"/>'
+            f'<text class="on0" x="{x:.1f}" y="24" text-anchor="middle" '
+            f'style="font-size:12px;font-weight:700">{esc(a)}</text>'
             f'<line x1="{x:.1f}" y1="34" x2="{x:.1f}" y2="{height - 24}" class="edge" '
             f'style="stroke-dasharray:4 4"/></g>'
         )

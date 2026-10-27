@@ -9,7 +9,7 @@
   --panel2: #E2EAF6;
   --line: #C6D4E9;
   --text: #16202E;
-  --muted: #5A6B80;
+  --muted: #46586E;
   --primary: #2F6BFF;
   --on-primary: #FFFFFF;
   --accent: #00A08F;
@@ -47,12 +47,13 @@ body {
 .wrap { display: flex; flex-direction: column; min-height: 100vh; }
 .head { padding: 10px 14px 4px 14px; }
 .title {
-  font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text);
+  font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--text);
 }
 .cap {
-  font-size: 11.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
+  font-size: 12.5px; line-height: 1.5; color: var(--muted); margin-top: 3px;
 }
-.stage { flex: 1 1 auto; min-height: 200px; position: relative; }
+.stage { flex: 1 1 auto; min-height: 200px; position: relative;
+         display: flex; align-items: center; justify-content: center; }
 .stage svg { display: block; width: 100%; height: auto; }
 .bar {
   display: flex; align-items: center; gap: 8px;
@@ -61,7 +62,7 @@ body {
 .bar .sp { flex: 1 1 auto; }
 .btn {
   border: 1px solid var(--line); background: var(--panel); color: var(--text);
-  border-radius: 999px; padding: 4px 12px; font-size: 11.5px; line-height: 1.6;
+  border-radius: 999px; padding: 4px 12px; font-size: 12px; line-height: 1.6;
   cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent;
 }
 .btn:active { background: var(--panel2); }
@@ -72,11 +73,11 @@ body {
 }
 .dot.on { background: var(--primary); transform: scale(1.35); }
 
-/* 通用图元 */
-.lbl  { font-size: 12px; font-weight: 600; fill: var(--text); }
-.lbl-s{ font-size: 10.5px; font-weight: 500; fill: var(--muted); }
-.lbl-w{ font-size: 12px; font-weight: 700; fill: var(--on-primary); }
-.num  { font-size: 10px; font-weight: 700; fill: var(--muted); }
+/* 通用图元。字号是 fit_viewbox 估宽的兜底依据：改这里要同步改 CLASS_FONT。 */
+.lbl  { font-size: 13.5px; font-weight: 600; fill: var(--text); }
+.lbl-s{ font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+.lbl-w{ font-size: 13.5px; font-weight: 700; fill: var(--on-primary); }
+.num  { font-size: 11px; font-weight: 700; fill: var(--muted); }
 .card { fill: var(--panel); stroke: var(--line); stroke-width: 1; }
 .card2{ fill: var(--panel2); stroke: var(--line); stroke-width: 1; }
 .edge { stroke: var(--line); stroke-width: 1.6; fill: none; }
@@ -158,7 +159,7 @@ body.paused * { animation-play-state: paused !important; }
 
 </style></head>
 <body>
-<div class="wrap"><div class="head"><div class="title">流媒体传输与安全防护</div><div class="cap">自下而上：物理链路 → 传输协议 → 流媒体协议 → 应用安全。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 360.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><g class="drop" style="animation-delay:0.10s"><rect x="85.0" y="26.0" width="190.0" height="30" rx="8" class="c5" opacity="0.92"/><text class="on0" x="180" y="45.0" text-anchor="middle" style="font-size:12px;font-weight:700">网络与链路层</text></g><text class="lbl-s" x="180" y="67.0" text-anchor="middle" style="fill:var(--muted);font-size:10px">带宽、抖动、丢包</text><g class="drop" style="animation-delay:0.23s"><rect x="66.2" y="86.0" width="227.5" height="30" rx="8" class="c1" opacity="0.92"/><text class="on0" x="180" y="105.0" text-anchor="middle" style="font-size:12px;font-weight:700">传输协议</text></g><text class="lbl-s" x="180" y="127.0" text-anchor="middle" style="fill:var(--muted);font-size:10px">TCP 可靠 / UDP 快</text><g class="drop" style="animation-delay:0.36s"><rect x="47.5" y="146.0" width="265.0" height="30" rx="8" class="c2" opacity="0.92"/><text class="on0" x="180" y="165.0" text-anchor="middle" style="font-size:12px;font-weight:700">流媒体协议</text></g><text class="lbl-s" x="180" y="187.0" text-anchor="middle" style="fill:var(--muted);font-size:10px">RTSP / RTMP / HLS</text><g class="drop" style="animation-delay:0.49s"><rect x="30.0" y="206.0" width="300.0" height="30" rx="8" class="c3" opacity="0.92"/><text class="on0" x="180" y="225.0" text-anchor="middle" style="font-size:12px;font-weight:700">加密与认证</text></g><text class="lbl-s" x="180" y="247.0" text-anchor="middle" style="fill:var(--muted);font-size:10px">TLS/DRM、鉴权</text><g class="drop" style="animation-delay:0.62s"><rect x="30.0" y="266.0" width="300.0" height="30" rx="8" class="c4" opacity="0.92"/><text class="on0" x="180" y="285.0" text-anchor="middle" style="font-size:12px;font-weight:700">版权保护</text></g><text class="lbl-s" x="180" y="307.0" text-anchor="middle" style="fill:var(--muted);font-size:10px">水印、加密、防盗链</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
+<div class="wrap"><div class="head"><div class="title">流媒体传输与安全防护</div><div class="cap">自下而上：物理链路 → 传输协议 → 流媒体协议 → 应用安全。</div></div><div class="stage"><svg viewBox="-10.0 -10.0 380.0 502.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><g class="drop" style="animation-delay:0.10s"><rect x="85.0" y="26.0" width="190.0" height="42" rx="8" class="c5" opacity="0.92"/><text class="on0" x="180" y="53.0" text-anchor="middle" style="font-size:14px;font-weight:700">网络与链路层</text></g><text class="lbl-s" x="180" y="82.0" text-anchor="middle" style="fill:var(--muted);font-size:11.5px">带宽、抖动、丢包</text><g class="drop" style="animation-delay:0.23s"><rect x="66.2" y="114.5" width="227.5" height="42" rx="8" class="c1" opacity="0.92"/><text class="on0" x="180" y="141.5" text-anchor="middle" style="font-size:14px;font-weight:700">传输协议</text></g><text class="lbl-s" x="180" y="170.5" text-anchor="middle" style="fill:var(--muted);font-size:11.5px">TCP 可靠 / UDP 快</text><g class="drop" style="animation-delay:0.36s"><rect x="47.5" y="203.0" width="265.0" height="42" rx="8" class="c2" opacity="0.92"/><text class="on0" x="180" y="230.0" text-anchor="middle" style="font-size:14px;font-weight:700">流媒体协议</text></g><text class="lbl-s" x="180" y="259.0" text-anchor="middle" style="fill:var(--muted);font-size:11.5px">RTSP / RTMP / HLS</text><g class="drop" style="animation-delay:0.49s"><rect x="30.0" y="291.5" width="300.0" height="42" rx="8" class="c3" opacity="0.92"/><text class="on0" x="180" y="318.5" text-anchor="middle" style="font-size:14px;font-weight:700">加密与认证</text></g><text class="lbl-s" x="180" y="347.5" text-anchor="middle" style="fill:var(--muted);font-size:11.5px">TLS/DRM、鉴权</text><g class="drop" style="animation-delay:0.62s"><rect x="30.0" y="380.0" width="300.0" height="42" rx="8" class="c4" opacity="0.92"/><text class="on0" x="180" y="407.0" text-anchor="middle" style="font-size:14px;font-weight:700">版权保护</text></g><text class="lbl-s" x="180" y="436.0" text-anchor="middle" style="fill:var(--muted);font-size:11.5px">水印、加密、防盗链</text></svg></div><div class="bar"><div class="steps"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="sp"></div><span class="btn" id="play">暂停</span><span class="btn" id="replay">重播</span></div></div>
 <script>
 (function () {
   var stage = document.querySelector('.stage');
