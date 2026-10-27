@@ -149,6 +149,25 @@ fun TagChip(
     )
 }
 
+/**
+ * 题目的「20XX年真题」徽标：从 tags 里过滤年份真题标签，合并成一个 chip。
+ * 没有年份标签时不渲染任何内容。
+ */
+@Composable
+fun ExamYearBadge(tags: List<String>, modifier: Modifier = Modifier) {
+    val years = tags
+        .filter { it.matches(Regex("^20\\d{2}年真题")) }
+        .map { it.removeSuffix("年真题") }
+        .sorted()
+    if (years.isEmpty()) return
+    TagChip(
+        text = "📌 ${years.joinToString(" · ")} 真题",
+        color = MaterialTheme.colorScheme.tertiaryContainer,
+        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        modifier = modifier,
+    )
+}
+
 @Composable
 fun LabeledProgress(
     label: String,

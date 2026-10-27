@@ -64,6 +64,7 @@ import com.softkao.trainer.core.model.PracticeMode
 import com.softkao.trainer.core.model.Question
 import com.softkao.trainer.core.model.QuestionType
 import com.softkao.trainer.core.ui.PracticeLogic
+import com.softkao.trainer.feature.common.ExamYearBadge
 import com.softkao.trainer.feature.common.SectionCard
 import com.softkao.trainer.feature.common.TagChip
 import kotlinx.coroutines.Dispatchers
@@ -522,7 +523,7 @@ fun PracticeScreen(
             }
 
             Text(q.stem, style = MaterialTheme.typography.bodyLarge)
-
+            ExamYearBadge(tags = q.tags)
             if (q.subQuestions.isNotEmpty()) {
                 SectionCard(title = "小问") {
                     q.subQuestions.forEachIndexed { i, sq ->

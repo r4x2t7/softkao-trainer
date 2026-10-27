@@ -42,6 +42,7 @@ import com.softkao.trainer.core.model.Mastery
 import com.softkao.trainer.core.model.PracticeMode
 import com.softkao.trainer.core.model.Question
 import com.softkao.trainer.core.ui.rememberCurrentExamId
+import com.softkao.trainer.feature.common.ExamYearBadge
 import com.softkao.trainer.feature.common.SectionCard
 import com.softkao.trainer.feature.common.StatTile
 import com.softkao.trainer.feature.common.TagChip
@@ -403,6 +404,7 @@ private fun SubQuestionCard(
         }
         Spacer(Modifier.height(8.dp))
         Text(question.stem, style = MaterialTheme.typography.bodyLarge)
+        ExamYearBadge(tags = question.tags)
 
         if (!revealed) {
             Spacer(Modifier.height(10.dp))

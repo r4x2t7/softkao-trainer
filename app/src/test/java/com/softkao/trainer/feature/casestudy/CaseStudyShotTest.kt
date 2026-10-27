@@ -68,7 +68,7 @@ class CaseStudyShotTest {
             explanation = "参考答案：先定位缺陷根因，再按质量保证流程整改并回归验证，最后更新质量保证计划。",
             aiExplanation = "AI 深度解析：本题考查质量管理过程的闭环。正确思路是先做根因分析（如因果图、5Why），再走纠正措施流程，修补后必须回归测试确认缺陷已消除，并把经验教训固化进质量保证计划防止复发。",
             source = "自编（测试用）",
-            tags = listOf("案例", "质量管理"),
+            tags = listOf("案例", "质量管理", "2025年真题"),
             caseStudy = "某系统集成公司承建的政务平台项目进入验收阶段，建设单位在初验中发现多个模块存在数据一致性缺陷，项目组直接安排开发人员逐个修补，未做根因分析，修补后也未回归测试。",
             caseId = "si-casetest-01",
             subQuestions = emptyList(),
@@ -138,6 +138,7 @@ class CaseStudyShotTest {
         }
         assertTrue("案例背景没显示", waitForText("案例背景"))
         assertTrue("小问没显示", waitForText("小问 1"))
+        assertTrue("真题年份徽标没显示", waitForText("2025 真题"))
 
         // 展开第一小问：参考答案 + AI 深度解析 + 自评按钮
         composeRule.onAllNodesWithText("自己作答后，点此对照参考答案")[0].performClick()
