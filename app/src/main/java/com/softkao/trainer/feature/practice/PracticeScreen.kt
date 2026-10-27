@@ -139,6 +139,7 @@ class PracticeViewModel(
         PracticeMode.DAILY -> "每日一练"
         PracticeMode.WRONG -> "错题重做"
         PracticeMode.MOCK -> "模拟卷"
+        PracticeMode.CASE -> "案例分析"
     }
 
     private fun buildQuestionSet(): List<Question> {
@@ -157,6 +158,8 @@ class PracticeViewModel(
             PracticeMode.DAILY -> dailySet()
             PracticeMode.MOCK -> mockSet()
             PracticeMode.SEQUENTIAL -> repo.list(examId = examId)
+            // 案例分析有独立模块（CaseListScreen），不会从练习路由进入
+            PracticeMode.CASE -> emptyList()
         }
     }
 

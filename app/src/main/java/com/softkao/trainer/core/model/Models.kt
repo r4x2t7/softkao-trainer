@@ -42,7 +42,8 @@ enum class PracticeMode(val label: String) {
     KNOWLEDGE("专项练习"),
     DAILY("每日一练"),
     WRONG("错题重做"),
-    MOCK("模拟卷");
+    MOCK("模拟卷"),
+    CASE("案例分析");
 
     companion object {
         fun fromWire(value: String): PracticeMode = entries.firstOrNull { it.name == value } ?: SEQUENTIAL

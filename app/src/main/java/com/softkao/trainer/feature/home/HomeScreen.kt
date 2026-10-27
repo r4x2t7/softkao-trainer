@@ -56,6 +56,8 @@ class HomeViewModel : ViewModel() {
         val accuracy: Float,
         val chapters: List<String>,
         val knowledgePoints: List<Pair<String, Int>> = emptyList(),
+        val caseGroups: Int = 0,
+        val caseQuestions: Int = 0,
     )
 
     data class State(
@@ -106,6 +108,7 @@ class HomeViewModel : ViewModel() {
                 val s = ServiceLocator.statsRepository
                 val p = ServiceLocator.practiceRepository
                 val exams = ExamId.entries.map { exam ->
+                    val cases = q.list(exam.id, subject = "案例分析")
                     ExamStat(
                         exam = exam,
                         questionCount = q.count(exam.id),
@@ -114,6 +117,8 @@ class HomeViewModel : ViewModel() {
                         accuracy = s.accuracy(exam.id),
                         chapters = q.chapters(exam.id),
                         knowledgePoints = q.knowledgePointCounts(exam.id).toList(),
+                        caseGroups = cases.mapNotNull { it.caseId }.distinct().size,
+                        caseQuestions = cases.size,
                     )
                 }
                 val extra = Quad(
@@ -152,6 +157,7 @@ fun HomeScreen(
     onOpenStats: () -> Unit,
     onOpenBank: () -> Unit,
     onOpenSearch: () -> Unit,
+    onOpenCases: (examId: String) -> Unit = {},
     viewModel: HomeViewModel = viewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -277,6 +283,19 @@ fun HomeScreen(
                             onClick = { onOpenPicker(stat.exam.id, 1) },
                             modifier = Modifier.weight(1f),
                         ) { Text("按知识点（${stat.knowledgePoints.size}）") }
+                    }
+                }
+                if (stat.caseQuestions > 0) {
+                    Spacer(Modifier.height(10.dp))
+                    OutlinedButton(
+                        onClick = { onOpenCases(stat.exam.id) },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(
+                            "📝 案例分析 · ${stat.caseGroups} 组大题（${stat.caseQuestions} 问）",
+                            maxLines = 1,
+                            softWrap = false,
+                        )
                     }
                 }
                 if (stat.knowledgePoints.isNotEmpty()) {

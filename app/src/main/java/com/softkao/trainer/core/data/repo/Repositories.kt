@@ -144,6 +144,10 @@ class PracticeRepository(private val db: AppDatabase) {
 
     fun removeWrongEntry(questionId: String) = db.deleteWrongEntry(questionId)
 
+    /** 这些题里哪些已经有过作答记录（案例分析用它显示「已自评 n/m」） */
+    fun attempted(ids: List<String>): Set<String> =
+        ids.filter { db.questionAccuracy(it).first > 0 }.toSet()
+
     companion object {
         const val DAY_MS = 24 * 3600 * 1000L
         val REVIEW_STEPS = longArrayOf(1, 3, 7, 15)

@@ -28,6 +28,8 @@ import com.softkao.trainer.ServiceLocator
 import com.softkao.trainer.core.model.PracticeMode
 import com.softkao.trainer.feature.bank.BankScreen
 import com.softkao.trainer.feature.home.HomeScreen
+import com.softkao.trainer.feature.casestudy.CaseDetailScreen
+import com.softkao.trainer.feature.casestudy.CaseListScreen
 import com.softkao.trainer.feature.knowledge.ChapterDetailScreen
 import com.softkao.trainer.feature.knowledge.KnowledgeScreen
 import com.softkao.trainer.feature.knowledge.VisualDetailScreen
@@ -61,6 +63,8 @@ object Routes {
     const val KNOWLEDGE_CHAPTER = "knowledge/chapter/{examId}/{chapter}"
     const val KNOWLEDGE_VISUALS = "knowledge/visuals"
     const val KNOWLEDGE_VISUAL = "knowledge/visuals/{visualId}"
+    const val CASES = "cases"
+    const val CASE_DETAIL = "cases/{examId}/{caseId}"
     const val TOPIC_PICKER = "practice/picker/{examId}/{tab}"
     const val PRACTICE =
         "practice?examId={examId}&mode={mode}&chapter={chapter}&kp={kp}&title={title}&ids={ids}"
@@ -135,6 +139,28 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                     onOpenStats = { navController.navigate(Routes.STATS) },
                     onOpenBank = { navController.navigate(Routes.BANK) },
                     onOpenSearch = { navController.navigate(Routes.SEARCH) },
+                    onOpenCases = { examId -> navController.navigate("cases") },
+                )
+            }
+            composable(Routes.CASES) {
+                CaseListScreen(
+                    onBack = { navController.popBackStack() },
+                    onOpenCase = { examId, caseId ->
+                        navController.navigate("cases/$examId/${Uri.encode(caseId)}")
+                    },
+                )
+            }
+            composable(
+                route = Routes.CASE_DETAIL,
+                arguments = listOf(
+                    navArgument("examId") { type = NavType.StringType },
+                    navArgument("caseId") { type = NavType.StringType },
+                ),
+            ) { entry ->
+                CaseDetailScreen(
+                    examId = entry.arguments?.getString("examId").orEmpty(),
+                    caseId = entry.arguments?.getString("caseId").orEmpty(),
+                    onBack = { navController.popBackStack() },
                 )
             }
             composable(
