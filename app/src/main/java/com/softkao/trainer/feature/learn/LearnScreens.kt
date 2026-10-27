@@ -335,7 +335,7 @@ fun ChapterLearnScreen(
                     FilledTonalButton(
                         onClick = { onOpenChapterDetail(examId, ch.bankChapters.first()) },
                         modifier = Modifier.fillMaxWidth(),
-                    ) { Text("本章精讲 · 图解 · 知识点", maxLines = 1, softWrap = false) }
+                    ) { Text("本章精讲 · 图解 · 知识点") }
                 }
             }
         }
