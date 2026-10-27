@@ -186,7 +186,7 @@ fun HomeScreen(
         }
         item {
             Button(onClick = onOpenLearn, modifier = Modifier.fillMaxWidth()) {
-                Text("📖 学习中心 · 按最新大纲学整本书", maxLines = 1, softWrap = false)
+                Text("📖 学习中心 · 按最新大纲学整本书")
             }
         }
 
