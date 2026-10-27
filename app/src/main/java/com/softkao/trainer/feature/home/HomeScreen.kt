@@ -158,6 +158,7 @@ fun HomeScreen(
     onOpenBank: () -> Unit,
     onOpenSearch: () -> Unit,
     onOpenCases: (examId: String) -> Unit = {},
+    onOpenLearn: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -181,6 +182,11 @@ fun HomeScreen(
         item {
             OutlinedButton(onClick = onOpenSearch, modifier = Modifier.fillMaxWidth()) {
                 Text("🔍 搜索题目（题干 / 解析 / 知识点）")
+            }
+        }
+        item {
+            Button(onClick = onOpenLearn, modifier = Modifier.fillMaxWidth()) {
+                Text("📖 学习中心 · 按最新大纲学整本书", maxLines = 1, softWrap = false)
             }
         }
 

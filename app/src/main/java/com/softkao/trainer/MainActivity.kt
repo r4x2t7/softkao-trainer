@@ -30,6 +30,8 @@ import com.softkao.trainer.feature.bank.BankScreen
 import com.softkao.trainer.feature.home.HomeScreen
 import com.softkao.trainer.feature.casestudy.CaseDetailScreen
 import com.softkao.trainer.feature.casestudy.CaseListScreen
+import com.softkao.trainer.feature.learn.ChapterLearnScreen
+import com.softkao.trainer.feature.learn.LearningScreen
 import com.softkao.trainer.feature.knowledge.ChapterDetailScreen
 import com.softkao.trainer.feature.knowledge.KnowledgeScreen
 import com.softkao.trainer.feature.knowledge.VisualDetailScreen
@@ -64,6 +66,8 @@ object Routes {
     const val KNOWLEDGE_VISUALS = "knowledge/visuals"
     const val KNOWLEDGE_VISUAL = "knowledge/visuals/{visualId}"
     const val CASES = "cases"
+    const val LEARN = "learn"
+    const val LEARN_CHAPTER = "learn/{examId}/{chapterId}"
     const val CASE_DETAIL = "cases/{examId}/{caseId}"
     const val TOPIC_PICKER = "practice/picker/{examId}/{tab}"
     const val PRACTICE =
@@ -140,6 +144,37 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                     onOpenBank = { navController.navigate(Routes.BANK) },
                     onOpenSearch = { navController.navigate(Routes.SEARCH) },
                     onOpenCases = { examId -> navController.navigate("cases") },
+                    onOpenLearn = { navController.navigate(Routes.LEARN) },
+                )
+            }
+            composable(Routes.LEARN) {
+                LearningScreen(
+                    onBack = { navController.popBackStack() },
+                    onOpenChapter = { examId, chapterId ->
+                        navController.navigate("learn/$examId/${Uri.encode(chapterId)}")
+                    },
+                )
+            }
+            composable(
+                route = Routes.LEARN_CHAPTER,
+                arguments = listOf(
+                    navArgument("examId") { type = NavType.StringType },
+                    navArgument("chapterId") { type = NavType.StringType },
+                ),
+            ) { entry ->
+                ChapterLearnScreen(
+                    examId = entry.arguments?.getString("examId").orEmpty(),
+                    chapterId = entry.arguments?.getString("chapterId").orEmpty(),
+                    onBack = { navController.popBackStack() },
+                    onPractice = { e, chapter ->
+                        navController.navigate(
+                            "practice?examId=$e&mode=CHAPTER&chapter=${Uri.encode(chapter)}&kp=&title=" +
+                                Uri.encode("章节 · $chapter")
+                        )
+                    },
+                    onOpenChapterDetail = { e, chapter ->
+                        navController.navigate("knowledge/chapter/$e/${Uri.encode(chapter)}")
+                    },
                 )
             }
             composable(Routes.CASES) {
