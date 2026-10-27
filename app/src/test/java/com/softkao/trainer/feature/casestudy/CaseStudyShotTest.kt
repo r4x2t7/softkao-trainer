@@ -146,7 +146,7 @@ class CaseStudyShotTest {
         capture("case-detail-revealed")
 
         // 自评「没答上」→ 应出现已记录提示
-        composeRule.onNodeWithText("没答上 · 记错题").performClick()
+        composeRule.onNodeWithText("没答上").performClick()
         assertTrue("自评后没有出现记录提示", waitForText("已记录。"))
         capture("case-detail-graded")
     }
