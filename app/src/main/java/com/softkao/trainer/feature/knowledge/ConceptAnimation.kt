@@ -260,11 +260,12 @@ private fun LessonCanvas(frame: VisualFrame, alpha: Float) {
                         size = Size(nw, barH),
                         cornerRadius = androidx.compose.ui.geometry.CornerRadius(4.dp.toPx()),
                     )
+                    // 画布外（h+12dp）会被父级 clip 裁掉：caption 必须画在柱顶上方
                     if (node.label.isNotBlank()) {
                         drawCenteredText(measurer, node.label, Offset(x + nw / 2, h - barH - 14.dp.toPx()), colors.onSurface)
                     }
                     if (node.caption.isNotBlank()) {
-                        drawCenteredText(measurer, node.caption, Offset(x + nw / 2, h + 12.dp.toPx()), colors.muted, 10.sp)
+                        drawCenteredText(measurer, node.caption, Offset(x + nw / 2, h - barH - 30.dp.toPx()), colors.muted, 10.sp)
                     }
                 }
                 VisualKind.TEXT, VisualKind.LABEL -> {

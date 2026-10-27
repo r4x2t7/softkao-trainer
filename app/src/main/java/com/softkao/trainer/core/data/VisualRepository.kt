@@ -473,9 +473,10 @@ object VisualRepository {
         ),
     )
 
-    /** 全部图解（三批合并） */
+    /** 全部图解（四批合并） */
     private val allLessons: List<VisualLesson>
-        get() = lessons + VisualRepositoryExtra.lessons + VisualRepositoryThird.lessons
+        get() = lessons + VisualRepositoryExtra.lessons + VisualRepositoryThird.lessons +
+            VisualRepositoryFourth.lessons
 
     fun forExam(examId: String): List<VisualLesson> = allLessons.filter { it.examId == examId }
 

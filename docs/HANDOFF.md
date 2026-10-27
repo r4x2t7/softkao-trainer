@@ -1,13 +1,13 @@
 # 交接文档 · SoftKao Trainer（软考刷题 App）
 
-> 交接时间：2026-10-25 ｜ 仓库：https://github.com/r4x2t7/softkao-trainer
+> 交接时间：2026-10-27 ｜ 仓库：https://github.com/r4x2t7/softkao-trainer
 > 接手前先读本文件，再读 `docs/REQUIREMENTS-REVIEW.md`（需求评审）与 `docs/QUESTION-PLAN.md`（题库生产计划）。
 
 ---
 
 ## 1. 一句话现状
 
-一个离线优先的 Android 软考刷题 App：两科题库 **2390 题**（全部带 AI 深度解析）+ **59 章章节精讲** + **2195 条逐知识点精讲（100% 覆盖）** + **87 张可视化图解**（28 个帧动画 + 59 张离线 HTML 卡片），题库与资料托管在 GitHub 可增量更新，仓库 public、CI 全绿，已发版到 v2.3.0。
+一个离线优先的 Android 软考刷题 App：两科题库 **2390 题**（全部带 AI 深度解析）+ **59 章章节精讲** + **2195 条逐知识点精讲（100% 覆盖）** + **93 张可视化图解**（34 个帧动画 + 59 张离线 HTML 卡片），题库与资料托管在 GitHub 可增量更新，仓库 public、CI 全绿，已发版到 v2.9.0。
 
 ## 2. 环境（已装好，别重装）
 
@@ -59,6 +59,7 @@ app/src/main/java/com/softkao/trainer/
 │       ├── VisualRepository.kt       # 图解总入口（第一批）
 │       ├── VisualRepositoryExtra.kt  # 图解第二批
 │       ├── VisualRepositoryThird.kt  # 图解第三批
+│       ├── VisualRepositoryFourth.kt # 图解第四批（决策树/敏感性/成本类型/CDN/DRM/开发流程）
 │       ├── QuestionBankParser.kt    # 题库解析 + 索引解析（含 kpNotes 字段）
 │       ├── QuestionBankImporter.kt   # 导入 + sha256（LF 归一化）
 │       ├── db/AppDatabase.kt        # 表结构与全部 SQL
@@ -76,7 +77,7 @@ docs/                             # 需求评审、题库规范、生产计划�
 ## 5. 测试与自检（不依赖设备）
 
 ```bash
-./gradlew testDebugUnitTest                # 99 个测试：解析校验 + 纯逻辑 + Compose 界面测试 + 统计数据库行为 + 错题本筛选
+./gradlew testDebugUnitTest                # 100 个测试：解析校验 + 纯逻辑 + Compose 界面测试 + 统计数据库行为 + 错题本筛选 + 图解逐帧出图
 python tools/ui_contract_check.py          # UI 契约：文字不截断 / 路由齐全 / 科目作用域统一 / 图解不越界
 python tools/kp_notes_pipeline.py coverage # 知识点精讲覆盖率
 python tools/kp_notes_lint.py              # 精讲长度体检
