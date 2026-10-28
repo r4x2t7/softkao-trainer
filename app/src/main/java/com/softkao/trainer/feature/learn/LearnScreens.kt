@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -25,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -167,6 +171,21 @@ fun LearningScreen(
                             "${state.mastery.values.sumOf { it.questionCount }} 题",
                             modifier = Modifier.weight(1f),
                         )
+                    }
+                }
+            }
+            item {
+                SectionCard(title = "扩展学习资源") {
+                    Text(
+                        "以下为经筛选的外部资源（开放许可/免费），点击用浏览器打开；" +
+                            "官方大纲与教材信息以 ruankao.org.cn 为准。",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    LearnResources.items.forEach { r ->
+                        ResourceRow(r)
+                        Spacer(Modifier.height(2.dp))
                     }
                 }
             }
@@ -350,4 +369,54 @@ private fun LevelChip(level: String) {
         else -> MaterialTheme.colorScheme.surfaceVariant to MaterialTheme.colorScheme.onSurfaceVariant
     }
     TagChip(level, color = bg, contentColor = fg)
+}
+
+
+/** 外部学习资源（目录与核实记录见 docs/research/LEARN-RESOURCES.md） */
+data class LearnResource(
+    val scope: String,
+    val title: String,
+    val note: String,
+    val url: String,
+)
+
+object LearnResources {
+    val items = listOf(
+        LearnResource("官方", "中国计算机技术职业资格网", "考试大纲、教材信息、报名与成绩", "https://www.ruankao.org.cn"),
+        LearnResource("集成", "scpm_engineer（GitHub · MIT）", "历年真题解析、第3版思维导图、1-18章速记卡", "https://github.com/xiaomabenten/scpm_engineer"),
+        LearnResource("集成", "ruankao_itpm（GitHub · MIT）", "十大管理思维导图（高级，进阶参考）", "https://github.com/emacle/ruankao_itpm"),
+        LearnResource("通用", "软考达人", "免费题库与机考模拟（6w+ 题）", "https://ruankaodaren.com"),
+        LearnResource("通用", "信管网 · 章节考点", "按章的真题考点汇总（2021 下-2026 上）", "https://www.cnitpm.com/jc"),
+        LearnResource("集成", "希赛 · 真题回忆", "2025 下半年各批次真题答案回忆", "https://www.educity.cn/rk/5423358.html"),
+        LearnResource("集成", "环球网校 · 思维导图", "2025 系统集成备考思维导图", "https://www.hqwx.com/rkzjzc-kaoshi/ziliaolm/1210672.html"),
+        LearnResource("多媒体", "51CTO · 历年试题", "多媒体应用设计师历年试题列表", "https://t.51cto.com/list/years/sub-696"),
+        LearnResource("多媒体", "B 站 · 考前密训", "考生分享的密训资料与机考模拟", "https://www.bilibili.com/video/BV1Jr421s7hj"),
+        LearnResource("多媒体", "B 站 · 教材重点笔记", "UP 主「自学大师姐」一次上岸笔记", "https://www.bilibili.com/video/BV1f142127cu"),
+    )
+}
+
+@Composable
+private fun ResourceRow(r: LearnResource) {
+    val context = LocalContext.current
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(r.url)))
+            }
+            .padding(vertical = 5.dp),
+    ) {
+        TagChip(r.scope)
+        Column(Modifier.weight(1f)) {
+            Text(r.title, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.Medium)
+            Text(
+                r.note,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Text("↗", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+    }
 }
