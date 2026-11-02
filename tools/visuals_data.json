@@ -3236,6 +3236,335 @@
           "accent": 4
         }
       ]
+    },
+    {
+      "id": "si-evm-s-curve",
+      "examId": "system-integration",
+      "chapter": "项目成本管理",
+      "title": "挣值管理：三条 S 曲线",
+      "archetype": "flow",
+      "caption": "PV 永远在前（计划先花钱），EV 在中间（实际干出来），AC 在最后（花的比干的多就超支）。三线的垂直距离＝偏差。",
+      "tags": [
+        "高频",
+        "挣值",
+        "S 曲线"
+      ],
+      "steps": [
+        {
+          "label": "PV 曲线",
+          "note": "计划价值·成本基准 S 曲线",
+          "accent": 1
+        },
+        {
+          "label": "EV 曲线",
+          "note": "挣值·实际完成工作的计划价值",
+          "accent": 0
+        },
+        {
+          "label": "AC 曲线",
+          "note": "实际成本·通常高于 EV 即超支",
+          "accent": 4
+        },
+        {
+          "label": "CV<0 超支",
+          "note": "AC 在 EV 上方",
+          "accent": 4
+        },
+        {
+          "label": "SV<0 落后",
+          "note": "EV 在 PV 下方",
+          "accent": 3
+        },
+        {
+          "label": "BAC",
+          "note": "完工预算=S 终点",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "si-scope-creep-vs-gold",
+      "examId": "system-integration",
+      "chapter": "项目范围管理",
+      "title": "范围蔓延 vs 镀金",
+      "archetype": "compare",
+      "caption": "两者都是未经变更控制的范围扩大，但来源不同：蔓延来自客户渐进要求，镀金来自团队主动赠送。",
+      "tags": [
+        "高频",
+        "范围管理"
+      ],
+      "columns": [
+        {
+          "title": "范围蔓延",
+          "accent": 3,
+          "items": [
+            "客户渐进提出小改动",
+            "每次看似微小不加控制",
+            "累积导致范围失控",
+            "常因无 WBS 或无基线",
+            "治理：走变更控制"
+          ]
+        },
+        {
+          "title": "镀金",
+          "accent": 4,
+          "items": [
+            "团队主动添加功能",
+            "客户并未要求",
+            "消耗资源但无验收价值",
+            "可能引入新风险",
+            "治理：严格按范围执行"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-rtm-map",
+      "examId": "system-integration",
+      "chapter": "需求管理",
+      "title": "需求跟踪矩阵：双向追溯",
+      "archetype": "map",
+      "caption": "每个需求从业务目标出发，正向追踪到设计与测试，反向追踪回业务价值——确保不遗漏、不多做。",
+      "tags": [
+        "高频",
+        "需求跟踪"
+      ],
+      "center": "需求 ID",
+      "spokes": [
+        {
+          "label": "业务目标",
+          "note": "为什么做",
+          "accent": 0
+        },
+        {
+          "label": "设计文档",
+          "note": "怎么实现",
+          "accent": 1
+        },
+        {
+          "label": "代码模块",
+          "note": "在哪里实现",
+          "accent": 2
+        },
+        {
+          "label": "测试用例",
+          "note": "怎么验证",
+          "accent": 3
+        },
+        {
+          "label": "验收标准",
+          "note": "达标判据",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "md-2d-animation-flow",
+      "examId": "multimedia-designer",
+      "chapter": "动画技术",
+      "title": "二维动画制作流程",
+      "archetype": "flow",
+      "caption": "从脚本到成片：前期（策划+分镜+原画）→ 中期（中间画+上色）→ 后期（合成+配音+输出）。",
+      "tags": [
+        "高频",
+        "二维动画"
+      ],
+      "steps": [
+        {
+          "label": "策划",
+          "note": "脚本+分镜",
+          "accent": 0
+        },
+        {
+          "label": "原画",
+          "note": "关键帧设计",
+          "accent": 1
+        },
+        {
+          "label": "中间画",
+          "note": "补间+清理",
+          "accent": 2
+        },
+        {
+          "label": "上色",
+          "note": "数字化上色",
+          "accent": 3
+        },
+        {
+          "label": "合成",
+          "note": "背景+特效",
+          "accent": 4
+        },
+        {
+          "label": "配音输出",
+          "note": "音画同步",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "md-compression-choice",
+      "examId": "multimedia-designer",
+      "chapter": "压缩编码技术",
+      "title": "压缩方案选择决策",
+      "archetype": "tree",
+      "caption": "先判断数据类型，再判断是否需要无损，最后按场景选方案。",
+      "tags": [
+        "压缩",
+        "决策"
+      ],
+      "root": "选择压缩方案",
+      "rootNote": "按数据类型",
+      "children": [
+        {
+          "label": "文本/程序",
+          "note": "必须无损",
+          "accent": 0
+        },
+        {
+          "label": "照片",
+          "note": "可接受有损",
+          "accent": 3
+        },
+        {
+          "label": "音频",
+          "note": "按用途选",
+          "accent": 1
+        },
+        {
+          "label": "视频",
+          "note": "帧间+帧内",
+          "accent": 2
+        }
+      ]
+    },
+    {
+      "id": "si-tender-flow",
+      "examId": "system-integration",
+      "chapter": "项目采购管理",
+      "title": "招投标全流程",
+      "archetype": "flow",
+      "caption": "从招标到签约：招标→投标→开标→评标→中标→订立合同，关键数字：20日/15日/2%/10%/30日。",
+      "tags": [
+        "高频",
+        "招投标"
+      ],
+      "steps": [
+        {
+          "label": "招标",
+          "note": "发文件≥20日",
+          "accent": 0
+        },
+        {
+          "label": "投标",
+          "note": "保证金≤2%",
+          "accent": 1
+        },
+        {
+          "label": "开标",
+          "note": "公开拆封",
+          "accent": 2
+        },
+        {
+          "label": "评标",
+          "note": "5人+专家2/3",
+          "accent": 3
+        },
+        {
+          "label": "中标",
+          "note": "通知书生效",
+          "accent": 4
+        },
+        {
+          "label": "签合同",
+          "note": "≤30日内",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "si-pm-power-map",
+      "examId": "system-integration",
+      "chapter": "项目人力资源管理",
+      "title": "项目经理的权力来源",
+      "archetype": "map",
+      "caption": "正式权力来自章程授权，参考权力来自个人声望，专家权力来自专业能力——跨部门协调主要靠后两者。",
+      "tags": [
+        "高频",
+        "权力"
+      ],
+      "center": "项目经理",
+      "spokes": [
+        {
+          "label": "正式权力",
+          "note": "章程授权",
+          "accent": 0
+        },
+        {
+          "label": "参考权力",
+          "note": "个人声望",
+          "accent": 1
+        },
+        {
+          "label": "专家权力",
+          "note": "专业能力",
+          "accent": 2
+        },
+        {
+          "label": "奖励权力",
+          "note": "奖惩资源",
+          "accent": 3
+        },
+        {
+          "label": "潜示权力",
+          "note": "私下影响",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "md-av-sync-flow",
+      "examId": "multimedia-designer",
+      "chapter": "数字视频",
+      "title": "音视频同步机制",
+      "archetype": "flow",
+      "caption": "音频流与视频流各自携带时间戳，播放器以统一时间基准对齐两条流——唇音同步是直播体验的核心指标。",
+      "tags": [
+        "流媒体",
+        "同步"
+      ],
+      "steps": [
+        {
+          "label": "音频流",
+          "note": "携带时间戳",
+          "accent": 1
+        },
+        {
+          "label": "视频流",
+          "note": "携带时间戳",
+          "accent": 0
+        },
+        {
+          "label": "解封装",
+          "note": "按时间戳分离",
+          "accent": 2
+        },
+        {
+          "label": "解码",
+          "note": "各自独立解码",
+          "accent": 3
+        },
+        {
+          "label": "同步对齐",
+          "note": "以时钟基准",
+          "accent": 4
+        },
+        {
+          "label": "渲染播放",
+          "note": "唇音同步",
+          "accent": 5
+        }
+      ]
     }
   ]
 }

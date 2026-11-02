@@ -1,6 +1,6 @@
 {
  "version": 1,
- "count": 72,
+ "count": 80,
  "visuals": [
   {
    "id": "si-osi-layers",
@@ -991,6 +991,119 @@
    ],
    "file": "system-integration/si-tender-evaluation-flow.html",
    "darkFile": "system-integration/si-tender-evaluation-flow.dark.html"
+  },
+  {
+   "id": "si-evm-s-curve",
+   "examId": "system-integration",
+   "chapter": "项目成本管理",
+   "title": "挣值管理：三条 S 曲线",
+   "archetype": "flow",
+   "caption": "PV 永远在前（计划先花钱），EV 在中间（实际干出来），AC 在最后（花的比干的多就超支）。三线的垂直距离＝偏差。",
+   "tags": [
+    "高频",
+    "挣值",
+    "S 曲线"
+   ],
+   "file": "system-integration/si-evm-s-curve.html",
+   "darkFile": "system-integration/si-evm-s-curve.dark.html"
+  },
+  {
+   "id": "si-scope-creep-vs-gold",
+   "examId": "system-integration",
+   "chapter": "项目范围管理",
+   "title": "范围蔓延 vs 镀金",
+   "archetype": "compare",
+   "caption": "两者都是未经变更控制的范围扩大，但来源不同：蔓延来自客户渐进要求，镀金来自团队主动赠送。",
+   "tags": [
+    "高频",
+    "范围管理"
+   ],
+   "file": "system-integration/si-scope-creep-vs-gold.html",
+   "darkFile": "system-integration/si-scope-creep-vs-gold.dark.html"
+  },
+  {
+   "id": "si-rtm-map",
+   "examId": "system-integration",
+   "chapter": "需求管理",
+   "title": "需求跟踪矩阵：双向追溯",
+   "archetype": "map",
+   "caption": "每个需求从业务目标出发，正向追踪到设计与测试，反向追踪回业务价值——确保不遗漏、不多做。",
+   "tags": [
+    "高频",
+    "需求跟踪"
+   ],
+   "file": "system-integration/si-rtm-map.html",
+   "darkFile": "system-integration/si-rtm-map.dark.html"
+  },
+  {
+   "id": "md-2d-animation-flow",
+   "examId": "multimedia-designer",
+   "chapter": "动画技术",
+   "title": "二维动画制作流程",
+   "archetype": "flow",
+   "caption": "从脚本到成片：前期（策划+分镜+原画）→ 中期（中间画+上色）→ 后期（合成+配音+输出）。",
+   "tags": [
+    "高频",
+    "二维动画"
+   ],
+   "file": "multimedia-designer/md-2d-animation-flow.html",
+   "darkFile": "multimedia-designer/md-2d-animation-flow.dark.html"
+  },
+  {
+   "id": "md-compression-choice",
+   "examId": "multimedia-designer",
+   "chapter": "压缩编码技术",
+   "title": "压缩方案选择决策",
+   "archetype": "tree",
+   "caption": "先判断数据类型，再判断是否需要无损，最后按场景选方案。",
+   "tags": [
+    "压缩",
+    "决策"
+   ],
+   "file": "multimedia-designer/md-compression-choice.html",
+   "darkFile": "multimedia-designer/md-compression-choice.dark.html"
+  },
+  {
+   "id": "si-tender-flow",
+   "examId": "system-integration",
+   "chapter": "项目采购管理",
+   "title": "招投标全流程",
+   "archetype": "flow",
+   "caption": "从招标到签约：招标→投标→开标→评标→中标→订立合同，关键数字：20日/15日/2%/10%/30日。",
+   "tags": [
+    "高频",
+    "招投标"
+   ],
+   "file": "system-integration/si-tender-flow.html",
+   "darkFile": "system-integration/si-tender-flow.dark.html"
+  },
+  {
+   "id": "si-pm-power-map",
+   "examId": "system-integration",
+   "chapter": "项目人力资源管理",
+   "title": "项目经理的权力来源",
+   "archetype": "map",
+   "caption": "正式权力来自章程授权，参考权力来自个人声望，专家权力来自专业能力——跨部门协调主要靠后两者。",
+   "tags": [
+    "高频",
+    "权力"
+   ],
+   "file": "system-integration/si-pm-power-map.html",
+   "darkFile": "system-integration/si-pm-power-map.dark.html"
+  },
+  {
+   "id": "md-av-sync-flow",
+   "examId": "multimedia-designer",
+   "chapter": "数字视频",
+   "title": "音视频同步机制",
+   "archetype": "flow",
+   "caption": "音频流与视频流各自携带时间戳，播放器以统一时间基准对齐两条流——唇音同步是直播体验的核心指标。",
+   "tags": [
+    "流媒体",
+    "同步"
+   ],
+   "file": "multimedia-designer/md-av-sync-flow.html",
+   "darkFile": "multimedia-designer/md-av-sync-flow.dark.html"
   }
  ]
 }
