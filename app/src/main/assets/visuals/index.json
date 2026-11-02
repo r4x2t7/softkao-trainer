@@ -1,6 +1,6 @@
 {
  "version": 1,
- "count": 80,
+ "count": 88,
  "visuals": [
   {
    "id": "si-osi-layers",
@@ -1104,6 +1104,120 @@
    ],
    "file": "multimedia-designer/md-av-sync-flow.html",
    "darkFile": "multimedia-designer/md-av-sync-flow.dark.html"
+  },
+  {
+   "id": "si-seven-quality-tools",
+   "examId": "system-integration",
+   "chapter": "质量工具与质量成本",
+   "title": "质量七大工具速查",
+   "archetype": "compare",
+   "caption": "因果图找原因、帕累托排优先级、控制图盯过程、散点图查相关、直方图看分布、检查表做记录、流程图理步骤。",
+   "tags": [
+    "高频",
+    "质量工具"
+   ],
+   "file": "system-integration/si-seven-quality-tools.html",
+   "darkFile": "system-integration/si-seven-quality-tools.dark.html"
+  },
+  {
+   "id": "si-ccb-decision-flow",
+   "examId": "system-integration",
+   "chapter": "项目整体管理",
+   "title": "CCB 变更决策全景",
+   "archetype": "flow",
+   "caption": "变更控制委员会（CCB）是变更的决策机构：任何变更先评估影响再由 CCB 审批，紧急变更先处置后补手续。",
+   "tags": [
+    "高频",
+    "CCB",
+    "变更"
+   ],
+   "file": "system-integration/si-ccb-decision-flow.html",
+   "darkFile": "system-integration/si-ccb-decision-flow.dark.html"
+  },
+  {
+   "id": "si-attack-defense-compare",
+   "examId": "system-integration",
+   "chapter": "信息安全",
+   "title": "常见攻击与防护对照",
+   "archetype": "compare",
+   "caption": "知道攻击者用什么手段，才能对症下药——每种攻击都有对应的防护措施。",
+   "tags": [
+    "高频",
+    "攻防"
+   ],
+   "file": "system-integration/si-attack-defense-compare.html",
+   "darkFile": "system-integration/si-attack-defense-compare.dark.html"
+  },
+  {
+   "id": "si-scope-baseline-flow",
+   "examId": "system-integration",
+   "chapter": "项目范围管理",
+   "title": "范围基准的三件套",
+   "archetype": "flow",
+   "caption": "范围基准 = 范围说明书 + WBS + WBS 字典——三份文件缺一不可，共同构成范围管理的参照。",
+   "tags": [
+    "范围管理",
+    "基准"
+   ],
+   "file": "system-integration/si-scope-baseline-flow.html",
+   "darkFile": "system-integration/si-scope-baseline-flow.dark.html"
+  },
+  {
+   "id": "md-drm-flow",
+   "examId": "multimedia-designer",
+   "chapter": "传输与安全",
+   "title": "DRM 数字版权管理流程",
+   "archetype": "flow",
+   "caption": "内容加密→打包分发→用户申请→许可证签发→设备解密播放，全程无明文暴露。",
+   "tags": [
+    "高频",
+    "DRM",
+    "版权"
+   ],
+   "file": "multimedia-designer/md-drm-flow.html",
+   "darkFile": "multimedia-designer/md-drm-flow.dark.html"
+  },
+  {
+   "id": "md-streaming-protocol-compare",
+   "examId": "multimedia-designer",
+   "chapter": "流媒体技术",
+   "title": "流媒体协议对比",
+   "archetype": "compare",
+   "caption": "RTMP 推流、HTTP-FLV 低延迟拉流、HLS 兼容自适应、DASH 开放标准——按延迟与兼容性需求选型。",
+   "tags": [
+    "高频",
+    "协议"
+   ],
+   "file": "multimedia-designer/md-streaming-protocol-compare.html",
+   "darkFile": "multimedia-designer/md-streaming-protocol-compare.dark.html"
+  },
+  {
+   "id": "md-interaction-principles",
+   "examId": "multimedia-designer",
+   "chapter": "交互设计",
+   "title": "交互设计五原则",
+   "archetype": "map",
+   "caption": "反馈及时、导航高效、文案说人话、错误可恢复、一致可预测——好交互的五根支柱。",
+   "tags": [
+    "高频",
+    "交互设计"
+   ],
+   "file": "multimedia-designer/md-interaction-principles.html",
+   "darkFile": "multimedia-designer/md-interaction-principles.dark.html"
+  },
+  {
+   "id": "si-knowledge-process-matrix",
+   "examId": "system-integration",
+   "chapter": "项目管理概论",
+   "title": "知识领域×过程组交叉",
+   "archetype": "matrix",
+   "caption": "10 大知识领域 × 5 大过程组 = 49 个过程，每个过程有唯一的坐标定位。",
+   "tags": [
+    "高频",
+    "概论"
+   ],
+   "file": "system-integration/si-knowledge-process-matrix.html",
+   "darkFile": "system-integration/si-knowledge-process-matrix.dark.html"
   }
  ]
 }
