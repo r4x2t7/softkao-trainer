@@ -58755,7 +58755,7 @@
       "type": "single",
       "difficulty": 3,
       "chapter": "项目质量管理",
-      "knowledgePoint": "质量要求的可验证性",
+      "knowledgePoint": "质量需求的可验证性",
       "stem": "某项目的质量需求写成「系统应当运行得足够快、界面要美观大方」。该需求的主要问题是（）。",
       "options": [
         {
