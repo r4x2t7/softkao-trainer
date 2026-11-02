@@ -4982,6 +4982,282 @@
           ]
         }
       ]
+    },
+    {
+      "id": "md-media-types-compare",
+      "examId": "multimedia-designer",
+      "chapter": "多媒体技术基础",
+      "title": "媒体的五种分类",
+      "archetype": "compare",
+      "caption": "感知媒体（人感受什么）→表示媒体（怎么编码）→显示媒体（怎么呈现）→存储媒体（存在哪）→传输媒体（怎么传）。",
+      "tags": [
+        "高频",
+        "媒体分类"
+      ],
+      "columns": [
+        {
+          "title": "感知媒体",
+          "accent": 0,
+          "items": [
+            "人感官直接感受",
+            "声音/图像/文字/动画",
+            "最原始的形态"
+          ]
+        },
+        {
+          "title": "表示媒体",
+          "accent": 1,
+          "items": [
+            "编码后的形式",
+            "PCM/JPEG/MPEG",
+            "机器可处理"
+          ]
+        },
+        {
+          "title": "显示媒体",
+          "accent": 2,
+          "items": [
+            "呈现/采集设备",
+            "显示器/音箱/键盘/摄像头",
+            "输入+输出两端"
+          ]
+        },
+        {
+          "title": "存储+传输",
+          "accent": 5,
+          "items": [
+            "存储：硬盘/光盘/U盘",
+            "传输：网线/光纤/无线",
+            "支撑流动的基础设施"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-config-audit-compare",
+      "examId": "system-integration",
+      "chapter": "配置审计与变更控制",
+      "title": "功能审计 vs 物理审计",
+      "archetype": "compare",
+      "caption": "功能配置审计查「做出来的东西是否满足需求」，物理配置审计查「交付的东西与文档描述是否一致」。",
+      "tags": [
+        "高频",
+        "配置审计"
+      ],
+      "columns": [
+        {
+          "title": "功能配置审计",
+          "accent": 0,
+          "items": [
+            "验证功能特性",
+            "与需求文档对照",
+            "确认「做对了」",
+            "检查测试结果",
+            "核实验证方法正确"
+          ]
+        },
+        {
+          "title": "物理配置审计",
+          "accent": 1,
+          "items": [
+            "验证标识与文档",
+            "与合同/规格对照",
+            "确认「手续齐全」",
+            "检查版本与标识",
+            "核对交付清单"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "md-color-depth-ladder",
+      "examId": "multimedia-designer",
+      "chapter": "数字图形与图像基础",
+      "title": "色彩深度阶梯",
+      "archetype": "compare",
+      "caption": "位深每加 1 位，颜色数翻倍、容量也翻倍：1 位黑白→8 位 256 色→24 位 1670 万色。",
+      "tags": [
+        "高频",
+        "位深"
+      ],
+      "columns": [
+        {
+          "title": "1 / 4 位",
+          "accent": 5,
+          "items": [
+            "1 位：2 色（黑白）",
+            "4 位：16 色",
+            "早期显示/简图",
+            "体积极小"
+          ]
+        },
+        {
+          "title": "8 位",
+          "accent": 2,
+          "items": [
+            "256 色索引色",
+            "GIF 格式上限",
+            "适合图标/简图",
+            "可能出现色带"
+          ]
+        },
+        {
+          "title": "16 / 24 位",
+          "accent": 0,
+          "items": [
+            "16 位：65536 色（高彩）",
+            "24 位：1670 万色（真彩）",
+            "R8G8B8 三通道",
+            "照片级质量"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "md-post-production-flow",
+      "examId": "multimedia-designer",
+      "chapter": "视频格式与制作流程",
+      "title": "视频后期制作流程",
+      "archetype": "flow",
+      "caption": "粗剪→精剪→调色→特效→混音→输出——后期是「素材变成品」的最后一公里。",
+      "tags": [
+        "高频",
+        "后期"
+      ],
+      "steps": [
+        {
+          "label": "粗剪",
+          "note": "选镜头排序",
+          "accent": 0
+        },
+        {
+          "label": "精剪",
+          "note": "节奏微调",
+          "accent": 1
+        },
+        {
+          "label": "调色",
+          "note": "色彩校正与风格",
+          "accent": 2
+        },
+        {
+          "label": "特效",
+          "note": "VFX+转场",
+          "accent": 3
+        },
+        {
+          "label": "混音",
+          "note": "对白+音乐+音效",
+          "accent": 4
+        },
+        {
+          "label": "输出",
+          "note": "母版+分发版",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "si-risk-trigger-compare",
+      "examId": "system-integration",
+      "chapter": "项目风险管理",
+      "title": "风险触发条件与预警",
+      "archetype": "compare",
+      "caption": "每个风险应定义触发条件（预警信号）——信号出现时立即启动应对计划，不等风险爆发。",
+      "tags": [
+        "高频",
+        "触发条件"
+      ],
+      "columns": [
+        {
+          "title": "触发条件",
+          "accent": 2,
+          "items": [
+            "明确的预警信号",
+            "如：供应商延迟 >1 周",
+            "如：缺陷密度突增 50%",
+            "出现即启动应对"
+          ]
+        },
+        {
+          "title": "无触发条件的后果",
+          "accent": 4,
+          "items": [
+            "风险爆发才发现",
+            "措手不及",
+            "应急储备来不及用",
+            "只能被动救火"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-pert-formula",
+      "examId": "system-integration",
+      "chapter": "活动历时估算",
+      "title": "PERT 三点估算公式",
+      "archetype": "formula",
+      "caption": "期望值=（乐观+4×最可能+悲观）÷6，标准差=（悲观−乐观）÷6，±1σ 覆盖 68.26%。",
+      "tags": [
+        "高频",
+        "PERT",
+        "公式"
+      ],
+      "formula": "期望工期 = (乐观 + 4×最可能 + 悲观) ÷ 6",
+      "terms": [
+        {
+          "symbol": "期望值 (TE)",
+          "meaning": "贝塔分布加权平均，最可能值权重为 4"
+        },
+        {
+          "symbol": "标准差 (σ)",
+          "meaning": "（悲观 − 乐观）÷ 6，衡量估算的不确定性"
+        },
+        {
+          "symbol": "±1σ 区间",
+          "meaning": "覆盖 68.26% 概率，±2σ 为 95.44%，±3σ 为 99.73%"
+        }
+      ],
+      "note": "三角分布（简单平均）与贝塔分布（加权平均）是两种不同的估算方法，考试必须区分。"
+    },
+    {
+      "id": "si-forward-backward-pass",
+      "examId": "system-integration",
+      "chapter": "进度网络图与关键路径法",
+      "title": "正推法与逆推法",
+      "archetype": "flow",
+      "caption": "正推从左到右算最早时间（取最大），逆推从右到左算最迟时间（取最小）；总时差=最迟开始−最早开始。",
+      "tags": [
+        "高频",
+        "网络计算"
+      ],
+      "steps": [
+        {
+          "label": "正推法",
+          "note": "ES=max(紧前EF)",
+          "accent": 0
+        },
+        {
+          "label": "计算 EF",
+          "note": "EF=ES+工期",
+          "accent": 1
+        },
+        {
+          "label": "逆推法",
+          "note": "LF=min(紧后LS)",
+          "accent": 2
+        },
+        {
+          "label": "计算 LS",
+          "note": "LS=LF−工期",
+          "accent": 3
+        },
+        {
+          "label": "总时差",
+          "note": "TF=LS−ES",
+          "accent": 4
+        }
+      ]
     }
   ]
 }

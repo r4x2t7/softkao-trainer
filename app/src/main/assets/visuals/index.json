@@ -1,6 +1,6 @@
 {
  "version": 1,
- "count": 112,
+ "count": 119,
  "visuals": [
   {
    "id": "si-osi-layers",
@@ -1558,6 +1558,105 @@
    ],
    "file": "system-integration/si-initiating-starter-compare.html",
    "darkFile": "system-integration/si-initiating-starter-compare.dark.html"
+  },
+  {
+   "id": "md-media-types-compare",
+   "examId": "multimedia-designer",
+   "chapter": "多媒体技术基础",
+   "title": "媒体的五种分类",
+   "archetype": "compare",
+   "caption": "感知媒体（人感受什么）→表示媒体（怎么编码）→显示媒体（怎么呈现）→存储媒体（存在哪）→传输媒体（怎么传）。",
+   "tags": [
+    "高频",
+    "媒体分类"
+   ],
+   "file": "multimedia-designer/md-media-types-compare.html",
+   "darkFile": "multimedia-designer/md-media-types-compare.dark.html"
+  },
+  {
+   "id": "si-config-audit-compare",
+   "examId": "system-integration",
+   "chapter": "配置审计与变更控制",
+   "title": "功能审计 vs 物理审计",
+   "archetype": "compare",
+   "caption": "功能配置审计查「做出来的东西是否满足需求」，物理配置审计查「交付的东西与文档描述是否一致」。",
+   "tags": [
+    "高频",
+    "配置审计"
+   ],
+   "file": "system-integration/si-config-audit-compare.html",
+   "darkFile": "system-integration/si-config-audit-compare.dark.html"
+  },
+  {
+   "id": "md-color-depth-ladder",
+   "examId": "multimedia-designer",
+   "chapter": "数字图形与图像基础",
+   "title": "色彩深度阶梯",
+   "archetype": "compare",
+   "caption": "位深每加 1 位，颜色数翻倍、容量也翻倍：1 位黑白→8 位 256 色→24 位 1670 万色。",
+   "tags": [
+    "高频",
+    "位深"
+   ],
+   "file": "multimedia-designer/md-color-depth-ladder.html",
+   "darkFile": "multimedia-designer/md-color-depth-ladder.dark.html"
+  },
+  {
+   "id": "md-post-production-flow",
+   "examId": "multimedia-designer",
+   "chapter": "视频格式与制作流程",
+   "title": "视频后期制作流程",
+   "archetype": "flow",
+   "caption": "粗剪→精剪→调色→特效→混音→输出——后期是「素材变成品」的最后一公里。",
+   "tags": [
+    "高频",
+    "后期"
+   ],
+   "file": "multimedia-designer/md-post-production-flow.html",
+   "darkFile": "multimedia-designer/md-post-production-flow.dark.html"
+  },
+  {
+   "id": "si-risk-trigger-compare",
+   "examId": "system-integration",
+   "chapter": "项目风险管理",
+   "title": "风险触发条件与预警",
+   "archetype": "compare",
+   "caption": "每个风险应定义触发条件（预警信号）——信号出现时立即启动应对计划，不等风险爆发。",
+   "tags": [
+    "高频",
+    "触发条件"
+   ],
+   "file": "system-integration/si-risk-trigger-compare.html",
+   "darkFile": "system-integration/si-risk-trigger-compare.dark.html"
+  },
+  {
+   "id": "si-pert-formula",
+   "examId": "system-integration",
+   "chapter": "活动历时估算",
+   "title": "PERT 三点估算公式",
+   "archetype": "formula",
+   "caption": "期望值=（乐观+4×最可能+悲观）÷6，标准差=（悲观−乐观）÷6，±1σ 覆盖 68.26%。",
+   "tags": [
+    "高频",
+    "PERT",
+    "公式"
+   ],
+   "file": "system-integration/si-pert-formula.html",
+   "darkFile": "system-integration/si-pert-formula.dark.html"
+  },
+  {
+   "id": "si-forward-backward-pass",
+   "examId": "system-integration",
+   "chapter": "进度网络图与关键路径法",
+   "title": "正推法与逆推法",
+   "archetype": "flow",
+   "caption": "正推从左到右算最早时间（取最大），逆推从右到左算最迟时间（取最小）；总时差=最迟开始−最早开始。",
+   "tags": [
+    "高频",
+    "网络计算"
+   ],
+   "file": "system-integration/si-forward-backward-pass.html",
+   "darkFile": "system-integration/si-forward-backward-pass.dark.html"
   }
  ]
 }
