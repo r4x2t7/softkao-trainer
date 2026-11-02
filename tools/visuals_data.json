@@ -4627,6 +4627,361 @@
           ]
         }
       ]
+    },
+    {
+      "id": "md-audio-edit-compare",
+      "examId": "multimedia-designer",
+      "chapter": "音频格式与编辑",
+      "title": "音频编辑四大操作",
+      "archetype": "compare",
+      "caption": "降噪清底噪、均衡调音色、压缩控动态、混音合成品——四步从粗录音到成品。",
+      "tags": [
+        "高频",
+        "音频编辑"
+      ],
+      "columns": [
+        {
+          "title": "降噪",
+          "accent": 4,
+          "items": [
+            "采样降噪：需噪声样本",
+            "滤波降噪：频段分离",
+            "噪声门限：间歇底噪",
+            "过度降噪→水声伪影"
+          ]
+        },
+        {
+          "title": "均衡 EQ",
+          "accent": 0,
+          "items": [
+            "提升/衰减频段",
+            "高频太刺→衰减",
+            "低频浑浊→高通",
+            "人声中频突出"
+          ]
+        },
+        {
+          "title": "动态压缩",
+          "accent": 2,
+          "items": [
+            "缩小响度差距",
+            "阈值+比率+attack/release",
+            "保护不削波",
+            "提高可听度"
+          ]
+        },
+        {
+          "title": "混音",
+          "accent": 3,
+          "items": [
+            "多轨合并",
+            "音量平衡",
+            "声像定位",
+            "输出母版+分发版"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-config-three-bins",
+      "examId": "system-integration",
+      "chapter": "项目配置管理",
+      "title": "配置管理三库对比",
+      "archetype": "compare",
+      "caption": "开发库随便改、受控库走流程、产品库做交付——三库权限递增、可控性递增。",
+      "tags": [
+        "高频",
+        "配置管理",
+        "三库"
+      ],
+      "columns": [
+        {
+          "title": "开发库",
+          "accent": 0,
+          "items": [
+            "开发者工作区",
+            "可自由修改",
+            "无需审批",
+            "保存工作副本",
+            "不对外发布"
+          ]
+        },
+        {
+          "title": "受控库",
+          "accent": 1,
+          "items": [
+            "基线管理区",
+            "修改须走变更流程",
+            "评审通过后入库",
+            "版本受控可追溯",
+            "含变更记录"
+          ]
+        },
+        {
+          "title": "产品库",
+          "accent": 2,
+          "items": [
+            "最终发布区",
+            "只读·不可修改",
+            "交付给客户/运维",
+            "含完整版本标识",
+            "归档保存"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-admin-vs-contract-closing",
+      "examId": "system-integration",
+      "chapter": "收尾过程组",
+      "title": "行政收尾 vs 合同收尾",
+      "archetype": "compare",
+      "caption": "合同收尾管「这份合同了结了吗」，行政收尾管「整个项目了结了吗」——两者都要做但内容不同。",
+      "tags": [
+        "高频",
+        "收尾"
+      ],
+      "columns": [
+        {
+          "title": "合同收尾",
+          "accent": 3,
+          "items": [
+            "针对每份合同",
+            "核验交付物与验收报告",
+            "处理未决事项与索赔",
+            "完成尾款结算",
+            "关闭合同"
+          ]
+        },
+        {
+          "title": "行政收尾",
+          "accent": 0,
+          "items": [
+            "针对整个项目/阶段",
+            "最终验收签字",
+            "文档归档与移交",
+            "经验教训入库",
+            "释放团队资源"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-color-depth-compare",
+      "examId": "system-integration",
+      "chapter": "信息化常识",
+      "title": "色彩深度与容量关系",
+      "archetype": "compare",
+      "caption": "位深每增加 1 位，颜色数翻倍，容量也翻倍——1 位黑白、8 位 256 色、24 位真彩 1670 万色。",
+      "tags": [
+        "高频",
+        "位深"
+      ],
+      "columns": [
+        {
+          "title": "1 位 / 8 位",
+          "accent": 5,
+          "items": [
+            "1 位：黑白二值",
+            "8 位：256 色（索引色）",
+            "适合图标/简图",
+            "体积最小"
+          ]
+        },
+        {
+          "title": "16 位",
+          "accent": 1,
+          "items": [
+            "高彩色 65536 色",
+            "R5G6B5 分布",
+            "人眼可辨色带",
+            "过渡使用中"
+          ]
+        },
+        {
+          "title": "24 位 / 32 位",
+          "accent": 0,
+          "items": [
+            "24 位：1670 万真彩色",
+            "32 位：+8 位 Alpha 透明",
+            "R8G8B8(A8)",
+            "照片级无损"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-initiating-compare",
+      "examId": "system-integration",
+      "chapter": "启动过程组",
+      "title": "章程 vs 商业论证 vs 项目管理计划",
+      "archetype": "compare",
+      "caption": "商业论证回答「值不值」，章程回答「谁来授权做」，项目管理计划回答「具体怎么做」——三份文件各管一段。",
+      "tags": [
+        "高频",
+        "启动"
+      ],
+      "columns": [
+        {
+          "title": "商业论证",
+          "accent": 3,
+          "items": [
+            "回答：值不值",
+            "发起人/业务方主导",
+            "收益/成本/可行性",
+            "定期评审收益",
+            "可能触发终止"
+          ]
+        },
+        {
+          "title": "项目章程",
+          "accent": 0,
+          "items": [
+            "回答：授权谁做",
+            "发起人签发",
+            "任命项目经理",
+            "概要目标与里程碑",
+            "先于规划"
+          ]
+        },
+        {
+          "title": "项目管理计划",
+          "accent": 2,
+          "items": [
+            "回答：具体怎么做",
+            "项目经理主导编制",
+            "子计划+三大基准",
+            "详细到活动级",
+            "随变更更新"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "md-image-format-decision",
+      "examId": "multimedia-designer",
+      "chapter": "数字图像与格式",
+      "title": "图像格式选型决策",
+      "archetype": "tree",
+      "caption": "先判断是否需要透明和动画，再判断是否接受有损，最后按目标平台选格式。",
+      "tags": [
+        "高频",
+        "格式选型"
+      ],
+      "root": "选图像格式",
+      "rootNote": "按需求",
+      "children": [
+        {
+          "label": "需透明/无损",
+          "note": "PNG/WebP",
+          "accent": 1
+        },
+        {
+          "label": "照片/有损",
+          "note": "JPEG/WebP",
+          "accent": 3
+        },
+        {
+          "label": "需要动画",
+          "note": "GIF/APNG/WebP",
+          "accent": 2
+        },
+        {
+          "label": "图标/矢量",
+          "note": "SVG",
+          "accent": 0
+        }
+      ]
+    },
+    {
+      "id": "si-risk-register-fields",
+      "examId": "system-integration",
+      "chapter": "风险识别与登记",
+      "title": "风险登记册字段明细",
+      "archetype": "compare",
+      "caption": "识别阶段记「是什么」，分析阶段补「概率影响评级」，应对阶段补「措施+责任人+储备」——字段随过程递增。",
+      "tags": [
+        "高频",
+        "风险登记册"
+      ],
+      "columns": [
+        {
+          "title": "识别阶段",
+          "accent": 0,
+          "items": [
+            "风险描述",
+            "风险类别",
+            "潜在应对措施",
+            "触发条件"
+          ]
+        },
+        {
+          "title": "分析阶段补充",
+          "accent": 1,
+          "items": [
+            "概率与影响评级",
+            "优先级排序",
+            "数据质量评估"
+          ]
+        },
+        {
+          "title": "应对阶段补充",
+          "accent": 2,
+          "items": [
+            "应对策略",
+            "责任人",
+            "应急储备金额",
+            "状态跟踪"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-initiating-starter-compare",
+      "examId": "system-integration",
+      "chapter": "启动过程组",
+      "title": "发起人 vs 项目经理 vs PMO",
+      "archetype": "compare",
+      "caption": "发起人出钱授权、项目经理执行管理、PMO 定规范管资源——三种角色的职责边界。",
+      "tags": [
+        "高频",
+        "角色"
+      ],
+      "columns": [
+        {
+          "title": "发起人",
+          "accent": 3,
+          "items": [
+            "出资与立项决策",
+            "签发项目章程",
+            "任命项目经理",
+            "验收最终成果",
+            "不参与日常管理"
+          ]
+        },
+        {
+          "title": "项目经理",
+          "accent": 0,
+          "items": [
+            "执行与管理",
+            "调组织资源",
+            "对项目成败负责",
+            "编制项目计划",
+            "管理干系人期望"
+          ]
+        },
+        {
+          "title": "PMO",
+          "accent": 2,
+          "items": [
+            "定标准与流程",
+            "提供模板与培训",
+            "跨项目协调资源",
+            "监督合规性",
+            "管理项目组合"
+          ]
+        }
+      ]
     }
   ]
 }

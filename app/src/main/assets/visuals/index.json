@@ -1,6 +1,6 @@
 {
  "version": 1,
- "count": 104,
+ "count": 112,
  "visuals": [
   {
    "id": "si-osi-layers",
@@ -1445,6 +1445,119 @@
    ],
    "file": "system-integration/si-conflict-strategies.html",
    "darkFile": "system-integration/si-conflict-strategies.dark.html"
+  },
+  {
+   "id": "md-audio-edit-compare",
+   "examId": "multimedia-designer",
+   "chapter": "音频格式与编辑",
+   "title": "音频编辑四大操作",
+   "archetype": "compare",
+   "caption": "降噪清底噪、均衡调音色、压缩控动态、混音合成品——四步从粗录音到成品。",
+   "tags": [
+    "高频",
+    "音频编辑"
+   ],
+   "file": "multimedia-designer/md-audio-edit-compare.html",
+   "darkFile": "multimedia-designer/md-audio-edit-compare.dark.html"
+  },
+  {
+   "id": "si-config-three-bins",
+   "examId": "system-integration",
+   "chapter": "项目配置管理",
+   "title": "配置管理三库对比",
+   "archetype": "compare",
+   "caption": "开发库随便改、受控库走流程、产品库做交付——三库权限递增、可控性递增。",
+   "tags": [
+    "高频",
+    "配置管理",
+    "三库"
+   ],
+   "file": "system-integration/si-config-three-bins.html",
+   "darkFile": "system-integration/si-config-three-bins.dark.html"
+  },
+  {
+   "id": "si-admin-vs-contract-closing",
+   "examId": "system-integration",
+   "chapter": "收尾过程组",
+   "title": "行政收尾 vs 合同收尾",
+   "archetype": "compare",
+   "caption": "合同收尾管「这份合同了结了吗」，行政收尾管「整个项目了结了吗」——两者都要做但内容不同。",
+   "tags": [
+    "高频",
+    "收尾"
+   ],
+   "file": "system-integration/si-admin-vs-contract-closing.html",
+   "darkFile": "system-integration/si-admin-vs-contract-closing.dark.html"
+  },
+  {
+   "id": "si-color-depth-compare",
+   "examId": "system-integration",
+   "chapter": "信息化常识",
+   "title": "色彩深度与容量关系",
+   "archetype": "compare",
+   "caption": "位深每增加 1 位，颜色数翻倍，容量也翻倍——1 位黑白、8 位 256 色、24 位真彩 1670 万色。",
+   "tags": [
+    "高频",
+    "位深"
+   ],
+   "file": "system-integration/si-color-depth-compare.html",
+   "darkFile": "system-integration/si-color-depth-compare.dark.html"
+  },
+  {
+   "id": "si-initiating-compare",
+   "examId": "system-integration",
+   "chapter": "启动过程组",
+   "title": "章程 vs 商业论证 vs 项目管理计划",
+   "archetype": "compare",
+   "caption": "商业论证回答「值不值」，章程回答「谁来授权做」，项目管理计划回答「具体怎么做」——三份文件各管一段。",
+   "tags": [
+    "高频",
+    "启动"
+   ],
+   "file": "system-integration/si-initiating-compare.html",
+   "darkFile": "system-integration/si-initiating-compare.dark.html"
+  },
+  {
+   "id": "md-image-format-decision",
+   "examId": "multimedia-designer",
+   "chapter": "数字图像与格式",
+   "title": "图像格式选型决策",
+   "archetype": "tree",
+   "caption": "先判断是否需要透明和动画，再判断是否接受有损，最后按目标平台选格式。",
+   "tags": [
+    "高频",
+    "格式选型"
+   ],
+   "file": "multimedia-designer/md-image-format-decision.html",
+   "darkFile": "multimedia-designer/md-image-format-decision.dark.html"
+  },
+  {
+   "id": "si-risk-register-fields",
+   "examId": "system-integration",
+   "chapter": "风险识别与登记",
+   "title": "风险登记册字段明细",
+   "archetype": "compare",
+   "caption": "识别阶段记「是什么」，分析阶段补「概率影响评级」，应对阶段补「措施+责任人+储备」——字段随过程递增。",
+   "tags": [
+    "高频",
+    "风险登记册"
+   ],
+   "file": "system-integration/si-risk-register-fields.html",
+   "darkFile": "system-integration/si-risk-register-fields.dark.html"
+  },
+  {
+   "id": "si-initiating-starter-compare",
+   "examId": "system-integration",
+   "chapter": "启动过程组",
+   "title": "发起人 vs 项目经理 vs PMO",
+   "archetype": "compare",
+   "caption": "发起人出钱授权、项目经理执行管理、PMO 定规范管资源——三种角色的职责边界。",
+   "tags": [
+    "高频",
+    "角色"
+   ],
+   "file": "system-integration/si-initiating-starter-compare.html",
+   "darkFile": "system-integration/si-initiating-starter-compare.dark.html"
   }
  ]
 }
