@@ -35,6 +35,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 
 class StatsViewModel : ViewModel() {
 
@@ -47,11 +52,37 @@ class StatsViewModel : ViewModel() {
         val streak: Int = 0,
         val today: Int = 0,
         val trend: List<Pair<String, Pair<Int, Int>>> = emptyList(),
+        val heatmap: List<List<HeatCell?>> = emptyList(),
         val knowledge: List<Triple<String, Int, Int>> = emptyList(),
         val examOverview: List<Pair<ExamId, Pair<Int, Int>>> = emptyList(),
     )
 
     private val _state = MutableStateFlow(State())
+    data class HeatCell(val attempts: Int, val correct: Int)
+
+    companion object {
+        /**
+         * 把 dailyTrend 的有序日序列（旧→新，最后一天=今天）排成「周列 × 周一~周日」的热力图网格。
+         * 纯函数，便于 JVM 单测。
+         */
+        fun buildHeatmapWeeks(
+            raw: List<Pair<String, Pair<Int, Int>>>,
+            lastDayMillis: Long,
+        ): List<List<HeatCell?>> {
+            if (raw.isEmpty()) return emptyList()
+            val firstCal = java.util.Calendar.getInstance().apply {
+                timeInMillis = lastDayMillis - (raw.size - 1) * 86_400_000L
+            }
+            // 周一开头对齐：周一=0 … 周日=6（Calendar 的 SUNDAY=1）
+            val leading = (firstCal.get(java.util.Calendar.DAY_OF_WEEK) + 5) % 7
+            val cells = mutableListOf<HeatCell?>()
+            repeat(leading) { cells.add(null) }
+            raw.forEach { entry -> cells.add(HeatCell(entry.second.first, entry.second.second)) }
+            while (cells.size % 7 != 0) cells.add(null)
+            return cells.chunked(7)
+        }
+    }
+
     val state: StateFlow<State> = _state.asStateFlow()
 
     init {
@@ -90,6 +121,11 @@ class StatsViewModel : ViewModel() {
                     .map { (name, pair) -> Triple(name, pair.first, pair.second) }
                     .sortedByDescending { it.second }
             }
+            val heat = withContext(Dispatchers.IO) {
+                val raw = ServiceLocator.statsRepository.dailyTrend(119) // 近 17 周，旧 → 新，两科合计
+                val today = System.currentTimeMillis()
+                buildHeatmapWeeks(raw, today)
+            }
             val (core, trend, overview) = data
             _state.value = _state.value.copy(
                 loading = false,
@@ -101,6 +137,7 @@ class StatsViewModel : ViewModel() {
                 trend = trend.third,
                 knowledge = kp,
                 examOverview = overview,
+                heatmap = heat,
             )
         }
     }
@@ -188,6 +225,59 @@ fun StatsScreen(viewModel: StatsViewModel = viewModel()) {
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            }
+        }
+
+        item {
+            SectionCard(title = "学习日历 · 近 17 周（两科合计）") {
+                Row(horizontalArrangement = Arrangement.spacedBy(3.dp)) {
+                    state.heatmap.forEach { week ->
+                        Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                            week.forEach { cell ->
+                                val color = when {
+                                    cell == null || cell.attempts == 0 ->
+                                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.55f)
+                                    cell.attempts <= 2 -> MaterialTheme.colorScheme.primary.copy(alpha = 0.30f)
+                                    cell.attempts <= 5 -> MaterialTheme.colorScheme.primary.copy(alpha = 0.60f)
+                                    else -> MaterialTheme.colorScheme.primary
+                                }
+                                Box(
+                                    Modifier
+                                        .size(16.dp)
+                                        .clip(androidx.compose.foundation.shape.RoundedCornerShape(3.dp))
+                                        .background(color),
+                                )
+                            }
+                        }
+                    }
+                }
+                Spacer(Modifier.height(6.dp))
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        "少",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    listOf(0.55f, 0.30f, 0.60f, 1f).forEach { a ->
+                        Box(
+                            Modifier
+                                .size(12.dp)
+                                .clip(androidx.compose.foundation.shape.RoundedCornerShape(3.dp))
+                                .background(
+                                    if (a == 0.55f) MaterialTheme.colorScheme.surfaceVariant.copy(alpha = a)
+                                    else MaterialTheme.colorScheme.primary.copy(alpha = a)
+                                ),
+                        )
+                    }
+                    Text(
+                        "多（0 / 1-2 / 3-5 / 6+ 题）",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
         }
 

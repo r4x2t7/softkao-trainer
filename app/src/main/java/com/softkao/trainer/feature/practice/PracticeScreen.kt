@@ -1,6 +1,7 @@
 package com.softkao.trainer.feature.practice
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -47,10 +48,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlin.math.abs
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
@@ -449,6 +452,17 @@ fun PracticeScreen(
                 if (state.mode == PracticeMode.MOCK) {
                     MockTimerBar(questions = state.questions.size)
                 }
+                if (state.questions.isNotEmpty()) {
+                    Text(
+                        "← 左右滑动可切换题目 →",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 3.dp),
+                    )
+                }
                 PracticeJumpBar(
                     index = state.index,
                     total = state.questions.size,
@@ -487,6 +501,21 @@ fun PracticeScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
+                // 左右滑动切换题目：jumpBy 内部会夹到合法范围，越界滑等于停在本题
+                .pointerInput(state.questions.size) {
+                    var totalDrag = 0f
+                    detectHorizontalDragGestures(
+                        onDragStart = { totalDrag = 0f },
+                        onDragEnd = {
+                            when {
+                                totalDrag < -110f -> vm.jumpBy(1)
+                                totalDrag > 110f -> vm.jumpBy(-1)
+                            }
+                        },
+                    ) { _, dragAmount ->
+                        totalDrag += dragAmount
+                    }
+                }
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
