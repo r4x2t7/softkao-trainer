@@ -1,6 +1,6 @@
 {
  "version": 1,
- "count": 96,
+ "count": 104,
  "visuals": [
   {
    "id": "si-osi-layers",
@@ -1331,6 +1331,120 @@
    ],
    "file": "system-integration/si-qual-vs-quant.html",
    "darkFile": "system-integration/si-qual-vs-quant.dark.html"
+  },
+  {
+   "id": "md-dct-quant-compare",
+   "examId": "multimedia-designer",
+   "chapter": "JPEG与DCT",
+   "title": "DCT 变换 vs 量化",
+   "archetype": "compare",
+   "caption": "DCT 变换本身是无损的（只做能量重组），量化才是有损的——量化表步长决定压缩比与画质的平衡。",
+   "tags": [
+    "高频",
+    "JPEG"
+   ],
+   "file": "multimedia-designer/md-dct-quant-compare.html",
+   "darkFile": "multimedia-designer/md-dct-quant-compare.dark.html"
+  },
+  {
+   "id": "md-redundancy-map",
+   "examId": "multimedia-designer",
+   "chapter": "冗余与压缩比",
+   "title": "四类冗余与编码方法",
+   "archetype": "map",
+   "caption": "空间→帧内/DCT、时间→帧间预测、统计→熵编码、视觉→感知丢弃——每类冗余对应一种编码手段。",
+   "tags": [
+    "高频",
+    "冗余"
+   ],
+   "file": "multimedia-designer/md-redundancy-map.html",
+   "darkFile": "multimedia-designer/md-redundancy-map.dark.html"
+  },
+  {
+   "id": "md-resolution-ladder",
+   "examId": "multimedia-designer",
+   "chapter": "视频参数与计算",
+   "title": "视频分辨率规格阶梯",
+   "archetype": "compare",
+   "caption": "从 SD 到 8K：分辨率每翻一倍，像素总量翻 4 倍，所需码率也同步增加。",
+   "tags": [
+    "高频",
+    "分辨率"
+   ],
+   "file": "multimedia-designer/md-resolution-ladder.html",
+   "darkFile": "multimedia-designer/md-resolution-ladder.dark.html"
+  },
+  {
+   "id": "md-cbir-flow",
+   "examId": "multimedia-designer",
+   "chapter": "多媒体数据库",
+   "title": "基于内容检索 CBIR 流程",
+   "archetype": "flow",
+   "caption": "特征提取→特征向量入库→查询特征提取→相似度匹配→排序返回，核心是「让机器理解图像内容」。",
+   "tags": [
+    "高频",
+    "CBIR"
+   ],
+   "file": "multimedia-designer/md-cbir-flow.html",
+   "darkFile": "multimedia-designer/md-cbir-flow.dark.html"
+  },
+  {
+   "id": "md-scan-resolution-flow",
+   "examId": "multimedia-designer",
+   "chapter": "分辨率与图像容量",
+   "title": "扫描分辨率决策流",
+   "archetype": "flow",
+   "caption": "扫描 dpi = 输出 dpi × 放大倍数。1:1 输出用 300dpi，放大 2 倍用 600dpi，只看屏幕 72~150dpi 即可。",
+   "tags": [
+    "高频",
+    "扫描",
+    "计算"
+   ],
+   "file": "multimedia-designer/md-scan-resolution-flow.html",
+   "darkFile": "multimedia-designer/md-scan-resolution-flow.dark.html"
+  },
+  {
+   "id": "si-stakeholder-engagement",
+   "examId": "system-integration",
+   "chapter": "项目干系人管理",
+   "title": "干系人参与度评估矩阵",
+   "archetype": "matrix",
+   "caption": "五级参与度：不了解→抵制→中立→支持→领导，C 标当前、D 标期望，差距即行动计划。",
+   "tags": [
+    "高频",
+    "参与度"
+   ],
+   "file": "system-integration/si-stakeholder-engagement.html",
+   "darkFile": "system-integration/si-stakeholder-engagement.dark.html"
+  },
+  {
+   "id": "si-contract-claim-flow",
+   "examId": "system-integration",
+   "chapter": "项目合同管理",
+   "title": "合同变更与索赔流程",
+   "archetype": "flow",
+   "caption": "合同变更需双方协商一致签补充协议；索赔需有实际损失、非己方责任、按程序及时提出。",
+   "tags": [
+    "高频",
+    "合同",
+    "索赔"
+   ],
+   "file": "system-integration/si-contract-claim-flow.html",
+   "darkFile": "system-integration/si-contract-claim-flow.dark.html"
+  },
+  {
+   "id": "si-conflict-strategies",
+   "examId": "system-integration",
+   "chapter": "团队发展与冲突管理",
+   "title": "五种冲突处理策略",
+   "archetype": "compare",
+   "caption": "合作/解决问题是双赢首选，强迫是应急手段，撤退是临时措施——按场景选策略。",
+   "tags": [
+    "高频",
+    "冲突"
+   ],
+   "file": "system-integration/si-conflict-strategies.html",
+   "darkFile": "system-integration/si-conflict-strategies.dark.html"
   }
  ]
 }

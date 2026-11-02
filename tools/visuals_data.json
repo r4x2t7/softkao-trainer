@@ -4285,6 +4285,348 @@
           ]
         }
       ]
+    },
+    {
+      "id": "md-dct-quant-compare",
+      "examId": "multimedia-designer",
+      "chapter": "JPEG与DCT",
+      "title": "DCT 变换 vs 量化",
+      "archetype": "compare",
+      "caption": "DCT 变换本身是无损的（只做能量重组），量化才是有损的——量化表步长决定压缩比与画质的平衡。",
+      "tags": [
+        "高频",
+        "JPEG"
+      ],
+      "columns": [
+        {
+          "title": "DCT 变换",
+          "accent": 0,
+          "items": [
+            "8×8 像素块→频率域",
+            "能量集中到左上角",
+            "本身可逆·无损失",
+            "为量化创造条件",
+            "输出：64 个 DCT 系数"
+          ]
+        },
+        {
+          "title": "量化",
+          "accent": 4,
+          "items": [
+            "系数÷量化表步长→取整",
+            "高频系数大量归零",
+            "有损·不可逆",
+            "步长越大压缩越高",
+            "决定画质与体积"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "md-redundancy-map",
+      "examId": "multimedia-designer",
+      "chapter": "冗余与压缩比",
+      "title": "四类冗余与编码方法",
+      "archetype": "map",
+      "caption": "空间→帧内/DCT、时间→帧间预测、统计→熵编码、视觉→感知丢弃——每类冗余对应一种编码手段。",
+      "tags": [
+        "高频",
+        "冗余"
+      ],
+      "center": "数据冗余",
+      "spokes": [
+        {
+          "label": "空间冗余",
+          "note": "帧内 DCT 变换",
+          "accent": 0
+        },
+        {
+          "label": "时间冗余",
+          "note": "帧间运动预测",
+          "accent": 1
+        },
+        {
+          "label": "统计冗余",
+          "note": "哈夫曼/算术编码",
+          "accent": 2
+        },
+        {
+          "label": "视觉冗余",
+          "note": "量化/感知编码",
+          "accent": 3
+        }
+      ]
+    },
+    {
+      "id": "md-resolution-ladder",
+      "examId": "multimedia-designer",
+      "chapter": "视频参数与计算",
+      "title": "视频分辨率规格阶梯",
+      "archetype": "compare",
+      "caption": "从 SD 到 8K：分辨率每翻一倍，像素总量翻 4 倍，所需码率也同步增加。",
+      "tags": [
+        "高频",
+        "分辨率"
+      ],
+      "columns": [
+        {
+          "title": "SD 标清",
+          "accent": 5,
+          "items": [
+            "720×480 / 720×576",
+            "DVD 质量",
+            "码率 1~2 Mbps"
+          ]
+        },
+        {
+          "title": "720p HD",
+          "accent": 2,
+          "items": [
+            "1280×720",
+            "高清入门",
+            "码率 2~5 Mbps"
+          ]
+        },
+        {
+          "title": "1080p FHD",
+          "accent": 0,
+          "items": [
+            "1920×1080",
+            "全高清主流",
+            "码率 2~5 Mbps"
+          ]
+        },
+        {
+          "title": "4K UHD",
+          "accent": 3,
+          "items": [
+            "3840×2160",
+            "4 倍于 1080p",
+            "码率 15~25 Mbps"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "md-cbir-flow",
+      "examId": "multimedia-designer",
+      "chapter": "多媒体数据库",
+      "title": "基于内容检索 CBIR 流程",
+      "archetype": "flow",
+      "caption": "特征提取→特征向量入库→查询特征提取→相似度匹配→排序返回，核心是「让机器理解图像内容」。",
+      "tags": [
+        "高频",
+        "CBIR"
+      ],
+      "steps": [
+        {
+          "label": "入库提取",
+          "note": "颜色/纹理/形状",
+          "accent": 0
+        },
+        {
+          "label": "特征向量",
+          "note": "入特征数据库",
+          "accent": 1
+        },
+        {
+          "label": "查询提取",
+          "note": "用户上传示例图",
+          "accent": 2
+        },
+        {
+          "label": "相似匹配",
+          "note": "向量距离计算",
+          "accent": 3
+        },
+        {
+          "label": "排序返回",
+          "note": "相似度降序",
+          "accent": 4
+        },
+        {
+          "label": "反馈优化",
+          "note": "相关反馈调权",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "md-scan-resolution-flow",
+      "examId": "multimedia-designer",
+      "chapter": "分辨率与图像容量",
+      "title": "扫描分辨率决策流",
+      "archetype": "flow",
+      "caption": "扫描 dpi = 输出 dpi × 放大倍数。1:1 输出用 300dpi，放大 2 倍用 600dpi，只看屏幕 72~150dpi 即可。",
+      "tags": [
+        "高频",
+        "扫描",
+        "计算"
+      ],
+      "steps": [
+        {
+          "label": "确定用途",
+          "note": "印刷/屏幕/存档",
+          "accent": 0
+        },
+        {
+          "label": "确定精度",
+          "note": "印刷 300dpi",
+          "accent": 1
+        },
+        {
+          "label": "确定倍数",
+          "note": "输出÷原稿尺寸",
+          "accent": 2
+        },
+        {
+          "label": "计算 dpi",
+          "note": "dpi=输出精度×倍数",
+          "accent": 3
+        },
+        {
+          "label": "执行扫描",
+          "note": "光学分辨率≥计算值",
+          "accent": 4
+        }
+      ]
+    },
+    {
+      "id": "si-stakeholder-engagement",
+      "examId": "system-integration",
+      "chapter": "项目干系人管理",
+      "title": "干系人参与度评估矩阵",
+      "archetype": "matrix",
+      "caption": "五级参与度：不了解→抵制→中立→支持→领导，C 标当前、D 标期望，差距即行动计划。",
+      "tags": [
+        "高频",
+        "参与度"
+      ],
+      "xAxis": [
+        "不了解",
+        "抵制",
+        "中立",
+        "支持",
+        "领导"
+      ],
+      "yAxis": [
+        "关键干系人"
+      ],
+      "xTitle": "参与度等级",
+      "yTitle": "",
+      "cells": [
+        {
+          "row": 0,
+          "col": 0,
+          "title": "当前 C",
+          "items": [
+            "多数普通干系人"
+          ],
+          "accent": 5
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "title": "期望 D",
+          "items": [
+            "客户/发起人"
+          ],
+          "accent": 0
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "title": "需转化",
+          "items": [
+            "抵制→中立"
+          ],
+          "accent": 4
+        }
+      ]
+    },
+    {
+      "id": "si-contract-claim-flow",
+      "examId": "system-integration",
+      "chapter": "项目合同管理",
+      "title": "合同变更与索赔流程",
+      "archetype": "flow",
+      "caption": "合同变更需双方协商一致签补充协议；索赔需有实际损失、非己方责任、按程序及时提出。",
+      "tags": [
+        "高频",
+        "合同",
+        "索赔"
+      ],
+      "steps": [
+        {
+          "label": "识别变更/损失",
+          "note": "事件发生",
+          "accent": 0
+        },
+        {
+          "label": "提交书面申请",
+          "note": "索赔意向通知",
+          "accent": 1
+        },
+        {
+          "label": "影响评估",
+          "note": "工期+费用",
+          "accent": 2
+        },
+        {
+          "label": "协商一致",
+          "note": "签补充协议",
+          "accent": 3
+        },
+        {
+          "label": "争议升级",
+          "note": "调解/仲裁",
+          "accent": 4
+        }
+      ]
+    },
+    {
+      "id": "si-conflict-strategies",
+      "examId": "system-integration",
+      "chapter": "团队发展与冲突管理",
+      "title": "五种冲突处理策略",
+      "archetype": "compare",
+      "caption": "合作/解决问题是双赢首选，强迫是应急手段，撤退是临时措施——按场景选策略。",
+      "tags": [
+        "高频",
+        "冲突"
+      ],
+      "columns": [
+        {
+          "title": "合作/解决问题",
+          "accent": 1,
+          "items": [
+            "双赢首选",
+            "面对分歧找共识",
+            "数据+协商",
+            "维护关系+解决问题"
+          ]
+        },
+        {
+          "title": "强迫/命令",
+          "accent": 4,
+          "items": [
+            "输赢分明",
+            "紧急时权宜之计",
+            "损害关系",
+            "仅限重大原则问题"
+          ]
+        },
+        {
+          "title": "缓和/撤退",
+          "accent": 5,
+          "items": [
+            "暂时搁置降温",
+            "非根本解决",
+            "给时间冷静",
+            "可能积累矛盾"
+          ]
+        }
+      ]
     }
   ]
 }
