@@ -3953,6 +3953,338 @@
           "accent": 3
         }
       ]
+    },
+    {
+      "id": "md-spiral-model",
+      "examId": "multimedia-designer",
+      "chapter": "多媒体项目实施",
+      "title": "螺旋模型四象限",
+      "archetype": "cycle",
+      "caption": "每个迭代循环四步：定计划→风险分析→实施工程→客户评估。风险分析是螺旋模型区别于其他模型的核心特征。",
+      "tags": [
+        "高频",
+        "生命周期"
+      ],
+      "items": [
+        {
+          "label": "定计划",
+          "note": "确定目标与方案",
+          "accent": 1
+        },
+        {
+          "label": "风险分析",
+          "note": "识别评估应对",
+          "accent": 4
+        },
+        {
+          "label": "实施工程",
+          "note": "开发与验证",
+          "accent": 0
+        },
+        {
+          "label": "客户评估",
+          "note": "反馈驱动下一轮",
+          "accent": 3
+        }
+      ],
+      "center": "螺旋模型"
+    },
+    {
+      "id": "md-copyright-rights-map",
+      "examId": "multimedia-designer",
+      "chapter": "标准与版权",
+      "title": "著作权权利体系",
+      "archetype": "map",
+      "caption": "著作权包括人身权（署名/修改/保护完整）与财产权（复制/发行/信息网络传播等），人身权不可转让，财产权可以许可或转让。",
+      "tags": [
+        "高频",
+        "著作权"
+      ],
+      "center": "著作权",
+      "spokes": [
+        {
+          "label": "署名权",
+          "note": "人身权·不可转让",
+          "accent": 0
+        },
+        {
+          "label": "修改权",
+          "note": "人身权·不可转让",
+          "accent": 0
+        },
+        {
+          "label": "复制权",
+          "note": "财产权·可许可",
+          "accent": 1
+        },
+        {
+          "label": "发行权",
+          "note": "财产权·可许可",
+          "accent": 2
+        },
+        {
+          "label": "信息网络传播权",
+          "note": "财产权·互联网核心",
+          "accent": 3
+        }
+      ]
+    },
+    {
+      "id": "md-audio-edit-flow",
+      "examId": "multimedia-designer",
+      "chapter": "数字音频",
+      "title": "音频编辑处理流程",
+      "archetype": "flow",
+      "caption": "降噪→剪辑→均衡→压缩→混音→母带导出——每步都有对应的工具与参数考量。",
+      "tags": [
+        "高频",
+        "音频编辑"
+      ],
+      "steps": [
+        {
+          "label": "降噪",
+          "note": "采样/滤波/门限",
+          "accent": 0
+        },
+        {
+          "label": "剪辑",
+          "note": "排列/裁剪/淡入出",
+          "accent": 1
+        },
+        {
+          "label": "均衡",
+          "note": "EQ 调整频段",
+          "accent": 2
+        },
+        {
+          "label": "压缩",
+          "note": "动态范围控制",
+          "accent": 3
+        },
+        {
+          "label": "混音",
+          "note": "多轨合成",
+          "accent": 4
+        },
+        {
+          "label": "母带导出",
+          "note": "WAV+分发版",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "si-qa-vs-qc",
+      "examId": "system-integration",
+      "chapter": "项目质量管理",
+      "title": "QA vs QC 对比",
+      "archetype": "compare",
+      "caption": "QA 管过程（确保过程按规范执行以预防缺陷），QC 查产品（检验成果是否合格）——先 QA 后 QC。",
+      "tags": [
+        "高频",
+        "QA",
+        "QC"
+      ],
+      "columns": [
+        {
+          "title": "QA 质量保证",
+          "accent": 1,
+          "items": [
+            "面向过程",
+            "预防缺陷发生",
+            "过程审计与评审",
+            "质量部门执行",
+            "输出：质量报告"
+          ]
+        },
+        {
+          "title": "QC 质量控制",
+          "accent": 2,
+          "items": [
+            "面向产品",
+            "检测已有缺陷",
+            "测试与检验",
+            "测试/QC 团队执行",
+            "输出：核实的可交付成果"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "md-sample-rate-compare",
+      "examId": "multimedia-designer",
+      "chapter": "音频参数与计算",
+      "title": "采样频率与用途对照",
+      "archetype": "compare",
+      "caption": "采样定理 fs≥2×fmax：采样频率决定可还原的频率上限，按内容频段选参数。",
+      "tags": [
+        "高频",
+        "采样频率"
+      ],
+      "columns": [
+        {
+          "title": "8 kHz",
+          "accent": 5,
+          "items": [
+            "覆盖 4kHz",
+            "电话语音",
+            "体积最小",
+            "人声可懂即可"
+          ]
+        },
+        {
+          "title": "22.05 kHz",
+          "accent": 2,
+          "items": [
+            "覆盖 11kHz",
+            "普通多媒体",
+            "体积适中",
+            "语音+轻音乐"
+          ]
+        },
+        {
+          "title": "44.1 kHz",
+          "accent": 0,
+          "items": [
+            "覆盖 22kHz",
+            "CD 音乐标准",
+            "覆盖人耳上限 20kHz",
+            "音乐制作基础档"
+          ]
+        },
+        {
+          "title": "48/96 kHz",
+          "accent": 3,
+          "items": [
+            "影视/专业制作",
+            "48k 影视标准",
+            "96k 高分辨率录音",
+            "后期处理余量大"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-comm-method-compare",
+      "examId": "system-integration",
+      "chapter": "项目沟通管理",
+      "title": "沟通方式三分类",
+      "archetype": "compare",
+      "caption": "交互式（实时双向）、推式（主动送达）、拉式（按需自取）——按信息量与互动需求选方式。",
+      "tags": [
+        "高频",
+        "沟通方式"
+      ],
+      "columns": [
+        {
+          "title": "交互式",
+          "accent": 0,
+          "items": [
+            "实时双向",
+            "会议/电话/视频",
+            "达成共识最佳",
+            "成本最高"
+          ]
+        },
+        {
+          "title": "推式",
+          "accent": 1,
+          "items": [
+            "主动送达指定人",
+            "邮件/报告/纪要",
+            "确保送达不确保读懂",
+            "最常用"
+          ]
+        },
+        {
+          "title": "拉式",
+          "accent": 2,
+          "items": [
+            "按需自取",
+            "知识库/门户",
+            "受众广量信息大",
+            "不确保已阅"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-cloud-service-compare",
+      "examId": "system-integration",
+      "chapter": "新兴技术",
+      "title": "云计算三层服务模型",
+      "archetype": "compare",
+      "caption": "IaaS 租基础设施、PaaS 租开发平台、SaaS 租现成软件——从下往上责任逐层向云商转移。",
+      "tags": [
+        "高频",
+        "云计算"
+      ],
+      "columns": [
+        {
+          "title": "IaaS",
+          "accent": 0,
+          "items": [
+            "租虚拟机/存储/网络",
+            "自己装 OS 和软件",
+            "灵活度最高",
+            "运维负担最重"
+          ]
+        },
+        {
+          "title": "PaaS",
+          "accent": 1,
+          "items": [
+            "租开发运行平台",
+            "只管应用与数据",
+            "免运维中间件",
+            "适合开发者"
+          ]
+        },
+        {
+          "title": "SaaS",
+          "accent": 2,
+          "items": [
+            "租现成软件",
+            "打开浏览器即用",
+            "责任最少的模式",
+            "定制化受限"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-qual-vs-quant",
+      "examId": "system-integration",
+      "chapter": "风险分析与评价",
+      "title": "定性 vs 定量风险分析",
+      "archetype": "compare",
+      "caption": "定性快速排序（高/中/低），定量精确计算（概率×金额）——先定性筛选再定量深挖。",
+      "tags": [
+        "高频",
+        "风险分析"
+      ],
+      "columns": [
+        {
+          "title": "定性分析",
+          "accent": 1,
+          "items": [
+            "概率影响矩阵",
+            "快速排序优先级",
+            "成本低速度快",
+            "输出：风险评级"
+          ]
+        },
+        {
+          "title": "定量分析",
+          "accent": 0,
+          "items": [
+            "蒙特卡洛/EMV/决策树",
+            "精确计算敞口",
+            "需要高质量数据",
+            "输出：概率分布与金额"
+          ]
+        }
+      ]
     }
   ]
 }

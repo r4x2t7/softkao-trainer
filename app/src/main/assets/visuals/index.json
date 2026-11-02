@@ -1,6 +1,6 @@
 {
  "version": 1,
- "count": 88,
+ "count": 96,
  "visuals": [
   {
    "id": "si-osi-layers",
@@ -1218,6 +1218,119 @@
    ],
    "file": "system-integration/si-knowledge-process-matrix.html",
    "darkFile": "system-integration/si-knowledge-process-matrix.dark.html"
+  },
+  {
+   "id": "md-spiral-model",
+   "examId": "multimedia-designer",
+   "chapter": "多媒体项目实施",
+   "title": "螺旋模型四象限",
+   "archetype": "cycle",
+   "caption": "每个迭代循环四步：定计划→风险分析→实施工程→客户评估。风险分析是螺旋模型区别于其他模型的核心特征。",
+   "tags": [
+    "高频",
+    "生命周期"
+   ],
+   "file": "multimedia-designer/md-spiral-model.html",
+   "darkFile": "multimedia-designer/md-spiral-model.dark.html"
+  },
+  {
+   "id": "md-copyright-rights-map",
+   "examId": "multimedia-designer",
+   "chapter": "标准与版权",
+   "title": "著作权权利体系",
+   "archetype": "map",
+   "caption": "著作权包括人身权（署名/修改/保护完整）与财产权（复制/发行/信息网络传播等），人身权不可转让，财产权可以许可或转让。",
+   "tags": [
+    "高频",
+    "著作权"
+   ],
+   "file": "multimedia-designer/md-copyright-rights-map.html",
+   "darkFile": "multimedia-designer/md-copyright-rights-map.dark.html"
+  },
+  {
+   "id": "md-audio-edit-flow",
+   "examId": "multimedia-designer",
+   "chapter": "数字音频",
+   "title": "音频编辑处理流程",
+   "archetype": "flow",
+   "caption": "降噪→剪辑→均衡→压缩→混音→母带导出——每步都有对应的工具与参数考量。",
+   "tags": [
+    "高频",
+    "音频编辑"
+   ],
+   "file": "multimedia-designer/md-audio-edit-flow.html",
+   "darkFile": "multimedia-designer/md-audio-edit-flow.dark.html"
+  },
+  {
+   "id": "si-qa-vs-qc",
+   "examId": "system-integration",
+   "chapter": "项目质量管理",
+   "title": "QA vs QC 对比",
+   "archetype": "compare",
+   "caption": "QA 管过程（确保过程按规范执行以预防缺陷），QC 查产品（检验成果是否合格）——先 QA 后 QC。",
+   "tags": [
+    "高频",
+    "QA",
+    "QC"
+   ],
+   "file": "system-integration/si-qa-vs-qc.html",
+   "darkFile": "system-integration/si-qa-vs-qc.dark.html"
+  },
+  {
+   "id": "md-sample-rate-compare",
+   "examId": "multimedia-designer",
+   "chapter": "音频参数与计算",
+   "title": "采样频率与用途对照",
+   "archetype": "compare",
+   "caption": "采样定理 fs≥2×fmax：采样频率决定可还原的频率上限，按内容频段选参数。",
+   "tags": [
+    "高频",
+    "采样频率"
+   ],
+   "file": "multimedia-designer/md-sample-rate-compare.html",
+   "darkFile": "multimedia-designer/md-sample-rate-compare.dark.html"
+  },
+  {
+   "id": "si-comm-method-compare",
+   "examId": "system-integration",
+   "chapter": "项目沟通管理",
+   "title": "沟通方式三分类",
+   "archetype": "compare",
+   "caption": "交互式（实时双向）、推式（主动送达）、拉式（按需自取）——按信息量与互动需求选方式。",
+   "tags": [
+    "高频",
+    "沟通方式"
+   ],
+   "file": "system-integration/si-comm-method-compare.html",
+   "darkFile": "system-integration/si-comm-method-compare.dark.html"
+  },
+  {
+   "id": "si-cloud-service-compare",
+   "examId": "system-integration",
+   "chapter": "新兴技术",
+   "title": "云计算三层服务模型",
+   "archetype": "compare",
+   "caption": "IaaS 租基础设施、PaaS 租开发平台、SaaS 租现成软件——从下往上责任逐层向云商转移。",
+   "tags": [
+    "高频",
+    "云计算"
+   ],
+   "file": "system-integration/si-cloud-service-compare.html",
+   "darkFile": "system-integration/si-cloud-service-compare.dark.html"
+  },
+  {
+   "id": "si-qual-vs-quant",
+   "examId": "system-integration",
+   "chapter": "风险分析与评价",
+   "title": "定性 vs 定量风险分析",
+   "archetype": "compare",
+   "caption": "定性快速排序（高/中/低），定量精确计算（概率×金额）——先定性筛选再定量深挖。",
+   "tags": [
+    "高频",
+    "风险分析"
+   ],
+   "file": "system-integration/si-qual-vs-quant.html",
+   "darkFile": "system-integration/si-qual-vs-quant.dark.html"
   }
  ]
 }
