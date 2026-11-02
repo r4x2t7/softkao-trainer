@@ -196,6 +196,12 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                     examId = entry.arguments?.getString("examId").orEmpty(),
                     caseId = entry.arguments?.getString("caseId").orEmpty(),
                     onBack = { navController.popBackStack() },
+                    onPracticeGroup = { e, ids ->
+                        navController.navigate(
+                            "practice?examId=$e&mode=CASE&chapter=&kp=&title=" +
+                                Uri.encode("案例整组连做") + "&ids=" + Uri.encode(ids.joinToString(","))
+                        )
+                    },
                 )
             }
             composable(

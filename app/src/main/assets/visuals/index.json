@@ -1,14 +1,14 @@
 {
  "version": 1,
- "count": 59,
+ "count": 64,
  "visuals": [
   {
    "id": "si-osi-layers",
    "examId": "system-integration",
    "chapter": "信息化常识",
-   "title": "OSI 七层 ↔ TCP/IP 四层",
+   "title": "OSI 七层 → TCP/IP 四层映射",
    "archetype": "layers",
-   "caption": "上三层（会话、表示、应用）并入应用层；物理层与数据链路层合成网络接口层。",
+   "caption": "自上而下看七层各归哪去：同色＝同一个 TCP/IP 层。上三层并入应用层，下两层并入网络接口层，传输层与网络层原样保留。",
    "tags": [
     "高频",
     "对比"
@@ -143,7 +143,7 @@
    "chapter": "活动排序与网络图绘制",
    "title": "AON 网络图：活动在节点上",
    "archetype": "network",
-   "caption": "AON 把活动画成节点、依赖画成箭头；AOA 把活动画在箭线上，绘制时必须处理虚拟活动。",
+   "caption": "AON 把活动画成节点、依赖画成箭头，箭头方向＝先后顺序；AOA 把活动画在箭线上，需要虚拟活动补逻辑。",
    "tags": [
     "高频",
     "图形"
@@ -807,6 +807,76 @@
    ],
    "file": "multimedia-designer/md-audio-format-compare.html",
    "darkFile": "multimedia-designer/md-audio-format-compare.dark.html"
+  },
+  {
+   "id": "si-lifecycle-choice",
+   "examId": "system-integration",
+   "chapter": "项目管理概论",
+   "title": "生命周期怎么选",
+   "archetype": "flow",
+   "caption": "第一判据是需求与技术的明确程度：明确走预测型，模糊走迭代/增量，反馈驱动走敏捷。",
+   "tags": [
+    "高频",
+    "选型"
+   ],
+   "file": "system-integration/si-lifecycle-choice.html",
+   "darkFile": "system-integration/si-lifecycle-choice.dark.html"
+  },
+  {
+   "id": "si-risk-response-map",
+   "examId": "system-integration",
+   "chapter": "风险应对与储备",
+   "title": "威胁应对四策略",
+   "archetype": "map",
+   "caption": "规避消除来源、转移转嫁后果、减轻降概率或影响、接受留储备观察。",
+   "tags": [
+    "高频",
+    "风险"
+   ],
+   "file": "system-integration/si-risk-response-map.html",
+   "darkFile": "system-integration/si-risk-response-map.dark.html"
+  },
+  {
+   "id": "md-color-models",
+   "examId": "multimedia-designer",
+   "chapter": "色彩与色彩管理",
+   "title": "三大颜色模型对比",
+   "archetype": "compare",
+   "caption": "RGB 给屏幕、CMYK 给印刷、HSV 给人调色——面向的对象不同。",
+   "tags": [
+    "高频",
+    "色彩"
+   ],
+   "file": "multimedia-designer/md-color-models.html",
+   "darkFile": "multimedia-designer/md-color-models.dark.html"
+  },
+  {
+   "id": "md-video-pipeline",
+   "examId": "multimedia-designer",
+   "chapter": "数字视频",
+   "title": "视频从拍摄到播放",
+   "archetype": "flow",
+   "caption": "采集的是模拟/RAW 数据，编码压缩后封装传输，播放端按相反顺序还原渲染。",
+   "tags": [
+    "流程",
+    "视频"
+   ],
+   "file": "multimedia-designer/md-video-pipeline.html",
+   "darkFile": "multimedia-designer/md-video-pipeline.dark.html"
+  },
+  {
+   "id": "md-gop-timeline",
+   "examId": "multimedia-designer",
+   "chapter": "帧与编码",
+   "title": "GOP 帧序列：I 带 P、P 带 B",
+   "archetype": "timeline",
+   "caption": "I 帧独立可解码是随机访问点；P 帧参考前一帧，B 帧参考前后两帧。I 帧越密访问越快、码率越高。",
+   "tags": [
+    "高频",
+    "帧编码"
+   ],
+   "file": "multimedia-designer/md-gop-timeline.html",
+   "darkFile": "multimedia-designer/md-gop-timeline.dark.html"
   }
  ]
 }

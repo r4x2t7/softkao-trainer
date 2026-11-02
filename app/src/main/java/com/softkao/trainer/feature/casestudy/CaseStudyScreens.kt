@@ -315,6 +315,7 @@ fun CaseDetailScreen(
     examId: String,
     caseId: String,
     onBack: () -> Unit,
+    onPracticeGroup: (examId: String, ids: List<String>) -> Unit = { _, _ -> },
     viewModel: CaseStudyViewModel = viewModel(),
 ) {
     androidx.compose.runtime.LaunchedEffect(examId, caseId) { viewModel.loadDetail(examId, caseId) }
@@ -349,6 +350,12 @@ fun CaseDetailScreen(
             contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            item {
+                Button(
+                    onClick = { onPracticeGroup(examId, group.questions.map { it.id }) },
+                    modifier = Modifier.fillMaxWidth(),
+                ) { Text("▶ 整组连做（${group.questions.size} 问，按顺序）") }
+            }
             item {
                 SectionCard(title = "案例背景") {
                     Text(group.questions.first().caseStudy.orEmpty(), style = MaterialTheme.typography.bodyMedium)
