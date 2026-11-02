@@ -2834,6 +2834,408 @@
           "accent": 1
         }
       ]
+    },
+    {
+      "id": "si-wbs-tree",
+      "examId": "system-integration",
+      "chapter": "项目范围管理",
+      "title": "WBS 分解树：从项目到工作包",
+      "archetype": "tree",
+      "caption": "第 0 层是项目，第 1 层是阶段，第 2 层是可交付成果，最底层是可估算、可指派的工作包（8~80h）。",
+      "tags": [
+        "高频",
+        "WBS"
+      ],
+      "root": "智慧园区项目",
+      "rootNote": "第 0 层",
+      "children": [
+        {
+          "label": "需求分析",
+          "note": "8~80h",
+          "accent": 0
+        },
+        {
+          "label": "系统设计",
+          "note": "8~80h",
+          "accent": 1
+        },
+        {
+          "label": "开发实施",
+          "note": "8~80h",
+          "accent": 2
+        },
+        {
+          "label": "测试验收",
+          "note": "8~80h",
+          "accent": 3
+        }
+      ]
+    },
+    {
+      "id": "si-bidding-timeline",
+      "examId": "system-integration",
+      "chapter": "法律法规与标准规范",
+      "title": "招投标关键时间线",
+      "archetype": "timeline",
+      "caption": "从招标文件发出到合同签订的完整时间链：20 日最短等待、15 日澄清提前期、30 日订立合同、保证金 ≤2%。",
+      "tags": [
+        "高频",
+        "法规",
+        "时间线"
+      ],
+      "milestones": [
+        {
+          "label": "发出招标文件",
+          "note": "开始出售标书",
+          "accent": 0
+        },
+        {
+          "label": "澄清/修改",
+          "note": "截止前 ≥15 日",
+          "accent": 1
+        },
+        {
+          "label": "递交投标文件",
+          "note": "距发出 ≥20 日",
+          "accent": 2
+        },
+        {
+          "label": "开标+评标",
+          "note": "评标委员会 5+ 单数",
+          "accent": 3
+        },
+        {
+          "label": "中标通知书",
+          "note": "发出即具法律效力",
+          "accent": 4
+        },
+        {
+          "label": "订立书面合同",
+          "note": "通知后 ≤30 日",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "si-ip-protection-compare",
+      "examId": "system-integration",
+      "chapter": "法律法规与标准规范",
+      "title": "知识产权保护期限对比",
+      "archetype": "compare",
+      "caption": "专利、商标、著作权的保护期限与起算规则——年限与起算日是考试的核心数字。",
+      "tags": [
+        "高频",
+        "知识产权"
+      ],
+      "columns": [
+        {
+          "title": "专利权",
+          "accent": 0,
+          "items": [
+            "发明：20 年",
+            "实用新型：10 年",
+            "外观设计：15 年",
+            "均自申请日起算",
+            "到期不可续展"
+          ]
+        },
+        {
+          "title": "商标权",
+          "accent": 3,
+          "items": [
+            "有效期 10 年",
+            "自核准注册日起算",
+            "可无限次续展（每次 10 年）",
+            "期满前 12 个月内续展",
+            "另有 6 个月宽展期"
+          ]
+        },
+        {
+          "title": "著作权",
+          "accent": 1,
+          "items": [
+            "自然人：终生+50 年",
+            "法人作品：创作完成 50 年",
+            "软件著作权 50 年",
+            "自首次发表起算",
+            "署名权不受期限限制"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-five-process-groups",
+      "examId": "system-integration",
+      "chapter": "项目管理概论",
+      "title": "五大过程组：项目全生命周期",
+      "archetype": "flow",
+      "caption": "启动→规划→执行→监控→收尾，监控贯穿始终而非独立阶段，49 个过程分布其中。",
+      "tags": [
+        "高频",
+        "过程组"
+      ],
+      "steps": [
+        {
+          "label": "启动",
+          "note": "章程+干系人",
+          "accent": 0
+        },
+        {
+          "label": "规划",
+          "note": "基准+子计划",
+          "accent": 1
+        },
+        {
+          "label": "执行",
+          "note": "交付成果",
+          "accent": 2
+        },
+        {
+          "label": "监控",
+          "note": "贯穿始终",
+          "accent": 3
+        },
+        {
+          "label": "收尾",
+          "note": "验收+归档",
+          "accent": 4
+        }
+      ]
+    },
+    {
+      "id": "si-network-arch-compare",
+      "examId": "system-integration",
+      "chapter": "信息化常识",
+      "title": "四种信息系统架构对比",
+      "archetype": "compare",
+      "caption": "集中式、C/S、B/S 与分布式各有优劣，选择取决于可用性、性能、成本与运维需求。",
+      "tags": [
+        "高频",
+        "架构"
+      ],
+      "columns": [
+        {
+          "title": "集中式",
+          "accent": 4,
+          "items": [
+            "主机/终端",
+            "管理集中安全",
+            "单点故障风险",
+            "终端能力弱",
+            "扩展成本高"
+          ]
+        },
+        {
+          "title": "C/S",
+          "accent": 0,
+          "items": [
+            "客户端+服务器",
+            "交互性强",
+            "需安装客户端",
+            "升级维护成本高",
+            "适合内部系统"
+          ]
+        },
+        {
+          "title": "B/S",
+          "accent": 1,
+          "items": [
+            "浏览器即客户端",
+            "零安装免维护",
+            "跨平台易访问",
+            "交互不如 C/S",
+            "适合广域分发"
+          ]
+        },
+        {
+          "title": "分布式",
+          "accent": 2,
+          "items": [
+            "多节点协同",
+            "高可用可扩展",
+            "一致性问题",
+            "运维复杂度高",
+            "适合大规模系统"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "si-evm-scurve",
+      "examId": "system-integration",
+      "chapter": "进度控制与进度成本",
+      "title": "挣值三值关系图",
+      "archetype": "network",
+      "caption": "PV 是计划基准，EV 是实际挣到的价值，AC 是实际花费——三者组合可算出所有偏差与指数。",
+      "tags": [
+        "高频",
+        "挣值",
+        "计算"
+      ],
+      "nodes": [
+        {
+          "id": "pv",
+          "label": "PV 计划值",
+          "x": 0.15,
+          "y": 0.1,
+          "note": "计划要做的",
+          "accent": 1
+        },
+        {
+          "id": "ev",
+          "label": "EV 挣值",
+          "x": 0.5,
+          "y": 0.35,
+          "note": "实际做完的",
+          "accent": 0
+        },
+        {
+          "id": "ac",
+          "label": "AC 实际成本",
+          "x": 0.85,
+          "y": 0.6,
+          "note": "实际花掉的",
+          "accent": 4
+        },
+        {
+          "id": "cv",
+          "label": "CV=EV-AC",
+          "x": 0.85,
+          "y": 0.15,
+          "note": "成本偏差",
+          "accent": 3
+        },
+        {
+          "id": "sv",
+          "label": "SV=EV-PV",
+          "x": 0.15,
+          "y": 0.65,
+          "note": "进度偏差",
+          "accent": 2
+        }
+      ],
+      "edges": [
+        [
+          "pv",
+          "ev",
+          ""
+        ],
+        [
+          "ev",
+          "ac",
+          ""
+        ],
+        [
+          "ev",
+          "cv",
+          ""
+        ],
+        [
+          "pv",
+          "sv",
+          ""
+        ]
+      ]
+    },
+    {
+      "id": "si-risk-decision-tree",
+      "examId": "system-integration",
+      "chapter": "风险应对与储备",
+      "title": "风险应对决策树",
+      "archetype": "tree",
+      "caption": "面对威胁时按「能否消除→能否转移→能否减轻→是否可接受」依次决策。",
+      "tags": [
+        "高频",
+        "风险应对"
+      ],
+      "root": "识别到威胁",
+      "rootNote": "风险决策",
+      "children": [
+        {
+          "label": "能消除？",
+          "note": "规避",
+          "accent": 0,
+          "children": [
+            {
+              "label": "改方案",
+              "note": "取消风险源"
+            },
+            {
+              "label": "延长计划",
+              "note": "消除时间压力"
+            }
+          ]
+        },
+        {
+          "label": "能转移？",
+          "note": "转给第三方",
+          "accent": 2,
+          "children": [
+            {
+              "label": "保险",
+              "note": ""
+            },
+            {
+              "label": "外包",
+              "note": ""
+            }
+          ]
+        },
+        {
+          "label": "能减轻？",
+          "note": "降概率/影响",
+          "accent": 1
+        },
+        {
+          "label": "都不行？",
+          "note": "接受+储备",
+          "accent": 5
+        }
+      ]
+    },
+    {
+      "id": "si-tender-evaluation-flow",
+      "examId": "system-integration",
+      "chapter": "项目采购管理",
+      "title": "评标流程与否决条件",
+      "archetype": "flow",
+      "caption": "评标委员会按招标文件标准评审：先形式审查，再技术商务评审，最后综合排序并出具评标报告。",
+      "tags": [
+        "高频",
+        "评标"
+      ],
+      "steps": [
+        {
+          "label": "形式审查",
+          "note": "签字/密封/资质",
+          "accent": 0
+        },
+        {
+          "label": "符合性审查",
+          "note": "实质响应招标",
+          "accent": 1
+        },
+        {
+          "label": "技术评审",
+          "note": "方案/团队/案例",
+          "accent": 2
+        },
+        {
+          "label": "商务评审",
+          "note": "报价/工期/付款",
+          "accent": 3
+        },
+        {
+          "label": "综合排序",
+          "note": "出具评标报告",
+          "accent": 4
+        },
+        {
+          "label": "否决条件",
+          "note": "低于成本/串标",
+          "accent": 4
+        }
+      ]
     }
   ]
 }
