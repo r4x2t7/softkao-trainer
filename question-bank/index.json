@@ -7,12 +7,12 @@
       "version": 2,
       "file": "system-integration/v2.json",
       "questionCount": 1606,
-      "sha256": "1fbbc0e40182c6f8e899aa32dfd38084ed1c6c3f2ee560bf9efd28fd5b97d28f",
+      "sha256": "b7dd0a824a2c69f5ffc206f6ee1128e130e7edd3a8fdfc69cd151635aab4ed78",
       "updatedAt": "2026-10-24T20:00:00Z",
       "kpNotes": {
         "file": "system-integration/kp_notes.json",
-        "count": 1237,
-        "sha256": "353783beef0f4d165c6aae351ac81fda31e1218beb7013e1a3e0b0aa313a2964"
+        "count": 1238,
+        "sha256": "6b06ba47d597412d25a0c9ae81a93bb3f6d36b0358c0c1a27bf6a163bff27479"
       }
     },
     {
@@ -20,13 +20,13 @@
       "examName": "多媒体应用设计师",
       "version": 2,
       "file": "multimedia-designer/v2.json",
-      "questionCount": 1253,
-      "sha256": "c874626474888e2f31b32cb3240330aa0e8c622e82813024b01a057d32633b11",
+      "questionCount": 1260,
+      "sha256": "2776bf70a539bcaca636cad83d48f513b7a38957987e7e901ce8276282d0b559",
       "updatedAt": "2026-10-24T20:00:00Z",
       "kpNotes": {
         "file": "multimedia-designer/kp_notes.json",
-        "count": 1024,
-        "sha256": "6756fdaf445b5229dfab1dc403b2fe34cd12a4ab8734842529f15ccfc51f4f01"
+        "count": 1026,
+        "sha256": "1de10c31fc634a7001fc655eb57ac9bbedf878ea59fd02b95b062dce39979f97"
       }
     }
   ]
