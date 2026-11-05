@@ -7,7 +7,7 @@
       "version": 2,
       "file": "system-integration/v2.json",
       "questionCount": 1624,
-      "sha256": "58325bd942e6f10d2251e5c6e193a70eaa61d2d2d27bf46b73941ac81b37a623",
+      "sha256": "006ba1a4d4dc35fb60d728ff99de87bc1e406f29228d0903017c326404355d26",
       "updatedAt": "2026-10-24T20:00:00Z",
       "kpNotes": {
         "file": "system-integration/kp_notes.json",
@@ -21,7 +21,7 @@
       "version": 2,
       "file": "multimedia-designer/v2.json",
       "questionCount": 1272,
-      "sha256": "1f3fbe47afd7f574b176a7a14bb67d53dd65d8078f9f3b83ee9bfacff5c5af88",
+      "sha256": "a980bd7da363e1a6bd3519749d6199017e97253dcaf930fb38c583c1de135f70",
       "updatedAt": "2026-10-24T20:00:00Z",
       "kpNotes": {
         "file": "multimedia-designer/kp_notes.json",
