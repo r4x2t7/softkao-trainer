@@ -47792,6 +47792,154 @@
       "tags": [
         "动画配套"
       ]
+    },
+    {
+      "id": "md-1370",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "数字图像与格式",
+      "knowledgePoint": "图像格式",
+      "stem": "设计师需要交付一组 UI 素材：图标与截图，要求背景透明、边缘锐利、文件可无损再编辑。最合适的图像格式是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "PNG（无损压缩 + Alpha 透明通道）"
+        },
+        {
+          "key": "B",
+          "text": "JPEG（有损压缩、24 位真彩）"
+        },
+        {
+          "key": "C",
+          "text": "GIF（8 位索引色）"
+        },
+        {
+          "key": "D",
+          "text": "BMP（无压缩位图）"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "PNG 无损 + Alpha 透明 + 锐利边缘，是截图与 UI 素材的标配格式。",
+      "aiExplanation": "答案A。三要求逐条对照：透明→PNG 的 Alpha 通道（JPEG 无透明）；无损再编辑→PNG 无损压缩；边缘锐利→无损保细节（JPEG 有损会在锐利边缘产生蚊噪）。B 无透明且文字边缘有损；C 只有 256 色且透明是「1 位硬透明」渐变毛边；D 无压缩体积巨大且部分软件不支持半透明。配套动画：md-image-formats。",
+      "source": "自编（配套知识动画 md-image-formats / md-3d-pipeline / md-print-resolution）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1371",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "动画技术",
+      "knowledgePoint": "三维动画合成",
+      "stem": "三维动画制作流水线的正确顺序是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "建模 → 材质贴图 → 绑骨 → 灯光 → 渲染输出"
+        },
+        {
+          "key": "B",
+          "text": "渲染 → 灯光 → 建模 → 材质 → 绑骨"
+        },
+        {
+          "key": "C",
+          "text": "绑骨 → 建模 → 渲染 → 材质 → 灯光"
+        },
+        {
+          "key": "D",
+          "text": "材质 → 灯光 → 渲染 → 绑骨 → 建模"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "先塑形（建模）再穿皮肤（材质）再装驱动（绑骨）再布光（灯光）最后出图（渲染）——上游返工会向后传导。",
+      "aiExplanation": "答案A。流水线逻辑链：没有模型谈不上材质，没有材质谈不上灯光下的表现，渲染是唯一的出图闸门必须最后。B/C/D 全部颠倒了依赖关系——例如渲染后再绑骨毫无意义（渲染输出的已是成品帧）。实务提醒：上游改动会导致渲染全部重来，所以「先定稿再渲染」。配套动画：md-3d-pipeline。",
+      "source": "自编（配套知识动画 md-image-formats / md-3d-pipeline / md-print-resolution）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1372",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "分辨率与图像容量",
+      "knowledgePoint": "印刷所需像素计算",
+      "stem": "要印刷输出一张 6×4 英寸（宽×高）的照片，按印刷品质通行的 300dpi 标准，图像需要至少多少像素？（）",
+      "options": [
+        {
+          "key": "A",
+          "text": "1800×1200"
+        },
+        {
+          "key": "B",
+          "text": "600×400"
+        },
+        {
+          "key": "C",
+          "text": "6000×4000"
+        },
+        {
+          "key": "D",
+          "text": "300×300"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "所需像素 = 输出英寸 × dpi：宽 6×300=1800，高 4×300=1200。",
+      "aiExplanation": "答案A。300dpi 规则的正反两算：正算（本题）英寸×dpi=像素；反算（给定图像算最大印刷尺寸）像素÷300=英寸。B 漏乘 300（把 dpi 当像素）；C 多乘了 10 倍；D 完全无关系。延伸：A4 纸（8.27×11.69 英寸）@300dpi ≈ 2480×3508 像素——衡量「这张图能不能印」就用这个换算。配套动画：md-print-resolution。",
+      "source": "自编（配套知识动画 md-image-formats / md-3d-pipeline / md-print-resolution）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1373",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "数字图像与格式",
+      "knowledgePoint": "现代图像格式 WebP",
+      "stem": "关于 Google 推出的 WebP 格式，下列说法正确的是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "同一框架内同时支持有损与无损压缩，且支持 Alpha 透明，同等画质体积通常小于 JPEG/PNG"
+        },
+        {
+          "key": "B",
+          "text": "WebP 只支持有损压缩，且不支持透明"
+        },
+        {
+          "key": "C",
+          "text": "WebP 的压缩效率低于 JPEG，已停止发展"
+        },
+        {
+          "key": "D",
+          "text": "WebP 是一种音频容器格式"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "WebP 集有损/无损/Alpha 透明于一体，同等画质体积明显小于 JPEG 与 PNG，是新一代网页图像格式。",
+      "aiExplanation": "答案A。WebP 三合一：有损（VP8 帧内编码）+ 无损 + Alpha 透明，平均比 JPEG 小 25~34%、比 PNG 小约 26%。B 把 JPEG 的限制安到 WebP 头上；C 与事实相反（主流浏览器已全面支持）；D 是概念混淆（它是图像格式）。选型：网页图片全面可换 WebP；需兼容旧环境时仍备 JPEG/PNG。配套动画：md-image-formats。",
+      "source": "自编（配套知识动画 md-image-formats / md-3d-pipeline / md-print-resolution）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }

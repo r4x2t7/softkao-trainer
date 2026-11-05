@@ -63558,6 +63558,154 @@
       "tags": [
         "动画配套"
       ]
+    },
+    {
+      "id": "si-1742",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "项目管理概论",
+      "knowledgePoint": "五大过程组",
+      "stem": "关于五大过程组的关系，下列说法正确的是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "监控过程组贯穿项目全程，与其他过程组平行作用，而不是只在某个阶段进行"
+        },
+        {
+          "key": "B",
+          "text": "监控过程组只发生在项目结束前的验收阶段"
+        },
+        {
+          "key": "C",
+          "text": "执行过程组的产出是项目管理计划"
+        },
+        {
+          "key": "D",
+          "text": "启动过程组的产出是三大基准"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "监控不是第五个「阶段」而是平行伴随：执行干活的同时监控比对基准；计划产自规划、基准产自规划、章程产自启动。",
+      "aiExplanation": "答案A。「监控贯穿全程」是过程组考法的头号题眼——它是与启动规划执行收尾平行作用的持续性动作。B 把监控降格为验收动作；C 反了——执行产可交付成果，计划产自规划；D 反了——三大基准产自规划，启动产项目章程与识别干系人。配套动画：si-process-groups。",
+      "source": "自编（配套知识动画 si-process-groups / si-engagement-ladder / si-cia-triad）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1743",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "项目干系人管理",
+      "knowledgePoint": "参与度评估",
+      "stem": "在干系人参与度评估矩阵中，某干系人被标记为「当前 C：中立，期望 D：支持」。对该标记的正确理解是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "该干系人目前既不支持也不反对，项目希望其达到愿意配合的水平，两者差距需通过沟通与参与策略弥合"
+        },
+        {
+          "key": "B",
+          "text": "该干系人已经完全满足项目要求，无需再投入"
+        },
+        {
+          "key": "C",
+          "text": "该干系人当前正在抵制项目，必须立即升级处理"
+        },
+        {
+          "key": "D",
+          "text": "C 和 D 分别代表两个不同的干系人"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "参与度评估矩阵给每个干系人标两个位置：C（Current 当前）与 D（Desired 期望），差距即沟通计划的工作量。",
+      "aiExplanation": "答案A。五级参与度：不了解→抵制→中立→支持→领导。C=Current 当前位置、D=Desired 期望位置，本例是从「中立」提升到「支持」的差距。B 忽略了差距（中立≠达标）；C 把中立误读为抵制；D 完全错误——C/D 是同一干系人的两个标记。配套动画：si-engagement-ladder。",
+      "source": "自编（配套知识动画 si-process-groups / si-engagement-ladder / si-cia-triad）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1744",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "信息安全",
+      "knowledgePoint": "CIA 三要素",
+      "stem": "用户下载软件后，通过比对发布方公布的哈希值（摘要）来确认文件在传输中未被篡改。该做法主要保障的信息安全属性是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "完整性"
+        },
+        {
+          "key": "B",
+          "text": "保密性"
+        },
+        {
+          "key": "C",
+          "text": "可用性"
+        },
+        {
+          "key": "D",
+          "text": "不可否认性"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "「确认未被篡改」是完整性（Integrity）——哈希校验、数字签名都是完整性的典型措施。",
+      "aiExplanation": "答案A。CIA 措施对应口诀：防泄露→保密性（加密/权限）；防篡改→完整性（哈希/签名/校验）；防瘫痪→可用性（冗余/备份/抗 DDoS）。B 的保密性是「不让别人看到」，与篡改无关；C 的可用性是「要用时能用」；D 的不可否认性不属于 CIA 三要素（由数字签名间接支撑）。配套动画：si-cia-triad。",
+      "source": "自编（配套知识动画 si-process-groups / si-engagement-ladder / si-cia-triad）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1745",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "项目管理概论",
+      "knowledgePoint": "启动过程组的目的",
+      "stem": "「制定项目章程」过程所属的过程组及其主要作用是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "启动过程组：正式授权项目存在，赋予项目经理调用组织资源的权力"
+        },
+        {
+          "key": "B",
+          "text": "规划过程组：确定项目管理计划的组成部分"
+        },
+        {
+          "key": "C",
+          "text": "执行过程组：指导项目工作按计划开展"
+        },
+        {
+          "key": "D",
+          "text": "监控过程组：对比绩效与基准的偏差"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "项目章程是启动过程组的核心产出：一份正式批准项目成立的文件，授权 PM 调动资源。",
+      "aiExplanation": "答案A。章程三句话记忆：正式授权项目存在（法理地位）、授权 PM 调资源（权柄）、连接发起人与项目（源头）。B 的计划、C 的执行、D 的监控都在章程之后——没有章程就没有合法的规划与执行。考「章程」必联想「启动过程组」。配套动画：si-process-groups。",
+      "source": "自编（配套知识动画 si-process-groups / si-engagement-ladder / si-cia-triad）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }
