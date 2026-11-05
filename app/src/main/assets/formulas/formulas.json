@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "formulas": {
+    "version": 1,
+    "system-integration": [
+      {
+        "category": "进度管理 · 三点估算",
+        "items": [
+          {
+            "name": "期望工期（贝塔分布）",
+            "formula": "TE = (乐观 + 4×最可能 + 悲观) ÷ 6",
+            "example": "乐观3 最可能5 悲观13 → TE=(3+20+13)/6=6天",
+            "trap": "最可能值权重是4"
+          },
+          {
+            "name": "标准差",
+            "formula": "σ = (悲观 − 乐观) ÷ 6",
+            "example": "乐观3 悲观13 → σ=10/6≈1.67天",
+            "trap": "衡量估算不确定性"
+          },
+          {
+            "name": "概率区间",
+            "formula": "±1σ=68.26%  ±2σ=95.44%  ±3σ=99.73%",
+            "example": "TE=10 σ=2 → 8~12天概率68.26%",
+            "trap": "单侧=50%+区间÷2"
+          }
+        ]
+      },
+      {
+        "category": "进度管理 · 网络图",
+        "items": [
+          {
+            "name": "关键路径",
+            "formula": "最长路径 = 总工期，其上TF=0",
+            "example": "A-B-D=12周 A-C-D=14周 → 关键路径A-C-D 工期14周",
+            "trap": "可有多条关键路径"
+          },
+          {
+            "name": "总时差TF",
+            "formula": "TF = LS − ES",
+            "example": "ES=5 LS=8 → TF=3天",
+            "trap": "时差归路径所有，消耗影响后续"
+          },
+          {
+            "name": "自由时差FF",
+            "formula": "FF = 紧后最早开始 − 本活动最早结束",
+            "example": "紧后ES=18 本EF=14 → FF=4天",
+            "trap": "FF ≤ TF 恒成立"
+          }
+        ]
+      },
+      {
+        "category": "成本管理 · 挣值管理",
+        "items": [
+          {
+            "name": "成本偏差CV",
+            "formula": "CV = EV − AC",
+            "example": "EV=200 AC=250 → CV=−50超支",
+            "trap": "负值超支正值节约"
+          },
+          {
+            "name": "进度偏差SV",
+            "formula": "SV = EV − PV",
+            "example": "EV=200 PV=250 → SV=−50落后",
+            "trap": "负值落后"
+          },
+          {
+            "name": "成本绩效指数CPI",
+            "formula": "CPI = EV ÷ AC",
+            "example": "EV=200 AC=250 → CPI=0.80",
+            "trap": "<1不利 >1有利"
+          },
+          {
+            "name": "进度绩效指数SPI",
+            "formula": "SPI = EV ÷ PV",
+            "example": "EV=200 PV=250 → SPI=0.80",
+            "trap": "<1落后"
+          },
+          {
+            "name": "完工估算EAC典型",
+            "formula": "EAC = BAC ÷ CPI",
+            "example": "BAC=500 CPI=0.8 → EAC=625超支125万",
+            "trap": "偏差将延续时用"
+          },
+          {
+            "name": "完工估算EAC非典型",
+            "formula": "EAC = AC + (BAC − EV)",
+            "example": "AC=200 BAC=500 EV=300 → EAC=400",
+            "trap": "偏差是一次性时用"
+          },
+          {
+            "name": "完工尚需ETC",
+            "formula": "ETC = EAC − AC",
+            "example": "EAC=625 AC=250 → ETC=375",
+            "trap": "还差多少钱"
+          },
+          {
+            "name": "完工偏差VAC",
+            "formula": "VAC = BAC − EAC",
+            "example": "BAC=500 EAC=625 → VAC=−75",
+            "trap": "负值将超支"
+          },
+          {
+            "name": "完工绩效TCPI",
+            "formula": "TCPI = (BAC − EV) ÷ (BAC − AC)",
+            "example": "BAC=400 EV=180 AC=200 → TCPI=1.10",
+            "trap": "基于EAC口径分母用(EAC−AC)"
+          }
+        ]
+      },
+      {
+        "category": "沟通与风险",
+        "items": [
+          {
+            "name": "沟通渠道数",
+            "formula": "渠道数 = n(n−1) ÷ 2",
+            "example": "8人 → 28条",
+            "trap": "别忘了除以2"
+          },
+          {
+            "name": "期望货币价值EMV",
+            "formula": "EMV = Σ(概率 × 影响金额)",
+            "example": "0.7×100 + 0.3×(−20) = 64万",
+            "trap": "亏损用负数"
+          }
+        ]
+      }
+    ],
+    "multimedia-designer": [
+      {
+        "category": "图像容量",
+        "items": [
+          {
+            "name": "未压缩位图容量",
+            "formula": "容量 = 宽 × 高 × 位深 ÷ 8",
+            "example": "800×600×24位 → 1,440,000字节≈1.37MB",
+            "trap": "24位=3字节/像素"
+          },
+          {
+            "name": "灰度图容量",
+            "formula": "容量 = 宽 × 高 × 1",
+            "example": "1024×768 8位灰度 → 768KB",
+            "trap": "灰度1通道"
+          },
+          {
+            "name": "YUV420单帧",
+            "formula": "单帧 = 宽 × 高 × 1.5",
+            "example": "1920×1080 → 3,110,400字节≈3MB",
+            "trap": "每像素1.5字节不是3"
+          }
+        ]
+      },
+      {
+        "category": "音频容量",
+        "items": [
+          {
+            "name": "未压缩音频容量",
+            "formula": "容量 = 采样率 × 位数 × 声道 × 时间 ÷ 8",
+            "example": "44100×16×2×60÷8 ≈ 10.09MB(1分钟CD)",
+            "trap": "双声道乘2"
+          },
+          {
+            "name": "CD标准参数",
+            "formula": "44.1kHz/16bit/双声道 → 码率1.41Mbps",
+            "example": "1分钟CD音质≈10MB",
+            "trap": "fs≥2×fmax"
+          }
+        ]
+      },
+      {
+        "category": "视频容量",
+        "items": [
+          {
+            "name": "未压缩视频数据率",
+            "formula": "数据率 = 宽 × 高 × 每像素字节 × 帧率",
+            "example": "1080p YUV420 25fps → 77.8MB/s",
+            "trap": "YUV420=1.5B/像素"
+          },
+          {
+            "name": "恒定码率文件大小",
+            "formula": "文件大小 = 码率 × 时长 ÷ 8",
+            "example": "4Mbps×1小时=1.8GB",
+            "trap": "码率是bit/s"
+          },
+          {
+            "name": "压缩比",
+            "formula": "压缩比 = 压缩前 ÷ 压缩后",
+            "example": "280GB÷1.8GB≈155:1",
+            "trap": "恒大于1"
+          }
+        ]
+      },
+      {
+        "category": "分辨率与印刷",
+        "items": [
+          {
+            "name": "印刷所需像素",
+            "formula": "像素 = 尺寸(英寸) × dpi",
+            "example": "8英寸×300dpi=2400像素",
+            "trap": "dpi每英寸墨点"
+          },
+          {
+            "name": "有效分辨率",
+            "formula": "有效 = 扫描分辨率 ÷ 放大倍数",
+            "example": "600dpi扫描放大2倍→300dpi",
+            "trap": "放大降低有效分辨率"
+          }
+        ]
+      }
+    ]
+  }
+}
