@@ -21,6 +21,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -254,6 +255,63 @@ fun CaseListScreen(
                     singleLine = true,
                     placeholder = { Text("搜索章节 / 知识点 / 小问内容") },
                 )
+            }
+            item {
+                var guideOpen by remember { mutableStateOf(false) }
+                SectionCard {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            "📌 案例答题指南（三大题型套路）",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                        TextButton(onClick = { guideOpen = !guideOpen }) {
+                            Text(if (guideOpen) "收起" else "展开")
+                        }
+                    }
+                    if (guideOpen) {
+                        val isSi = state.examId == ExamId.SYSTEM_INTEGRATION.id
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            if (isSi) {
+                                Text("① 问题诊断类（分析存在的问题）", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    "按背景事件逐条翻译成术语找茬：识别→分析→执行→监控→改进各环节逐层过。答案用「①…②…」编号，每点 = 问题 + 背景依据。高频靶位：干系人漏识别、沟通单向无闭环、受控库直改、变更无记录、审计缺失。",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                                Text("② 计算类（挣值 / 网络图 / 质量度量）", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    "先列公式再代数字，保留题目要求的小数位。挣值三步铁律：PV 看「计划应完成」、EV 看「实际已完成」、按比例拆预算；结论必须进度（SV/SPI）与成本（CV/CPI）双向判断。典型偏差 EAC = BAC/CPI，特殊偏差 EAC = AC+(BAC−EV)。",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                                Text("③ 判断 / 填空类", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    "固定结论直接给：受控库不能直接修改（开发库才能）、配置审计多时点进行（建基线审/大变更审/交付前审）、配置库三类型（开发库/受控库/产品库，已发布基线存档=产品库）、干系人高权高利=重点管理。拿不准时按「持续性 / 需审批 / 要有记录」原则判「正确」方向。",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            } else {
+                                Text("① 计算类（图像 / 音频 / 视频容量）", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    "单位链一步到位：位→字节（÷8）→KB/MB（÷1024）；双声道 ×2、YUV 4:2:0 每像素 1.5 字节。最容易丢分的是忘了 ÷8 或声道漏乘。写清公式→代入→结果→单位四步。",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                                Text("② 流程管理类（素材 / 版本 / 交付）", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    "素材问题四连：命名（杜绝相机默认编号）/ 目录（按场次分层）/ 清单（场记单）/ 备份（RAID+冷备）。版本混乱三层治理：规则（版本号规范）+ 流程（书面确认+预览确认）+ 技术（工程快照可回退）。",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                                Text("③ 方案设计类（格式 / 编码选择）", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    "母版与分发版分离：母版最高画质存档（ProRes / H.265 4K），分发版按目标设备与信道定制并给参数（分辨率/码率/编码）。「给参数才给分」——只答「输出高清版本」不算方案。交付前真实环境试播 + 签署验收单是收尾规范动作。",
+                                    style = MaterialTheme.typography.bodySmall,
+                                )
+                            }
+                        }
+                    }
+                }
             }
             items(filtered, key = { it.examId + it.caseId }) { group ->
                 Card(
