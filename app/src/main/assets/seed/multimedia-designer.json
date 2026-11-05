@@ -47348,6 +47348,154 @@
       "tags": [
         "动画配套"
       ]
+    },
+    {
+      "id": "md-1358",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "色彩与色彩管理",
+      "knowledgePoint": "色彩空间转换的本质",
+      "stem": "在色彩管理系统中，把显示器图像准确转换到打印机输出，颜色信息的中转空间（PCS）通常采用（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "Lab（设备无关色彩空间）"
+        },
+        {
+          "key": "B",
+          "text": "RGB（设备相关色彩空间）"
+        },
+        {
+          "key": "C",
+          "text": "CMYK（印刷专用空间）"
+        },
+        {
+          "key": "D",
+          "text": "YUV（视频色彩空间）"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "PCS（Profile Connection Space）使用设备无关的 Lab：源设备先转到 Lab，再从 Lab 转到目标设备。",
+      "aiExplanation": "答案A。转换链「源 Profile → PCS(Lab) → 目标 Profile」需要 PCS 具备设备无关性——B 的 RGB 随设备而变（同一个 RGB 值在不同屏幕显示不同），不能当公尺；C 的 CMYK 是目标设备语言不是中转；D 的 YUV 服务视频传输不服务色彩管理。Lab 的三维：L 明度、a 红绿轴、b 黄蓝轴，覆盖人眼可见的全部色域，天然适合做「公尺」。配套动画：md-color-space-chain。",
+      "source": "自编（配套知识动画 md-color-space-chain / md-animation-three-tech / md-transcode-pipeline）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1359",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "动画技术",
+      "knowledgePoint": "骨骼动画",
+      "stem": "某游戏需为主角制作大量连贯的人物动作（跑/跳/挥剑），且动作需要持续迭代调整。最适合采用的动画技术是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "骨骼动画：骨架绑定蒙皮，调骨架动作即可带动全身复用"
+        },
+        {
+          "key": "B",
+          "text": "逐帧动画：每帧手绘保证表现力"
+        },
+        {
+          "key": "C",
+          "text": "补间动画：用位移+旋转插值模拟所有动作"
+        },
+        {
+          "key": "D",
+          "text": "形状补间：改变矢量形状生成动作"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "骨骼动画用骨架驱动蒙皮，一套骨架可复用无数动作、调整灵活——人物/生物动作的标准方案。",
+      "aiExplanation": "答案A。三种技术谱系：逐帧=表现力天花板但改一帧画一帧（迭代成本爆炸）；补间=规则运动省力（位移/缩放/旋转），但模拟人物动作会僵硬失真；骨骼=角色动画专用，动作数据可复用可微调。B 在「大量动作+持续迭代」需求下工作量不可控；C 用补间硬仿人物动作是经典错误认知；D 形状补间用于图形变形不是角色动作。配套动画：md-animation-three-tech。",
+      "source": "自编（配套知识动画 md-color-space-chain / md-animation-three-tech / md-transcode-pipeline）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1360",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "流媒体技术",
+      "knowledgePoint": "自适应码率原理",
+      "stem": "ABR（自适应码率）流媒体之所以能在网络波动时流畅切换清晰度，其前提条件是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "内容已预先转码为多档码率的分片，播放器可在分片边界换档"
+        },
+        {
+          "key": "B",
+          "text": "播放器实时调用云端服务器动态转码"
+        },
+        {
+          "key": "C",
+          "text": "视频采用了更高的压缩率，不需要多档"
+        },
+        {
+          "key": "D",
+          "text": "用户的网络带宽永远不会波动"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "ABR 的前提是「多档预转码 + 切片」：播放器监测带宽后只能在「已存在的档位」间选择，切换发生在分片边界。",
+      "aiExplanation": "答案A。ABR 三要件缺一不可：①多档转码（1080p/720p/480p 各一套）②小分片（2~10 秒）③播放器带宽与缓冲监测选档。B 的「实时转码」算力与延迟都不现实——ABR 换的是「档位」不是「即时压缩参数」；C 混淆了压缩率与码率梯度；D 与 ABR 存在的前提自相矛盾。换档时机在分片边界，保证解码连续性。配套动画：md-transcode-pipeline。",
+      "source": "自编（配套知识动画 md-color-space-chain / md-animation-three-tech / md-transcode-pipeline）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1361",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "多媒体项目实施",
+      "knowledgePoint": "母版与输出件的分工",
+      "stem": "关于母版在视频交付中的作用，下列说法正确的是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "母版是最高画质的存档源头，所有分发版都应从母版转码得出，避免二次有损压缩"
+        },
+        {
+          "key": "B",
+          "text": "母版就是最终交付版，直接发给所有渠道使用"
+        },
+        {
+          "key": "C",
+          "text": "母版应使用最低码率以节省存储空间"
+        },
+        {
+          "key": "D",
+          "text": "母版只需在项目验收前临时存在，交付后即可删除"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "母版 = 高画质源头存档：从母版转码各分发版只经历一次有损环节；从分发版再转则是二次压缩、画质劣化。",
+      "aiExplanation": "答案A。「永远从母版转码」是交付流程的铁律：分发版（4K 投影/1080p 网络/移动端）各自只承受一次转码损失。B 的母版码率高体积大，直接分发既浪费带宽又未必匹配设备；C 说反——母版恰恰要最高码率保画质；D 错误，后续新渠道（如新增平台规格）都要从母版重新转出，删除母版等于自断源头。配套动画：md-transcode-pipeline。",
+      "source": "自编（配套知识动画 md-color-space-chain / md-animation-three-tech / md-transcode-pipeline）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }

@@ -63114,6 +63114,154 @@
       "tags": [
         "动画配套"
       ]
+    },
+    {
+      "id": "si-1730",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "项目风险管理",
+      "knowledgePoint": "风险应对策略",
+      "stem": "某项目发现一项机会：若与某高校联合研发，可显著提升技术方案的先进性。项目组决定与高校签订合作协议共同开发、共享成果。该风险应对策略属于（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "分享"
+        },
+        {
+          "key": "B",
+          "text": "开拓"
+        },
+        {
+          "key": "C",
+          "text": "提高"
+        },
+        {
+          "key": "D",
+          "text": "接受"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "把机会「拉入合伙人共同享有」是分享策略——与威胁侧的「转移」互为镜像。",
+      "aiExplanation": "答案A。机会四策略与威胁四策略一一镜像：开拓↔规避（彻底实现/彻底消除）、分享↔转移（拉人共享/甩给第三方）、提高↔减轻（升概率收益/降概率影响）、接受两侧通用。题眼「签订合作协议、共同开发共享成果」= 引入合伙人 → 分享。B 的开拓是「确保机会 100% 实现」（如为自己配备最强资源），不涉及与人共享；C 的提高是增大机会发生的概率。配套动画：si-risk-response-mirror。",
+      "source": "自编（配套知识动画 si-risk-response-mirror / si-procurement-five / si-quality-three-processes / si-mlps-five-levels）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1731",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "项目采购管理",
+      "knowledgePoint": "采购方式选择",
+      "stem": "某采购项目标的物技术复杂、无法事先确定详细规格与最终价格，且采购时间紧迫。除公开招标外，最适宜的采购方式是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "竞争性谈判"
+        },
+        {
+          "key": "B",
+          "text": "邀请招标"
+        },
+        {
+          "key": "C",
+          "text": "单一来源采购"
+        },
+        {
+          "key": "D",
+          "text": "询价"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "竞争性谈判适用于「技术复杂、性质特殊，不能确定详细规格或具体要求」以及「招标后无合格标的」等情形。",
+      "aiExplanation": "答案A。五种方式题眼对照：公开招标=默认；邀请招标=特殊情形（仍需招标形式、≥3 家）；竞争性谈判=技术复杂/紧急/招标失败（与 ≥3 家谈判）；询价=规格统一的现货（≥3 家报价）；单一来源=唯一供应商（零竞争但需公示审批）。B 的邀请招标仍是「招标」，要求事先能确定规格——与「无法确定详细规格」矛盾；D 的询价恰恰要求「规格统一」与题干相反。配套动画：si-procurement-five。",
+      "source": "自编（配套知识动画 si-risk-response-mirror / si-procurement-five / si-quality-three-processes / si-mlps-five-levels）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1732",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "项目质量管理",
+      "knowledgePoint": "管理质量的活动范围",
+      "stem": "下列活动中，属于「控制质量」过程的是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "对已完成的登录模块执行功能测试，记录缺陷并验证修复结果"
+        },
+        {
+          "key": "B",
+          "text": "审计开发过程是否遵循组织的编码与评审规范"
+        },
+        {
+          "key": "C",
+          "text": "确定本项目应达到的可靠性测量指标"
+        },
+        {
+          "key": "D",
+          "text": "编制质量报告并向管理层提出过程改进建议"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "控制质量检测交付物（测试、缺陷验证）；审计过程是管理质量，定指标是规划质量管理，编报告促改进是管理质量。",
+      "aiExplanation": "答案A。质量三过程分工对号：规划=定标准与测量指标（C）；管理质量=执行质量活动+审计过程+质量报告（B、D）；控制质量=对可交付物测试检查+缺陷跟踪验证（A）。主体也不同：规划由团队+客户、管理质量由质量部门、控制质量由测试/QC 团队执行。2025.11 真题的「质量保证工程师审查过程/测试工程师缺陷跟踪」就是 B 与 A 的分工。配套动画：si-quality-three-processes。",
+      "source": "自编（配套知识动画 si-risk-response-mirror / si-procurement-five / si-quality-three-processes / si-mlps-five-levels）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1733",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "信息安全",
+      "knowledgePoint": "等级保护",
+      "stem": "信息系统安全保护等级的确定，主要依据（）两个定级要素。",
+      "options": [
+        {
+          "key": "A",
+          "text": "受侵害的客体和对客体的侵害程度"
+        },
+        {
+          "key": "B",
+          "text": "系统的投资规模和使用人数"
+        },
+        {
+          "key": "C",
+          "text": "系统的技术架构和部署方式"
+        },
+        {
+          "key": "D",
+          "text": "运营单位的行政级别和行业属性"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "等保定级两要素：受侵害客体（公民法人/社会秩序公共利益/国家安全）×侵害程度（一般/严重/特别严重）。",
+      "aiExplanation": "答案A。定级矩阵由「客体×程度」交叉得出等级：损害公民法人权益=一级起、损害社会秩序公共利益=二级起、危害国家安全=三级以上。B、C、D 都不是法定定级要素——行政级别高不等于级别高，小系统也可能定三级（如涉及大量个人信息的平台）。配套记忆：三级及以上每年开展商用密码应用安全性评估。配套动画：si-mlps-five-levels。",
+      "source": "自编（配套知识动画 si-risk-response-mirror / si-procurement-five / si-quality-three-processes / si-mlps-five-levels）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }
