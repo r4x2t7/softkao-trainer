@@ -6,13 +6,13 @@
       "examName": "系统集成项目管理工程师",
       "version": 2,
       "file": "system-integration/v2.json",
-      "questionCount": 1596,
-      "sha256": "02e112a76193119c01b7a126d16893e449414dfc260014ef076826e6035df93c",
+      "questionCount": 1606,
+      "sha256": "1fbbc0e40182c6f8e899aa32dfd38084ed1c6c3f2ee560bf9efd28fd5b97d28f",
       "updatedAt": "2026-10-24T20:00:00Z",
       "kpNotes": {
         "file": "system-integration/kp_notes.json",
-        "count": 1234,
-        "sha256": "ce0b281e5392a033927dac711b19a1dd795269a0cc54eb95c8e5c1353d9137c3"
+        "count": 1237,
+        "sha256": "353783beef0f4d165c6aae351ac81fda31e1218beb7013e1a3e0b0aa313a2964"
       }
     },
     {
@@ -20,8 +20,8 @@
       "examName": "多媒体应用设计师",
       "version": 2,
       "file": "multimedia-designer/v2.json",
-      "questionCount": 1246,
-      "sha256": "60d995108cade3e9df9afafc9bd1e73456f6fdab51a58c3ea567232a6173fa8d",
+      "questionCount": 1253,
+      "sha256": "c874626474888e2f31b32cb3240330aa0e8c622e82813024b01a057d32633b11",
       "updatedAt": "2026-10-24T20:00:00Z",
       "kpNotes": {
         "file": "multimedia-designer/kp_notes.json",
