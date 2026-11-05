@@ -47200,6 +47200,154 @@
       "tags": [
         "易混辨析"
       ]
+    },
+    {
+      "id": "md-1354",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "帧与编码",
+      "knowledgePoint": "GOP 长度的影响",
+      "stem": "某直播平台观众反馈：进入直播间后画面迟迟无法起播，且网络抖动出现花屏后要很久才能恢复清晰画面。从 GOP 设置角度，正确的优化方向是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "缩短 GOP，让 I 帧更密集：起播可就近从 I 帧解码，花屏后也能更快恢复"
+        },
+        {
+          "key": "B",
+          "text": "拉长 GOP，减少 I 帧数量以降低码率，起播自然就快了"
+        },
+        {
+          "key": "C",
+          "text": "取消 I 帧，全部使用 P/B 帧以最大化压缩率"
+        },
+        {
+          "key": "D",
+          "text": "GOP 与起播速度、纠错恢复无关，应只增大缓冲区"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "直播起播与恢复依赖「就近的 I 帧」：GOP 短→I 帧密→观众随时能从最近的 I 帧开始解码，花屏后误差传播也被 I 帧截断。拉长 GOP 省码率但起播慢、容错差。",
+      "aiExplanation": "答案A。直播场景的 GOP 选型逻辑：起播速度取决于「距最近 I 帧的距离」——I 帧越密，观众进入时等待下一个 I 帧的时间越短；花屏恢复同理，I 帧会截断 P/B 链的误差传播。B 恰好说反（长 GOP 省码率但起播更慢）；C 违反 GOP 定义——没有 I 帧就永远无法随机进入；D 增大缓冲只会让「开始播放」更迟。对比记忆：点播存档可用长 GOP 省流量，直播低延迟用短 GOP。配套知识动画：md-gop-frames。",
+      "source": "自编（配套知识动画 md-gop-frames / md-sampling-quant / md-color-three-props / md-lossy-vs-lossless）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1355",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "数字音频",
+      "knowledgePoint": "音频参数与容量",
+      "stem": "音频数字化中，采样频率与量化位数分别决定了什么？",
+      "options": [
+        {
+          "key": "A",
+          "text": "采样频率决定频率范围（纵向切多密），量化位数决定动态范围与精度（横向切多细）"
+        },
+        {
+          "key": "B",
+          "text": "采样频率决定文件大小，量化位数决定音质"
+        },
+        {
+          "key": "C",
+          "text": "两者都只影响文件大小"
+        },
+        {
+          "key": "D",
+          "text": "量化位数决定频率范围，采样频率决定精度"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "采样是按时间轴取点（决定能还原的最高频率），量化是按幅度轴分档（决定动态范围与信噪比）。",
+      "aiExplanation": "答案A。两个维度的分工：采样率作用在时间轴（每秒取多少个点 → 奈奎斯特：≥2×最高频率才能保住高频）；量化位数作用在幅度轴（每点用多少位表示 → 16bit=65536 级，位数少则量化噪声大）。B 半对半错——两者都影响文件大小（容量=采样率×位深÷8×声道），但「决定音质」的主语不完整；D 把两个维度对调。CD 44.1kHz/16bit 的选择正是两个维度各取所需。配套动画：md-sampling-quant。",
+      "source": "自编（配套知识动画 md-gop-frames / md-sampling-quant / md-color-three-props / md-lossy-vs-lossless）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1356",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "色彩与色彩管理",
+      "knowledgePoint": "色彩三属性",
+      "stem": "把一张海报中的主色由纯蓝改为深蓝（加黑），发生变化的属性是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "明度降低、饱和度降低，色相不变"
+        },
+        {
+          "key": "B",
+          "text": "色相由蓝变紫"
+        },
+        {
+          "key": "C",
+          "text": "只有明度变化，饱和度不变"
+        },
+        {
+          "key": "D",
+          "text": "饱和度升高"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "加黑使颜色变暗变脏：明度↓、饱和度↓，色相（蓝色系）不变。",
+      "aiExplanation": "答案A。三属性影响规律：加白=S↓B↑、加黑=S↓B↓、加灰=只 S↓——共同点是饱和度都下降、色相都不变。B 的「变紫」是对色相的误解（深蓝还是蓝色相）；C 漏了饱和度的下降；D 与事实相反。判断题变体：「加黑后色相改变」（错）。配套动画：md-color-three-props。",
+      "source": "自编（配套知识动画 md-gop-frames / md-sampling-quant / md-color-three-props / md-lossy-vs-lossless）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1357",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "数字图像与格式",
+      "knowledgePoint": "无损与有损的选择",
+      "stem": "某医院需要归档保存医学影像（X 光片数字化件），要求多年后取用与原始扫描件完全一致。应选择的方案是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "无损压缩格式（如 PNG/TIFF 无损模式）归档"
+        },
+        {
+          "key": "B",
+          "text": "JPEG 高质量有损压缩以节省空间"
+        },
+        {
+          "key": "C",
+          "text": "JPEG2000 有损模式压缩率更高"
+        },
+        {
+          "key": "D",
+          "text": "先 JPEG 压缩再转 PNG 存储以兼顾两者"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "医疗影像法律与诊断要求零失真——必须无损归档；任何有损环节都会造成不可逆的信息丢失。",
+      "aiExplanation": "答案A。选型判定标准「能否容忍失真」：医疗影像、法律证据、文字原件、需多代编辑的素材→一律无损。B 节省空间但丢失高频细节，医学诊断不可接受；C 的 JPEG2000 即便支持无损，有损模式同样违规；D 是典型的错误认知——有损转换后信息已经丢了，转回无损容器救不回来（不可逆）。配套动画：md-lossy-vs-lossless。",
+      "source": "自编（配套知识动画 md-gop-frames / md-sampling-quant / md-color-three-props / md-lossy-vs-lossless）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }

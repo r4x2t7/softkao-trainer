@@ -62966,6 +62966,154 @@
       "tags": [
         "易混辨析"
       ]
+    },
+    {
+      "id": "si-1726",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "项目整体管理",
+      "knowledgePoint": "整体变更控制",
+      "stem": "整体变更控制流程的正确顺序是（）。\n①实施变更并验证效果 ②提交书面变更申请 ③CCB 审批决策 ④评估变更影响 ⑤更新基准与计划",
+      "options": [
+        {
+          "key": "A",
+          "text": "②④③⑤①"
+        },
+        {
+          "key": "B",
+          "text": "②③④⑤①"
+        },
+        {
+          "key": "C",
+          "text": "④②③⑤①"
+        },
+        {
+          "key": "D",
+          "text": "②④⑤③①"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "变更五步：申请→影响评估→CCB 审批→更新基准→实施并验证。先评估再审批（CCB 依据评估结论决策），先更新基准再实施。",
+      "aiExplanation": "答案A。顺序两大关键：①「评估在审批前」——CCB 要根据影响评估结果做决策，不评估就批是流程违规；②「更新基准在实施前」——基准只能经批准的变更程序改，改完基准才能按新基准实施。B 把评估和审批顺序颠倒；C 先评估后申请逻辑不通；D 基准还没批就更新。配套动画：si-change-flow-ccb。",
+      "source": "自编（配套知识动画 si-change-flow-ccb / si-stakeholder-quad / si-quality-cost）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1727",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "项目干系人管理",
+      "knowledgePoint": "权力利益矩阵",
+      "stem": "根据权力/利益方格，对「权力大但对项目利益关注度低」的职能部门负责人（如财务总监），最合适的应对策略是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "令其满意：关键节点主动通报，避免过度打扰"
+        },
+        {
+          "key": "B",
+          "text": "重点管理：每周例会汇报全部细节"
+        },
+        {
+          "key": "C",
+          "text": "随时告知：每天发送进度邮件"
+        },
+        {
+          "key": "D",
+          "text": "仅做监督：不投入沟通精力"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "高权力低利益象限的策略是「令其满意」——保持其知情与认可，但不占用其过多注意力。",
+      "aiExplanation": "答案A。方格四象限策略对号入座：高权高利=重点管理（密切沟通）；高权低利=令其满意（关键节点通报）；低权高利=随时告知（保持知情）；低权低利=监督（最小投入）。B 的「全部细节」是给重点管理对象的力度，对财务总监是打扰；C 的频次策略错位；D 对高权力者有失管理。配套动画：si-stakeholder-quad。",
+      "source": "自编（配套知识动画 si-change-flow-ccb / si-stakeholder-quad / si-quality-cost）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1728",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "项目质量管理",
+      "knowledgePoint": "质量成本",
+      "stem": "关于质量成本的构成规律，下列说法正确的是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "加大预防与评估投入通常能显著降低失败成本，使总质量成本下降"
+        },
+        {
+          "key": "B",
+          "text": "失败成本与预防投入无关，两者相互独立"
+        },
+        {
+          "key": "C",
+          "text": "评估成本属于非一致性成本"
+        },
+        {
+          "key": "D",
+          "text": "总质量成本随预防投入增加而线性上升"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "一致性成本（预防+评估）是杠杆：投入增加会带来失败成本大幅下降，总成本反而降低。",
+      "aiExplanation": "答案A。质量成本的跷跷板规律：1 元预防投入约省数元失败损失——因为缺陷在早期拦截的成本远低于交付后修复（外部失败还含赔偿与商誉）。C 说反——评估属于一致性成本；D 忽略了失败成本的下降项。案例题常见问法：「为什么培训费花了 2 万还要花？」——答：预防成本压低失败成本。配套动画：si-quality-cost。",
+      "source": "自编（配套知识动画 si-change-flow-ccb / si-stakeholder-quad / si-quality-cost）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1729",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "项目配置管理",
+      "knowledgePoint": "项目配置管理",
+      "stem": "配置审计中发现用户手册与系统实际功能不符，最可能的管理漏洞是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "基线变更后未同步更新相关文档，交付前又缺少功能配置审核（FCA）"
+        },
+        {
+          "key": "B",
+          "text": "配置管理员权限过大导致误删手册"
+        },
+        {
+          "key": "C",
+          "text": "产品库的存档版本太多导致查找困难"
+        },
+        {
+          "key": "D",
+          "text": "开发库的工作副本数量过多"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "「文档与系统不符」= 变更只改了代码没同步文档（基线管理漏洞）+ 交付前 FCA 审核缺失。",
+      "aiExplanation": "答案A。FCA（功能配置审核）核验「功能与需求/文档一致」，PCA（物理配置审核）核验「交付物与配置信息一致」。手册不同步的两层原因：过程层（变更实施后未联动更新相关文档——变更管理的「验证与同步」缺失）与把关层（交付前没做 FCA）。B、C、D 都是臆造的干扰项。2025.11 真题案例四的配置审计事件即此考点。",
+      "source": "自编（配套知识动画 si-change-flow-ccb / si-stakeholder-quad / si-quality-cost）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }
