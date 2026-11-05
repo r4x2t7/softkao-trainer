@@ -34,6 +34,7 @@ import com.softkao.trainer.feature.learn.ChapterLearnScreen
 import com.softkao.trainer.feature.learn.FormulaScreen
 import com.softkao.trainer.feature.learn.GlossaryScreen
 import com.softkao.trainer.feature.learn.NumberScreen
+import com.softkao.trainer.feature.learn.ConfusionScreen
 import com.softkao.trainer.feature.learn.LearningScreen
 import com.softkao.trainer.feature.knowledge.ChapterDetailScreen
 import com.softkao.trainer.feature.knowledge.KnowledgeScreen
@@ -74,6 +75,7 @@ object Routes {
     const val FORMULAS = "formulas"
     const val GLOSSARY = "glossary"
     const val NUMBERS = "numbers"
+    const val CONFUSIONS = "confusions"
     const val CASE_DETAIL = "cases/{examId}/{caseId}"
     const val TOPIC_PICKER = "practice/picker/{examId}/{tab}"
     const val PRACTICE =
@@ -154,6 +156,7 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
                     onOpenFormulas = { navController.navigate(Routes.FORMULAS) },
                     onOpenGlossary = { navController.navigate(Routes.GLOSSARY) },
                     onOpenNumbers = { navController.navigate(Routes.NUMBERS) },
+                    onOpenConfusions = { navController.navigate(Routes.CONFUSIONS) },
                 )
             }
             composable(Routes.LEARN) {
@@ -189,6 +192,7 @@ fun AppRoot(navController: NavHostController = rememberNavController()) {
             composable(Routes.FORMULAS) { FormulaScreen(onBack = { navController.popBackStack() }) }
             composable(Routes.GLOSSARY) { GlossaryScreen(onBack = { navController.popBackStack() }) }
             composable(Routes.NUMBERS) { NumberScreen(onBack = { navController.popBackStack() }) }
+            composable(Routes.CONFUSIONS) { ConfusionScreen(onBack = { navController.popBackStack() }) }
             composable(Routes.CASES) {
                 CaseListScreen(
                     onBack = { navController.popBackStack() },

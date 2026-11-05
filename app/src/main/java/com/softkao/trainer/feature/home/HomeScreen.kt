@@ -162,6 +162,7 @@ fun HomeScreen(
     onOpenFormulas: () -> Unit = {},
     onOpenGlossary: () -> Unit = {},
     onOpenNumbers: () -> Unit = {},
+    onOpenConfusions: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -199,6 +200,9 @@ fun HomeScreen(
             }
             OutlinedButton(onClick = onOpenNumbers, modifier = Modifier.fillMaxWidth()) {
                 Text("🔢 高频数字速查", maxLines = 1, softWrap = false)
+            }
+            OutlinedButton(onClick = onOpenConfusions, modifier = Modifier.fillMaxWidth()) {
+                Text("⚖️ 易混概念对照", maxLines = 1, softWrap = false)
             }
         }
 
