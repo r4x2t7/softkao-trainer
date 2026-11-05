@@ -160,6 +160,7 @@ fun HomeScreen(
     onOpenCases: (examId: String) -> Unit = {},
     onOpenLearn: () -> Unit = {},
     onOpenFormulas: () -> Unit = {},
+    onOpenGlossary: () -> Unit = {},
     viewModel: HomeViewModel = viewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -191,6 +192,9 @@ fun HomeScreen(
             }
             OutlinedButton(onClick = onOpenFormulas, modifier = Modifier.fillMaxWidth()) {
                 Text("📐 公式速查", maxLines = 1, softWrap = false)
+            }
+            OutlinedButton(onClick = onOpenGlossary, modifier = Modifier.fillMaxWidth()) {
+                Text("🔤 英语术语速查", maxLines = 1, softWrap = false)
             }
         }
 

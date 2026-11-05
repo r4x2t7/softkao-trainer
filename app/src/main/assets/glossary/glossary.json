@@ -1,0 +1,152 @@
+{
+  "system-integration": [
+    {
+      "category": "整体与范围管理",
+      "items": [
+        {"term": "Project Charter", "zh": "项目章程", "note": "正式授权项目成立的文档（Develop Project Charter）"},
+        {"term": "Project Management Plan", "zh": "项目管理计划", "note": "指导项目执行的总体计划"},
+        {"term": "WBS (Work Breakdown Structure)", "zh": "工作分解结构", "note": "分层级、面向交付物的总范围分解"},
+        {"term": "Work Package", "zh": "工作包", "note": "WBS 最底层，可估算可管理"},
+        {"term": "Deliverable", "zh": "可交付成果", "note": "为完成项目而必须产出的独特可核实的产品或服务"},
+        {"term": "Scope Baseline", "zh": "范围基准", "note": "由范围说明书 + WBS + WBS 词典组成"},
+        {"term": "Change Control Board (CCB)", "zh": "变更控制委员会", "note": "正式审批变更请求的决策机构"},
+        {"term": "Change Management", "zh": "变更管理", "note": "识别、记录并批准或拒绝变更"},
+        {"term": "Configuration Management", "zh": "配置管理", "note": "关注可交付成果与过程的规范及版本状态"},
+        {"term": "Predictive Life Cycle", "zh": "预测型生命周期", "note": "范围/时间/成本早期确定，严格控变更（瀑布型）"}
+      ]
+    },
+    {
+      "category": "进度与成本管理",
+      "items": [
+        {"term": "Schedule Baseline", "zh": "进度基准", "note": "经批准的进度计划，绩效比较依据"},
+        {"term": "Critical Path", "zh": "关键路径", "note": "总历时最长的路径，决定项目最短工期"},
+        {"term": "Float / Slack", "zh": "浮动时间（时差）", "note": "活动可延迟而不影响工期的时间余量"},
+        {"term": "Cost Baseline", "zh": "成本基准", "note": "经批准的分阶段预算，不含管理储备"},
+        {"term": "Determine Budget", "zh": "制定预算", "note": "汇总估算形成成本基准的过程"},
+        {"term": "Control Costs", "zh": "控制成本", "note": "监控状态、更新成本、管理成本基准变更"},
+        {"term": "Earned Value (EV)", "zh": "挣值", "note": "已完成工作的预算价值"},
+        {"term": "Planned Value (PV)", "zh": "计划价值", "note": "计划完成工作的预算价值"},
+        {"term": "Actual Cost (AC)", "zh": "实际成本", "note": "已完成工作的实际花费"},
+        {"term": "Schedule Variance (SV)", "zh": "进度偏差", "note": "SV = EV − PV，负值进度落后"},
+        {"term": "Cost Variance (CV)", "zh": "成本偏差", "note": "CV = EV − AC，负值成本超支"},
+        {"term": "BAC (Budget at Completion)", "zh": "完工预算", "note": "为执行工作所建立的全部预算之和"},
+        {"term": "Management Reserve", "zh": "管理储备", "note": "应对未知-未知风险，不在成本基准内"}
+      ]
+    },
+    {
+      "category": "质量与风险管理",
+      "items": [
+        {"term": "Quality Planning", "zh": "质量规划", "note": "确定质量标准与测量指标"},
+        {"term": "Quality Assurance", "zh": "质量保证", "note": "检查过程本身是否合规（审计过程）"},
+        {"term": "Quality Control", "zh": "质量控制", "note": "检查交付物是否合格（检测缺陷）"},
+        {"term": "Scatter Diagram", "zh": "散点图", "note": "显示两个变量之间关系"},
+        {"term": "Histogram", "zh": "直方图", "note": "按区间展示数据分布"},
+        {"term": "Corrective Action", "zh": "纠正措施", "note": "消除已发现不合格的原因"},
+        {"term": "Preventive Action", "zh": "预防措施", "note": "消除潜在不合格的原因"},
+        {"term": "Identify Risks", "zh": "识别风险", "note": "识别单个与整体风险来源并记录特征"},
+        {"term": "Monitor Risks", "zh": "监督风险", "note": "跟踪已识别风险、监测残余与新风险"},
+        {"term": "Sensitivity Analysis", "zh": "敏感性分析", "note": "确定哪些风险对项目结果影响最大（龙卷风图）"},
+        {"term": "Monte Carlo Simulation", "zh": "蒙特卡洛模拟", "note": "定量风险分析：随机抽样算概率分布"},
+        {"term": "Probability and Impact Matrix", "zh": "概率影响矩阵", "note": "网格映射风险发生概率与影响，用于风险分析"},
+        {"term": "Residual Risk", "zh": "残余风险", "note": "应对措施实施后仍然存在的风险"}
+      ]
+    },
+    {
+      "category": "团队与干系人",
+      "items": [
+        {"term": "Forming", "zh": "形成期", "note": "成员相识、了解角色职责，独立拘谨"},
+        {"term": "Storming", "zh": "震荡期", "note": "冲突与分歧集中出现的阶段"},
+        {"term": "Norming", "zh": "规范期", "note": "建立规则、开始协同工作"},
+        {"term": "Performing", "zh": "发挥期", "note": "高效运转、相互依赖"},
+        {"term": "Adjourning", "zh": "解散期", "note": "完成工作后团队解散"},
+        {"term": "Stakeholder", "zh": "干系人", "note": "能影响项目或被项目影响的个人/组织"},
+        {"term": "Stakeholder Engagement", "zh": "干系人参与", "note": "促进干系人合理参与项目的过程"},
+        {"term": "Virtual Team", "zh": "虚拟团队", "note": "异地协作，用视频会议/邮件/共享门户沟通（面对面不算）"},
+        {"term": "Delphi Technique", "zh": "德尔菲技术", "note": "专家多轮匿名问卷达成共识、减少偏差"},
+        {"term": "Performance Reporting", "zh": "绩效报告", "note": "向干系人传播工作绩效信息"}
+      ]
+    },
+    {
+      "category": "新技术与安全",
+      "items": [
+        {"term": "IaaS / PaaS / SaaS", "zh": "基础设施/平台/软件即服务", "note": "给资源 / 给平台 / 给软件，层级依次升高"},
+        {"term": "Big Data 5V", "zh": "大数据 5V 特征", "note": "Volume 体量、Variety 多样、Velocity 速度、Veracity 真实、Value 价值"},
+        {"term": "MapReduce", "zh": "MapReduce", "note": "集群上并行分布式处理大数据集的编程模型"},
+        {"term": "IoT Sensing Layer", "zh": "物联网感知层", "note": "RFID/传感器/摄像头/GPS 采集物理世界信息"},
+        {"term": "Machine Learning", "zh": "机器学习", "note": "AI 子集，用统计技术让计算机具备学习能力"},
+        {"term": "Blockchain", "zh": "区块链", "note": "分布式账本 + 共识机制 + 哈希链接"},
+        {"term": "Firewall", "zh": "防火墙", "note": "网络安全网关，识别可进入内网的数据包"},
+        {"term": "Confidentiality / Integrity / Availability", "zh": "保密性/完整性/可用性", "note": "信息安全 CIA 三要素"},
+        {"term": "MLPS", "zh": "等级保护（等保）", "note": "我国信息系统安全保护等级共 5 级"}
+      ]
+    }
+  ],
+  "multimedia-designer": [
+    {
+      "category": "音频术语",
+      "items": [
+        {"term": "Sampling Frequency", "zh": "采样频率", "note": "每秒采样次数；CD 44.1kHz、专业视频 48kHz"},
+        {"term": "Nyquist Theorem", "zh": "奈奎斯特采样定理", "note": "采样频率 ≥ 最高频率的 2 倍才能无损还原"},
+        {"term": "Quantization", "zh": "量化", "note": "把采样值离散化为有限位数；16bit=65536 级"},
+        {"term": "Aliasing", "zh": "混叠", "note": "采样不足导致高频被错误映射为低频的失真"},
+        {"term": "MIDI", "zh": "乐器数字接口", "note": "音符指令序列而非声音波形，文件极小"},
+        {"term": "Mono / Stereo", "zh": "单声道 / 双声道", "note": "双声道容量是单声道的 2 倍"}
+      ]
+    },
+    {
+      "category": "图像与色彩",
+      "items": [
+        {"term": "Pixel", "zh": "像素", "note": "图像的最小显示单元"},
+        {"term": "Resolution", "zh": "分辨率", "note": "宽×高像素数；4K UHD=3840×2160"},
+        {"term": "Color Depth / Bit Depth", "zh": "色彩深度（位深）", "note": "每像素存储位数；24 位真彩≈1670 万色"},
+        {"term": "True Color", "zh": "真彩色", "note": "24 位 RGB 各 8 位直接存颜色值"},
+        {"term": "Indexed Color", "zh": "索引色", "note": "像素存调色板编号，最多 256 色（GIF）"},
+        {"term": "Palette", "zh": "调色板", "note": "索引色图像共用的颜色查找表"},
+        {"term": "Color Space", "zh": "色彩空间", "note": "描述颜色的数学模型（RGB/YUV/Lab）"},
+        {"term": "Gamut", "zh": "色域", "note": "设备或空间能表达的颜色范围"},
+        {"term": "Hue / Saturation / Brightness", "zh": "色相/饱和度/明度", "note": "HSB 三要素"},
+        {"term": "Vector Graphics", "zh": "矢量图形", "note": "用数学描述存图，缩放不失真（SVG/AI）"},
+        {"term": "Raster / Bitmap", "zh": "位图", "note": "用像素阵列存图，放大出现锯齿"}
+      ]
+    },
+    {
+      "category": "压缩与格式",
+      "items": [
+        {"term": "Lossy / Lossless", "zh": "有损 / 无损压缩", "note": "JPEG 有损可丢弃信息；PNG/ZIP 无损可完全还原"},
+        {"term": "DCT (Discrete Cosine Transform)", "zh": "离散余弦变换", "note": "JPEG 核心变换，把空间域转频率域"},
+        {"term": "Quantization Table", "zh": "量化表", "note": "JPEG 压缩中丢弃高频细节的环节（不可逆）"},
+        {"term": "Redundancy", "zh": "冗余", "note": "空间/时间/统计/视觉冗余是压缩的出发点"},
+        {"term": "MPEG-1/2/4", "zh": "MPEG 系列标准", "note": "VCD / DVD / 多媒体交互（含 H.264 基础）"},
+        {"term": "H.264 / H.265 (HEVC)", "zh": "视频编码标准", "note": "同画质下 H.265 码率约为 H.264 的一半"},
+        {"term": "GOP (Group of Pictures)", "zh": "图像组", "note": "I/B/P 帧结构；I 帧是随机访问点"},
+        {"term": "I-Frame / P-Frame / B-Frame", "zh": "帧内/前向/双向预测帧", "note": "I 全量、P 参考、B 双向参考"},
+        {"term": "Bitrate", "zh": "码率", "note": "每秒数据量；决定画质与带宽需求"}
+      ]
+    },
+    {
+      "category": "流媒体与视频",
+      "items": [
+        {"term": "Streaming Media", "zh": "流媒体", "note": "边下边播，无需完整下载"},
+        {"term": "ABR (Adaptive Bitrate)", "zh": "自适应码率", "note": "多档预转码，播放器按带宽动态选档"},
+        {"term": "HLS", "zh": "HTTP 直播流", "note": "Apple 提出，TS 分片 + m3u8 清单"},
+        {"term": "MPEG-DASH", "zh": "动态自适应流", "note": "MPEG 国际标准，不绑定编解码器"},
+        {"term": "CMAF", "zh": "通用媒体应用格式", "note": "统一 HLS 与 DASH 的分片格式"},
+        {"term": "Buffer", "zh": "缓冲区", "note": "播放前预存数据防卡顿；直播要小、点播可大"},
+        {"term": "Latency", "zh": "延迟", "note": "直播的核心指标；LL-HLS 可压到 2~5 秒"},
+        {"term": "VOD (Video on Demand)", "zh": "视频点播", "note": "用户任意时间点播任意内容"},
+        {"term": "Frame Rate", "zh": "帧率", "note": "每秒帧数；电影 24fps、电视 25/30fps"}
+      ]
+    },
+    {
+      "category": "动画与著作",
+      "items": [
+        {"term": "Keyframe", "zh": "关键帧", "note": "定义动画起止状态，中间帧自动插值"},
+        {"term": "Tweening", "zh": "补间动画", "note": "由首尾关键帧自动生成中间帧"},
+        {"term": "Frame-by-Frame", "zh": "逐帧动画", "note": "每帧手工绘制，工作量大但表现力强"},
+        {"term": "Copyright", "zh": "著作权", "note": "自动取得，保护表达形式而非思想"},
+        {"term": "Right of Communication through Information Network", "zh": "信息网络传播权", "note": "上传网络供公众在选定时间地点获取的权利"},
+        {"term": "Moral Rights / Property Rights", "zh": "人身权 / 财产权", "note": "署名修改等不可转让；财产权可授权许可"}
+      ]
+    }
+  ]
+}

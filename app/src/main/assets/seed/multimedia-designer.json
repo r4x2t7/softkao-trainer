@@ -46386,6 +46386,310 @@
           "text": "不同厂商设备无法互联互通"
         }
       ]
+    },
+    {
+      "id": "md-1331",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "音频数字化",
+      "stem": "According to the Nyquist sampling theorem, to accurately digitize an audio signal, the sampling frequency must be at least (  ) the highest frequency component of the signal.",
+      "options": [
+        {
+          "key": "A",
+          "text": "twice"
+        },
+        {
+          "key": "B",
+          "text": "equal to"
+        },
+        {
+          "key": "C",
+          "text": "half of"
+        },
+        {
+          "key": "D",
+          "text": "one third of"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "奈奎斯特采样定理：采样频率 ≥ 信号最高频率的 2 倍，才能无损还原。",
+      "aiExplanation": "答案A。奈奎斯特采样定理：f采样 ≥ 2 × f最高。CD 音质 44.1kHz 正是为覆盖人耳上限 20kHz 而设（2×20=40，留余量到 44.1）。题干 at least（至少）对应「≥ 2 倍」。低于 2 倍会产生混叠（aliasing）失真——高频被错误地映射为低频。应用常识：专业视频用 48kHz、DVD 用 96kHz，都是围绕 2 倍定理加余量。",
+      "source": "真题风格自编（多媒体术语英文语境）",
+      "tags": [
+        "英语",
+        "采样定理"
+      ]
+    },
+    {
+      "id": "md-1332",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "色彩深度",
+      "stem": "(  ) color uses 24 bits per pixel — 8 bits each for red, green and blue — which allows approximately 16.7 million different colors to be displayed simultaneously.",
+      "options": [
+        {
+          "key": "A",
+          "text": "True"
+        },
+        {
+          "key": "B",
+          "text": "Indexed"
+        },
+        {
+          "key": "C",
+          "text": "Grayscale"
+        },
+        {
+          "key": "D",
+          "text": "Binary"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "真彩色（True Color）= 每像素 24 位（RGB 各 8 位），约 1670 万色。",
+      "aiExplanation": "答案A。题干的数字链条是解题钥匙：24 bits per pixel、8 bits each for RGB、16.7 million colors（2²⁴ ≈ 1677 万）。对比记忆：Indexed 索引色 8 位调色板最多 256 色；Grayscale 灰度 8 位表示 256 级明暗；Binary 二值图 1 位只有黑白。真题常以「位深↔色数」换算出题：8 位=256 色、16 位=65536 色（高彩 Hi-Color）、24 位=1670 万色（真彩）。",
+      "source": "真题风格自编（多媒体术语英文语境）",
+      "tags": [
+        "英语",
+        "色彩深度"
+      ]
+    },
+    {
+      "id": "md-1333",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "英语题",
+      "knowledgePoint": "压缩编码",
+      "stem": "JPEG compression is a (  ) compression method: some image information is permanently discarded during the process, which is acceptable for photographic images but not for text or line art where every detail matters.",
+      "options": [
+        {
+          "key": "A",
+          "text": "lossy"
+        },
+        {
+          "key": "B",
+          "text": "lossless"
+        },
+        {
+          "key": "C",
+          "text": "predictive"
+        },
+        {
+          "key": "D",
+          "text": "dictionary-based"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "JPEG 是有损压缩：丢弃人眼不敏感的信息，适合照片；文字/线条图应选无损格式。",
+      "aiExplanation": "答案A。题干的判定词：permanently discarded（永久丢弃）→ lossy 有损。JPEG 利用了 DCT 变换+量化+熵编码，量化环节不可逆地丢弃高频细节。选型常识：照片用 JPEG（有损但人眼不敏感）；文字/线稿/截图用 PNG 或 GIF（无损，细节不能丢）；医学影像用无损格式（法律与诊断要求零失真）。B 的 lossless（如 PNG/ZIP）逐字节可还原；C 的预测编码与 D 的字典编码（LZ 系列）是无损压缩的内部技术手段。",
+      "source": "真题风格自编（多媒体术语英文语境）",
+      "tags": [
+        "英语",
+        "JPEG"
+      ]
+    },
+    {
+      "id": "md-1334",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "英语题",
+      "knowledgePoint": "流媒体技术",
+      "stem": "In adaptive bitrate (ABR) streaming, video content is pre-encoded into multiple renditions at different bitrates and split into small segments. The player (  ) selects the appropriate rendition based on the current network bandwidth and buffer status.",
+      "options": [
+        {
+          "key": "A",
+          "text": "dynamically"
+        },
+        {
+          "key": "B",
+          "text": "randomly"
+        },
+        {
+          "key": "C",
+          "text": "never"
+        },
+        {
+          "key": "D",
+          "text": "manually"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "ABR 的核心：多档预转码+小分片，播放器根据带宽与缓冲「动态」选档，网络波动时平滑切换。",
+      "aiExplanation": "答案A。ABR 三个技术要件：multiple renditions（多档码率转码）、small segments（小分片，HLS 一般 2~10 秒）、dynamically select（动态选档）。选档依据两条：当前带宽（估算吞吐）与缓冲区水位（防卡顿）。网络变差时降档防中断，恢复时升档提画质，切换发生在分片边界。HLS 与 DASH 都支持 ABR——这是两者共同点，区别在清单格式与治理主体。",
+      "source": "真题风格自编（多媒体术语英文语境）",
+      "tags": [
+        "英语",
+        "ABR"
+      ]
+    },
+    {
+      "id": "md-1335",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "图像文件格式",
+      "stem": "The GIF format uses (  ) color: each pixel stores an index number into a palette table that contains at most 256 colors, which makes GIF files compact and suitable for simple graphics.",
+      "options": [
+        {
+          "key": "A",
+          "text": "indexed"
+        },
+        {
+          "key": "B",
+          "text": "true"
+        },
+        {
+          "key": "C",
+          "text": "high"
+        },
+        {
+          "key": "D",
+          "text": "floating"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "GIF 采用索引色：像素存调色板编号，调色板最多 256 色，文件紧凑。",
+      "aiExplanation": "答案A。题干的关键描述：stores an index number into a palette table（存调色板编号）、at most 256 colors（最多 256 色）——索引色的标准定义。GIF 三大特性：8 位索引色、LZW 无损压缩、支持动画与透明。对比：JPEG 24 位真彩无调色板、PNG 支持真彩+alpha 透明且无损。选型口诀：简单图形/动画用 GIF，照片用 JPEG，需要透明+无损用 PNG。",
+      "source": "真题风格自编（多媒体术语英文语境）",
+      "tags": [
+        "英语",
+        "GIF"
+      ]
+    },
+    {
+      "id": "md-1336",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "英语题",
+      "knowledgePoint": "视频编码",
+      "stem": "Temporal redundancy in video sequences is reduced by (  ) frames, which are encoded by predicting the current frame from previously encoded frames instead of storing it in full.",
+      "options": [
+        {
+          "key": "A",
+          "text": "inter-coded (P/B)"
+        },
+        {
+          "key": "B",
+          "text": "intra-coded (I)"
+        },
+        {
+          "key": "C",
+          "text": "key"
+        },
+        {
+          "key": "D",
+          "text": "anchor"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "时间冗余靠帧间预测编码（P/B 帧）消除：只存与参考帧的差异而非完整帧。",
+      "aiExplanation": "答案A。视频冗余两大类：时间冗余（相邻帧相似）靠帧间预测 P/B 帧消除，空间冗余（帧内平坦区域）靠变换编码（DCT）消除。I 帧（intra）不参考其他帧、不利用时间冗余，是解码起点与随机访问点；P 帧参考前面的帧；B 帧双向参考，压缩率最高但延迟最大。记忆锚点：inter=帧间=时间冗余，intra=帧内=空间冗余。",
+      "source": "真题风格自编（多媒体术语英文语境）",
+      "tags": [
+        "英语",
+        "视频编码"
+      ]
+    },
+    {
+      "id": "md-1337",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "宽高比",
+      "stem": "An HD television picture with a resolution of 1920×1080 pixels has an aspect ratio of (  ), which is the standard for high-definition television (HDTV).",
+      "options": [
+        {
+          "key": "A",
+          "text": "16:9"
+        },
+        {
+          "key": "B",
+          "text": "4:3"
+        },
+        {
+          "key": "C",
+          "text": "21:9"
+        },
+        {
+          "key": "D",
+          "text": "1:1"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "1920÷1080 = 16:9，是 HDTV 与现代显示设备的标准宽高比。",
+      "aiExplanation": "答案A。宽高比（aspect ratio）= 宽÷高。1920×1080 与 3840×2160 都是 16:9（因为 4K 正好是 1080p 宽高各翻 2 倍）。历史对比：标清电视（SDTV）是 4:3（如 640×480、800×600）；21:9 用于超宽屏电影；1:1 是方形（老式 Instagram 图标）。易错点：4:3 的 800×600 与 16:9 的 1024×576 不能只看像素数，要算比值。",
+      "source": "真题风格自编（多媒体术语英文语境）",
+      "tags": [
+        "英语",
+        "分辨率"
+      ]
+    },
+    {
+      "id": "md-1338",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "英语题",
+      "knowledgePoint": "色彩管理",
+      "stem": "In color management, an (  ) profile describes the color characteristics of a device (such as a scanner, monitor or printer), enabling consistent color reproduction across different devices.",
+      "options": [
+        {
+          "key": "A",
+          "text": "ICC"
+        },
+        {
+          "key": "B",
+          "text": "HTTP"
+        },
+        {
+          "key": "C",
+          "text": "ASCII"
+        },
+        {
+          "key": "D",
+          "text": "USB"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "ICC Profile 描述设备的色彩特性，是跨设备一致呈色的基础。",
+      "aiExplanation": "答案A。色彩管理三要素（与 md-1309 呼应）：ICC Profile（设备特性文件，描述该设备「能显示/打印什么颜色」）、PCS 连接空间（设备无关的中转，如 Lab）、CMM 色彩转换引擎。转换链：源设备 Profile → PCS → 目标设备 Profile。B/C/D 都是传输或字符编码协议，与颜色无关。英文场景词：describes the color characteristics of a device = 设备特性文件。",
+      "source": "真题风格自编（多媒体术语英文语境）",
+      "tags": [
+        "英语",
+        "色彩管理"
+      ]
     }
   ]
 }

@@ -61575,6 +61575,386 @@
           "text": "暂不处理，等项目验收时一并提出"
         }
       ]
+    },
+    {
+      "id": "si-1682",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "云计算服务模式",
+      "stem": "(  ) is a software distribution model in which applications are hosted by a vendor or service provider and made available to customers over a network, typically the Internet. Users access the application through a web browser without installing or maintaining any software locally.",
+      "options": [
+        {
+          "key": "A",
+          "text": "SaaS"
+        },
+        {
+          "key": "B",
+          "text": "IaaS"
+        },
+        {
+          "key": "C",
+          "text": "PaaS"
+        },
+        {
+          "key": "D",
+          "text": "DaaS"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "题干描述「供应商托管应用、用户通过浏览器访问、无需本地安装维护」是 SaaS（软件即服务）的典型定义。",
+      "aiExplanation": "答案A。题干关键词：applications are hosted（应用由服务商托管）、through a web browser（浏览器直接访问）、without installing software（无需本地安装）——这是 SaaS 的标准定义。三模式区分口诀：IaaS 给「资源」（虚拟机/存储/网络），PaaS 给「平台」（运行环境+开发框架），SaaS 给「软件」（开箱即用）。真题 2017 上 71 考过几乎同样的 web-based e-mail 场景。对应中文考点：云服务三种模式的应用层级。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "云计算"
+      ]
+    },
+    {
+      "id": "si-1683",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "大数据特征",
+      "stem": "The 5V characteristics of big data include Volume, Variety, Velocity, Veracity and Value. The characteristic (  ) refers to the scale of data — the quantity of data generated and stored.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Volume"
+        },
+        {
+          "key": "B",
+          "text": "Variety"
+        },
+        {
+          "key": "C",
+          "text": "Velocity"
+        },
+        {
+          "key": "D",
+          "text": "Veracity"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "Volume 指数据体量（生成与存储的数量规模），是 5V 中最直观的一个 V。",
+      "aiExplanation": "答案A。5V 逐个记：Volume 体量大（数据量 PB/EB 级）、Variety 类型多（结构化+非结构化）、Velocity 速度快（产生与处理速度快，流式实时）、Veracity 真实性（数据质量与可信度）、Value 价值密度低（有价值信息占比小但总价值高）。题干 the scale of data / quantity of data 对应 Volume。真题 2019 上 71 用 4V 考过 Volume。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "大数据"
+      ]
+    },
+    {
+      "id": "si-1684",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "物联网架构",
+      "stem": "In the three-layer architecture of the Internet of Things (IoT), the (  ) layer is responsible for perceiving the physical world, using devices such as RFID readers, sensors, cameras and GPS to collect information from objects.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Sensing"
+        },
+        {
+          "key": "B",
+          "text": "Network"
+        },
+        {
+          "key": "C",
+          "text": "Application"
+        },
+        {
+          "key": "D",
+          "text": "Presentation"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "感知层（Sensing layer）负责用 RFID、传感器、摄像头、GPS 等设备采集物理世界信息，是物联网的数据入口。",
+      "aiExplanation": "答案A。物联网三层架构自下而上：感知层（Sensing，数据采集：RFID/传感器/摄像头/GPS/蓝牙）→ 网络层（Network，数据传输：互联网/移动网/卫星）→ 应用层（Application，数据处理与行业应用：智能交通/智慧医疗）。记忆锚点：感知层是「皮肤和神经末梢」，网络层是「神经」，应用层是「大脑」。真题 2018 上 72 考过感知层、2021 上 72 考过「SOA 不属于感知层技术」。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "物联网"
+      ]
+    },
+    {
+      "id": "si-1685",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "WBS 定义",
+      "stem": "The (  ) is a hierarchical, deliverable-oriented decomposition of the total scope of work to be carried out by the project team in order to accomplish the project objectives and create the required deliverables.",
+      "options": [
+        {
+          "key": "A",
+          "text": "WBS"
+        },
+        {
+          "key": "B",
+          "text": "OBS"
+        },
+        {
+          "key": "C",
+          "text": "RBS"
+        },
+        {
+          "key": "D",
+          "text": "RAM"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "WBS（工作分解结构）：分层级、面向交付物的项目总范围分解，最底层是工作包。",
+      "aiExplanation": "答案A。题干三个关键词一一对应：hierarchical（层级分解）、deliverable-oriented（面向交付物）、decomposition of the total scope（分解总范围）——这是 WBS 的教科书定义。易混缩写辨析：OBS 组织分解结构（按部门/团队切分）、RBS 风险分解结构（按风险类别切分）、RAM 责任分配矩阵（工作与人对应，如 RACI）。真题 2018 上 74、2021 上 73 都原样考过这一定义。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "范围管理"
+      ]
+    },
+    {
+      "id": "si-1686",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "挣值管理",
+      "stem": "In Earned Value Management, the Schedule Variance is calculated as (  ). A negative SV means the project is behind schedule.",
+      "options": [
+        {
+          "key": "A",
+          "text": "EV minus PV"
+        },
+        {
+          "key": "B",
+          "text": "EV minus AC"
+        },
+        {
+          "key": "C",
+          "text": "AC minus PV"
+        },
+        {
+          "key": "D",
+          "text": "EV divided by PV"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "SV = EV − PV（挣值减计划值）；负值表示进度落后。EV − AC 是成本偏差 CV，EV ÷ PV 是进度绩效指数 SPI。",
+      "aiExplanation": "答案A。挣值四个基础公式：SV = EV − PV（进度偏差，负=落后）、CV = EV − AC（成本偏差，负=超支）、SPI = EV ÷ PV（<1 落后）、CPI = EV ÷ AC（<1 超支）。题干明确说 Schedule Variance 且负值=behind schedule，锁定 SV = EV − PV。D 的 EV ÷ PV 是 SPI 不是差值。真题 2021 上 74 考过「挣值与计划值之差」即 SV。延伸记忆：判断进度看 SV/SPI，判断成本看 CV/CPI，两者都以 EV 为核心。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "成本管理"
+      ]
+    },
+    {
+      "id": "si-1687",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "英语题",
+      "knowledgePoint": "成本基准",
+      "stem": "The (  ) is the approved version of the time-phased project budget, excluding any management reserves, which can only be changed through formal change control procedures and is used as a basis for comparison to actual results.",
+      "options": [
+        {
+          "key": "A",
+          "text": "cost baseline"
+        },
+        {
+          "key": "B",
+          "text": "funding requirement"
+        },
+        {
+          "key": "C",
+          "text": "cost estimate"
+        },
+        {
+          "key": "D",
+          "text": "control account"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "成本基准 = 经批准的分阶段预算（不含管理储备），只能通过正式变更控制修改，是绩效比较的依据。",
+      "aiExplanation": "答案A。题干四个限定词全是成本基准的定义特征：approved version（经批准）、time-phased（分阶段/按时段分布）、excluding management reserves（不含管理储备）、changed only through formal change control（只能正式变更）。关系式：项目总预算 = 成本基准 + 管理储备；成本基准 = 工作包估算汇总 + 应急储备。真题 2017 下 75 原样考过。B 的资金需求是「花钱的时间计划」，C 的成本估算未经批准，D 的控制账户是 WBS 上的管理控制点。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "成本管理"
+      ]
+    },
+    {
+      "id": "si-1688",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "英语题",
+      "knowledgePoint": "变更与配置管理",
+      "stem": "(  ) management focuses on identifying, documenting, and approving or rejecting changes to project documents, deliverables, or baselines, while configuration management focuses on the specifications of deliverables and processes.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Change"
+        },
+        {
+          "key": "B",
+          "text": "Risk"
+        },
+        {
+          "key": "C",
+          "text": "Quality"
+        },
+        {
+          "key": "D",
+          "text": "Capacity"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "变更管理管「改不改」（识别、记录、批准或拒绝变更），配置管理管「改的是哪个版本」（规范与版本状态）。",
+      "aiExplanation": "答案A。题干给了对比定义的后半句：配置管理关注可交付成果和过程的规范（specifications），前半句「识别、记录并批准或拒绝变更」正是变更管理。两者协作关系：配置管理负责记录产品的版本与状态，变更管理负责决定何时、由谁批准对这些版本的修改——CCB（变更控制委员会）是变更管理的决策机构。真题 2018 下 73 原样考过。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "变更管理"
+      ]
+    },
+    {
+      "id": "si-1689",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "团队建设阶段",
+      "stem": "In the (  ) stage of team development, team members meet and learn about the project, their roles and responsibilities, and the expectations of each other. At this stage, team members tend to be independent and not as open as they will be in later stages.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Forming"
+        },
+        {
+          "key": "B",
+          "text": "Storming"
+        },
+        {
+          "key": "C",
+          "text": "Norming"
+        },
+        {
+          "key": "D",
+          "text": "Performing"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "形成期（Forming）：成员相识、了解角色与职责，彼此独立、较为拘谨。",
+      "aiExplanation": "答案A。塔克曼五阶段英文对照：Forming 形成（相识、试探、独立）、Storming 震荡（冲突、分歧）、Norming 规范（建立规则、协同工作）、Performing 发挥（高效运转、相互依赖）、Adjourning 解散（收尾）。题干关键词：meet and learn about（初识）、roles and responsibilities（了解职责）、independent and not open（独立拘谨）——典型 Forming。真题 2022 下广东卷 75 原样考过。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "人力资源"
+      ]
+    },
+    {
+      "id": "si-1690",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "英语题",
+      "knowledgePoint": "德尔菲技术",
+      "stem": "The (  ) is a technique in which a panel of experts answers questionnaires in multiple rounds, with the facilitator providing an anonymous summary of the experts' forecasts and reasons after each round, helping the group reach consensus while reducing bias.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Delphi technique"
+        },
+        {
+          "key": "B",
+          "text": "brainstorming"
+        },
+        {
+          "key": "C",
+          "text": "nominal group technique"
+        },
+        {
+          "key": "D",
+          "text": "mind mapping"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "德尔菲技术：专家多轮匿名问卷+主持人汇总反馈，达成共识并减少偏差。",
+      "aiExplanation": "答案A。德尔菲的三个识别特征：panel of experts（专家组）、multiple rounds of anonymous questionnaires（多轮匿名问卷）、anonymous summary after each round（每轮后匿名反馈汇总）——目标是 reach consensus while reducing bias（达成共识、减少偏差）。辨析：brainstorming 头脑风暴是当面自由发言（不匿名、一轮为主）；nominal group 名义组是先独立写再投票；mind mapping 思维导图是放射状联想。真题 2022 上广东卷 74 原样考过。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "收集需求"
+      ]
+    },
+    {
+      "id": "si-1691",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "英语题",
+      "knowledgePoint": "预测型生命周期",
+      "stem": "In a (  ) life cycle, the project scope, time, and cost are determined in the early phase of the project life cycle, and any changes to the scope are carefully managed.",
+      "options": [
+        {
+          "key": "A",
+          "text": "predictive"
+        },
+        {
+          "key": "B",
+          "text": "iterative"
+        },
+        {
+          "key": "C",
+          "text": "incremental"
+        },
+        {
+          "key": "D",
+          "text": "adaptive"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "预测型生命周期：范围/时间/成本在早期确定，变更受严格管控，又称瀑布型。",
+      "aiExplanation": "答案A。四种生命周期对比：predictive 预测型（早期定死三要素，严格控变更，适合需求明确）、iterative 迭代型（反复优化产品，先做原型再精化）、incremental 增量型（分批交付可用增量）、adaptive 适应型（敏捷，需求随进展涌现，变更频繁）。题干 determined in the early phase + carefully managed changes 是预测型的标志。真题 2022 下全国卷 72 原样考过。记忆锚点：瀑布=预测型；Scrum=适应型。",
+      "source": "真题风格自编（依据历年 71~75 题英语真题模式）",
+      "tags": [
+        "英语",
+        "生命周期"
+      ]
     }
   ]
 }
