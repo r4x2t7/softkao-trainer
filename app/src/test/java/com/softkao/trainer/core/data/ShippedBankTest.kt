@@ -31,7 +31,7 @@ class ShippedBankTest {
             "解析报错：${parsed.errors.take(5)}",
             parsed.errors.isEmpty(),
         )
-        assertEquals(1660, parsed.questions.size)
+        assertEquals(1665, parsed.questions.size)
     }
 
     @Test
@@ -42,7 +42,7 @@ class ShippedBankTest {
             "解析报错：${parsed.errors.take(5)}",
             parsed.errors.isEmpty(),
         )
-        assertEquals(1292, parsed.questions.size)
+        assertEquals(1298, parsed.questions.size)
     }
 
     @Test
