@@ -47496,6 +47496,154 @@
       "tags": [
         "动画配套"
       ]
+    },
+    {
+      "id": "md-1362",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "数字图形与图像基础",
+      "knowledgePoint": "锯齿的成因",
+      "stem": "将一张小尺寸位图 Logo 明显放大用于展板输出，使用哪种重采样方式可以在速度可接受的前提下最有效地减轻锯齿？（）",
+      "options": [
+        {
+          "key": "A",
+          "text": "双线性插值（取邻域 4 像素加权平均）"
+        },
+        {
+          "key": "B",
+          "text": "最近邻插值（直接复制邻近像素）"
+        },
+        {
+          "key": "C",
+          "text": "不插值，直接拉伸像素网格"
+        },
+        {
+          "key": "D",
+          "text": "把图片改成索引色再放大"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "双线性插值通过邻域加权让边缘过渡平滑，是速度与质量兼顾的常用方案；最近邻最快但锯齿最重。",
+      "aiExplanation": "答案A。放大位图必然要「造」新像素：最近邻直接复制（速度第一、锯齿/马赛克最重）；双线性 4 邻域加权（平滑过渡，常用默认）；更高档还有双三次与 Lanczos。C 就是不插值=最近邻的原始形态；D 与锯齿无关还限色数。根治方案仍是矢量重绘——位图放大只是选算法减缓锯齿，无法消除。配套动画：md-interpolation-scaling。",
+      "source": "自编（配套知识动画 md-interpolation-scaling / md-audio-edit-flow）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1363",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "分辨率与图像容量",
+      "knowledgePoint": "光学分辨率与插值分辨率",
+      "stem": "扫描仪标称「光学分辨率 1200dpi、插值分辨率 9600dpi」。关于插值分辨率，下列说法正确的是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "插值分辨率由软件算法估算生成，不会带来真实的新细节"
+        },
+        {
+          "key": "B",
+          "text": "插值分辨率越高，扫描出的真实细节越多"
+        },
+        {
+          "key": "C",
+          "text": "插值分辨率由传感器物理像素密度决定"
+        },
+        {
+          "key": "D",
+          "text": "插值分辨率与光学分辨率是同一个概念"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "光学分辨率取决于传感器物理像素密度；插值分辨率是软件「无中生有」的放大，细节不会增加。",
+      "aiExplanation": "答案A。两分辨率的本质区别：光学=硬件真实采样能力（真实细节的上限）；插值=软件在光学数据之上做的放大估算（新像素是算出来的，不是采集来的）。B 恰好说反；C 描述的是光学分辨率；D 混淆了硬件能力与算法放大。实务：追求细节只看光学分辨率，插值只在需要特定输出尺寸时有用。配套动画：md-interpolation-scaling。",
+      "source": "自编（配套知识动画 md-interpolation-scaling / md-audio-edit-flow）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1364",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "音频格式与编辑",
+      "knowledgePoint": "常见音频编辑操作",
+      "stem": "音频后期的正确处理顺序是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "先剪辑修素材（去噪/对轨），再混音调平衡，最后母带处理并按用途导出"
+        },
+        {
+          "key": "B",
+          "text": "先做母带统一响度，再回到各轨混音，最后剪辑"
+        },
+        {
+          "key": "C",
+          "text": "剪辑和混音同时进行，母带可提前做"
+        },
+        {
+          "key": "D",
+          "text": "顺序无关紧要，只要最终导出即可"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "后期是单向流水线：素材层（剪辑）→平衡层（混音）→整体层（母带），顺序颠倒会互相推翻。",
+      "aiExplanation": "答案A。三段式各管一层：剪辑让每条音轨干净可用；混音让多轨协调（电平/均衡/声像）；母带从整体做响度统一与格式导出。B 的顺序完全倒置——母带定了整体响度后再混音会全部重做；C 混音阶段抢着调总响度是新手最常见错误（母带无从下手）；D 忽视了工序依赖。导出规格按用途：CD 44.1kHz、视频配音 48kHz。配套动画：md-audio-edit-flow。",
+      "source": "自编（配套知识动画 md-interpolation-scaling / md-audio-edit-flow）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1365",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "音频格式与编辑",
+      "knowledgePoint": "混音操作",
+      "stem": "混音阶段的主要工作内容是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "调整各音轨的电平、声像与均衡，使多轨声音协调融合"
+        },
+        {
+          "key": "B",
+          "text": "对成品做整体响度标准化并导出格式"
+        },
+        {
+          "key": "C",
+          "text": "为录音素材去除背景噪声"
+        },
+        {
+          "key": "D",
+          "text": "编写旋律与和弦进行"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "混音=多轨平衡艺术：电平（谁响谁轻）、声像（左右定位）、均衡（频段避让），目标是协调融合。",
+      "aiExplanation": "答案A。B 是母带阶段的活（整体响度与导出）；C 的降噪属于剪辑/修复阶段（素材层）；D 是作曲创作不属于后期。三阶段口诀：剪辑修素材、混音调平衡、母带定响度——把「去噪」「响度」「平衡」放到正确的阶段是操作题常考法。配套动画：md-audio-edit-flow。",
+      "source": "自编（配套知识动画 md-interpolation-scaling / md-audio-edit-flow）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }

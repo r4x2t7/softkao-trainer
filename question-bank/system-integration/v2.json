@@ -63262,6 +63262,154 @@
       "tags": [
         "动画配套"
       ]
+    },
+    {
+      "id": "si-1734",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "项目进度管理",
+      "knowledgePoint": "期望历时与标准差计算",
+      "stem": "某活动三点估算结果：乐观工期 8 天，最可能工期 12 天，悲观工期 22 天。按 PERT 贝塔分布计算，该活动的期望工期与标准差约为（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "期望 13 天，标准差约 2.33 天"
+        },
+        {
+          "key": "B",
+          "text": "期望 14 天，标准差约 2.33 天"
+        },
+        {
+          "key": "C",
+          "text": "期望 13 天，标准差约 3.5 天"
+        },
+        {
+          "key": "D",
+          "text": "期望 12 天，标准差约 1.41 天"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "E = (O+4M+P)/6 = (8+48+22)/6 = 13；σ = (P−O)/6 = 14/6 ≈ 2.33。",
+      "aiExplanation": "答案A。PERT 两步走：期望 = (O+4M+P)÷6，注意 M 前面的系数 4——B 的 14 是算成三角分布(8+12+22)/3=14 的干扰项（等权平均）；C 的 3.5 是 ÷4 的错误（σ=(P−O)/6 分母是 6）；D 把最可能值当期望。延伸：±1σ 区间约 68%（10.67~15.33 天），±2σ 约 95%——考概率区间时用 σ 往两侧推。配套动画：si-pert-beta。",
+      "source": "自编（配套知识动画 si-pert-beta / si-forward-backward / si-comm-three-modes / si-bidding-deadlines）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1735",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "项目进度管理",
+      "knowledgePoint": "总时差的计算参数",
+      "stem": "某活动的最早开始时间 ES=3、最早结束 EF=7、最晚开始 LS=5、最晚结束 LF=9（单位：天）。该活动的总时差为（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "2 天"
+        },
+        {
+          "key": "B",
+          "text": "4 天"
+        },
+        {
+          "key": "C",
+          "text": "0 天"
+        },
+        {
+          "key": "D",
+          "text": "−2 天"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "总时差 = LS − ES = 5 − 3 = 2 天（也可用 LF − EF = 9 − 7 = 2 天验证）。",
+      "aiExplanation": "答案A。总时差两种算法必相等：LS−ES 或 LF−EF。B 的 4 是误用 LF−ES（跨参数相减）；C 的 0 是关键活动特征（本题活动有 2 天富余不是关键活动）；D 负值意味着违反逻辑关系需调整网络。总时差为零的活动串成关键路径。配套动画：si-forward-backward。",
+      "source": "自编（配套知识动画 si-pert-beta / si-forward-backward / si-comm-three-modes / si-bidding-deadlines）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1736",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "项目沟通管理",
+      "knowledgePoint": "沟通方式选择",
+      "stem": "项目经理希望把项目实施过程中的经验教训沉淀下来，供全员日后随时查阅。最适宜的沟通方式是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "拉式沟通：写入知识库/经验教训登记册供按需查阅"
+        },
+        {
+          "key": "B",
+          "text": "推式沟通：给全员逐个发送邮件"
+        },
+        {
+          "key": "C",
+          "text": "交互式沟通：逐人安排会议宣讲"
+        },
+        {
+          "key": "D",
+          "text": "取消沉淀，口头传达即可"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "「信息放公共位置、受众按需自取」正是拉式沟通的定义场景——知识库、经验教训登记册都是拉式载体。",
+      "aiExplanation": "答案A。三方式选型口诀：要共识→交互式（会议）；要告知→推式（邮件报告）；要长期自查→拉式（知识库）。题干「随时查阅」是拉式的标志词。B 的邮件是一次性推送，新成员入职后收不到历史邮件；C 成本高且无法沉淀；D 违背组织过程资产积累要求。2025.11 真题考过「内网发布通知属推式」，与本题形成对照：供推送的是推式，供自取的是拉式。配套动画：si-comm-three-modes。",
+      "source": "自编（配套知识动画 si-pert-beta / si-forward-backward / si-comm-three-modes / si-bidding-deadlines）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1737",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "项目采购管理",
+      "knowledgePoint": "招标程序合规性",
+      "stem": "某依法必须招标的项目，招标文件于 6 月 1 日开始发出，招标人为加快进度，将投标截止时间定为 6 月 9 日。对该做法的评价，正确的是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "违规：投标准备期仅 8 天，低于法定的最短 20 日，投标人可依法提出异议"
+        },
+        {
+          "key": "B",
+          "text": "合规：准备期长短由招标人视项目紧急程度自行决定"
+        },
+        {
+          "key": "C",
+          "text": "合规：只要发售期不少于 5 日即可，与准备期无关"
+        },
+        {
+          "key": "D",
+          "text": "违规：投标准备期应不少于 30 日"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "依法必须招标的项目，自招标文件发出至投标截止最短不得少于 20 日；6 月 1 日至 6 月 9 日仅 8 天，程序违规。",
+      "aiExplanation": "答案A。本题考「时间线数字的用法」：6 月 1 日发出 → 6 月 9 日截止 = 8 天 < 法定最短 20 日，构成程序违规，投标人有权提出异议，招标人应顺延截止时间。B 错在「法定最短期限不可协商」；C 把发售期（≥5 日）与准备期（≥20 日）两个刻度混为一谈；D 的 30 日是「中标后签约期」不是准备期——5/20/30 三个数字的归属互换是本考点最经典出题手法。配套知识动画：si-bidding-deadlines。",
+      "source": "自编（配套知识动画 si-pert-beta / si-forward-backward / si-comm-three-modes / si-bidding-deadlines）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }
