@@ -12,8 +12,8 @@ android {
         applicationId = "com.softkao.trainer"
         minSdk = 26
         targetSdk = 36
-        versionCode = 42
-        versionName = "2.40.0"
+        versionCode = 43
+        versionName = "2.41.0"
     }
 
     buildTypes {

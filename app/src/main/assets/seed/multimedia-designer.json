@@ -47644,6 +47644,154 @@
       "tags": [
         "动画配套"
       ]
+    },
+    {
+      "id": "md-1366",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "流媒体技术",
+      "knowledgePoint": "流媒体协议选择",
+      "stem": "某平台同时服务 iOS（HLS）与 Android（DASH）用户。为避免同一内容存储两套分片，行业采用的统一方案是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "CMAF：统一 HLS 与 DASH 的分片格式，一份内容两端服务"
+        },
+        {
+          "key": "B",
+          "text": "全部转码为 RTMP 流"
+        },
+        {
+          "key": "C",
+          "text": "为每个用户单独转码适配"
+        },
+        {
+          "key": "D",
+          "text": "放弃自适应码率，只提供单一码率"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "CMAF（通用媒体应用格式）统一了 HLS 与 DASH 的分片格式——一份 CMAF 分片可同时被两种清单引用。",
+      "aiExplanation": "答案A。CMAF 的价值：存储减半（不再两套分片）、CDN 缓存复用、配合 LL-HLS/Low-Latency-DASH 压延迟。B 的 RTMP 是推流上行协议不是分发格式；C 成本不可行；D 放弃 ABR 会牺牲弱网体验。协议谱系：RTMP 推流上行、HLS/DASH 分发下行、CMAF 统一分片、WebRTC 毫秒实时。配套动画：md-streaming-protocols。",
+      "source": "自编（配套知识动画 md-streaming-protocols / md-av-sync / md-copyright-rights）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1367",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "视频参数与计算",
+      "knowledgePoint": "音视频同步",
+      "stem": "观众观看视频时，人物口型与声音不同步达到明显可察觉的程度，大约发生在唇音偏差超过（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "±80 毫秒"
+        },
+        {
+          "key": "B",
+          "text": "±10 毫秒"
+        },
+        {
+          "key": "C",
+          "text": "±500 毫秒"
+        },
+        {
+          "key": "D",
+          "text": "人眼对唇音偏差完全不敏感"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "唇音同步的感知阈值约 ±80ms——超过该范围观众明显感觉「对不上口型」。",
+      "aiExplanation": "答案A。±80ms 是音视频同步的经典容差数字：人脑对声音与画面的错位在此范围内难以察觉，超过后体验急剧劣化（声音先于画面更令人不适）。B 的 10ms 远小于可感知阈值；C 的 500ms 已经是「严重不同步」的半秒级错误；D 与生理感知事实相反。直播场景还需动态缓冲对抗网络抖动；多机位拍摄用统一时间码保证后期对齐。配套动画：md-av-sync。",
+      "source": "自编（配套知识动画 md-streaming-protocols / md-av-sync / md-copyright-rights）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1368",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "标准与版权",
+      "knowledgePoint": "著作权的转让与署名权",
+      "stem": "关于著作权中人身权的特性，下列说法正确的是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "署名权等与作者人身不可分离，不可转让，署名权永久受保护"
+        },
+        {
+          "key": "B",
+          "text": "人身权可以随作品转让而一并转让给公司"
+        },
+        {
+          "key": "C",
+          "text": "署名权保护期为作者去世后 50 年"
+        },
+        {
+          "key": "D",
+          "text": "署名权可以授权他人代为署名行使"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "人身权（发表/署名/修改/保护作品完整权）与作者人身不可分：不可转让，署名权等人身权利无期限保护。",
+      "aiExplanation": "答案A。人身权 vs 财产权的分界线：人身权跟着「人」走（不可转让、署名权永久）；财产权跟着「交易」走（可授权可转让、有保护期）。B 混淆了两者——公司买断的是财产权，署名权仍在作者；C 的 50 年是财产权保护期，署名权无期限；D 的「代为署名」本质是冒名。实务结论：委托开发合同要写清著作权归属，但作者的署名权永远保留。配套动画：md-copyright-rights。",
+      "source": "自编（配套知识动画 md-streaming-protocols / md-av-sync / md-copyright-rights）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "md-1369",
+      "examId": "multimedia-designer",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "标准与版权",
+      "knowledgePoint": "著作权",
+      "stem": "某网站未经许可将他人摄制的影视作品上传至服务器，供用户在任意时间、任意地点点播观看。该行为侵犯的权利是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "信息网络传播权"
+        },
+        {
+          "key": "B",
+          "text": "复制权"
+        },
+        {
+          "key": "C",
+          "text": "放映权"
+        },
+        {
+          "key": "D",
+          "text": "表演权"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "「上传到网络 + 用户可在自选时间地点获取」正是信息网络传播权的法定定义场景。",
+      "aiExplanation": "答案A。信息网络传播权的关键词是「公众可以在其个人选定的时间和地点获得作品」——点播/回看/在线观看全部命中。B 的复制权管复制行为，但网络点播的核心是「交互式传播」；C 的放映权针对影院等现场放映设备；D 的表演权针对现场表演与机械表演。易混对照：网络直播（定时播出，用户不能选时间）传统上用广播权/其他权利分析，点播才是信息网络传播权——「能不能自选时间」是分水岭。配套动画：md-copyright-rights。",
+      "source": "自编（配套知识动画 md-streaming-protocols / md-av-sync / md-copyright-rights）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }

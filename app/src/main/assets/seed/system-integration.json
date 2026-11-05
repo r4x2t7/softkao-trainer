@@ -63410,6 +63410,154 @@
       "tags": [
         "动画配套"
       ]
+    },
+    {
+      "id": "si-1738",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "团队发展与冲突管理",
+      "knowledgePoint": "冲突解决策略",
+      "stem": "团队两名成员因技术路线争执不下，项目经理组织双方在同一会议上摆出各自方案的测试数据与成本测算，共同分析后形成折中的最优方案。这种冲突处理方式属于（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "合作/解决问题"
+        },
+        {
+          "key": "B",
+          "text": "强迫/命令"
+        },
+        {
+          "key": "C",
+          "text": "妥协/调解"
+        },
+        {
+          "key": "D",
+          "text": "撤退/回避"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "直面分歧、用数据共同寻找最优解是合作/解决问题——唯一能彻底解决并增进关系的双赢方式。",
+      "aiExplanation": "答案A。五方式判定口诀：看「有没有共同找解」——同堂对数据求最优=合作；各让一步=妥协；强调共识淡化分歧=缓和；凭职权拍板=强迫；暂缓离开=撤退。C 的妥协是「各让半步」的临时平衡，本题是「共同分析出更优方案」，性质不同。技术/方案分歧的考试标准答案就是合作。配套动画：si-conflict-five。",
+      "source": "自编（配套知识动画 si-conflict-five / si-risk-identify-methods / si-claim-process）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1739",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "项目风险管理",
+      "knowledgePoint": "风险识别",
+      "stem": "某项目组织多位专家识别风险：专家互不见面，独立填写问卷，主持人汇总匿名反馈后再发给各专家征询第二轮意见，直至意见趋于一致。该方法是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "德尔菲法"
+        },
+        {
+          "key": "B",
+          "text": "头脑风暴"
+        },
+        {
+          "key": "C",
+          "text": "检查表法"
+        },
+        {
+          "key": "D",
+          "text": "访谈法"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "「匿名 + 多轮问卷 + 汇总反馈再征询」是德尔菲法的三个识别特征，核心目的是防权威压制与从众心理。",
+      "aiExplanation": "答案A。三特征缺一不可：匿名（互不见面）、多轮（意见反馈后再征询）、趋同（直到一致）。B 的头脑风暴恰恰当面放开说，靠规则「禁止批评」防压制；C 靠历史风险清单核对；D 是一对一深挖专家经验的半结构化谈话。德尔菲与头脑风暴的「当面/匿名」对照是最爱考的点。配套动画：si-risk-identify-methods。",
+      "source": "自编（配套知识动画 si-conflict-five / si-risk-identify-methods / si-claim-process）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1740",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 2,
+      "chapter": "项目合同管理",
+      "knowledgePoint": "索赔意向通知",
+      "stem": "按照施工合同通用条款的通行规定，承包方应在索赔事件发生后（）内，向监理工程师发出索赔意向通知，否则将失去索赔权利。",
+      "options": [
+        {
+          "key": "A",
+          "text": "28 天"
+        },
+        {
+          "key": "B",
+          "text": "14 天"
+        },
+        {
+          "key": "C",
+          "text": "56 天"
+        },
+        {
+          "key": "D",
+          "text": "90 天"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "索赔意向通知的时限是 28 天（逾期未报视为放弃索赔权利），这是索赔程序的第一个硬时限。",
+      "aiExplanation": "答案A。28 天是索赔时限题的核心数字：事件发生→28 天内报意向→随后提交正式索赔报告与证据。「逾期失权」是本考点的题眼——不按时报意向，再有理也索赔不了。延伸：监理收到完整资料后也要在约定时限（常为 28 天）内答复。配套动画：si-claim-process。",
+      "source": "自编（配套知识动画 si-conflict-five / si-risk-identify-methods / si-claim-process）",
+      "tags": [
+        "动画配套"
+      ]
+    },
+    {
+      "id": "si-1741",
+      "examId": "system-integration",
+      "subject": "基础知识",
+      "type": "single",
+      "difficulty": 3,
+      "chapter": "项目合同管理",
+      "knowledgePoint": "索赔报告的内容",
+      "stem": "承包方向发包方提交的索赔报告中，最核心的内容是（）。",
+      "options": [
+        {
+          "key": "A",
+          "text": "索赔事件的事实与合同依据、损失计算及相应证据链"
+        },
+        {
+          "key": "B",
+          "text": "对发包方项目管理的批评与改进建议"
+        },
+        {
+          "key": "C",
+          "text": "索赔人员的个人感受与对事件的评价"
+        },
+        {
+          "key": "D",
+          "text": "其他类似项目的索赔金额作为类比"
+        }
+      ],
+      "answer": [
+        "A"
+      ],
+      "explanation": "索赔报告三要素：事实描述、合同依据（引条款）、损失计算——每个要素都要有证据支撑，证据链决定成败。",
+      "aiExplanation": "答案A。索赔审核的核心是「证据链完整性」：现场记录、往来函件、影像资料、第三方证明等。B 的情绪化内容不是索赔报告要素；C 的主观感受无证据效力；D 的类比只能参考不能作为依据——每起索赔的事实与合同条件不同。答题时「证据链」是关键词，案例题常考「索赔失败的证据原因」。配套动画：si-claim-process。",
+      "source": "自编（配套知识动画 si-conflict-five / si-risk-identify-methods / si-claim-process）",
+      "tags": [
+        "动画配套"
+      ]
     }
   ]
 }
