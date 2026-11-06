@@ -608,6 +608,8 @@ git tag -a v2.3.0 -m "..."; git push origin v2.3.0
 gh release create v2.3.0 .\SoftKaoTrainer-v2.3.0-debug.apk --title "..." --notes-file .release-notes.md
 ```
 
+> ⚠️ **发版必带 APK（v2.33~v2.41 曾断档 9 版）**：现在 `.github/workflows/release-apk.yml` 会在 tag 推送后自动构建并附加 `SoftKaoTrainer-{ver}-debug.apk`，但本地发版时仍建议手动补传或事后核对 `gh release view <tag> --json assets` 非空。历史断档已于 2026-11-06 全部补齐（v2.31~v2.42 每版一个 debug APK）。
+
 **注意**：`versionCode`/`versionName` 在 `app/build.gradle.kts`，发版时记得同步改（v2.3.0 = code 4 / name 2.3.0）。
 
 ## 11. 常用验证
